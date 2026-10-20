@@ -4,7 +4,7 @@ Nagrywasz, a Claude montuje rolkę w Twoim stylu.
 
 Ta wtyczka jest dla kursantów AI Content Creator Studio. Filmy instruktażowe i wsparcie znajdziesz w materiałach kursu.
 
-> **Wersja testowa (0.2.2).** Wtyczka przygotowuje komputer do montażu. Sam montaż rolek pojawi się w kolejnych
+> **Wersja testowa (0.3.0).** Wtyczka przygotowuje komputer do montażu. Sam montaż rolek pojawi się w kolejnych
 > aktualizacjach.
 
 ## Czego potrzebujesz
@@ -91,22 +91,18 @@ Chcesz tylko sprawdzić, czy wtyczka jest zainstalowana? Wpisz `/studio:witaj`.
 
 ## Aktualizacje
 
-Poprawki i nowe funkcje przychodzą jako aktualizacje tej wtyczki.
+**Nic nie musisz robić.** `/studio:start` włącza automatyczne aktualizacje i od tej chwili wszystko aktualizuje się
+samo:
 
-**Najprościej:** włącz automatyczne aktualizacje. W aplikacji Claude otwórz listę wtyczek, przejdź do **Marketplaces**,
-wybierz **ai-content-studio** i kliknij **Enable auto-update**.
+- **Studio** (ta wtyczka): Claude pobiera nowe wersje w tle. Gdy zobaczysz komunikat „Plugin updated … Run
+  /reload-plugins”, zacznij nową sesję albo wpisz `/reload-plugins`.
+- **Silnik montażu HyperFrames**: Studio raz dziennie sprawdza, czy jest nowsza wersja. Instaluje ją obok obecnej,
+  sprawdza, czy działa, i dopiero wtedy podmienia. Jeśli nowa wersja nie działa, zostaje dotychczasowa.
 
-**Z terminala:** wklej każdą linijkę osobno:
+Twoje ustawienia, foldery i projekty zostają nietknięte przy każdej aktualizacji.
 
-```
-claude plugin marketplace update ai-content-studio
-```
-
-```
-claude plugin update studio@ai-content-studio
-```
-
-Po aktualizacji zacznij nową sesję, żeby Claude wczytał nową wersję.
+Gdyby automatyczne aktualizacje były kiedyś wyłączone, możesz je włączyć ręcznie: lista wtyczek → **Marketplaces** →
+**ai-content-studio** → **Enable auto-update**.
 
 ## Gdy coś nie działa
 

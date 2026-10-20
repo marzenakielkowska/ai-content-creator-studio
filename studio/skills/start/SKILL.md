@@ -17,6 +17,8 @@ na zwykłe zdania.
 3. **Nic poza folderem Studio.** Wszystko trafia do folderu Studio w katalogu domowym kursanta (`.ai-content-studio`)
    oraz do folderu podręcznego HyperFrames (`.cache/hyperframes`). Nie instaluj niczego systemowo, nie używaj
    `sudo`, Homebrew, winget ani instalatorów `.pkg` / `.msi`, nie zmieniaj ustawień systemu ani profilu powłoki.
+   Jedyny wyjątek: skrypt włącza automatyczne aktualizacje Studio w ustawieniach Claude Code (zostawia kopię
+   poprzedniego pliku obok, z końcówką `.ai-studio-kopia`).
 4. **Pliki kursanta tylko do odczytu.** Nie przenosisz, nie zmieniasz i nie usuwasz jego nagrań.
 5. **Tylko skrypty z tego skilla.** Nie pisz własnych poleceń instalacyjnych w zastępstwie. Gdy skrypt zgłasza błąd,
    postępuj według sekcji „Gdy coś pójdzie nie tak”.
@@ -35,13 +37,36 @@ wywołanie, bez `cd` i bez `&&`.
 Rozpoznaj system, zanim zaczniesz: na Windowsie ścieżki zaczynają się od litery dysku (`C:/...`), a `uname` w Git Bash
 zwraca `MINGW` lub `MSYS`.
 
-Polecenia: `sprawdz`, `instaluj`, `ustaw --nagrania "<folder>" --projekty "<folder>"`, `test`.
+Polecenia: `sprawdz`, `instaluj`, `ustaw --nagrania "<folder>" --projekty "<folder>"`, `test`, `aktualizuj`.
+
+## Aktualizacje (automatyczne, kursant nic nie robi)
+
+Wszystko aktualizuje się samo, bez pytania kursanta:
+
+- **Wtyczka Studio**: `instaluj` i `aktualizuj` włączają automatyczne aktualizacje sklepu `ai-content-studio` w
+  ustawieniach Claude Code (to samo, co przełącznik „Enable auto-update” w liście wtyczek). Od tej chwili Claude Code
+  sam pobiera nowe wersje w tle. Gdy kursant zobaczy komunikat „Plugin updated … Run /reload-plugins”, powiedz mu,
+  że przyszła nowa wersja Studio i wystarczy zacząć nową sesję (albo wpisać `/reload-plugins`).
+- **HyperFrames**: `aktualizuj` raz na dobę sprawdza, czy jest nowsza wersja. Instaluje ją obok obecnej, sprawdza,
+  czy działa, i dopiero wtedy podmienia. Gdy nowa wersja nie przejdzie sprawdzenia, zostaje dotychczasowa.
+
+**Na początku każdej pracy ze Studio** (ten skill i każdy inny skill Studio) uruchom po cichu `aktualizuj`. Gdy było
+sprawdzane w ostatniej dobie, kończy się od razu. Linie:
+
+| Linia | Co zrobić |
+| --- | --- |
+| `STATUS aktualizacja NIEDAWNO_SPRAWDZANE` | nic, nie wspominaj o tym |
+| `STATUS autoaktualizacja OK\|WLACZONA` | nic, nie wspominaj o tym |
+| `STATUS autoaktualizacja NIEMOZLIWA` | powiedz jednym zdaniem, że automatyczne aktualizacje Studio trzeba włączyć ręcznie: lista wtyczek → **Marketplaces** → **ai-content-studio** → **Enable auto-update** |
+| `STATUS hyperframes AKTUALNY\|NIE_SPRAWDZONO\|BRAK` | nic, nie wspominaj o tym |
+| `STATUS hyperframes ZAKTUALIZOWANY <stara> <nowa>` | jedno zdanie: „Zaktualizowałam silnik montażu do nowszej wersji.” |
+| `STATUS hyperframes BEZ_ZMIAN ...` | nic, nie wspominaj o tym (działa dotychczasowa wersja) |
 
 ## Przebieg
 
 ### Krok 1. Sprawdzenie (zawsze, po cichu)
 
-Uruchom `sprawdz`. Trwa kilka sekund i niczego nie pobiera. Przeczytaj linie:
+Uruchom `sprawdz`. Trwa kilka sekund i niczego nie pobiera ani nie zmienia. Przeczytaj linie:
 
 | Linia | Znaczenie |
 | --- | --- |
@@ -52,6 +77,7 @@ Uruchom `sprawdz`. Trwa kilka sekund i niczego nie pobiera. Przeczytaj linie:
 | `STATUS przegladarka OK\|BRAK\|NIEZNANE` | ukryta przeglądarka, w której HyperFrames renderuje |
 | `STATUS transkrypcja OK\|BRAK\|NIEZNANE\|NIEOBSLUGIWANA` | model mowy do napisów (rozumie polski) |
 | `STATUS ustawienia OK\|BRAK` | foldery na nagrania i projekty |
+| `STATUS autoaktualizacja OK\|WYLACZONA` | czy Studio aktualizuje się samo (`instaluj` to włącza) |
 | `STATUS do_pobrania_mb <liczba>` | ile mniej więcej trzeba pobrać |
 | `WYNIK GOTOWE\|NIEGOTOWE` | podsumowanie |
 
@@ -71,7 +97,11 @@ rzecz. Powiedz, gdzie to trafi i że niczego nie zmieniasz w systemie. Przykład
 >
 > Do pobrania jest razem około 1,2 GB, jednorazowo. Wszystko trafi do jednego folderu Studio w Twoim katalogu domowym;
 > nic nie instaluję w systemie i nie potrzebuję hasła. Zależnie od internetu potrwa to od kilku do kilkunastu minut.
+> Włączę też automatyczne aktualizacje Studio, żeby poprawki przychodziły same.
 > Pobieram?
+
+Gdy `WYNIK GOTOWE`, ale `STATUS autoaktualizacja WYLACZONA`, nie pytaj o nic: uruchom `aktualizuj --teraz` (włącza
+automatyczne aktualizacje) i powiedz o tym jednym zdaniem.
 
 Przy pierwszym uruchomieniu dodaj jedno zdanie o prywatności, bo kursanci często o to pytają:
 

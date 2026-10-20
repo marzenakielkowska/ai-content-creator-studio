@@ -2,7 +2,7 @@
 #
 # Uzycie (z Claude Code):
 #   powershell -NoProfile -ExecutionPolicy Bypass -File "<folder>\start.ps1" sprawdz
-#   ... instaluj | ustaw --nagrania <folder> --projekty <folder> | test
+#   ... instaluj | ustaw --nagrania <folder> --projekty <folder> | test | aktualizuj
 #
 # Ten skrypt dba tylko o Node (bez Node nie da sie uruchomic reszty). Reszte robi przygotuj.mjs.
 # Wszystko trafia do jednego folderu (domyslnie %USERPROFILE%\.ai-content-studio). Bez uprawnien

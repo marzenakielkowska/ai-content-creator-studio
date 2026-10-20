@@ -7,6 +7,7 @@
 //   instaluj                                  pobiera brakujace narzedzia do folderu Studio
 //   ustaw --nagrania <folder> --projekty <folder>   zapisuje foldery kursanta
 //   test                                      sprawdza, czy HyperFrames widzi wszystkie narzedzia
+//   aktualizuj [--teraz]                      raz na dobe: automatyczne aktualizacje wtyczki i nowszy HyperFrames
 //
 // Wypisuje linie "STATUS ...", "KROK ...", "INFO ..." i na koniec "WYNIK ...". Claude tlumaczy je
 // kursantowi na prosty jezyk. Bez zaleznosci: tylko to, co ma Node. Wszystkie pliki trafiaja do
@@ -34,6 +35,7 @@ const P = {
   pobrane: path.join(DOM, 'pobrane'),
   ustawienia: path.join(DOM, 'ustawienia.json'),
   narzedzia: path.join(DOM, 'narzedzia.json'),
+  aktualizacje: path.join(DOM, 'aktualizacje.json'),
   dziennik: path.join(DOM, 'dziennik.log'),
 };
 
@@ -197,8 +199,8 @@ function znajdzFfmpeg() {
   return null;
 }
 
-function hyperframesPakiet() {
-  const pj = path.join(P.hyperframes, 'node_modules', WERSJE.hyperframes.pakiet, 'package.json');
+function hyperframesPakiet(folder = P.hyperframes) {
+  const pj = path.join(folder, 'node_modules', WERSJE.hyperframes.pakiet, 'package.json');
   try {
     const j = JSON.parse(fs.readFileSync(pj, 'utf8'));
     const bin = typeof j.bin === 'string' ? j.bin : (j.bin && (j.bin.hyperframes || Object.values(j.bin)[0]));
@@ -223,8 +225,8 @@ function srodowisko(ff) {
   return env;
 }
 
-function hyperframes(argumenty, ff) {
-  const pakiet = hyperframesPakiet();
+function hyperframes(argumenty, ff, folder = P.hyperframes) {
+  const pakiet = hyperframesPakiet(folder);
   if (!pakiet) return { ok: false, out: '', err: 'brak hyperframes' };
   return uruchom(process.execPath, [pakiet.skrypt, ...argumenty], { env: srodowisko(ff), dziennik: true });
 }
@@ -311,6 +313,7 @@ function wypiszStan(s) {
   }
   if (s.ustawienia) wypisz(`STATUS ustawienia OK nagrania=${s.ustawienia.nagrania} projekty=${s.ustawienia.projekty}`);
   else wypisz('STATUS ustawienia BRAK');
+  wypisz(`STATUS autoaktualizacja ${autoAktualizacja(false)}`);
   wypisz(`STATUS do_pobrania_mb ${doPobrania}`);
   const gotowe = narzedziaGotowe(s) && Boolean(s.ustawienia);
   wypisz(`WYNIK ${gotowe ? 'GOTOWE' : 'NIEGOTOWE'}`);
@@ -412,19 +415,93 @@ function npmCli() {
   return kandydaci.find((k) => fs.existsSync(k)) || null;
 }
 
-function instalujHyperframes() {
-  fs.mkdirSync(P.hyperframes, { recursive: true });
-  const pj = path.join(P.hyperframes, 'package.json');
+function npm(argumenty) {
+  const cli = npmCli();
+  return cli
+    ? uruchom(process.execPath, [cli, ...argumenty], { env: srodowisko(null), dziennik: true })
+    : uruchom(WIN ? 'npm.cmd' : 'npm', argumenty, { env: srodowisko(null), dziennik: true, shell: WIN });
+}
+
+function instalujHyperframes(folder = P.hyperframes, wersja = WERSJE.hyperframes.wersja) {
+  fs.mkdirSync(folder, { recursive: true });
+  const pj = path.join(folder, 'package.json');
   if (!fs.existsSync(pj)) {
     fs.writeFileSync(pj, JSON.stringify({ name: 'ai-content-studio-narzedzia', private: true }, null, 2) + '\n');
   }
-  const spec = `${WERSJE.hyperframes.pakiet}@${WERSJE.hyperframes.wersja}`;
-  const argumenty = ['install', spec, '--prefix', P.hyperframes, '--no-audit', '--no-fund', '--loglevel=error'];
-  const cli = npmCli();
-  const r = cli
-    ? uruchom(process.execPath, [cli, ...argumenty], { env: srodowisko(null), dziennik: true })
-    : uruchom(WIN ? 'npm.cmd' : 'npm', argumenty, { env: srodowisko(null), dziennik: true, shell: WIN });
-  if (!r.ok || !hyperframesPakiet()) throw new BladKroku('instalacja HyperFrames nie powiodla sie');
+  const spec = `${WERSJE.hyperframes.pakiet}@${wersja}`;
+  const r = npm(['install', spec, '--prefix', folder, '--no-audit', '--no-fund', '--loglevel=error']);
+  if (!r.ok || !hyperframesPakiet(folder)) throw new BladKroku('instalacja HyperFrames nie powiodla sie');
+}
+
+function najnowszaWersjaHyperframes() {
+  const r = npm(['view', WERSJE.hyperframes.pakiet, 'version', '--json']);
+  if (!r.ok) return null;
+  try {
+    const v = JSON.parse(r.out.trim());
+    return typeof v === 'string' ? v : null;
+  } catch {
+    return null;
+  }
+}
+
+// ---------- automatyczne aktualizacje wtyczki ----------
+//
+// Claude Code sam aktualizuje wtyczki ze sklepu, ktory ma wlaczone "autoUpdate" (dla sklepow spoza Anthropic
+// domyslnie jest wylaczone). Wlaczamy je dokladnie tam, gdzie robi to przelacznik "Enable auto-update" w /plugin:
+// we wpisie sklepu w ustawieniach uzytkownika, a gdy go tam nie ma, w known_marketplaces.json.
+
+const SKLEP = 'ai-content-studio';
+
+function folderClaude() {
+  return process.env.CLAUDE_CONFIG_DIR || path.join(os.homedir(), '.claude');
+}
+
+function ustawAutoUpdate(plik, wezSklep) {
+  if (!fs.existsSync(plik)) return 'BRAK';
+  let dane;
+  try {
+    dane = JSON.parse(fs.readFileSync(plik, 'utf8'));
+  } catch {
+    return 'NIECZYTELNY';
+  }
+  const wpis = wezSklep(dane);
+  if (!wpis || typeof wpis !== 'object') return 'BRAK';
+  if (wpis.autoUpdate === true) return 'OK';
+  fs.copyFileSync(plik, `${plik}.ai-studio-kopia`);
+  wpis.autoUpdate = true;
+  const tmp = `${plik}.ai-studio-tmp`;
+  fs.writeFileSync(tmp, JSON.stringify(dane, null, 2) + '\n');
+  fs.renameSync(tmp, plik);
+  return 'WLACZONA';
+}
+
+function autoAktualizacja(zmieniaj) {
+  const ustawienia = path.join(folderClaude(), 'settings.json');
+  const sklepy = path.join(folderClaude(), 'plugins', 'known_marketplaces.json');
+  const zUstawien = (d) => d && d.extraKnownMarketplaces && d.extraKnownMarketplaces[SKLEP];
+  const zeSklepow = (d) => d && d[SKLEP];
+  if (!zmieniaj) {
+    const czyta = (plik, wez) => {
+      try {
+        const w = wez(JSON.parse(fs.readFileSync(plik, 'utf8')));
+        return w ? w.autoUpdate === true : null;
+      } catch {
+        return null;
+      }
+    };
+    const a = czyta(ustawienia, zUstawien);
+    const b = czyta(sklepy, zeSklepow);
+    return a === true || (a === null && b === true) ? 'OK' : 'WYLACZONA';
+  }
+  try {
+    const wynik = ustawAutoUpdate(ustawienia, zUstawien);
+    if (wynik === 'OK' || wynik === 'WLACZONA') return wynik;
+    const zapas = ustawAutoUpdate(sklepy, zeSklepow);
+    return zapas === 'OK' || zapas === 'WLACZONA' ? zapas : 'NIEMOZLIWA';
+  } catch (e) {
+    dziennik(`autoaktualizacja: ${e.stack || e.message}`);
+    return 'NIEMOZLIWA';
+  }
 }
 
 function krok(nazwa, opis, dzialanie) {
@@ -466,10 +543,103 @@ function instaluj() {
     }
   }
 
+  wypisz(`KROK autoaktualizacja ${autoAktualizacja(true)}`);
+  zapiszZnacznikAktualizacji();
   s = stan();
   zapiszNarzedzia(s);
   wypiszStan(s);
   return narzedziaGotowe(s);
+}
+
+// ---------- codzienne aktualizacje ----------
+//
+// "aktualizuj" uruchamia sie po cichu na poczatku kazdej pracy ze Studio. Najwyzej raz na dobe:
+//  - pilnuje, zeby automatyczne aktualizacje wtyczki byly wlaczone,
+//  - sprawdza, czy jest nowszy HyperFrames; instaluje go obok starego, sprawdza i dopiero wtedy podmienia.
+//    Gdy nowa wersja nie przejdzie sprawdzenia, zostaje stara, dzialajaca.
+
+const PRZERWA_GODZINY = 20;
+
+function zapiszZnacznikAktualizacji() {
+  try {
+    fs.writeFileSync(P.aktualizacje, JSON.stringify({ ostatnio: new Date().toISOString() }, null, 2) + '\n');
+  } catch (e) {
+    dziennik(`znacznik aktualizacji: ${e.message}`);
+  }
+}
+
+function niedawnoSprawdzane() {
+  try {
+    const { ostatnio } = JSON.parse(fs.readFileSync(P.aktualizacje, 'utf8'));
+    return Date.now() - Date.parse(ostatnio) < PRZERWA_GODZINY * 3600 * 1000;
+  } catch {
+    return false;
+  }
+}
+
+function aktualizuj(lista) {
+  if (!lista.includes('--teraz') && niedawnoSprawdzane()) {
+    wypisz('STATUS aktualizacja NIEDAWNO_SPRAWDZANE');
+    wypisz('WYNIK OK');
+    return true;
+  }
+  wypisz(`STATUS autoaktualizacja ${autoAktualizacja(true)}`);
+
+  const obecny = hyperframesPakiet();
+  if (!obecny) {
+    wypisz('STATUS hyperframes BRAK najpierw instaluj');
+    wypisz('WYNIK OK');
+    return true;
+  }
+  const najnowsza = najnowszaWersjaHyperframes();
+  if (!najnowsza) {
+    // Bez internetu nie zapisujemy znacznika: sprobujemy przy nastepnej pracy.
+    wypisz('STATUS hyperframes NIE_SPRAWDZONO brak_polaczenia');
+    wypisz('WYNIK OK');
+    return true;
+  }
+  if (najnowsza === obecny.wersja) {
+    wypisz(`STATUS hyperframes AKTUALNY ${obecny.wersja}`);
+    zapiszZnacznikAktualizacji();
+    wypisz('WYNIK OK');
+    return true;
+  }
+
+  const ff = znajdzFfmpeg();
+  const nowy = `${P.hyperframes}-nowy`;
+  const poprzedni = `${P.hyperframes}-poprzedni`;
+  fs.rmSync(nowy, { recursive: true, force: true });
+  let przeszedl = false;
+  try {
+    instalujHyperframes(nowy, najnowsza);
+    const diagnoza = ostatniJson(hyperframes(['doctor', '--json'], ff, nowy).out);
+    przeszedl = Boolean(diagnoza) && NIEZBEDNE.every((n) => sprawdzenieOk(diagnoza, n));
+  } catch (e) {
+    dziennik(`aktualizacja hyperframes: ${e.stack || e.message}`);
+  }
+  if (!przeszedl) {
+    fs.rmSync(nowy, { recursive: true, force: true });
+    wypisz(`STATUS hyperframes BEZ_ZMIAN ${obecny.wersja} nowa_wersja_${najnowsza}_nie_przeszla_sprawdzenia`);
+    zapiszZnacznikAktualizacji();
+    wypisz('WYNIK OK');
+    return true;
+  }
+  fs.rmSync(poprzedni, { recursive: true, force: true });
+  fs.renameSync(P.hyperframes, poprzedni);
+  try {
+    fs.renameSync(nowy, P.hyperframes);
+  } catch (e) {
+    fs.renameSync(poprzedni, P.hyperframes);
+    dziennik(`podmiana hyperframes: ${e.stack || e.message}`);
+    wypisz(`STATUS hyperframes BEZ_ZMIAN ${obecny.wersja} nie_udalo_sie_podmienic`);
+    wypisz('WYNIK OK');
+    return true;
+  }
+  zapiszNarzedzia(stan());
+  zapiszZnacznikAktualizacji();
+  wypisz(`STATUS hyperframes ZAKTUALIZOWANY ${obecny.wersja} ${najnowsza}`);
+  wypisz('WYNIK OK');
+  return true;
 }
 
 // ---------- ustawienia i test ----------
@@ -555,8 +725,11 @@ switch (tryb) {
   case 'test':
     ok = test();
     break;
+  case 'aktualizuj':
+    ok = aktualizuj(reszta);
+    break;
   default:
-    wypisz(`STATUS blad nieznane polecenie ${tryb} (uzyj: sprawdz, instaluj, ustaw, test)`);
+    wypisz(`STATUS blad nieznane polecenie ${tryb} (uzyj: sprawdz, instaluj, ustaw, test, aktualizuj)`);
     ok = false;
 }
 process.exitCode = ok ? 0 : 1;

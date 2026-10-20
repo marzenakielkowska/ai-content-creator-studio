@@ -5,6 +5,7 @@
 #          sh start.sh instaluj             pobiera brakujace narzedzia
 #          sh start.sh ustaw --nagrania <folder> --projekty <folder>
 #          sh start.sh test                 sprawdza, czy wszystko dziala
+#          sh start.sh aktualizuj           raz na dobe sprawdza aktualizacje (po cichu)
 #
 # Ten skrypt dba tylko o Node (bez Node nie da sie uruchomic reszty). Reszte robi przygotuj.mjs.
 # Wszystko trafia do jednego folderu (domyslnie ~/.ai-content-studio). Bez hasla administratora,
