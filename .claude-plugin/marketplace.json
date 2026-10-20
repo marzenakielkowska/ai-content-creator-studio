@@ -1,0 +1,15 @@
+{
+  "name": "ai-content-studio",
+  "description": "AI Content Creator Studio: montaż rolek i treści do social mediów z Claude.",
+  "owner": {
+    "name": "Marzena Kiełkowska",
+    "url": "https://github.com/marzenakielkowska"
+  },
+  "plugins": [
+    {
+      "name": "studio",
+      "source": "./studio",
+      "description": "Montaż rolek w Twoim stylu jedną komendą, karuzele i publikowanie. Wersja testowa: sprawdzenie instalacji."
+    }
+  ]
+}
