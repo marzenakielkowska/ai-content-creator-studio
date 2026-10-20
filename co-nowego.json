@@ -3,5 +3,6 @@
   "0.2.0": "Przygotowanie komputera do montażu na Macu i Windowsie: wpisz /studio:start. Studio sprawdza, czego brakuje, i po Twojej zgodzie pobiera narzędzia do jednego własnego folderu, bez instalacji w systemie.",
   "0.2.1": "Jasna informacja o prywatności: wszystko dzieje się na Twoim komputerze, autorka kursu nie widzi Twoich plików i wtyczka niczego jej nie wysyła.",
   "0.2.2": "Doprecyzowana informacja o prywatności: co dotyczy wtyczki i autorki, a co narzędzi innych firm.",
-  "0.3.0": "Wszystko aktualizuje się samo: Studio włącza automatyczne aktualizacje wtyczki, a silnik montażu HyperFrames sprawdza raz dziennie nowszą wersję i podmienia ją dopiero, gdy działa."
+  "0.3.0": "Wszystko aktualizuje się samo: Studio włącza automatyczne aktualizacje wtyczki, a silnik montażu HyperFrames sprawdza raz dziennie nowszą wersję i podmienia ją dopiero, gdy działa.",
+  "0.3.1": "Prostszy język przy przygotowaniu: zamiast ścieżek folderów zwykłe nazwy, i zawsze informacja o automatycznych aktualizacjach."
 }

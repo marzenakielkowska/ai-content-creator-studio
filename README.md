@@ -4,7 +4,7 @@ Nagrywasz, a Claude montuje rolkę w Twoim stylu.
 
 Ta wtyczka jest dla kursantów AI Content Creator Studio. Filmy instruktażowe i wsparcie znajdziesz w materiałach kursu.
 
-> **Wersja testowa (0.3.0).** Wtyczka przygotowuje komputer do montażu. Sam montaż rolek pojawi się w kolejnych
+> **Wersja testowa (0.3.1).** Wtyczka przygotowuje komputer do montażu. Sam montaż rolek pojawi się w kolejnych
 > aktualizacjach.
 
 ## Czego potrzebujesz
