@@ -4,7 +4,7 @@ Nagrywasz, a Claude montuje rolkę w Twoim stylu.
 
 Ta wtyczka jest dla kursantów AI Content Creator Studio. Filmy instruktażowe i wsparcie znajdziesz w materiałach kursu.
 
-> **Wersja testowa (0.2.0).** Wtyczka przygotowuje komputer do montażu. Sam montaż rolek pojawi się w kolejnych
+> **Wersja testowa (0.2.1).** Wtyczka przygotowuje komputer do montażu. Sam montaż rolek pojawi się w kolejnych
 > aktualizacjach.
 
 ## Czego potrzebujesz
@@ -70,6 +70,20 @@ Wszystkie narzędzia trafiają do jednego folderu Studio w Twoim katalogu domowy
 instalowane w systemie i nie jest potrzebne hasło administratora.
 
 Chcesz tylko sprawdzić, czy wtyczka jest zainstalowana? Wpisz `/studio:witaj`.
+
+## Twoje pliki zostają u Ciebie
+
+- **Pracujesz na swoim komputerze, nie na cudzym serwerze.** Ten GitHub zawiera wyłącznie instrukcje i skrypty
+  wtyczki. Przy instalacji Claude pobiera ich kopię na Twój komputer i od tej chwili wszystko dzieje się u Ciebie.
+- **Autorka kursu nie widzi, co robisz.** Nie ma dostępu do Twojego komputera, nagrań, rolek, ustawień ani rozmów
+  z Claude. Instalacja wtyczki nie daje nikomu dostępu do niczego.
+- **Wtyczka niczego nie wysyła autorce.** Nie zbiera statystyk i nie śledzi, jak z niej korzystasz. Jedyne, co
+  przychodzi z GitHuba, to aktualizacje instrukcji; nic nie idzie w drugą stronę.
+- **Nagrania tylko czytamy.** Studio nigdy nie zmienia ani nie usuwa Twoich oryginalnych plików. Projekty i gotowe
+  rolki zapisuje w folderze, który sama lub sam wskażesz.
+- **Co widzi Claude.** Podczas pracy Claude analizuje to, czego potrzebuje do montażu: transkrypcję i pojedyncze
+  klatki do sprawdzenia jakości. Dzieje się to w Twojej rozmowie z Claude, na Twoim koncie, tak jak przy każdej
+  innej pracy z Claude. Całe pliki wideo nie są nigdzie wysyłane.
 
 ## Aktualizacje
 

@@ -73,7 +73,16 @@ rzecz. Powiedz, gdzie to trafi i że niczego nie zmieniasz w systemie. Przykład
 > nic nie instaluję w systemie i nie potrzebuję hasła. Zależnie od internetu potrwa to od kilku do kilkunastu minut.
 > Pobieram?
 
+Przy pierwszym uruchomieniu dodaj jedno zdanie o prywatności, bo kursanci często o to pytają:
+
+> Wszystko dzieje się na Twoim komputerze. Autorka kursu nie ma dostępu do Twoich plików ani do tego, co robisz,
+> a wtyczka niczego jej nie wysyła.
+
 Pytanie o zgodę zadaj osobno i czekaj na odpowiedź.
+
+Jeśli kursant zapyta, gdzie są jego pliki albo kto je widzi, odpowiedz zgodnie z sekcją „Twoje pliki zostają u
+Ciebie” w README wtyczki: GitHub zawiera tylko instrukcje, wszystko dzieje się lokalnie, autorka nic nie widzi,
+nagrania są tylko czytane, a Claude analizuje transkrypcję i pojedyncze klatki w rozmowie na koncie kursanta.
 
 ### Krok 3. Instalacja
 

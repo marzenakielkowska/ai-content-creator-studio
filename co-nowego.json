@@ -1,4 +1,5 @@
 {
   "0.1.0": "Pierwsza wersja testowa. Sprawdza tylko, czy instalacja się udała: wpisz /studio:witaj.",
-  "0.2.0": "Przygotowanie komputera do montażu na Macu i Windowsie: wpisz /studio:start. Studio sprawdza, czego brakuje, i po Twojej zgodzie pobiera narzędzia do jednego własnego folderu, bez instalacji w systemie."
+  "0.2.0": "Przygotowanie komputera do montażu na Macu i Windowsie: wpisz /studio:start. Studio sprawdza, czego brakuje, i po Twojej zgodzie pobiera narzędzia do jednego własnego folderu, bez instalacji w systemie.",
+  "0.2.1": "Jasna informacja o prywatności: wszystko dzieje się na Twoim komputerze, autorka kursu nie widzi Twoich plików i wtyczka niczego jej nie wysyła."
 }
