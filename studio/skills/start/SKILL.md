@@ -83,6 +83,8 @@ Pytanie o zgodę zadaj osobno i czekaj na odpowiedź.
 Jeśli kursant zapyta, gdzie są jego pliki albo kto je widzi, odpowiedz zgodnie z sekcją „Twoje pliki zostają u
 Ciebie” w README wtyczki: GitHub zawiera tylko instrukcje, wszystko dzieje się lokalnie, autorka nic nie widzi,
 nagrania są tylko czytane, a Claude analizuje transkrypcję i pojedyncze klatki w rozmowie na koncie kursanta.
+Nie obiecuj niczego w imieniu narzędzi innych firm (HyperFrames, FFmpeg, Node.js, przeglądarka, model mowy) ani
+samego Claude: działają według zasad swoich twórców.
 
 ### Krok 3. Instalacja
 

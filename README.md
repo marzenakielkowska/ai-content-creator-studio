@@ -4,7 +4,7 @@ Nagrywasz, a Claude montuje rolkę w Twoim stylu.
 
 Ta wtyczka jest dla kursantów AI Content Creator Studio. Filmy instruktażowe i wsparcie znajdziesz w materiałach kursu.
 
-> **Wersja testowa (0.2.1).** Wtyczka przygotowuje komputer do montażu. Sam montaż rolek pojawi się w kolejnych
+> **Wersja testowa (0.2.2).** Wtyczka przygotowuje komputer do montażu. Sam montaż rolek pojawi się w kolejnych
 > aktualizacjach.
 
 ## Czego potrzebujesz
@@ -83,7 +83,11 @@ Chcesz tylko sprawdzić, czy wtyczka jest zainstalowana? Wpisz `/studio:witaj`.
   rolki zapisuje w folderze, który sama lub sam wskażesz.
 - **Co widzi Claude.** Podczas pracy Claude analizuje to, czego potrzebuje do montażu: transkrypcję i pojedyncze
   klatki do sprawdzenia jakości. Dzieje się to w Twojej rozmowie z Claude, na Twoim koncie, tak jak przy każdej
-  innej pracy z Claude. Całe pliki wideo nie są nigdzie wysyłane.
+  innej pracy z Claude.
+- **Narzędzia innych firm.** Studio korzysta z gotowych narzędzi, które pobiera przy pierwszym uruchomieniu:
+  Node.js, FFmpeg, HyperFrames (od firmy HeyGen), przeglądarki do renderu i modelu mowy. Każde z nich działa według
+  zasad i polityki prywatności swojego twórcy. Opis powyżej dotyczy wtyczki i autorki kursu, nie tych narzędzi
+  ani samego Claude.
 
 ## Aktualizacje
 
