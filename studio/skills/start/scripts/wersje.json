@@ -1,0 +1,22 @@
+{
+  "opis": "Skad AI Content Creator Studio pobiera narzedzia. Zmiana tutaj zmienia instalacje u wszystkich kursantow po aktualizacji wtyczki.",
+  "node": {
+    "linia": 22,
+    "uwaga": "Linia Node jest tez wpisana na gorze start.sh i start.ps1 (zmieniaj w trzech miejscach naraz)."
+  },
+  "hyperframes": {
+    "pakiet": "hyperframes",
+    "wersja": "latest"
+  },
+  "ffmpeg": {
+    "mac": "https://ffmpeg.martin-riedl.de/redirect/latest/macos/{arch}/release/",
+    "windows_i_linux": "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/"
+  },
+  "rozmiary_mb": {
+    "node": 50,
+    "ffmpeg": 200,
+    "hyperframes": 100,
+    "przegladarka": 150,
+    "transkrypcja": 700
+  }
+}

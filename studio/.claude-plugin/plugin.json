@@ -1,8 +1,8 @@
 {
   "name": "studio",
   "displayName": "AI Content Creator Studio",
-  "version": "0.1.0",
-  "description": "Montaż rolek w Twoim stylu jedną komendą, karuzele i publikowanie. Wersja testowa: sprawdzenie instalacji.",
+  "version": "0.2.0",
+  "description": "Montaż rolek w Twoim stylu jedną komendą, karuzele i publikowanie. Wersja testowa: przygotowanie komputera do montażu.",
   "author": {
     "name": "Marzena Kiełkowska",
     "url": "https://github.com/marzenakielkowska"
