@@ -1,0 +1,11 @@
+{
+  "id": "pop-in",
+  "kategoria": "ruch",
+  "nazwa": "Pop-in",
+  "opis": "Element wyskakuje i lekko się sprężynuje.",
+  "najlepsze_do": "Emocjonalne chwile, akcenty",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": "<div class=\"fx f2\"></div>",
+  "przepis": { "typ": "pop-in" }
+}

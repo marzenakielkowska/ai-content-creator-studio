@@ -1,0 +1,11 @@
+{
+  "id": "szklany-kafelek",
+  "kategoria": "plansze",
+  "nazwa": "Szklany kafelek",
+  "opis": "Ikona w zaokrąglonej szklanej ramce.",
+  "najlepsze_do": "Ekspertyza, certyfikaty, oznaczenia",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": "<div class=\"fx f4\"></div>",
+  "przepis": { "typ": "szklany-kafelek" }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "wjazd-z-boku",
+  "kategoria": "plansze",
+  "nazwa": "Wjazd z boku",
+  "opis": "Plansza wjeżdża i wyjeżdża bokiem.",
+  "najlepsze_do": "Cytaty, podpisy, kluczowe informacje",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": "<div class=\"fx f1\"></div>",
+  "przepis": { "typ": "wjazd-z-boku" }
+}

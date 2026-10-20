@@ -1,0 +1,11 @@
+{
+  "id": "ekran-telefonu",
+  "kategoria": "plansze",
+  "nazwa": "Ekran telefonu",
+  "opis": "Telefon z nagraniem ekranu wlatuje obok Ciebie.",
+  "najlepsze_do": "Tutoriale aplikacji, prezentacja produktu",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": "<div class=\"fx f8\"></div>",
+  "przepis": { "typ": "ekran-telefonu" }
+}

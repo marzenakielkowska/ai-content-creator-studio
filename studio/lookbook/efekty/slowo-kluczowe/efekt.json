@@ -1,0 +1,11 @@
+{
+  "id": "slowo-kluczowe",
+  "kategoria": "tekst",
+  "nazwa": "Słowo kluczowe",
+  "opis": "Najważniejsze słowo wyskakuje duże i wraca na miejsce.",
+  "najlepsze_do": "Porady, listy, mocne stwierdzenia",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": "<div class=\"fx f9\">ważne</div>",
+  "przepis": { "typ": "kluczowe-slowo" }
+}

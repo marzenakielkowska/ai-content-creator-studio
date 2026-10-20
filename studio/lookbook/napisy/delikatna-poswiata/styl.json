@@ -1,0 +1,20 @@
+{
+  "id": "delikatna-poswiata",
+  "nazwa": "Delikatna poświata",
+  "opis": "Cieńsze litery z miękkim blaskiem.",
+  "najlepsze_do": "Lifestyle, beauty, spokojne opowieści",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": "<div class=\"cap c3\">na spokojnie</div>",
+  "przepis": {
+    "czcionka": "Nunito",
+    "grubosc": 600,
+    "rozmiar_vw": 5.2,
+    "kolor": "#FFFFFF",
+    "cien": "0 0 14px rgba(255,255,255,.9),0 0 4px rgba(255,255,255,.6)",
+    "polozenie": "dolne-centrum",
+    "slowa_naraz": 4,
+    "animacja": "fade",
+    "czas_trwania_s": 0.2
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "powolne-zblizenie",
+  "kategoria": "ruch",
+  "nazwa": "Powolne zbliżenie",
+  "opis": "Kadr powoli zbliża się do Twojej twarzy.",
+  "najlepsze_do": "Spokojne opowieści, emocjonalne momenty",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": null,
+  "podglad_zoom": true,
+  "przepis": { "typ": "slow-zoom" }
+}

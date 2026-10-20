@@ -1,0 +1,11 @@
+{
+  "id": "karta-rolki",
+  "kategoria": "plansze",
+  "nazwa": "Karta rolki",
+  "opis": "Mniejsza karta z innym ujęciem rośnie.",
+  "najlepsze_do": "Zaproszenie do obserwowania, inne filmy",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": "<div class=\"fx f3\"></div>",
+  "przepis": { "typ": "karta-rolki" }
+}

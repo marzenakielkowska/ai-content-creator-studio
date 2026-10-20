@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lookbook · AI Content Creator Studio</title>
+<style>
+/* Czcionka: Nunito z systemu, jeśli zainstalowana, lub najbliższy odpowiednik.
+   Docelowo: dodaj pliki strona/fonts/Nunito-*.woff2 i odkomentuj @font-face poniżej. */
+/* @font-face { font-family:'Nunito'; font-weight:400 900; font-display:swap;
+   src:url('fonts/Nunito-variable.woff2') format('woff2 supports variations'),
+       url('fonts/Nunito-variable.woff2') format('woff2'); } */
+:root{
+  --bg:#FDF9F5; --band:#FAEFEC; --surface:#FFFCF9; --ink:#33292A; --muted:#6E5F5C;
+  --accent:#A9532D; --accent-ink:#FFFFFF; --rose:#D4A895; --line:#EBD9D2;
+  --tint-pink:#FBEFEC; --tint-peach:#FDF3EC; --tint-blue:#EEF6FA;
+  --frame-a:#8A6B60; --frame-b:#C9A493; --frame-c:#5E4842;
+  --font:"Nunito",ui-rounded,"Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1F1918; --band:#2A211F; --surface:#2A2220; --ink:#F6ECE6; --muted:#C2B1AA;
+  --accent:#E08A5E; --accent-ink:#1F1918; --rose:#C99583; --line:#43352F;
+  --tint-pink:#33262A; --tint-peach:#352A24; --tint-blue:#232C31; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1F1918; --band:#2A211F; --surface:#2A2220; --ink:#F6ECE6; --muted:#C2B1AA;
+  --accent:#E08A5E; --accent-ink:#1F1918; --rose:#C99583; --line:#43352F;
+  --tint-pink:#33262A; --tint-peach:#352A24; --tint-blue:#232C31; color-scheme:dark}
+
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.6;margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band{background:var(--band)}
+.band .wrap{padding-block:48px 56px}
+.brand{font-weight:700;font-size:15px;margin-bottom:36px}
+.pill{display:inline-block;border:1.5px solid var(--rose);color:var(--accent);border-radius:999px;padding:6px 18px;font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+h1{font-size:clamp(44px,8vw,84px);line-height:1;letter-spacing:-.045em;font-weight:900;margin:20px 0 14px;text-wrap:balance}
+h2{font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.04em;font-weight:900;margin:6px 0 10px;text-wrap:balance}
+h3{font-size:22px;letter-spacing:-.02em;font-weight:800;margin:40px 0 0;display:flex;align-items:baseline;gap:10px}
+h3 small{font-size:14px;color:var(--muted);font-weight:600;letter-spacing:0}
+.lead{max-width:62ch;color:var(--muted);font-size:18px;margin:0}
+.eyebrow{color:var(--accent);font-weight:800;font-size:13px;letter-spacing:.13em;text-transform:uppercase}
+
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:36px}
+.mode{all:unset;cursor:pointer;background:var(--surface);border:1.5px solid var(--line);border-radius:24px;padding:22px 24px;display:grid;gap:4px}
+.mode b{font-size:22px;letter-spacing:-.02em}
+.mode span{color:var(--muted);font-size:15px}
+.mode[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.mode:focus-visible,.card:focus-visible,.chip:focus-visible,.btn:focus-visible,.link:focus-visible,.switch:focus-visible,.snd:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+section.block{padding-block:56px 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:18px;margin-top:18px}
+.looks .grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.card{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:10px;border-radius:24px;padding:12px 12px 16px;border:1.5px solid var(--line);position:relative;min-width:0}
+.card:nth-child(3n+1){background:var(--tint-pink)}
+.card:nth-child(3n+2){background:var(--tint-peach)}
+.card:nth-child(3n){background:var(--tint-blue)}
+.card[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.tick{position:absolute;top:20px;left:22px;width:26px;height:26px;border-radius:50%;border:2px solid #fff;background:rgba(255,255,255,.25);z-index:3;display:grid;place-items:center;color:#fff;font-weight:900;font-size:14px}
+.card[aria-pressed="true"] .tick{background:var(--accent);border-color:var(--accent)}
+.card[aria-pressed="true"] .tick::after{content:"✓"}
+.badge{position:absolute;top:20px;right:22px;z-index:3;background:var(--surface);color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:3px 10px}
+.snd{all:unset;cursor:pointer;position:absolute;left:10px;bottom:10px;z-index:3;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.88);display:grid;place-items:center}
+.snd svg{width:16px;height:16px;stroke:#33292A;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.snd .on{display:none}.snd[aria-pressed="true"] .on{display:block}.snd[aria-pressed="true"] .off{display:none}
+.title{font-weight:800;font-size:17px;line-height:1.25;padding:0 4px}
+.desc{color:var(--muted);font-size:14px;line-height:1.45;padding:0 4px;margin-top:-4px}
+.best{padding:0 4px;font-size:13px;line-height:1.4;color:var(--ink)}
+.best b{display:block;color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.layers{display:grid;gap:4px;padding:0 4px;margin:0;font-size:13px}
+.layers div{display:grid;grid-template-columns:92px 1fr;gap:8px}
+.layers dt{color:var(--muted);font-weight:700}
+.layers dd{margin:0;font-weight:700}
+
+.frame{aspect-ratio:9/16;max-width:100%;border-radius:16px;overflow:hidden;position:relative;background:linear-gradient(170deg,var(--frame-b),var(--frame-a) 55%,var(--frame-c))}
+.frame.warm{background:linear-gradient(170deg,#E3B98F,#9C6A4E 55%,#4E3528)}
+.frame.bright{background:linear-gradient(170deg,#F3DCD3,#C99C8B 55%,#7C5A50)}
+.frame.empty{background:var(--surface);border:1.5px dashed var(--rose)}
+.frame.empty::before,.frame.empty::after{display:none}
+.frame::before{content:"";position:absolute;left:50%;top:22%;width:38%;aspect-ratio:1;border-radius:50%;transform:translateX(-50%);background:rgba(255,240,232,.28)}
+.frame::after{content:"";position:absolute;left:50%;top:44%;width:74%;height:60%;border-radius:45% 45% 0 0;transform:translateX(-50%);background:rgba(255,240,232,.2)}
+.frame .vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.zoom::before,.zoom::after{animation:zoomin 3s ease-in infinite}
+@keyframes zoomin{0%{scale:1}80%{scale:1.18}100%{scale:1}}
+.empty-txt{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--accent);font-weight:900;font-size:20px;letter-spacing:-.02em;padding:12px}
+.ph{position:absolute;inset:auto 0 14px;text-align:center;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.75);font-weight:700;z-index:1}
+.cap{position:absolute;left:0;right:0;text-align:center;z-index:1;color:#fff;font-weight:900;text-transform:lowercase}
+.c1{top:60%;font-size:22px;letter-spacing:-.02em;text-shadow:0 2px 8px rgba(0,0,0,.25)}
+.c2{top:14%;font-size:64px;letter-spacing:-.06em;opacity:.55;z-index:0}
+.c3{top:60%;font-size:20px;font-weight:600;text-shadow:0 0 14px rgba(255,255,255,.9),0 0 4px rgba(255,255,255,.6)}
+.c4{top:60%;font-size:20px}
+.c4 i{font-style:normal;display:inline-block;animation:pop 1.8s infinite}
+.c4 i:nth-child(2){animation-delay:.3s}.c4 i:nth-child(3){animation-delay:.6s}
+.c5{top:58%;line-height:1.05}.c5 b{display:block;font-size:24px;letter-spacing:-.04em;color:#FCE3D6}.c5 small{display:block;font-size:12px;font-weight:400}
+@keyframes pop{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(1)}}
+.fx{position:absolute;z-index:1}
+.f1{top:16%;left:-30%;width:70%;height:12%;border-radius:12px;background:rgba(255,255,255,.85);animation:slide 2.4s ease-in-out infinite}
+@keyframes slide{0%,20%{left:-70%}45%,80%{left:15%}100%{left:110%}}
+.f2{top:12%;left:50%;width:22%;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.9);translate:-50% 0;animation:pop 1.6s infinite}
+.f3{top:10%;left:18%;width:64%;aspect-ratio:9/16;max-height:40%;border-radius:12px;border:3px solid #fff;animation:grow 2.6s ease-in-out infinite}
+@keyframes grow{0%,100%{transform:scale(.8)}50%{transform:scale(1)}}
+.f4{top:12%;left:50%;translate:-50% 0;width:30%;aspect-ratio:1;border-radius:22%;background:rgba(255,255,255,.3);border:1.5px solid rgba(255,255,255,.8);backdrop-filter:blur(6px)}
+.f5{top:14%;left:50%;translate:-50% 0;display:flex;gap:4px;align-items:flex-end;height:14%}
+.f5 span{width:6px;border-radius:3px;background:#fff;animation:eq 1s infinite}
+.f5 span:nth-child(2){animation-delay:.2s}.f5 span:nth-child(3){animation-delay:.4s}.f5 span:nth-child(4){animation-delay:.1s}
+@keyframes eq{0%,100%{height:30%}50%{height:100%}}
+.f6{top:10%;left:12%;right:12%;display:grid;gap:5px}
+.f6 span{height:9px;border-radius:5px;background:rgba(255,255,255,.85);animation:tick 3s infinite}
+.f6 span:nth-child(2){animation-delay:.6s}.f6 span:nth-child(3){animation-delay:1.2s}
+@keyframes tick{0%,15%{opacity:.25;width:20%}35%,100%{opacity:1;width:100%}}
+.f7{top:12%;left:0;right:0;text-align:center;color:#fff;font-weight:900;font-size:34px;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.f8{top:9%;left:50%;translate:-50% 0;width:34%;aspect-ratio:9/18;border-radius:14px;border:3px solid #fff;background:rgba(255,255,255,.2);animation:fly 2.8s ease-in-out infinite}
+@keyframes fly{0%,100%{transform:translateY(-10%) rotate(-6deg)}50%{transform:translateY(6%) rotate(4deg)}}
+.f9{top:10%;left:50%;translate:-50% 0;color:#fff;font-weight:900;font-size:22px;animation:pop 1.4s infinite}
+
+.fxbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin-top:26px;background:var(--surface);border:1.5px solid var(--line);border-radius:20px;padding:14px 18px}
+.switch{all:unset;cursor:pointer;display:flex;align-items:center;gap:12px;min-width:0}
+.switch .tr{flex:none;width:44px;height:26px;border-radius:999px;background:var(--line);position:relative;transition:background .2s}
+.switch .tr::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.switch[aria-checked="true"] .tr{background:var(--accent)}
+.switch[aria-checked="true"] .tr::after{left:21px}
+.switch b{display:block;font-size:15px}
+.switch small{display:block;font-size:13px;color:var(--muted);line-height:1.35}
+.link{all:unset;cursor:pointer;color:var(--accent);font-weight:800;font-size:13px;letter-spacing:.1em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px}
+.where{display:flex;flex-wrap:wrap;gap:6px;padding:0 4px}
+.where small{width:100%;font-size:12px;color:var(--muted);font-weight:700}
+.chip{all:unset;cursor:pointer;font-size:13px;font-weight:700;padding:4px 12px;border-radius:999px;border:1.5px solid var(--rose);color:var(--accent);background:var(--surface)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+.bar{position:sticky;bottom:0;z-index:5;background:var(--surface);border-top:1.5px solid var(--line);margin-top:64px;padding-bottom:env(safe-area-inset-bottom,0px)}
+.bar .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding-block:14px}
+.sum{min-width:0;font-size:15px}
+.sum .eyebrow{display:block;font-size:11px}
+.btn{all:unset;cursor:pointer;background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:17px;padding:14px 30px;border-radius:999px;text-align:center}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+#loading{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:99}
+.spinner{width:36px;height:36px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}}
+</style>
+</head>
+<body>
+
+<div id="loading"><div class="spinner"></div></div>
+
+<div id="app" hidden>
+  <div class="band"><div class="wrap">
+    <div class="brand">AI Content Creator Studio</div>
+    <span class="pill">Lookbook</span>
+    <h1>Wybierz swój styl.</h1>
+    <p class="lead">Najedź na kartę, żeby zobaczyć animowany wzór. Zaznacz to, co do Ciebie pasuje, i kliknij „Zapisz mój styl". Claude zmontuje każdy Twój film w tym stylu.</p>
+    <div class="modes" role="group" aria-label="Sposób wyboru">
+      <button class="mode" id="m-ready" aria-pressed="false"><b>Jeden gotowy styl</b><span>Jeden wybór ustala napisy, efekty, tempo i wygląd obrazu.</span></button>
+      <button class="mode" id="m-own" aria-pressed="true"><b>Skomponuj własny</b><span>Twoje napisy i Twoje efekty. Ty decydujesz, gdzie się pojawiają.</span></button>
+    </div>
+  </div></div>
+
+  <div class="wrap">
+    <section class="block looks" id="sec-ready" hidden>
+      <div class="eyebrow">Gotowe style</div>
+      <h2>Cały look jednym kliknięciem.</h2>
+      <p class="lead">Każdy gotowy styl to komplet: napisy, efekty, tempo montażu i wygląd obrazu.</p>
+      <div class="grid" id="g-ready"></div>
+    </section>
+
+    <section class="block" id="sec-caps">
+      <div class="eyebrow">Krok 1 · Napisy</div>
+      <h2>Twoje napisy.</h2>
+      <p class="lead">Wybierz jeden styl napisów do tego, co mówisz. Pod każdym wzorem znajdziesz podpowiedź, do jakich treści pasuje najlepiej.</p>
+      <div class="grid" id="g-caps"></div>
+    </section>
+
+    <section class="block" id="sec-fx">
+      <div class="eyebrow">Krok 2 · Efekty</div>
+      <h2>Twoje efekty.</h2>
+      <p class="lead">Zaznacz tyle, ile chcesz. Claude użyje efektu tylko tam, gdzie pasuje do słów, które właśnie mówisz, więc wiele zaznaczonych efektów nie oznacza ich nadmiaru w filmie.</p>
+      <div class="fxbar">
+        <button class="switch" id="parts" role="switch" aria-checked="false">
+          <span class="tr"></span>
+          <span><b>Różne efekty w różnych częściach filmu</b><small>Przy każdym efekcie wybierz początek, środek lub koniec. Bez zaznaczenia efekt może pojawić się wszędzie.</small></span>
+        </button>
+        <button class="link" id="all">Zaznacz wszystkie</button>
+      </div>
+      <div id="fx-cats"></div>
+    </section>
+  </div>
+</div>
+
+<div id="zapisano" hidden>
+  <div class="band"><div class="wrap" style="padding-block:72px;text-align:center">
+    <div class="eyebrow">Gotowe</div>
+    <h2 style="margin:12px 0 16px">Twój styl zapisany&nbsp;✓</h2>
+    <p class="lead" style="margin:0 auto">Claude zmontuje każdy Twój film w wybranym stylu.<br>Możesz zamknąć to okno.</p>
+  </div></div>
+</div>
+
+<div class="bar" id="bar"><div class="wrap">
+  <div class="sum"><span class="eyebrow">Twój wybór</span><span id="sum">Nic jeszcze nie wybrano</span></div>
+  <button class="btn" id="save" disabled>Zapisz mój styl</button>
+</div></div>
+
+<script>
+let mode = 'own', ready = null, cap = null, fx = {}, partsOn = false;
+let allFxIds = [];
+const PARTS = [['poczatek','Początek'],['srodek','Środek'],['koniec','Koniec']];
+const SND = '<svg class="off" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6M16 9l6 6"/></svg><svg class="on" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>';
+const $ = s => document.querySelector(s);
+
+function plural(n) {
+  if (n === 1) return ' efekt';
+  if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) return ' efekty';
+  return ' efektów';
+}
+
+function buildFrame(item, typ) {
+  const isEmpty = item.podglad_html === null || item.id === 'bez-napisow';
+  const hasZoom = item.podglad_zoom === true;
+  const cls = 'frame' + (isEmpty ? ' empty' : '') + (hasZoom ? ' zoom' : '') + (item.podglad_frame ? ' ' + item.podglad_frame : '');
+  let inner;
+  if (item.ma_podglad) {
+    inner = `<video class="vid" src="/podglad/${typ}/${item.id}" muted playsinline loop></video>` +
+            `<button class="snd" aria-pressed="false" aria-label="Włącz dźwięk">${SND}</button>`;
+  } else if (isEmpty) {
+    inner = `<div class="empty-txt">${item.id === 'bez-napisow' ? 'bez napisów' : ''}</div>`;
+  } else {
+    inner = `${item.podglad_html}<span class="ph">tu Twój film</span>` +
+            `<button class="snd" aria-pressed="false" aria-label="Włącz dźwięk">${SND}</button>`;
+  }
+  return `<div class="${cls}"><span class="tick"></span>${item.nowosc ? '<span class="badge">Nowość</span>' : ''}${inner}</div>`;
+}
+
+function card(item, kind, typ, maps) {
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.tabIndex = 0;
+  el.setAttribute('role', 'button');
+  el.id = `${kind}-${item.id}`;
+  el.setAttribute('aria-pressed', 'false');
+
+  let html = buildFrame(item, typ);
+  html += `<div class="title">${item.nazwa}</div>`;
+  if (item.opis) html += `<div class="desc">${item.opis}</div>`;
+  if (kind === 'ready' && maps) {
+    const nNazwa = maps.napisy[item.napisy]?.nazwa || item.napisy;
+    const eNazwy = (item.efekty || []).map(id => maps.efekty[id]?.nazwa || id).join(', ');
+    html += `<dl class="layers">
+      <div><dt>Napisy</dt><dd>${nNazwa}</dd></div>
+      <div><dt>Efekty</dt><dd>${eNazwy}</dd></div>
+      <div><dt>Tempo</dt><dd>${item.tempo}</dd></div>
+      <div><dt>Obraz</dt><dd>${item.obraz}</dd></div>
+    </dl>`;
+  }
+  if (item.najlepsze_do) html += `<div class="best"><b>Najlepsze do</b>${item.najlepsze_do}</div>`;
+  el.innerHTML = html;
+
+  const vid = el.querySelector('.vid');
+  if (vid) {
+    el.addEventListener('mouseenter', () => vid.play().catch(() => {}));
+    el.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
+    el.addEventListener('touchstart', () => { vid.paused ? vid.play().catch(() => {}) : vid.pause(); }, { passive: true });
+  }
+  const snd = el.querySelector('.snd');
+  if (snd) {
+    snd.addEventListener('click', e => {
+      e.stopPropagation();
+      const on = snd.getAttribute('aria-pressed') !== 'true';
+      snd.setAttribute('aria-pressed', on);
+      snd.setAttribute('aria-label', on ? 'Wycisz' : 'Włącz dźwięk');
+      if (vid) vid.muted = !on;
+    });
+  }
+
+  if (kind === 'fx') {
+    const w = document.createElement('div');
+    w.className = 'where';
+    w.hidden = true;
+    w.innerHTML = '<small>Gdzie w filmie? Bez zaznaczenia: wszędzie.</small>' +
+      PARTS.map(([v, l]) => `<button class="chip" data-p="${v}" aria-pressed="false">${l}</button>`).join('');
+    w.addEventListener('click', e => {
+      const ch = e.target.closest('.chip');
+      if (!ch) return;
+      e.stopPropagation();
+      const set = new Set(fx[item.id] || []);
+      set.has(ch.dataset.p) ? set.delete(ch.dataset.p) : set.add(ch.dataset.p);
+      fx[item.id] = [...set];
+      render();
+    });
+    el.appendChild(w);
+  }
+
+  const act = () => {
+    if (kind === 'cap') cap = cap === item.id ? null : item.id;
+    else if (kind === 'fx') { fx[item.id] !== undefined ? delete fx[item.id] : (fx[item.id] = []); }
+    else ready = ready === item.id ? null : item.id;
+    render();
+  };
+  el.addEventListener('click', e => { if (e.target.closest('.where,.snd')) return; act(); });
+  el.addEventListener('keydown', e => {
+    if (e.target !== el) return;
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); act(); }
+  });
+  return el;
+}
+
+function render() {
+  $('#m-ready').setAttribute('aria-pressed', mode === 'ready');
+  $('#m-own').setAttribute('aria-pressed', mode === 'own');
+  $('#sec-ready').hidden = mode !== 'ready';
+  $('#sec-caps').hidden = mode !== 'own';
+  $('#sec-fx').hidden = mode !== 'own';
+  $('#parts').setAttribute('aria-checked', partsOn);
+
+  const allOn = allFxIds.length > 0 && allFxIds.every(id => fx[id] !== undefined);
+  $('#all').textContent = allOn ? 'Odznacz wszystkie' : 'Zaznacz wszystkie';
+
+  document.querySelectorAll('[id^="ready-"]').forEach(el =>
+    el.setAttribute('aria-pressed', ready === el.id.slice(6)));
+  document.querySelectorAll('[id^="cap-"]').forEach(el =>
+    el.setAttribute('aria-pressed', cap === el.id.slice(4)));
+
+  allFxIds.forEach(id => {
+    const el = $(`#fx-${id}`);
+    if (!el) return;
+    const on = fx[id] !== undefined;
+    el.setAttribute('aria-pressed', on);
+    const w = el.querySelector('.where');
+    if (w) {
+      w.hidden = !(on && partsOn);
+      w.querySelectorAll('.chip').forEach(ch =>
+        ch.setAttribute('aria-pressed', on && (fx[id] || []).includes(ch.dataset.p)));
+    }
+  });
+
+  const n = Object.keys(fx).length;
+  let txt = 'Nic jeszcze nie wybrano', ok = false;
+  if (mode === 'ready' && ready) {
+    const el = $(`#ready-${ready}`);
+    txt = `<b>${el?.querySelector('.title')?.textContent || ready}</b> · gotowy styl`;
+    ok = true;
+  } else if (mode === 'own' && cap) {
+    const el = $(`#cap-${cap}`);
+    txt = `<b>${el?.querySelector('.title')?.textContent || cap}</b> · ` +
+          (n ? n + plural(n) + (partsOn ? ' według części' : '') : 'bez efektów');
+    ok = true;
+  } else if (mode === 'own' && n) {
+    txt = 'Wybierz jeszcze styl napisów';
+  }
+  $('#sum').innerHTML = txt;
+  $('#save').disabled = !ok;
+}
+
+async function zapisz() {
+  let out;
+  if (mode === 'ready') {
+    out = { tryb: 'gotowy', styl: ready };
+  } else {
+    const efekty = {};
+    for (const [k, v] of Object.entries(fx))
+      efekty[k] = partsOn && v.length ? v : 'wszedzie';
+    out = { tryb: 'wlasny', napisy: cap, efekty };
+  }
+  out.zapisano = new Date().toISOString().slice(0, 10);
+
+  const btn = $('#save');
+  btn.disabled = true;
+  btn.textContent = 'Zapisuję…';
+  try {
+    const r = await fetch('/api/zapisz', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(out),
+    });
+    if (!r.ok) throw new Error('server');
+    $('#app').hidden = true;
+    $('#bar').hidden = true;
+    $('#zapisano').hidden = false;
+  } catch {
+    btn.disabled = false;
+    btn.textContent = 'Zapisz mój styl';
+    alert('Nie udało się zapisać. Sprawdź, czy okno terminala jest nadal otwarte, i spróbuj jeszcze raz.');
+  }
+}
+
+async function init() {
+  try {
+    const [napisy, efektyGrupy, gotowe] = await Promise.all([
+      fetch('/api/napisy').then(r => r.json()),
+      fetch('/api/efekty').then(r => r.json()),
+      fetch('/api/gotowe').then(r => r.json()),
+    ]);
+
+    const napisyMap = Object.fromEntries(napisy.map(n => [n.id, n]));
+    const efektyFlat = efektyGrupy.flatMap(g => g.efekty);
+    const efektyMap = Object.fromEntries(efektyFlat.map(e => [e.id, e]));
+    allFxIds = efektyFlat.map(e => e.id);
+    const maps = { napisy: napisyMap, efekty: efektyMap };
+
+    napisy.forEach(n => $('#g-caps').appendChild(card(n, 'cap', 'napisy', maps)));
+
+    efektyGrupy.forEach(kat => {
+      const h = document.createElement('h3');
+      h.innerHTML = `${kat.nazwa} <small>${kat.hint}</small>`;
+      const g = document.createElement('div');
+      g.className = 'grid';
+      kat.efekty.forEach(e => g.appendChild(card(e, 'fx', 'efekty', maps)));
+      $('#fx-cats').append(h, g);
+    });
+
+    gotowe.forEach(s => $('#g-ready').appendChild(card(s, 'ready', 'gotowe', maps)));
+
+    document.querySelectorAll('[data-count]').forEach(el => {
+      let n = 0;
+      setInterval(() => { n = (n + 7) % 100; el.textContent = n; }, 120);
+    });
+
+    $('#loading').hidden = true;
+    $('#app').hidden = false;
+
+    // Domyślne zaznaczenie jak w podglądzie
+    if (napisyMap['biale-pod-broda']) cap = 'biale-pod-broda';
+    if (efektyMap['pop-in']) fx['pop-in'] = [];
+    if (efektyMap['wjazd-z-boku']) fx['wjazd-z-boku'] = [];
+    render();
+  } catch {
+    $('#loading').innerHTML = '<p style="text-align:center;color:var(--muted);padding:40px 16px;max-width:400px;margin:0 auto">Nie można połączyć się z serwerem. Odśwież stronę lub zamknij i otwórz Lookbook ponownie.</p>';
+  }
+}
+
+$('#m-ready').onclick = () => { mode = 'ready'; render(); };
+$('#m-own').onclick = () => { mode = 'own'; render(); };
+$('#parts').onclick = () => { partsOn = !partsOn; render(); };
+$('#all').onclick = () => {
+  const allOn = allFxIds.every(id => fx[id] !== undefined);
+  if (allOn) { fx = {}; } else { allFxIds.forEach(id => { if (fx[id] === undefined) fx[id] = []; }); }
+  render();
+};
+$('#save').onclick = zapisz;
+
+init();
+</script>
+</body>
+</html>

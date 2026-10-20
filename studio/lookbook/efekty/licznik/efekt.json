@@ -1,0 +1,11 @@
+{
+  "id": "licznik",
+  "kategoria": "tekst",
+  "nazwa": "Licznik",
+  "opis": "Liczba przewija się cyfra po cyfrze.",
+  "najlepsze_do": "Statystyki, ceny, ilości",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": "<div class=\"fx f7\" data-count>0</div>",
+  "przepis": { "typ": "licznik" }
+}

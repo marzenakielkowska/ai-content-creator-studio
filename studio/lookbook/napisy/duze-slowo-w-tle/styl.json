@@ -1,0 +1,20 @@
+{
+  "id": "duze-slowo-w-tle",
+  "nazwa": "Duże słowo w tle",
+  "opis": "Kluczowe słowo ogromne, za Tobą.",
+  "najlepsze_do": "Mocne hasła, opinie, haczyki",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": "<div class=\"cap c2\">styl</div><div class=\"cap c1\" style=\"top:64%;font-size:16px\">w Twoim stylu</div>",
+  "przepis": {
+    "czcionka": "Nunito",
+    "grubosc": 900,
+    "rozmiar_vw": 18,
+    "kolor": "#FFFFFF",
+    "cien": null,
+    "polozenie": "srodek-centrum",
+    "slowa_naraz": 1,
+    "animacja": "fade",
+    "czas_trwania_s": 0.2
+  }
+}
