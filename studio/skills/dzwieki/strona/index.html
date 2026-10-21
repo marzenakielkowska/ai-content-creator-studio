@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Studio Dźwięków</title>
+<style>
+[hidden]{display:none!important}
+
+:root {
+  --bg:      #FDF9F5;
+  --band:    #FAEFEC;
+  --card:    #FFFFFF;
+  --border:  #EDE0D8;
+  --text:    #2C1A12;
+  --muted:   #7A5C50;
+  --accent:  #A9532D;
+  --accent2: #C4714A;
+  --sel:     #A9532D;
+  --sel-bg:  #FDF0EB;
+  --shadow:  0 2px 8px rgba(169,83,45,.10);
+  --r:       14px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:     #1E1410;
+    --band:   #2A1C16;
+    --card:   #2E1F18;
+    --border: #4A2E22;
+    --text:   #F5EDE8;
+    --muted:  #B89080;
+    --accent: #D4754E;
+    --accent2:#E8916A;
+    --sel-bg: #3A2218;
+    --shadow: 0 2px 8px rgba(0,0,0,.35);
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:"Nunito",ui-rounded,"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  padding-bottom:120px;
+}
+header{
+  background:var(--band);
+  padding:32px 24px 28px;
+  border-bottom:1px solid var(--border);
+}
+header h1{font-size:1.6rem;font-weight:900;letter-spacing:-.02em}
+header p{margin-top:8px;color:var(--muted);font-size:.95rem;max-width:520px}
+
+#loading{
+  display:grid;
+  place-items:center;
+  padding:80px 24px;
+  color:var(--muted);
+  font-size:1rem;
+}
+
+main{padding:24px}
+
+.siatka{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:14px;
+  max-width:960px;
+}
+
+.karta{
+  background:var(--card);
+  border:2px solid var(--border);
+  border-radius:var(--r);
+  padding:16px;
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  cursor:pointer;
+  transition:border-color .15s,background .15s,box-shadow .15s;
+  box-shadow:var(--shadow);
+  user-select:none;
+}
+.karta:hover{border-color:var(--accent2);box-shadow:0 4px 16px rgba(169,83,45,.15)}
+.karta.wybrana{
+  border-color:var(--sel);
+  background:var(--sel-bg);
+}
+.karta.niedostepna{opacity:.45;cursor:default}
+
+.play-btn{
+  flex-shrink:0;
+  width:44px;height:44px;
+  border-radius:50%;
+  border:2px solid var(--border);
+  background:var(--bg);
+  color:var(--accent);
+  font-size:1rem;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:background .15s,border-color .15s,transform .1s;
+  margin-top:2px;
+}
+.play-btn:hover{background:var(--band);border-color:var(--accent);transform:scale(1.05)}
+.play-btn.gra{background:var(--accent);color:#fff;border-color:var(--accent)}
+.play-btn svg{pointer-events:none;width:16px;height:16px;fill:currentColor}
+
+.info{flex:1;min-width:0}
+.nazwa-wiersz{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.nazwa{font-weight:800;font-size:.95rem}
+.czas{color:var(--muted);font-size:.8rem}
+.opis{margin-top:5px;font-size:.82rem;color:var(--muted);line-height:1.4}
+
+.brak-pliku{
+  font-size:.75rem;
+  color:var(--muted);
+  margin-top:4px;
+  font-style:italic;
+}
+
+/* footer */
+#pasek{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  background:var(--card);
+  border-top:1px solid var(--border);
+  padding:16px 24px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  box-shadow:0 -4px 20px rgba(169,83,45,.08);
+}
+#licznik-info{color:var(--muted);font-size:.9rem;flex:1}
+#licznik-info strong{color:var(--text)}
+#btn-zapisz{
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  padding:12px 28px;
+  font-size:1rem;
+  font-weight:800;
+  cursor:pointer;
+  transition:background .15s,transform .1s;
+}
+#btn-zapisz:hover{background:var(--accent2);transform:scale(1.02)}
+#btn-zapisz:disabled{opacity:.4;cursor:default;transform:none}
+#zapisano{color:var(--accent);font-weight:700;font-size:.95rem}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Studio Dźwięków</h1>
+  <p>Kliknij ▶ żeby posłuchać. Kliknij kartę żeby zaznaczyć dźwięk. Możesz wybrać kilka — będą używane w Twoich filmach.</p>
+</header>
+
+<div id="loading">Ładuję dźwięki…</div>
+<main id="main" hidden>
+  <div class="siatka" id="siatka"></div>
+</main>
+
+<div id="pasek">
+  <div id="licznik-info">Wybrano: <strong id="licznik">0</strong></div>
+  <div id="zapisano" hidden>Zapisano!</div>
+  <button id="btn-zapisz" disabled>Zapisz wybrane dźwięki</button>
+</div>
+
+<script>
+let wybrane = new Set();
+let aktualneAudio = null;
+let aktualnyBtn  = null;
+
+const PLAY_SVG = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+const STOP_SVG = `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+
+function formatCzas(s) {
+  return s >= 1 ? s.toFixed(1) + ' s' : Math.round(s * 1000) + ' ms';
+}
+
+function zatrzymaj() {
+  if (aktualneAudio) { aktualneAudio.pause(); aktualneAudio.currentTime = 0; }
+  if (aktualnyBtn)   { aktualnyBtn.classList.remove('gra'); aktualnyBtn.innerHTML = PLAY_SVG; }
+  aktualneAudio = null; aktualnyBtn = null;
+}
+
+function budujKarty(dzwieki) {
+  const siatka = document.getElementById('siatka');
+  dzwieki.forEach(d => {
+    const karta = document.createElement('div');
+    karta.className = 'karta' + (d.ma_plik ? '' : ' niedostepna');
+    karta.dataset.id = d.id;
+
+    const btn = document.createElement('button');
+    btn.className = 'play-btn';
+    btn.innerHTML = PLAY_SVG;
+    btn.title = d.ma_plik ? 'Odtwórz' : 'Plik niedostępny';
+    btn.disabled = !d.ma_plik;
+
+    const info = document.createElement('div');
+    info.className = 'info';
+    info.innerHTML = `
+      <div class="nazwa-wiersz">
+        <span class="nazwa">${d.nazwa}</span>
+        <span class="czas">${formatCzas(d.dlugosc_s)}</span>
+      </div>
+      <p class="opis">${d.opis}</p>
+      ${d.ma_plik ? '' : '<p class="brak-pliku">Plik audio niedostępny</p>'}
+    `;
+
+    karta.append(btn, info);
+
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      if (!d.ma_plik) return;
+      if (aktualnyBtn === btn) { zatrzymaj(); return; }
+      zatrzymaj();
+      const audio = new Audio(`/audio/${d.id}`);
+      audio.addEventListener('ended', () => {
+        if (aktualnyBtn === btn) { btn.classList.remove('gra'); btn.innerHTML = PLAY_SVG; aktualneAudio = null; aktualnyBtn = null; }
+      });
+      audio.play().catch(() => {});
+      btn.classList.add('gra'); btn.innerHTML = STOP_SVG;
+      aktualneAudio = audio; aktualnyBtn = btn;
+    });
+
+    karta.addEventListener('click', () => {
+      if (!d.ma_plik) return;
+      if (wybrane.has(d.id)) { wybrane.delete(d.id); karta.classList.remove('wybrana'); }
+      else                   { wybrane.add(d.id);    karta.classList.add('wybrana'); }
+      aktualizujPasek();
+    });
+
+    siatka.appendChild(karta);
+  });
+}
+
+function aktualizujPasek() {
+  document.getElementById('licznik').textContent = wybrane.size;
+  document.getElementById('btn-zapisz').disabled = wybrane.size === 0;
+}
+
+async function init() {
+  try {
+    const r = await fetch('/api/dzwieki');
+    const dzwieki = await r.json();
+    document.getElementById('loading').hidden = true;
+    document.getElementById('main').hidden = false;
+    budujKarty(dzwieki);
+  } catch {
+    document.getElementById('loading').textContent = 'Błąd ładowania dźwięków.';
+  }
+}
+
+document.getElementById('btn-zapisz').addEventListener('click', async () => {
+  zatrzymaj();
+  const btn = document.getElementById('btn-zapisz');
+  btn.disabled = true;
+  try {
+    const r = await fetch('/api/zapisz', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ dzwieki: [...wybrane] })
+    });
+    const j = await r.json();
+    if (j.ok) {
+      document.getElementById('zapisano').hidden = false;
+      btn.hidden = true;
+    } else { btn.disabled = false; }
+  } catch { btn.disabled = false; }
+});
+
+init();
+</script>
+</body>
+</html>

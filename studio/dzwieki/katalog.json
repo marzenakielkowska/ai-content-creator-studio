@@ -1,0 +1,21 @@
+[
+  {"id":"pop",                 "nazwa":"Pop",                  "opis":"Coś małego pojawia się na ekranie.",          "dlugosc_s":0.7},
+  {"id":"bass-hit",            "nazwa":"Bass Hit",             "opis":"Mocne uderzenie, gdy ważne słowo ląduje.",    "dlugosc_s":2.1},
+  {"id":"sparkle",             "nazwa":"Sparkle",              "opis":"Błysk przy ujawnieniu lub efekcie wow.",      "dlugosc_s":1.8},
+  {"id":"click",               "nazwa":"Click",                "opis":"Wyraźne kliknięcie, zaznaczenie, tick.",      "dlugosc_s":0.4},
+  {"id":"chime",               "nazwa":"Chime",                "opis":"Melodyjny dźwięk przy sukcesie lub wygranej.","dlugosc_s":2.5},
+  {"id":"short-whoosh",        "nazwa":"Short Whoosh",         "opis":"Szybki ruch — coś wchodzi lub wychodzi.",     "dlugosc_s":0.6},
+  {"id":"notification",        "nazwa":"Notification",         "opis":"Wiadomość lub alert pojawia się na ekranie.", "dlugosc_s":2.5},
+  {"id":"soft-click",          "nazwa":"Soft Click",           "opis":"Ciche kliknięcie dla małych, subtelnych momentów.", "dlugosc_s":0.4},
+  {"id":"whoosh",              "nazwa":"Whoosh",               "opis":"Mocniejszy whoosh — ostre przejście sceny.",  "dlugosc_s":0.6},
+  {"id":"ping",                "nazwa":"Ping",                 "opis":"Ostry elektroniczny ping — ważny punkt.",     "dlugosc_s":1.3},
+  {"id":"bass-hit-with-swell", "nazwa":"Bass Hit with Swell",  "opis":"Narastanie i mocne uderzenie razem.",         "dlugosc_s":2.6},
+  {"id":"key-press",           "nazwa":"Key Press",            "opis":"Jedno naciśnięcie klawisza.",                 "dlugosc_s":0.4},
+  {"id":"cinematic-whoosh",    "nazwa":"Cinematic Whoosh",     "opis":"Długie narastanie do nowej sceny.",           "dlugosc_s":5.5},
+  {"id":"typing",              "nazwa":"Typing",               "opis":"Krótka seria naciśnięć klawiszy.",            "dlugosc_s":1.5},
+  {"id":"riser",               "nazwa":"Riser",                "opis":"Długie narastanie, napięcie do końca.",       "dlugosc_s":10.0},
+  {"id":"glitch-1",            "nazwa":"Glitch 1",             "opis":"Dynamiczny cyfrowy glitch.",                  "dlugosc_s":2.6},
+  {"id":"error",               "nazwa":"Error",                "opis":"Dźwięk błędu lub złej odpowiedzi.",           "dlugosc_s":1.6},
+  {"id":"glitch-2",            "nazwa":"Glitch 2",             "opis":"Dłuższy, ostrzejszy glitch.",                 "dlugosc_s":3.5},
+  {"id":"glitch-3",            "nazwa":"Glitch 3",             "opis":"Cicha, teksturalna wersja glitcha.",          "dlugosc_s":3.1}
+]
