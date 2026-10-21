@@ -4,5 +4,6 @@
   "0.2.1": "Jasna informacja o prywatności: wszystko dzieje się na Twoim komputerze, autorka kursu nie widzi Twoich plików i wtyczka niczego jej nie wysyła.",
   "0.2.2": "Doprecyzowana informacja o prywatności: co dotyczy wtyczki i autorki, a co narzędzi innych firm.",
   "0.3.0": "Wszystko aktualizuje się samo: Studio włącza automatyczne aktualizacje wtyczki, a silnik montażu HyperFrames sprawdza raz dziennie nowszą wersję i podmienia ją dopiero, gdy działa.",
-  "0.3.1": "Prostszy język przy przygotowaniu: zamiast ścieżek folderów zwykłe nazwy, i zawsze informacja o automatycznych aktualizacjach."
+  "0.3.1": "Prostszy język przy przygotowaniu: zamiast ścieżek folderów zwykłe nazwy, i zawsze informacja o automatycznych aktualizacjach.",
+  "0.4.0": "Lookbook – wybierz swój styl montażu: wpisz /studio:lookbook. Przeglądarka otworzy stronę z wzorami napisów i efektów, zaznaczasz co do Ciebie pasuje i klikasz Zapisz. Studio zapamięta Twój wybór i będzie montować każdy film w tym stylu."
 }
