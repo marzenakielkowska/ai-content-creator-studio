@@ -22,7 +22,16 @@ Przed każdym krokiem przeczytaj odpowiedni plik reguł:
 - Sprawdzenie → `rules/checks.md`
 - Notatki → `NOTES_LOG.md`
 
-Styl kursantki (czcionka, kolory, efekty, dźwięki) pochodzi z `~/.ai-content-creator-studio/moj-styl.json`. Jeśli plik nie istnieje — uruchom najpierw `/studio:lookbook`.
+Styl kursantki (czcionka, kolory, efekty, dźwięki) pochodzi z `~/.ai-content-creator-studio/moj-styl.json`.
+
+Jeśli plik nie istnieje — zanim cokolwiek zrobisz, zapytaj:
+
+> „Nie masz jeszcze zapisanego stylu. Jak chcesz żebym montowała?
+> 1. **Pokaż mi film wzorcowy** — wrzuć plik albo powiedz skąd go pobrać, a dopasuję styl do niego.
+> 2. **Opisz styl słowami** — powiedz jak ma wyglądać: tempo, napisy, grafiki.
+> 3. **Zbuduj styl w Lookbooku** — wpisz `/studio:lookbook`, wybierz czcionki i efekty, a potem wróć tu."
+
+Jeśli wybierze 1 lub 2 — przejdź do `replicate.md` i postępuj według tamtego pliku. Nie wymagaj `moj-styl.json` do montażu — zastąp go stylem wzorcowym z `styl-wzorzec.json`.
 
 `SK` to folder tego pliku.
 
