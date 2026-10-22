@@ -626,11 +626,7 @@ function instaluj() {
     krok('numpy', 'okolo 20 MB (biblioteka matematyczna do efektow)', () => instalujNumpy(s.python));
   }
 
-  // rembg (wycinanie sylwetki z tla — potrzebne do efektow blackout, orbit i podobnych)
-  s = stan();
-  if (s.python && !s.rembg) {
-    krok('rembg', 'okolo 600 MB (wycinanie sylwetki — potrzebne do nektotrych efektow)', () => instalujRembg(s.python));
-  }
+  // rembg NIE jest instalowane automatycznie — pobierane tylko gdy konkretny efekt tego wymaga
 
   wypisz(`KROK autoaktualizacja ${autoAktualizacja(true)}`);
   zapiszZnacznikAktualizacji();
