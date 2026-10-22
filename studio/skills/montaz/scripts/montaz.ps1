@@ -10,6 +10,7 @@
 #   tnij <plik-wideo> <cuts.json> <wyjscie.mp4>
 #   render <projekt-dir> <wyjscie.mp4> [--draft]
 #   overlay-image <plik-wideo> <config.json> <wyjscie.mp4>   (wymaga Python3 + Pillow)
+#   analizuj-wzorzec <plik-wideo> <folder-wyjscia>           (wymaga Python3 + Pillow)
 
 $ErrorActionPreference = "Stop"
 

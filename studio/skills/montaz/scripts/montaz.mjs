@@ -399,6 +399,63 @@ function overlay_image(plikWideo, plikConfig, wyjscie) {
   return true;
 }
 
+// ---------- analizuj-wzorzec ----------
+//
+// Mierzy parametry rolki wzorcowej: cięcia, momenty ruchu, głośność.
+// Buduje arkusze klatek (JPG) i pomiary.json do folderu wyjściowego.
+// Wymaga Pythona 3 z zainstalowaną biblioteką Pillow.
+
+function analizuj_wzorzec(plikWideo, folderWyj) {
+  const narz = czytajNarzedzia();
+
+  if (!fs.existsSync(plikWideo)) {
+    wypisz(`STATUS blad plik wideo nie istnieje: ${plikWideo}`);
+    return false;
+  }
+
+  fs.mkdirSync(folderWyj, { recursive: true });
+
+  const kandydaciPy = WIN
+    ? ['python', 'python3', 'py']
+    : ['python3', '/usr/bin/python3', '/usr/local/bin/python3', '/opt/homebrew/bin/python3'];
+  let python = null;
+  for (const p of kandydaciPy) {
+    const r = uruchom(p, ['--version'], { timeout: 5000 });
+    if (r.ok) { python = p; break; }
+  }
+  if (!python) {
+    wypisz('STATUS blad Python 3 nie jest zainstalowany lub niedostepny');
+    return false;
+  }
+
+  const skrypt = path.join(path.dirname(fileURLToPath(import.meta.url)), 'analizuj_wzorzec.py');
+  if (!fs.existsSync(skrypt)) {
+    wypisz(`STATUS blad brak skryptu analizuj_wzorzec.py w ${path.dirname(skrypt)}`);
+    return false;
+  }
+
+  wypisz('KROK analizuj-wzorzec start (moze trwac kilka minut)');
+
+  const r = uruchom(python, [skrypt, plikWideo, folderWyj], {
+    env: srodowisko(narz),
+    timeout: 600000,
+  });
+
+  for (const linia of (r.out + r.err).split(/\r?\n/).filter(Boolean)) {
+    if (/^(STATUS|KROK|INFO|WYNIK)\s/.test(linia)) wypisz(linia);
+  }
+
+  const plikPom = path.join(folderWyj, 'pomiary.json');
+  if (!r.ok || !fs.existsSync(plikPom)) {
+    const blad = r.err.slice(-300).replace(/\n/g, ' ').trim();
+    wypisz(`STATUS blad analizuj-wzorzec nie powiodl sie (kod ${r.kod}): ${blad}`);
+    return false;
+  }
+
+  wypisz(`STATUS analizuj-wzorzec OK folder=${folderWyj}`);
+  return true;
+}
+
 // ---------- render ----------
 
 function render(projektDir, wyjscie, czyDraft) {
@@ -460,9 +517,12 @@ switch (tryb) {
   case 'overlay-image':
     ok = overlay_image(reszta[0], reszta[1], reszta[2]);
     break;
+  case 'analizuj-wzorzec':
+    ok = analizuj_wzorzec(reszta[0], reszta[1]);
+    break;
   default:
     wypisz(`STATUS blad nieznane polecenie "${tryb}"`);
-    wypisz('INFO dostepne: transkrypcja, klatki-pozycja, klatki-sprawdzenie, sprawdz-dzwiek, tnij, render, overlay-image');
+    wypisz('INFO dostepne: transkrypcja, klatki-pozycja, klatki-sprawdzenie, sprawdz-dzwiek, tnij, render, overlay-image, analizuj-wzorzec');
     ok = false;
 }
 
