@@ -84,10 +84,17 @@ Każda wersja różni się jedną rzeczą (inny hook, inne efekty, inny styl nap
 
 ### Kolejność budowania
 1. ✅ Reguły grafik → checks → NOTES_LOG → SKILL.md skilla montażu
-2. Uzupełnienia do cut.md (2 reguły)
-3. Podglądy stylów w Lookbooku (po nagraniu testowym)
-4. Warianty rolek do testowania
-5. Profile klientów (zmiana Lookbooka)
+2. ✅ Uzupełnienia do cut.md (cisza wewnątrz słowa, formuła głośności)
+3. ✅ Wykrycie pozycji mówiącej (krok 2b, layout.json)
+4. ⏳ `gotchas.md` — znane błędy HyperFrames i FFmpeg (dla Claude, nie kursantki)
+5. ⏳ `motion.md` — zasady animowania warstw graficznych
+6. ⏳ `gifs.md` — wstawianie GIF-ów do rolek
+7. ⏳ `replicate.md` — kursantka pokazuje rolkę → Claude odbudowuje styl (duża funkcja)
+8. Podglądy stylów w Lookbooku (po nagraniu testowym)
+9. Warianty rolek — szczegółowy plik zasad
+10. Profile klientów (zmiana Lookbooka)
+
+**Uwaga do gotchas.md:** To plik dla Claude — kursantka go nie widzi. Claude czyta go gdy HyperFrames lub FFmpeg zwraca błąd i stosuje znane rozwiązanie automatycznie, bez angażowania kursantki.
 
 ### Źródła reguł
 Reguły montażu wypracowane wewnętrznie na podstawie doświadczeń z montażem rolek.
