@@ -119,4 +119,15 @@ Powiedz Claude na początku rozmowy:
 
 ---
 
+## ⚠️ Przed oddaniem projektu klientom
+
+Ten plik musi zostać usunięty z GitHuba zanim projekt trafi do klientów.
+
+1. `git rm KONTEKST.md`
+2. Dodaj `KONTEKST.md` do `.gitignore`
+3. Zachowaj plik lokalnie w `~/Documents/` poza folderem repo
+4. Commit + push
+
+---
+
 *Ostatnia aktualizacja: 2026-10-22*
