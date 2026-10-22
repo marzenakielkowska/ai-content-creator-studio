@@ -169,6 +169,35 @@ function ktory(nazwa) {
   return r.out.split(/\r?\n/).map((l) => l.trim()).find(Boolean) || null;
 }
 
+// ---------- Python / Pillow ----------
+
+function znajdzPython() {
+  const kandydaci = WIN
+    ? ['python', 'python3', 'py']
+    : ['python3', '/usr/bin/python3', '/usr/local/bin/python3', '/opt/homebrew/bin/python3'];
+  for (const p of kandydaci) {
+    const r = uruchom(p, ['-c', 'import sys; print(sys.version_info[0])'], { timeout: 8000 });
+    if (r.ok && r.out.trim().startsWith('3')) return p;
+  }
+  return null;
+}
+
+function sprawdzPillow(python) {
+  if (!python) return false;
+  const r = uruchom(python, ['-c', 'import PIL; print(PIL.__version__)'], { timeout: 8000 });
+  return r.ok;
+}
+
+function instalujPillow(python) {
+  const cel = path.join(DOM, 'python-packages');
+  fs.mkdirSync(cel, { recursive: true });
+  const r = uruchom(python, ['-m', 'pip', 'install', '--target', cel, '--quiet', 'Pillow'], {
+    timeout: 120000,
+    dziennik: true,
+  });
+  if (!r.ok) throw new BladKroku('instalacja Pillow nie powiodla sie');
+}
+
 // ---------- co jest na komputerze ----------
 
 function wersjaFf(plik) {
@@ -249,6 +278,7 @@ function czytajUstawienia() {
 }
 
 function stan() {
+  const python = znajdzPython();
   const s = {
     node: { wersja: process.versions.node, zrodlo: process.env.STUDIO_NODE_ZRODLO || 'system' },
     ff: znajdzFfmpeg(),
@@ -257,6 +287,8 @@ function stan() {
     transkrypcja: null,
     transkrypcjaPowod: '',
     ustawienia: czytajUstawienia(),
+    python: python,
+    pillow: python ? sprawdzPillow(python) : false,
   };
   if (s.hf) {
     // Nie "browser path": ono przy braku przegladarki samo ja pobiera, bez zgody kursanta.
@@ -313,6 +345,9 @@ function wypiszStan(s) {
   }
   if (s.ustawienia) wypisz(`STATUS ustawienia OK nagrania=${s.ustawienia.nagrania} projekty=${s.ustawienia.projekty}`);
   else wypisz('STATUS ustawienia BRAK');
+  if (s.python && s.pillow) wypisz('STATUS pillow OK');
+  else if (s.python && !s.pillow) wypisz('STATUS pillow BRAK python-jest-ale-pillow-nie');
+  else wypisz('STATUS pillow BRAK python-nie-znaleziony');
   wypisz(`STATUS autoaktualizacja ${autoAktualizacja(false)}`);
   wypisz(`STATUS do_pobrania_mb ${doPobrania}`);
   const gotowe = narzedziaGotowe(s) && Boolean(s.ustawienia);
@@ -541,6 +576,14 @@ function instaluj() {
         if (!r.ok || (j && j.ok === false)) throw new BladKroku('nie udalo sie pobrac modelu mowy');
       });
     }
+  }
+
+  // Pillow (biblioteka graficzna Pythona do nakładania screenshotów)
+  s = stan();
+  if (s.python && !s.pillow) {
+    krok('pillow', 'okolo 4 MB (biblioteka graficzna)', () => instalujPillow(s.python));
+  } else if (!s.python) {
+    wypisz('INFO pillow Python 3 nie znaleziony — komenda overlay-image bedzie niedostepna');
   }
 
   wypisz(`KROK autoaktualizacja ${autoAktualizacja(true)}`);

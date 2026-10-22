@@ -7,6 +7,7 @@
 //   sprawdz-dzwiek <plik-wideo>                      mierzy peak audio w dB
 //   tnij <plik-wideo> <cuts.json> <wyjscie.mp4>      wycina segmenty wg pliku JSON
 //   render <projekt-dir> <wyjscie.mp4> [--draft]     renderuje przez HyperFrames
+//   overlay-image <plik-wideo> <config.json> <wyjscie.mp4>  nakłada zdjęcia/screenshoty (Python+Pillow)
 //
 // Wypisuje linie "STATUS ...", "KROK ...", "WYNIK ...". Claude tlumaczy je kursantce.
 // Czyta narzedzia.json zapisany przez /studio:start.
@@ -336,6 +337,68 @@ function tnij(plikWideo, plikCuts, wyjscie) {
   return true;
 }
 
+// ---------- overlay-image ----------
+//
+// Nakłada zdjęcia/screenshoty na wideo z animacją pop-in, dźwiękiem snap i czerwonym kółkiem.
+// Wymaga Pythona 3 z zainstalowaną biblioteką Pillow.
+// Konfiguracja w pliku JSON (format opisany w overlay_image.py).
+
+function overlay_image(plikWideo, plikConfig, wyjscie) {
+  const narz = czytajNarzedzia();
+
+  for (const [nazwa, wartosc] of [['wideo', plikWideo], ['config.json', plikConfig]]) {
+    if (!fs.existsSync(wartosc)) {
+      wypisz(`STATUS blad plik ${nazwa} nie istnieje: ${wartosc}`);
+      return false;
+    }
+  }
+
+  // Szukaj python3
+  const kandydaciPy = ['python3', '/usr/bin/python3', '/usr/local/bin/python3', '/opt/homebrew/bin/python3'];
+  let python = null;
+  for (const p of kandydaciPy) {
+    const r = uruchom(p, ['--version'], { timeout: 5000 });
+    if (r.ok) { python = p; break; }
+  }
+  if (!python) {
+    wypisz('STATUS blad Python 3 nie jest zainstalowany lub niedostepny');
+    return false;
+  }
+
+  const skrypt = path.join(path.dirname(fileURLToPath(import.meta.url)), 'overlay_image.py');
+  if (!fs.existsSync(skrypt)) {
+    wypisz(`STATUS blad brak skryptu overlay_image.py w ${path.dirname(skrypt)}`);
+    return false;
+  }
+
+  wypisz('KROK overlay-image start');
+
+  const r = uruchom(python, [skrypt, plikWideo, plikConfig, wyjscie], {
+    env: srodowisko(narz),
+    timeout: 600000,
+  });
+
+  // Przepisz linie KROK/STATUS z Pythona
+  for (const linia of (r.out + r.err).split(/\r?\n/).filter(Boolean)) {
+    if (/^(STATUS|KROK|INFO|WYNIK)\s/.test(linia)) wypisz(linia);
+  }
+
+  if (!r.ok || !fs.existsSync(wyjscie)) {
+    const blad = r.err.slice(-300).replace(/\n/g, ' ').trim();
+    wypisz(`STATUS blad overlay-image nie powiodl sie (kod ${r.kod}): ${blad}`);
+    return false;
+  }
+
+  const { size } = fs.statSync(wyjscie);
+  if (size < 1000) {
+    wypisz('STATUS blad plik wyjsciowy jest za maly — cos poszlo nie tak');
+    return false;
+  }
+
+  wypisz(`STATUS overlay-image OK plik=${wyjscie}`);
+  return true;
+}
+
 // ---------- render ----------
 
 function render(projektDir, wyjscie, czyDraft) {
@@ -394,9 +457,12 @@ switch (tryb) {
   case 'render':
     ok = render(reszta[0], reszta[1], reszta.includes('--draft'));
     break;
+  case 'overlay-image':
+    ok = overlay_image(reszta[0], reszta[1], reszta[2]);
+    break;
   default:
     wypisz(`STATUS blad nieznane polecenie "${tryb}"`);
-    wypisz('INFO dostepne: transkrypcja, klatki-pozycja, klatki-sprawdzenie, sprawdz-dzwiek, tnij, render');
+    wypisz('INFO dostepne: transkrypcja, klatki-pozycja, klatki-sprawdzenie, sprawdz-dzwiek, tnij, render, overlay-image');
     ok = false;
 }
 

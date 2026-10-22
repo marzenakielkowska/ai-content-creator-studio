@@ -35,3 +35,51 @@ Krótki zbiór zasad. Claude czyta go przed każdą grafiką. Gdy kursantka da u
 
 - **Każda grafika animuje się raz wejście, raz wyjście** — nigdy nie powtarza.
 - **Nigdy dwie grafiki naraz** — nigdy tekst na tekście.
+
+## Nakładanie oryginalnych screenshotów (`overlay-image`)
+
+Gdy kursantka chce pokazać swoje prawdziwe screenshoty z telefonu (np. statystyki z Instagram), użyj komendy `overlay-image`. **Nigdy nie odtwarzaj danych z screenshot ręcznie — nakładaj oryginalny plik.**
+
+### Jak wywołać
+
+```sh
+sh montaz.sh overlay-image <wideo_wej> <config.json> <wyjscie.mp4>
+```
+
+### Format config.json
+
+```json
+{
+  "fps": 30,
+  "snap_sound": true,
+  "overlays": [
+    {
+      "image":     "/ścieżka/do/screenshot.jpg",
+      "appear_t":  0.35,
+      "cx":        540,
+      "cy":        900,
+      "width":     780,
+      "angle":     -3,
+      "anim_dur":  0.15,
+      "red_delay": 0.30,
+      "red_circle": { "cx": 155, "cy": 115, "rx": 135, "ry": 55 }
+    }
+  ]
+}
+```
+
+### Zasady pozycjonowania
+
+- `cx`, `cy` — **środek** nałożonego obrazka w kadrze 1080×1920.
+- Screenshoty lądują na **klatce/brzuchu** (cy ≈ 800–1400) — **nigdy na twarzy** (cy < 600).
+- Gdy kilka screenshotów: każdy kolejny niżej, z przesunięciem ok. 220 px.
+- `width` — szerokość po skalowaniu. Nie przekraczaj 900 px; 700–800 px jest czytelne na telefonie.
+- `angle` — lekkie pochylenie (±2–5°) wygląda naturalnie.
+
+### Czerwone kółko (`red_circle`)
+
+Zaznacza kluczową wartość na screenshocie (np. Wyświetlenia). Podaj pozycję w pikselach **w zeskalowanym obrazku** (bez paddingu). Sprawdź ją narzędziem klatki-pozycja lub ręcznie szacując z proporcji.
+
+### Wymagania
+
+Komenda używa Pythona 3 i biblioteki Pillow. Jeśli `/studio:start` zgłosi brak Pillowa, uruchom go i poczekaj na instalację.
