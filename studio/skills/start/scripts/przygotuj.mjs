@@ -198,6 +198,34 @@ function instalujPillow(python) {
   if (!r.ok) throw new BladKroku('instalacja Pillow nie powiodla sie');
 }
 
+function sprawdzNumpy(python) {
+  if (!python) return false;
+  const r = uruchom(python, ['-c', 'import numpy; print(numpy.__version__)'], { timeout: 8000 });
+  return r.ok;
+}
+
+function instalujNumpy(python) {
+  const r = uruchom(python, ['-m', 'pip', 'install', '--user', '--quiet', 'numpy'], {
+    timeout: 120000,
+    dziennik: true,
+  });
+  if (!r.ok) throw new BladKroku('instalacja numpy nie powiodla sie');
+}
+
+function sprawdzRembg(python) {
+  if (!python) return false;
+  const r = uruchom(python, ['-c', 'import rembg; import onnxruntime'], { timeout: 10000 });
+  return r.ok;
+}
+
+function instalujRembg(python) {
+  const r = uruchom(python, ['-m', 'pip', 'install', '--user', '--quiet', 'rembg', 'onnxruntime'], {
+    timeout: 300000,
+    dziennik: true,
+  });
+  if (!r.ok) throw new BladKroku('instalacja rembg nie powiodla sie');
+}
+
 // ---------- co jest na komputerze ----------
 
 function wersjaFf(plik) {
@@ -289,6 +317,8 @@ function stan() {
     ustawienia: czytajUstawienia(),
     python: python,
     pillow: python ? sprawdzPillow(python) : false,
+    numpy: python ? sprawdzNumpy(python) : false,
+    rembg: python ? sprawdzRembg(python) : false,
   };
   if (s.hf) {
     // Nie "browser path": ono przy braku przegladarki samo ja pobiera, bez zgody kursanta.
@@ -348,6 +378,10 @@ function wypiszStan(s) {
   if (s.python && s.pillow) wypisz('STATUS pillow OK');
   else if (s.python && !s.pillow) wypisz('STATUS pillow BRAK python-jest-ale-pillow-nie');
   else wypisz('STATUS pillow BRAK python-nie-znaleziony');
+  if (s.python && s.numpy) wypisz('STATUS numpy OK');
+  else if (s.python && !s.numpy) wypisz('STATUS numpy BRAK');
+  if (s.python && s.rembg) wypisz('STATUS rembg OK');
+  else if (s.python && !s.rembg) wypisz('STATUS rembg BRAK');
   wypisz(`STATUS autoaktualizacja ${autoAktualizacja(false)}`);
   wypisz(`STATUS do_pobrania_mb ${doPobrania}`);
   const gotowe = narzedziaGotowe(s) && Boolean(s.ustawienia);
@@ -584,6 +618,18 @@ function instaluj() {
     krok('pillow', 'okolo 4 MB (biblioteka graficzna)', () => instalujPillow(s.python));
   } else if (!s.python) {
     wypisz('INFO pillow Python 3 nie znaleziony — komenda overlay-image bedzie niedostepna');
+  }
+
+  // numpy (biblioteka matematyczna do efektow wideo)
+  s = stan();
+  if (s.python && !s.numpy) {
+    krok('numpy', 'okolo 20 MB (biblioteka matematyczna do efektow)', () => instalujNumpy(s.python));
+  }
+
+  // rembg (wycinanie sylwetki z tla — potrzebne do efektow blackout, orbit i podobnych)
+  s = stan();
+  if (s.python && !s.rembg) {
+    krok('rembg', 'okolo 600 MB (wycinanie sylwetki — potrzebne do nektotrych efektow)', () => instalujRembg(s.python));
   }
 
   wypisz(`KROK autoaktualizacja ${autoAktualizacja(true)}`);
