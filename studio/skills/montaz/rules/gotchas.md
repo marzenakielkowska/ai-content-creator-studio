@@ -45,8 +45,18 @@ Zawsze używaj `display=swap` w URL Google Fonts.
 
 **Objaw:** Element pojawia się bez animacji wejścia/wyjścia.
 
-**Przyczyna:** HyperFrames nie obsługuje animacji JavaScript (`requestAnimationFrame`, `setTimeout`, biblioteki JS).
-**Rozwiązanie:** Wszystkie animacje muszą być CSS (`@keyframes`, `transition`). Tylko CSS animacje są gwarantowane.
+**Przyczyna 1:** Animacja napisana przez `requestAnimationFrame`, `setTimeout` lub `setInterval`.
+**Rozwiązanie:** HyperFrames renderuje klatka po klatce i seekuje timeline — własne pętle czasowe nie działają. Używaj wyłącznie GSAP (`tl.from`, `tl.to`, `tl.fromTo`) na jednym zatrzymanym timeline.
+
+**Przyczyna 2:** Timeline nie jest zarejestrowany na `window.__timelines` przed zakończeniem buildu.
+**Rozwiązanie:** Na końcu funkcji budującej scenę dodaj:
+```js
+window.__timelines = window.__timelines || []
+window.__timelines.push(tl)
+```
+
+**Przyczyna 3:** CSS `@keyframes` użyte zamiast GSAP — renderer seekuje i CSS animacje nie odtwarzają się poprawnie w trybie seek.
+**Rozwiązanie:** Zastąp CSS animacje GSAP tweenami. CSS `@keyframes` zostawiaj tylko dla prostych dekoracji (np. migający kursor, shimmer tła) które nie muszą być seekowalne.
 
 ---
 
