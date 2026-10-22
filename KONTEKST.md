@@ -116,6 +116,20 @@ Powiedz Claude na początku rozmowy:
 
 ---
 
+## Style napisów w Lookbooku — jak powstaną podglądy
+
+Lookbook ma teraz 6 starych stylów. 23 nowe style (z napisy-style.md) jeszcze nie są w Lookbooku.
+
+**Plan:**
+1. Marzena nagrywa film testowy
+2. Claude montuje go w różnych stylach napisów
+3. Marzena zatwierdza te które wyglądają dobrze
+4. Zatwierdzone wersje wchodzą do Lookbooka jako prawdziwe podglądy (nie makiety)
+
+Nie budować podglądów na sucho — czekamy na nagranie testowe.
+
+---
+
 ## ⚠️ Przed oddaniem projektu klientom
 
 Ten plik musi zostać usunięty z GitHuba zanim projekt trafi do klientów.
