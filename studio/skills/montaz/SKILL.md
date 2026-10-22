@@ -130,6 +130,21 @@ Każda uwaga kursantki:
 
 ---
 
+## Krok 8a. Warianty próbne (opcjonalnie)
+
+Po zatwierdzeniu draftu zapytaj:
+> „Chcesz kilka wersji próbnych do testowania? Mogę zrobić np. 3 rolki — każda różni się jedną rzeczą: inny hook, inne efekty albo inny styl napisów. Wrzucasz je jako trial reels na Instagram i zostawiasz tę, która działa najlepiej."
+
+Jeśli tak — zapytaj w jednej wiadomości:
+1. Ile wersji (2–5)?
+2. Co testować: hook (inne pierwsze zdanie), efekty, styl napisów, czy wszystko po trochu?
+
+Dla każdej wersji zmień dokładnie jedną rzecz. Każda wersja to osobny plik. Pokaż plan wersji przed budowaniem i czekaj na OK.
+
+**STOP — czekaj na OK planu wersji, potem buduj.**
+
+---
+
 ## Krok 8. Finał
 
 Tylko gdy kursantka wyraźnie zatwierdzi draft.
