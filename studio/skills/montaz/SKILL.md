@@ -9,6 +9,12 @@ Kursantka nagrywa, Ty montujesz. Każdy krok zatrzymuje się i czeka na jej odpo
 
 Mów po polsku, prostym językiem. Nie pokazuj ścieżek technicznych, komend ani błędów. Tłumacz je na zwykłe zdania.
 
+`SK` to folder tego pliku. Skrypty uruchamiasz tak:
+- **Mac:** `sh "SK/scripts/montaz.sh" <polecenie> [argumenty]`
+- **Windows:** `powershell -NoProfile -ExecutionPolicy Bypass -File "SK/scripts/montaz.ps1" <polecenie> [argumenty]`
+
+Rozpoznaj system: ścieżki z literą dysku (`C:/`) = Windows; `uname` zwraca `Darwin` = Mac.
+
 Przed każdym krokiem przeczytaj odpowiedni plik reguł:
 - Cięcie → `rules/cut.md`
 - Napisy → `rules/captions.md` i `napisy-style.md`
@@ -24,7 +30,11 @@ Styl kursantki (czcionka, kolory, efekty, dźwięki) pochodzi z `~/.ai-content-c
 
 ## Krok 1. Transkrypcja
 
-Uruchom Whisper na nagraniu kursantki. Wynik: plik `words.json` z każdym słowem i jego czasem.
+Uruchom skrypt:
+```
+montaz.sh transkrypcja "<plik-wideo>"
+```
+Wynik: `STATUS transkrypcja OK plik=<ścieżka>` → plik `words.json` z każdym słowem i jego czasem.
 
 Sprawdź transkrypcję pod kątem faktów:
 - liczby (czy są poprawne?)
@@ -57,10 +67,11 @@ Nie tniej jeszcze. Czekaj na jej decyzję w każdym wątpliwym miejscu.
 
 ## Krok 2b. Pozycja mówiącej w kadrze
 
-Wyciągnij 3 klatki z nagrania (w 20%, 50% i 80% długości) przez FFmpeg:
+Uruchom skrypt:
 ```
-ffmpeg -i <plik> -vf "select='eq(n,<klatka>)'" -frames:v 1 <wyjście.jpg>
+montaz.sh klatki-pozycja "<plik-wideo>"
 ```
+Wynik: `STATUS klatki-pozycja OK pliki=<ścieżki>` → 3 pliki JPG.
 
 Obejrzyj klatki i określ:
 - **Strona:** czy mówiąca jest po lewej, prawej, czy na środku kadru?
@@ -111,7 +122,11 @@ Przeczytaj `rules/graphics.md`.
 
 ## Krok 5. Draft
 
-Zrób render w połowie rozmiaru (720p zamiast 1080p), bez motion blur. Jeden render na raz.
+Uruchom skrypt:
+```
+montaz.sh render "<projekt-dir>" "<wyjście-draft.mp4>" --draft
+```
+Render 540×960 (połowa rozmiaru), bez motion blur. Jeden render na raz.
 
 Nie pokazuj jeszcze kursantce — najpierw krok 6.
 
@@ -121,7 +136,13 @@ Nie pokazuj jeszcze kursantce — najpierw krok 6.
 
 Przeczytaj `rules/checks.md`.
 
-Zrób zdjęcia co 10 klatek draftu. Patrz na każde. Szukaj 6 defektów:
+Uruchom skrypt:
+```
+montaz.sh klatki-sprawdzenie "<draft.mp4>"
+```
+Wynik: `STATUS klatki-sprawdzenie OK folder=<ścieżka> liczba=<N>` → folder ze zdjęciami co 10 klatek.
+
+Przejrzyj każde zdjęcie. Szukaj 6 defektów:
 1. animacja odgrywa się dwa razy
 2. flash krótszy niż 0,5 s
 3. tekst pojawia się za późno
@@ -171,7 +192,12 @@ Dla każdej wersji zmień dokładnie jedną rzecz. Każda wersja to osobny plik.
 
 Tylko gdy kursantka wyraźnie zatwierdzi draft.
 
-Zrób render w pełnym rozmiarze (1080p). Sprawdź poziom dźwięku (peak −6 dB lub wyżej — OK; ciszej — powiedz i zaproponuj głośniejszą kopię).
+Uruchom skrypty:
+```
+montaz.sh render "<projekt-dir>" "<wyjście-final.mp4>"
+montaz.sh sprawdz-dzwiek "<wyjście-final.mp4>"
+```
+Wynik dźwięku: `STATUS dzwiek OK peak=-Xdb` — w porządku. `STATUS dzwiek CICHO` — powiedz i zaproponuj głośniejszą kopię.
 
 Na końcu zapytaj:
 > „Czy coś z tego filmu powinno stać się regułą na przyszłość?"
