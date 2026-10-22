@@ -27,7 +27,7 @@ Krótki zbiór zasad. Claude czyta go przed każdą grafiką. Gdy kursantka da u
 
 ## Gdzie stawiać
 
-- **Z dala od twarzy** — tytuł w lewym górnym rogu, listy po lewej stronie. Przesuń jeśli mówiąca siedzi w innym miejscu kadru.
+- **Z dala od twarzy** — przed budowaniem sprawdź `layout.json`. Tytuł i listy idą na stronę wolną od twarzy (pole `wolne_miejsce`). Jeśli pliku nie ma — domyślnie lewy górny róg.
 - **Nigdy na ustach ani brodzie mówiącej.** Jeśli grafika wychodzi na twarz — przesuń w górę lub na bok.
 - **Bezpieczna strefa** — nic nie wychodzi poza: góra 220px, dół 450px (format 1080×1920), boki 35px.
 

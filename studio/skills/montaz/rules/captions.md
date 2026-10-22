@@ -25,7 +25,8 @@ Zasada: maksymalnie jedno oznaczenie na zdanie (liczba, nazwa lub akcent). Wype�
 
 ## Gdzie stawiać napisy
 
-- Domyślnie: dolna część ekranu, wyśrodkowana — bezpieczne miejsce na każdym nagraniu.
+- Przed ustawieniem napisów sprawdź `layout.json` — tam jest zapisane po której stronie stoi mówiąca i gdzie jest wolne miejsce.
+- Napisy idą na stronę **wolną od twarzy** (pole `wolne_miejsce` w layout.json). Jeśli pliku nie ma — domyślnie dolna część ekranu, wyśrodkowana.
 - Nigdy na ustach ani brodzie mówiącej. Podnieś margines jeśli tak wychodzi.
 - Gdy grafika jest na ekranie i ma wolne miejsce — wstaw napis w to miejsce. Nie wracaj do twarzy tylko po to, żeby pokazać napis.
 

@@ -55,6 +55,28 @@ Nie tniej jeszcze. Czekaj na jej decyzję w każdym wątpliwym miejscu.
 
 ---
 
+## Krok 2b. Pozycja mówiącej w kadrze
+
+Wyciągnij 3 klatki z nagrania (w 20%, 50% i 80% długości) przez FFmpeg:
+```
+ffmpeg -i <plik> -vf "select='eq(n,<klatka>)'" -frames:v 1 <wyjście.jpg>
+```
+
+Obejrzyj klatki i określ:
+- **Strona:** czy mówiąca jest po lewej, prawej, czy na środku kadru?
+- **Przestrzeń:** gdzie jest wolne miejsce — lewa strona, prawa, dół, góra?
+
+Zapisz wynik do pliku `layout.json` w folderze projektu:
+```json
+{"strona": "prawa", "wolne_miejsce": "lewa", "uwagi": "twarz w górnej połowie kadru"}
+```
+
+Użyj tego pliku przy kroku 3 (napisy) i kroku 4 (grafiki) — żeby napisy i grafiki lądowały po stronie wolnej od twarzy.
+
+Jeśli wszystkie trzy klatki są różne (kursantka się porusza) — wybierz najbardziej typową i zanotuj to w `uwagi`.
+
+---
+
 ## Krok 3. Napisy
 
 Przeczytaj `rules/captions.md` i `napisy-style.md`.
