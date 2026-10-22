@@ -63,6 +63,25 @@ Kursantki montują też dla swoich klientów. Planowana zmiana struktury:
 - Szacowany nakład: ~20 linii kodu
 - **Priorytet: po zbudowaniu skilla montażu**
 
+### Stan lookbooka i ścieżka kursantki — DO ZROBIENIA PÓŹNIEJ
+
+**Teraz (wersja testowa):**
+Kursantka nie przechodzi przez lookbook przy pierwszym uruchomieniu. Gdy wpisuje `/studio:montaz` bez `moj-styl.json`, Claude pyta jak chce montować: film wzorcowy, opis słowami, albo lookbook. To pozwala testować montaż zanim lookbook będzie gotowy.
+
+**Docelowo (po zbudowaniu lookbooka):**
+Kursantka przy pierwszym uruchomieniu (`/studio:start`) powinna przejść przez pełną ścieżkę onboardingową:
+1. `/studio:lookbook` — wybiera styl napisów z podglądami (prawdziwymi, nie makietami)
+2. `/studio:dzwieki` — wybiera dźwięki i efekty
+3. Dopiero potem `/studio:montaz` używa zapisanego `moj-styl.json`
+
+**Co blokuje lookbook:**
+Marzena nagrywa teraz filmy testowe i tworzy style (montuje próbne rolki w różnych wariantach). Po zatwierdzeniu tych stylów wchodzą jako prawdziwe podglądy do lookbooka. Lookbooka NIE robimy z makiet — tylko z prawdziwych zmontowanych przykładów.
+
+**Kiedy wrócimy do tego:**
+Gdy Marzena nagra i zatwierdzi style → wtedy budujemy lookbook z prawdziwymi podglądami i przywracamy obowiązkową ścieżkę onboardingową.
+
+---
+
 ### Zakres produktu (co robimy, czego nie)
 
 **W zakresie:**
