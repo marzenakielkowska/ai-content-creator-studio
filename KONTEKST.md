@@ -48,7 +48,7 @@ Kolejny skill: `/studio:montaz` — właściwy montaż rolek. Jeszcze nie istnie
 | `rules/graphics.md` | ✅ gotowe | 14 zasad grafik: plan→zatwierdzenie, kolory, czas, strefa bezpieczeństwa |
 | `rules/checks.md` | ✅ gotowe | 6 defektów + tabela 4 warunków + procedura poprawek |
 | `NOTES_LOG.md` | ✅ gotowe | Dziennik uwag i przepisanych reguł, format tabeli + przykład |
-| `SKILL.md` | ⏳ po wszystkich regułach |
+| `SKILL.md` | ✅ gotowe | 8-krokowy pipeline z zatrzymaniami na OK |
 
 ---
 
