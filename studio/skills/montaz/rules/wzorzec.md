@@ -5,8 +5,14 @@ Gdy kursantka przynosi film referencyjny (rolka którą chce naśladować), uży
 ## Jak wywołać
 
 ```sh
-sh montaz.sh analizuj-wzorzec <plik-wideo> <folder-wyjscia>
+sh montaz.sh zbadaj-wzorzec <plik-wideo-lub-url> <folder-wyjscia>
 ```
+
+Pierwszym argumentem może być:
+- ścieżka do lokalnego pliku MP4 / MOV
+- bezpośredni URL do pliku MP4 (np. link z Apify po pobraniu z Instagrama)
+
+Gdy podano URL: skrypt pobiera plik tymczasowo, robi analizę, **usuwa plik po zakończeniu** — na dysku zostają tylko wyniki.
 
 Wynik: `STATUS analizuj-wzorzec OK folder=<ścieżka>`
 

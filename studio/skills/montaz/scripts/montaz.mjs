@@ -408,7 +408,8 @@ function overlay_image(plikWideo, plikConfig, wyjscie) {
 function analizuj_wzorzec(plikWideo, folderWyj) {
   const narz = czytajNarzedzia();
 
-  if (!fs.existsSync(plikWideo)) {
+  const jestUrl = plikWideo.startsWith('http://') || plikWideo.startsWith('https://');
+  if (!jestUrl && !fs.existsSync(plikWideo)) {
     wypisz(`STATUS blad plik wideo nie istnieje: ${plikWideo}`);
     return false;
   }
@@ -518,11 +519,12 @@ switch (tryb) {
     ok = overlay_image(reszta[0], reszta[1], reszta[2]);
     break;
   case 'analizuj-wzorzec':
+  case 'zbadaj-wzorzec':
     ok = analizuj_wzorzec(reszta[0], reszta[1]);
     break;
   default:
     wypisz(`STATUS blad nieznane polecenie "${tryb}"`);
-    wypisz('INFO dostepne: transkrypcja, klatki-pozycja, klatki-sprawdzenie, sprawdz-dzwiek, tnij, render, overlay-image, analizuj-wzorzec');
+    wypisz('INFO dostepne: transkrypcja, klatki-pozycja, klatki-sprawdzenie, sprawdz-dzwiek, tnij, render, overlay-image, analizuj-wzorzec, zbadaj-wzorzec');
     ok = false;
 }
 

@@ -60,7 +60,9 @@ if len(sys.argv) < 3:
 WIDEO = sys.argv[1]
 FOLDER = sys.argv[2]
 
-if not os.path.isfile(WIDEO):
+JEST_URL = WIDEO.startswith('http://') or WIDEO.startswith('https://')
+
+if not JEST_URL and not os.path.isfile(WIDEO):
     print(f"STATUS blad plik wideo nie istnieje: {WIDEO}", flush=True)
     sys.exit(1)
 
@@ -404,6 +406,22 @@ def zmierz_glosnosc(wideo, okno_s=0.1, czest=8000):
 # ---------- główna pętla ----------
 
 t0 = time.time()
+
+# Jeśli podano URL — pobierz raz do pliku tymczasowego, potem usuń
+_PLIK_TMP = None
+if JEST_URL:
+    _PLIK_TMP = os.path.join(FOLDER, '_wideo_tmp.mp4')
+    print(f"KROK pobieranie-wideo start ({WIDEO[:60]}...)", flush=True)
+    ok_dl, _, err_dl = uruchom(
+        [FFMPEG, '-y', '-i', WIDEO, '-c', 'copy', _PLIK_TMP],
+        timeout=300,
+    )
+    if not ok_dl or not os.path.isfile(_PLIK_TMP) or os.path.getsize(_PLIK_TMP) < 1000:
+        print("STATUS blad nie udalo sie pobrac wideo — sprawdz czy URL jest bezposrednim linkiem do MP4", flush=True)
+        sys.exit(1)
+    WIDEO = _PLIK_TMP
+    print("KROK pobieranie-wideo gotowe", flush=True)
+
 print(f"KROK start badanie: {os.path.basename(WIDEO)}", flush=True)
 
 info = zbadaj_wideo(WIDEO)
@@ -475,6 +493,15 @@ with open(plik_pom, 'w', encoding='utf-8') as f:
 
 czas_s = int(time.time() - t0)
 print(f"KROK zapis-pomiary gotowe plik={plik_pom}", flush=True)
+
+# Usuń plik tymczasowy jeśli był pobrany z URL
+if _PLIK_TMP and os.path.isfile(_PLIK_TMP):
+    try:
+        os.remove(_PLIK_TMP)
+        print("KROK plik-tymczasowy usunieto", flush=True)
+    except OSError:
+        pass
+
 print(
     f"STATUS analizuj-wzorzec OK folder={FOLDER} "
     f"arkuszy={len(ark_gl)} ciec={len(ciecia)} ruch={len(momenty)} czas={czas_s}s",
