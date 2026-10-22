@@ -63,9 +63,31 @@ Kursantki montują też dla swoich klientów. Planowana zmiana struktury:
 - Szacowany nakład: ~20 linii kodu
 - **Priorytet: po zbudowaniu skilla montażu**
 
+### Zakres produktu (co robimy, czego nie)
+
+**W zakresie:**
+- Kursantka wrzuca materiał → wybiera styl/czcionki/dźwięki → Claude + HyperFrames montują → kursantka pobiera gotową rolkę i sama publikuje
+- Warianty rolek do testowania (patrz niżej)
+
+**Poza zakresem:**
+- Publikowanie na Instagram/TikTok (kursantka robi to sama po pobraniu)
+- Integracja z zewnętrznymi narzędziami do planowania postów
+
+### Warianty rolek do testowania (do zbudowania)
+
+Kursantka po zmontowaniu rolki może poprosić o N wersji próbnych. Claude pyta:
+> „Chcesz 3 wersje próbne z innym hookiem albo innym zestawem efektów?"
+
+Każda wersja różni się jedną rzeczą (inny hook, inne efekty, inny styl napisów). Kursantka testuje która działa najlepiej na Instagramie.
+
+**Priorytet: po ukończeniu podstawowego skilla montażu.**
+
 ### Kolejność budowania
-1. Reguły grafik → checks → NOTES_LOG → SKILL.md skilla montażu
-2. Profile klientów (zmiana Lookbooka)
+1. ✅ Reguły grafik → checks → NOTES_LOG → SKILL.md skilla montażu
+2. Uzupełnienia do cut.md (2 reguły)
+3. Podglądy stylów w Lookbooku (po nagraniu testowym)
+4. Warianty rolek do testowania
+5. Profile klientów (zmiana Lookbooka)
 
 ### Źródła reguł
 Reguły montażu wypracowane wewnętrznie na podstawie doświadczeń z montażem rolek.
