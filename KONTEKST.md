@@ -68,9 +68,7 @@ Kursantki montują też dla swoich klientów. Planowana zmiana struktury:
 2. Profile klientów (zmiana Lookbooka)
 
 ### Źródła reguł
-Reguły montażu bazują na dwóch projektach:
-- **Video Editor Starter Kit** (plik lokalny, skopiowany do `/tmp/video-editor-starter-kit/`)
-- **tenfoldmarc/studio-plugin** — bardziej zaawansowany, angielski, używa Pythona
+Reguły montażu wypracowane wewnętrznie na podstawie doświadczeń z montażem rolek.
 
 ---
 
@@ -104,8 +102,7 @@ Zdecydowane nazwy i czcionki. Do implementacji w Lookbooku.
 | 22 | Miękki styl | Nunito |
 | 23 | Biznes | Space Grotesk |
 
-Style 1–20: czcionki z tenfoldmarc/studio-plugin (licencja OFL).
-Style 21–23: własne dodatki Studio (Google Fonts, OFL).
+Wszystkie czcionki z Google Fonts (licencja OFL).
 
 ---
 

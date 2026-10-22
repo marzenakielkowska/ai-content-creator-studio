@@ -28,5 +28,4 @@
 | 22 | Miękki styl | Nunito |
 | 23 | Biznes | Space Grotesk |
 
-Style 1–20 bazują na czcionkach z projektu tenfoldmarc/studio-plugin (licencja OFL).
-Style 21–23 to własne dodatki Studio: Abril Fatface, Nunito, Space Grotesk (Google Fonts, OFL).
+Wszystkie czcionki pochodzą z Google Fonts (licencja OFL).
