@@ -1,8 +1,18 @@
-# Pomiar rolki wzorcowej (`analizuj-wzorzec`)
+# Pomiar i zapamiętywanie wzorców (`zbadaj-wzorzec`, `zapisz-wzorzec`, `lista-wzorcow`)
 
-Gdy kursantka przynosi film referencyjny (rolka którą chce naśladować), użyj komendy `analizuj-wzorzec`. Daje to liczby i obrazki zamiast zgadywania: tempo cięć, momenty wejść, głośność.
+Gdy kursantka przynosi film referencyjny (rolka z Instagrama, Pinterestu lub plik lokalny), użyj `zbadaj-wzorzec`. Wynikiem są arkusze klatek i liczby do wizualnej analizy stylu.
 
-## Jak wywołać
+**Na początku każdej sesji montażowej** sprawdź czy kursantka ma zapisane wzorce:
+
+```sh
+sh montaz.sh lista-wzorcow
+```
+
+Jeśli `WYNIK wzorzec nazwa=...` — powiedz co masz: „Mam zapisany efekt X i Y — chcesz użyć jednego z nich?". Jeśli `STATUS lista-wzorcow PUSTA` — nie wspominaj nic.
+
+---
+
+## Analiza rolki wzorcowej
 
 ```sh
 sh montaz.sh zbadaj-wzorzec <plik-wideo-lub-url> <folder-wyjscia>
@@ -12,49 +22,71 @@ Pierwszym argumentem może być:
 - ścieżka do lokalnego pliku MP4 / MOV
 - bezpośredni URL do pliku MP4 (np. link z Apify po pobraniu z Instagrama)
 
-Gdy podano URL: skrypt pobiera plik tymczasowo, robi analizę, **usuwa plik po zakończeniu** — na dysku zostają tylko wyniki.
+Gdy podano URL: skrypt pobiera plik tymczasowo, robi analizę, **usuwa plik** — na dysku zostają tylko wyniki.
 
 Wynik: `STATUS analizuj-wzorzec OK folder=<ścieżka>`
 
-## Co powstaje w folderze
+### Co powstaje w folderze
 
 | Plik | Co zawiera |
 |------|-----------|
-| `arkusz_01.jpg`, `arkusz_02.jpg` ... | Siatka 4×5 klatek co 0.5s — pełny przegląd rolki |
-| `ciecia.jpg` | Klatki przy każdym wykrytym cięciu montażowym |
-| `ruch_01.jpg`, `ruch_02.jpg` ... | Osiem klatek wokół każdego nagłego wejścia (grafika, napis) |
-| `pomiary.json` | Wszystkie zmierzone liczby (patrz niżej) |
+| `arkusz_01.jpg`, `arkusz_02.jpg` ... | Siatka 4×5 klatek co 0.5s |
+| `ciecia.jpg` | Klatki przy każdym cięciu montażowym |
+| `ruch_01.jpg` ... | Klatki wokół nagłych wejść grafik/napisów |
+| `pomiary.json` | Zmierzone liczby: fps, cięcia, ruch, głośność |
 
-## Co czytać z pomiary.json
+### Co zrobić po analizie
 
-```json
-{
-  "szerokosc_px": 1080,
-  "wysokosc_px": 1920,
-  "fps": 30.0,
-  "dlugosc_s": 45.2,
-  "ciecia_s": [3.1, 6.8, 10.4, ...],
-  "sredni_odstep_s": 3.6,
-  "momenty_ruchu_s": [1.2, 4.0, ...],
-  "srednia_glosnosc_db": -18.5,
-  "szczyt_glosnosc_db": -6.1,
-  "szczyty_dzwieku_s": [0.5, 6.8, ...]
-}
+1. **Obejrzyj arkusze klatek** — oceń wizualnie co się dzieje w tym filmie
+2. **Przeczytaj `pomiary.json`** — `sredni_odstep_s` to tempo, `momenty_ruchu_s` to kiedy coś wchodzi
+3. **Zapytaj kursantkę** czy chce zachować ten wzorzec do późniejszego użycia
+
+---
+
+## Zapisanie wzorca do biblioteki
+
+Gdy kursantka chce zachować efekt na przyszłość:
+
+```sh
+sh montaz.sh zapisz-wzorzec <folder-analizy> <nazwa>
 ```
 
-- `sredni_odstep_s` — co ile sekund są cięcia → tempo montażu wzorca
-- `momenty_ruchu_s` — kiedy coś wchodzi na ekran → gdzie wstawiać grafiki
-- `szczyty_dzwieku_s` — uderzenia dźwięku → naturalny rytm do naśladowania
+`nazwa` to krótka, bez spacji, np. `split-screen`, `zoom-in-twarz`, `caps-zolty`.
 
-## Jak używać wyników
+Po uruchomieniu skrypt wypisze: `STATUS zapisz-wzorzec OK folder=~/.ai-content-studio/wzorce/<nazwa>/`
 
-1. **Obejrzyj arkusze** — oceń wizualnie styl: ciemny/jasny tło, duży/mały tekst, ile miejsca na twarz.
-2. **Porównaj `sredni_odstep_s` ze swoim filmem** — jeśli wzorzec ma 3s a kursantka ma 8s, skróć cięcia.
-3. **Użyj `momenty_ruchu_s`** jako sugestię timestampów dla grafik — wejście grafiki przy naturalnym ruchu wygląda lepiej.
-4. **`srednia_glosnosc_db`** — punkt odniesienia do normalizacji audio (`sprawdz-dzwiek`).
+**Po wykonaniu — napisz `opis.md` do tego folderu.** Opis powinien zawierać:
+- Co to za efekt (jednozdaniowo)
+- Jak jest zbudowany (konkretnie: co się dzieje, timing, animacja)
+- Jak go odtworzyć w montażu (jakie komendy, jakie parametry)
+
+Przykład `opis.md`:
+```
+# Split-screen przed i po
+
+Ekran dzielony pionowo w połowie: lewa strona to stan "przed", prawa "po".
+Linia podziału wchodzi z prawej animacją 0.3s ease-out. Obie strony
+wchodzą jednocześnie. Użyj HyperFrames z layoutem split-horizontal,
+appear_t=0.5, anim_dur=0.3.
+```
+
+Wzorzec zostaje na dysku kursantki w `~/.ai-content-studio/wzorce/`. Nie jest wspólny — każda ma swoją bibliotekę.
+
+---
+
+## Korzystanie z zapisanego wzorca
+
+Gdy kursantka mówi „chcę ten efekt co go zapisałam" albo „użyj split-screen":
+
+1. Jeśli nie masz wyników `lista-wzorcow` — uruchom je teraz
+2. Wczytaj `~/.ai-content-studio/wzorce/<nazwa>/opis.md`
+3. Wczytaj `~/.ai-content-studio/wzorce/<nazwa>/pomiary.json`
+4. Odtwórz efekt według opisu — bez potrzeby ponownej analizy, bez linku
+
+---
 
 ## Ograniczenia
 
-- Wykrywanie ruchu działa na całej klatce — nie rozróżnia napisu od ruchu osoby. Sprawdź `ruch_NN.jpg` wzrokiem.
-- Cięcia z `ciecia_s` mogą nie zawierać cięć z nakładką przejściową (fade, wipe) — te mają niższy próg zmiany pikseli.
-- Komenda wymaga Pythona 3 z Pillow. Jeśli `/studio:start` zgłosi brak Pillowa, uruchom go i poczekaj.
+- Folder `~/.ai-content-studio/wzorce/` istnieje tylko na lokalnej maszynie — nowy komputer = pusta biblioteka
+- Opis efektu jest tak dokładny jak to co Claude napisał — warto sprawdzić `opis.md` przed użyciem
+- Wzorce z Lookbooka są osobne — `lista-wzorcow` pokazuje tylko te zapisane lokalnie przez kursantkę

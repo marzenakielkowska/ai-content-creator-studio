@@ -10,8 +10,9 @@
 #   tnij <plik-wideo> <cuts.json> <wyjscie.mp4>
 #   render <projekt-dir> <wyjscie.mp4> [--draft]
 #   overlay-image <plik-wideo> <config.json> <wyjscie.mp4>   (wymaga Python3 + Pillow)
-#   analizuj-wzorzec <plik-wideo|url> <folder-wyjscia>       (wymaga Python3 + Pillow)
-#   zbadaj-wzorzec   <plik-wideo|url> <folder-wyjscia>       (alias dla analizuj-wzorzec)
+#   zbadaj-wzorzec   <plik-wideo|url> <folder-wyjscia>       (wymaga Python3 + Pillow)
+#   zapisz-wzorzec   <folder-analizy> <nazwa>                 (zapisuje do ~/.ai-content-studio/wzorce/)
+#   lista-wzorcow                                             (wypisuje zapisane wzorce)
 
 $ErrorActionPreference = "Stop"
 

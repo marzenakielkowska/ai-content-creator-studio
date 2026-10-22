@@ -399,6 +399,89 @@ function overlay_image(plikWideo, plikConfig, wyjscie) {
   return true;
 }
 
+// ---------- zapisz-wzorzec ----------
+//
+// Kopiuje wyniki analizuj-wzorzec do osobistej biblioteki na dysku użytkownika:
+//   ~/.ai-content-studio/wzorce/<nazwa>/
+// Zapisuje pomiary.json, miniaturę i cięcia. Opis efektu (opis.md) pisze Claude.
+
+function zapisz_wzorzec(folderAnalizy, nazwa) {
+  if (!folderAnalizy || !nazwa) {
+    wypisz('STATUS blad uzycie: zapisz-wzorzec <folder-analizy> <nazwa>');
+    return false;
+  }
+  if (!fs.existsSync(folderAnalizy)) {
+    wypisz(`STATUS blad folder analizy nie istnieje: ${folderAnalizy}`);
+    return false;
+  }
+  const plikPom = path.join(folderAnalizy, 'pomiary.json');
+  if (!fs.existsSync(plikPom)) {
+    wypisz(`STATUS blad brak pomiary.json w ${folderAnalizy} — najpierw uruchom zbadaj-wzorzec`);
+    return false;
+  }
+
+  const cel = path.join(DOM, 'wzorce', nazwa);
+  fs.mkdirSync(cel, { recursive: true });
+
+  fs.copyFileSync(plikPom, path.join(cel, 'pomiary.json'));
+
+  const arkusze = fs.readdirSync(folderAnalizy)
+    .filter((f) => f.startsWith('arkusz_') && f.endsWith('.jpg'))
+    .sort();
+  if (arkusze.length > 0) {
+    fs.copyFileSync(path.join(folderAnalizy, arkusze[0]), path.join(cel, 'miniatura.jpg'));
+  }
+
+  const plikCiec = path.join(folderAnalizy, 'ciecia.jpg');
+  if (fs.existsSync(plikCiec)) {
+    fs.copyFileSync(plikCiec, path.join(cel, 'ciecia.jpg'));
+  }
+
+  wypisz(`STATUS zapisz-wzorzec OK folder=${cel}`);
+  wypisz(`INFO napisz opis.md do folderu ${cel} opisz efekt i jak go odtworzyc`);
+  return true;
+}
+
+// ---------- lista-wzorcow ----------
+//
+// Wypisuje co jest zapisane w ~/.ai-content-studio/wzorce/.
+// Dla każdego wzorca czyta pierwszą linię opis.md.
+
+function lista_wzorcow() {
+  const folder = path.join(DOM, 'wzorce');
+  if (!fs.existsSync(folder)) {
+    wypisz('STATUS lista-wzorcow PUSTA');
+    return true;
+  }
+
+  let pozycje;
+  try {
+    pozycje = fs.readdirSync(folder)
+      .filter((f) => fs.statSync(path.join(folder, f)).isDirectory());
+  } catch {
+    wypisz('STATUS lista-wzorcow PUSTA');
+    return true;
+  }
+
+  if (pozycje.length === 0) {
+    wypisz('STATUS lista-wzorcow PUSTA');
+    return true;
+  }
+
+  wypisz(`WYNIK lista-wzorcow liczba=${pozycje.length}`);
+  for (const nazwa of pozycje) {
+    const opisPlik = path.join(folder, nazwa, 'opis.md');
+    let pierwszaLinia = '(brak opisu)';
+    if (fs.existsSync(opisPlik)) {
+      const tresc = fs.readFileSync(opisPlik, 'utf8');
+      const linia = tresc.split('\n').find((l) => l.trim());
+      if (linia) pierwszaLinia = linia.replace(/^#+\s*/, '').trim();
+    }
+    wypisz(`WYNIK wzorzec nazwa=${nazwa} opis=${pierwszaLinia}`);
+  }
+  return true;
+}
+
 // ---------- analizuj-wzorzec ----------
 //
 // Mierzy parametry rolki wzorcowej: cięcia, momenty ruchu, głośność.
@@ -522,9 +605,15 @@ switch (tryb) {
   case 'zbadaj-wzorzec':
     ok = analizuj_wzorzec(reszta[0], reszta[1]);
     break;
+  case 'zapisz-wzorzec':
+    ok = zapisz_wzorzec(reszta[0], reszta[1]);
+    break;
+  case 'lista-wzorcow':
+    ok = lista_wzorcow();
+    break;
   default:
     wypisz(`STATUS blad nieznane polecenie "${tryb}"`);
-    wypisz('INFO dostepne: transkrypcja, klatki-pozycja, klatki-sprawdzenie, sprawdz-dzwiek, tnij, render, overlay-image, analizuj-wzorzec, zbadaj-wzorzec');
+    wypisz('INFO dostepne: transkrypcja, klatki-pozycja, klatki-sprawdzenie, sprawdz-dzwiek, tnij, render, overlay-image, zbadaj-wzorzec, zapisz-wzorzec, lista-wzorcow');
     ok = false;
 }
 
