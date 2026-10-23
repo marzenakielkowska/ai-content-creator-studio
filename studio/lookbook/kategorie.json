@@ -1,5 +1,6 @@
 {
   "kategorie": [
+    { "id": "glowne",    "nazwa": "Efekt główny",    "hint": "Jeden duży efekt wizualny, który definiuje całą rolkę" },
     { "id": "porownanie", "nazwa": "Przed i po",         "hint": "Samodzielny klip pokazujący transformację" },
     { "id": "tekst",      "nazwa": "Tekst na ekranie",   "hint": "Słowa i liczby, które pojawiają się, gdy je mówisz" },
     { "id": "plansze",    "nazwa": "Plansze i karty",    "hint": "Elementy, które wchodzą obok Ciebie" },

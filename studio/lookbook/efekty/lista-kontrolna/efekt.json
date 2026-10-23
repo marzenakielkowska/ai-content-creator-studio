@@ -1,0 +1,12 @@
+{
+  "id": "lista-kontrolna",
+  "kategoria": "glowne",
+  "nazwa": "Lista z odhaczaniem",
+  "opis": "Punkty listy pojawiają się i odhaczają się jeden po drugim, gdy o nich mówisz.",
+  "najlepsze_do": "Listy krok po kroku, podsumowania, checklisty, porady",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": "<div class=\"fx f6\"><span></span><span></span><span></span></div>",
+  "wymagania": { "wideo": "9:16, lista punktów w transkrypcji", "narzedzia": ["ffmpeg", "hyperframes"] },
+  "przepis": { "typ": "hyperframes", "instrukcja": "Punkty listy z ikoną check (✓) pojawiają się jeden po jeden zsynchronizowane z czasem wypowiedzi z transkrypcji. Każdy punkt: fromTo opacity 0→1, y 10→0, czas 0.3s. Ikona check pojawia się 0.2s po tekście z animacją scale 0→1." }
+}

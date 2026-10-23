@@ -1,0 +1,12 @@
+{
+  "id": "wykres-rosnie",
+  "kategoria": "glowne",
+  "nazwa": "Wykres rośnie",
+  "opis": "Słupki lub linia wykresu rosną na ekranie, gdy mówisz o liczbach.",
+  "najlepsze_do": "Statystyki, wyniki, wzrost, dane liczbowe",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div class=\"fx f-gl-chart\"><span></span><span></span><span></span><span></span></div>",
+  "wymagania": { "wideo": "9:16, liczby lub procenty w transkrypcji", "narzedzia": ["ffmpeg", "hyperframes"] },
+  "przepis": { "typ": "hyperframes", "instrukcja": "Słupki wyrównane do dołu, rosnące z height 0 do docelowej wartości przez 1.2s ease-out. Wartości procentowe bierze się z transkrypcji. Kolory: accentowy dla ostatniego słupka (wynik/cel), reszta muted. Etykiety wartości pojawiają się na szczycie słupka po zakończeniu animacji." }
+}

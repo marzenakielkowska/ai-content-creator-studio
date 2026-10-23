@@ -1,0 +1,14 @@
+{
+  "id": "ostry-kontrast",
+  "nazwa": "Ostry kontrast",
+  "opis": "Głębsze cienie, wyraźniejszy obraz. Mocny i skupiony look.",
+  "najlepsze_do": "Biznes, ekspertyza, motywacja, treści sprzedażowe",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_frame": "bright",
+  "podglad_html": null,
+  "przepis": {
+    "typ": "media-treatment",
+    "grading": { "preset": "deep-contrast", "details": { "vignette": 0.3 } }
+  }
+}

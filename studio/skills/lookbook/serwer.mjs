@@ -141,6 +141,11 @@ function startServer(port) {
       res.end(JSON.stringify(readItems(path.join(LOOKBOOK, 'gotowe'), 'gotowy.json')));
       return;
     }
+    if (p === '/api/styl') {
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify(readItems(path.join(LOOKBOOK, 'styl'), 'styl.json')));
+      return;
+    }
     if (p === '/api/dzwieki') {
       const katalog = path.join(DZWIEKI, 'katalog.json');
       try {
