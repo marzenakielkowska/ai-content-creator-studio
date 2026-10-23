@@ -1,0 +1,20 @@
+{
+  "id": "przed-i-po",
+  "kategoria": "porownanie",
+  "nazwa": "Przed i po",
+  "opis": "Pionowa linia wjeżdża od lewej (t=3s), odsłania lewą stronę jasną (\"po\") i prawą przyciemnioną (\"przed\"). Koło uchwytu <>, dwa badge, napisy nad głową, whoosh przy wejściu linii i pop przy dotknięciu ekranu.",
+  "najlepsze_do": "Transformacje, tutoriale stylizacji, porównania efektów",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": null,
+  "wymagania": {
+    "wideo": "9:16, kamera nieruchoma, ta sama scena przed i po",
+    "dzwieki": ["whoosh.mp3", "pop.mp3"],
+    "narzedzia": ["ffmpeg", "hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "projekt": "hf/",
+    "instrukcja": "PRZEPIS.md"
+  }
+}

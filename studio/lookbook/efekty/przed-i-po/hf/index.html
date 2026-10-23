@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="pl" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      /* Avenir Next Heavy via system font (macOS) for captions */
+      @font-face {
+        font-family: "CaptionFont";
+        src: local("Avenir Next Heavy");
+        font-weight: 900;
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      html, body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #000;
+      }
+
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Videos */
+      .vid-fill {
+        position: absolute;
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        object-fit: cover;
+      }
+
+      /* "po" (normal) video wrapper – clip-path animates right boundary */
+      #vid-po-wrap {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        /* hidden before divider enters; GSAP takes over at t=3 */
+        clip-path: inset(0 100% 0 0);
+      }
+
+      /* Divider line */
+      #divider {
+        position: absolute;
+        left: 0; top: 0;
+        width: 3px; height: 100%;
+        background: #fff;
+        z-index: 10;
+      }
+
+      /* Handle circle: left:-58px so center = GSAP-x */
+      #handle {
+        position: absolute;
+        left: -58px;
+        top: calc(60% - 58px);
+        width: 116px; height: 116px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.94);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        display: flex; align-items: center; justify-content: center;
+        z-index: 11;
+      }
+
+      #handle-txt {
+        font-family: Montserrat, sans-serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: #191919;
+        letter-spacing: 2px;
+      }
+
+      /* Badges */
+      .badge {
+        position: absolute;
+        top: 220px;
+        height: 72px;
+        border-radius: 36px;
+        padding: 0 30px;
+        display: flex; align-items: center;
+        font-family: Montserrat, sans-serif;
+        font-size: 36px;
+        font-weight: 700;
+        white-space: nowrap;
+        z-index: 20;
+        box-shadow: 4px 4px 0 rgba(0,0,0,0.45);
+      }
+
+      #badge-przed {
+        /* centered: (1080 - ~160) / 2 ≈ 460px  */
+        left: 460px;
+        background: rgba(22, 22, 22, 0.84);
+        border: 3px solid rgba(255, 255, 255, 0.78);
+        color: #fff;
+      }
+
+      #badge-po {
+        /* left-half center when divider=540: 270 - ~55 = 215px */
+        left: 215px;
+        background: rgba(245, 240, 50, 0.84);
+        border: 3px solid rgba(255, 255, 255, 0.78);
+        color: #141414;
+      }
+
+      /* Captions */
+      .caption {
+        position: absolute;
+        top: 350px;
+        width: 510px;
+        font-family: "CaptionFont", Montserrat, sans-serif;
+        font-weight: 900;
+        font-size: 62px;
+        line-height: 1.2;
+        color: #fff;
+        text-align: center;
+        /* Strong backdrop ensures contrast on any video background */
+        text-shadow:
+          0 0 12px rgba(0,0,0,0.95),
+          3px 3px 0 rgba(0,0,0,0.85),
+          -2px -2px 6px rgba(0,0,0,0.85),
+          2px -2px 6px rgba(0,0,0,0.85),
+          -2px 2px 6px rgba(0,0,0,0.85);
+        z-index: 20;
+      }
+
+      /* Left caption: 15px margin from left edge */
+      #cap-po { left: 15px; }
+
+      /* Right caption: starts at 555px (540 divider center + 15px margin) */
+      #cap-przed { left: 555px; }
+    </style>
+  </head>
+  <body>
+    <div data-hf-id="hf-fp5n"
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="7"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- ── "przed" darkened video – full screen ── -->
+      <video data-hf-id="hf-376l"
+        id="vid-przed"
+        class="clip vid-fill"
+        src="assets/bef.mp4"
+        muted
+        playsinline
+        data-start="0"
+        data-duration="7"
+        data-track-index="0"
+        style="z-index: 1"
+      ></video>
+
+      <!-- ── "po" normal video – clip-path wrapper (not timed), video is timed ── -->
+      <div data-hf-id="hf-pl15" id="vid-po-wrap" data-layout-allow-overflow style="position:absolute;inset:0;z-index:2;clip-path:inset(0 100% 0 0)">
+        <video data-hf-id="hf-p3ex"
+          id="vid-po"
+          class="clip vid-fill"
+          src="assets/norm.mp4"
+          muted
+          playsinline
+          data-start="0"
+          data-duration="7"
+          data-track-index="1"
+        ></video>
+      </div>
+
+      <!-- ── Original audio (from norm.mp4) ── -->
+      <audio data-hf-id="hf-3o71"
+        id="audio-orig"
+        class="clip"
+        src="assets/norm.mp4"
+        data-start="0"
+        data-duration="7"
+        data-volume="1"
+      ></audio>
+
+      <!-- ── Whoosh sound effect at t=3 (0.78s) ── -->
+      <audio data-hf-id="hf-fqn6"
+        id="audio-whoosh"
+        class="clip"
+        src="assets/whoosh.mp3"
+        data-start="3"
+        data-duration="0.78"
+        data-volume="1.2"
+      ></audio>
+
+      <!-- ── Pop sound effect at t=1 (0.48s) ── -->
+      <audio data-hf-id="hf-6h0d"
+        id="audio-pop"
+        class="clip"
+        src="assets/pop.mp3"
+        data-start="1"
+        data-duration="0.48"
+        data-volume="1.8"
+      ></audio>
+
+      <!-- ── Divider line: enters t=3, exits t=6.7 ── -->
+      <div data-hf-id="hf-vxto"
+        id="divider"
+        class="clip"
+        data-start="3"
+        data-duration="3.7"
+        data-track-index="2"
+      ></div>
+
+      <!-- ── Handle circle on divider ── -->
+      <div data-hf-id="hf-cgbv"
+        id="handle"
+        class="clip"
+        data-start="3"
+        data-duration="3.7"
+        data-track-index="3"
+        data-layout-allow-overflow
+      >
+        <span data-hf-id="hf-in3f" id="handle-txt">&lt; &gt;</span>
+      </div>
+
+      <!-- ── Badge "przed" (dark, t=0 to 6.7, animated right at t=3) ── -->
+      <div data-hf-id="hf-8xho"
+        id="badge-przed"
+        class="clip badge"
+        data-start="0"
+        data-duration="6.7"
+        data-track-index="4"
+      >przed</div>
+
+      <!-- ── Badge "po" (yellow, t=3 to 7, slides in from left) ── -->
+      <div data-hf-id="hf-cbyd"
+        id="badge-po"
+        class="clip badge"
+        data-start="3"
+        data-duration="4"
+        data-track-index="5"
+      >po</div>
+
+      <!-- ── Caption left: "Coś angażującego." ── -->
+      <div data-hf-id="hf-bb4o"
+        id="cap-po"
+        class="clip caption"
+        data-start="3"
+        data-duration="3.7"
+        data-track-index="6"
+        data-layout-allow-overflow
+      >Coś angażującego.</div>
+
+      <!-- ── Caption right: "Zamień nudne wideo na..." ── -->
+      <div data-hf-id="hf-rv20"
+        id="cap-przed"
+        class="clip caption"
+        data-start="3"
+        data-duration="3.7"
+        data-track-index="7"
+        data-layout-allow-overflow
+      >Zamień nudne wideo na...</div>
+    </div>
+
+    <script>
+      // Timing: SPT=3, SPE=4.2, HE=5.5, EE=6.7
+      // Enter: 1.2s, Hold: 1.3s, Exit: 1.2s
+      const tl = gsap.timeline({ paused: true });
+
+      // === VIDEO "po" – clip-path follows divider ===
+      // inset(top right bottom left): animate right edge inward→center→off
+      tl.fromTo(
+        "#vid-po-wrap",
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 50% 0 0)", duration: 1.2, ease: "power2.inOut" },
+        3,
+      ).to("#vid-po-wrap", { clipPath: "inset(0 0% 0 0)", duration: 1.2, ease: "power2.inOut" }, 5.5);
+
+      // === DIVIDER LINE – slides from left (x=0) to center (x=537) to right (x=1077) ===
+      tl.fromTo("#divider", { x: 0 }, { x: 537, duration: 1.2, ease: "power2.inOut" }, 3).to(
+        "#divider",
+        { x: 1077, duration: 1.2, ease: "power2.inOut" },
+        5.5,
+      );
+
+      // === HANDLE – center = CSS-left(-58) + GSAP-x + half-width(58) = GSAP-x ===
+      // So GSAP x matches divider position exactly
+      tl.fromTo("#handle", { x: 0 }, { x: 537, duration: 1.2, ease: "power2.inOut" }, 3).to(
+        "#handle",
+        { x: 1077, duration: 1.2, ease: "power2.inOut" },
+        5.5,
+      );
+
+      // === BADGE "przed" – starts centered (CSS left:460), slides right when divider enters ===
+      // At center: (1080-badgeW)/2≈460. At right-half: (540+1080)/2-badgeW/2≈727. Δx≈267
+      tl.fromTo("#badge-przed", { x: 0 }, { x: 267, duration: 1.2, ease: "power2.inOut" }, 3);
+
+      // === BADGE "po" – slides in from left edge (CSS left:215, x:-215→0) ===
+      tl.fromTo("#badge-po", { x: -215 }, { x: 0, duration: 1.2, ease: "power2.inOut" }, 3);
+
+      // === CAPTIONS – fade in when divider enters ===
+      tl.fromTo("#cap-po",    { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 3.2);
+      tl.fromTo("#cap-przed", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 3.2);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
