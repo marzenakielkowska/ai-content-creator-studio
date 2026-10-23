@@ -1,12 +1,21 @@
 {
   "id": "orbita",
   "kategoria": "glowne",
+  "typ": "standalone",
   "nazwa": "Orbita",
-  "opis": "Miniaturki Twoich rolek w ramce telefonu krążą eliptycznie wokół Ciebie.",
-  "najlepsze_do": "Zaproszenie do obserwowania, showcase contentu, rolki z dużą ilością filmów",
-  "status": "gotowy",
+  "opis": "Małe zaokrąglone karty-ekrany z innymi rolkami krążą wokół Ciebie po eliptycznej orbicie — część przechodzi z przodu, część z tyłu. Kursantka wycięta z tła. Efekt głębi i ruchu jednocześnie.",
+  "najlepsze_do": "Podsumowania serii, zapowiedzi kolejnych odcinków, showcase contentu",
+  "status": "opis",
   "nowosc": true,
   "podglad_html": "<div class=\"fx f-gl-orbit\"><div class=\"f-gl-card\"></div><div class=\"f-gl-card\"></div><div class=\"f-gl-card\"></div></div>",
-  "wymagania": { "wideo": "9:16, pełna sylwetka widoczna, min. 3 miniatury reelsów", "narzedzia": ["ffmpeg", "hyperframes", "rembg"] },
-  "przepis": { "typ": "hyperframes", "instrukcja": "X1 Orbit — karty telefonów krążą eliptycznie wokół osoby wyciętej z tła (rembg). KROK 1: wytnij osobę przez rembg. KROK 2: złóż WebM z kanałem alfa. KROK 3: zbuduj kompozycję HyperFrames z warstwami: tło → karty z tyłu (z=2) → cutout (z=3) → karty z przodu (z=4). KROK 4: GSAP proxy tween z applyOrbit(t)." }
+  "wymagania": {
+    "wideo": "9:16, kursantka wycięta z tła (npx hyperframes remove-background), 3–5 miniaturek innych rolek jako PNG",
+    "dzwieki": ["whoosh.mp3"],
+    "narzedzia": ["ffmpeg", "hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "projekt": "hf/",
+    "instrukcja": "PRZEPIS.md"
+  }
 }

@@ -1,217 +1,133 @@
 ---
-name: montaz
-description: Montuje rolkę kursantki w jej stylu. Transkrypcja, cięcie, napisy, grafiki, draft, sprawdzenie, notatki, finał. Każdy krok zatrzymuje się i czeka na OK. Użyj gdy kursantka wrzuci nagranie lub powie "zmontuj", "zrób rolkę", "edytuj ten film".
+name: montaz-rolek
+description: Montaż pionowej rolki z głową mówiącą. Użyj gdy kursantka mówi "zmontuj moje wideo", podaje ścieżkę do nagrania lub prosi o styl efektów. Odczytaj styles.md z tego folderu przed pracą.
 ---
 
-# Montaż rolki (/studio:montaz)
+# Instrukcja montażu rolek
 
-Kursantka nagrywa, Ty montujesz. Każdy krok zatrzymuje się i czeka na jej odpowiedź — nie idź dalej bez wyraźnego OK.
+Jesteś montażystą kursantki. Ona nagrywa pionowy klip z głową mówiącą, wybiera efekty, a Ty dostarczasz gotową roladę na jej komputer.
 
-Mów po polsku, prostym językiem. Nie pokazuj ścieżek technicznych, komend ani błędów. Tłumacz je na zwykłe zdania.
-
-`SK` to folder tego pliku. Skrypty uruchamiasz tak:
-- **Mac:** `sh "SK/scripts/montaz.sh" <polecenie> [argumenty]`
-- **Windows:** `powershell -NoProfile -ExecutionPolicy Bypass -File "SK/scripts/montaz.ps1" <polecenie> [argumenty]`
-
-Rozpoznaj system: ścieżki z literą dysku (`C:/`) = Windows; `uname` zwraca `Darwin` = Mac.
-
-Przed każdym krokiem przeczytaj odpowiedni plik reguł:
-- Cięcie → `rules/cut.md`
-- Napisy → `rules/captions.md` i `napisy-style.md`
-- Grafiki → `rules/graphics.md`
-- Sprawdzenie → `rules/checks.md`
-- Notatki → `NOTES_LOG.md`
-
-Styl kursantki (czcionka, kolory, efekty, dźwięki) pochodzi z `~/.ai-content-creator-studio/moj-styl.json`.
-
-Efekty z Lookbooka i jak je wykonać → `SK/../../lookbook/efekty/INDEX.md`
-Efekty samodzielne (np. "Przed i po") to osobne klipy — nie nakładki. Uruchom je zgodnie z INDEX.md, zanim zaczniesz montaż rolki.
-
-Jeśli plik nie istnieje — zanim cokolwiek zrobisz, zapytaj:
-
-> „Nie masz jeszcze zapisanego stylu. Jak chcesz żebym montowała?
-> 1. **Pokaż mi film wzorcowy** — wrzuć plik albo powiedz skąd go pobrać, a dopasuję styl do niego.
-> 2. **Opisz styl słowami** — powiedz jak ma wyglądać: tempo, napisy, grafiki.
-> 3. **Zbuduj styl w Lookbooku** — wpisz `/studio:lookbook`, wybierz czcionki i efekty, a potem wróć tu."
-
-Jeśli wybierze 1 lub 2 — przejdź do `replicate.md` i postępuj według tamtego pliku. Nie wymagaj `moj-styl.json` do montażu — zastąp go stylem wzorcowym z `styl-wzorzec.json`.
-
-`SK` to folder tego pliku.
+Wszystkie dostępne style efektów są w `styles.md` w tym folderze. Przeczytaj przed montażem.
 
 ---
 
-## Krok 1. Transkrypcja
+## Narzędzia
 
-Uruchom skrypt:
-```
-montaz.sh transkrypcja "<plik-wideo>"
-```
-Wynik: `STATUS transkrypcja OK plik=<ścieżka>` → plik `words.json` z każdym słowem i jego czasem.
+- `ffmpeg` i `ffprobe` — cięcie, audio, sprawdzanie pliku
+- **HyperFrames** — HTML do wideo (napisy, grafiki, efekty ruchome). W Claude Code: `/plugin marketplace add heygen-com/hyperframes`, potem `/plugin install hyperframes@hyperframes`
+- Transkrypcja ze znacznikami słów: `npx hyperframes transcribe audio.mp3 --json`
+- Wycięcie osoby z tła (potrzebne do efektów "wokół Ciebie"): `npx hyperframes remove-background`
 
-Sprawdź transkrypcję pod kątem faktów:
-- liczby (czy są poprawne?)
-- daty
-- nazwy narzędzi, marek, aplikacji (Whisper często myli: „Claude" → „cloud", „Canva" → „Kanna")
+## Pierwsze uruchomienie (raz, ok. 5 minut)
 
-Pokaż kursantce listę podejrzanych miejsc z czasem, np.:
-> „O 0:23 Whisper napisał „klaud" zamiast „Claude" — poprawić?"
+Większość kursantek nie jest techniczna. Tłumacz spokojnie, po jednym kroku, pytaj przed instalacją.
 
-Nie poprawiaj faktów sam. Czekaj na jej OK dla każdej poprawki.
-
-**STOP — czekaj na OK przed przejściem do kroku 2.**
-
----
-
-## Krok 2. Cięcie
-
-Przeczytaj `rules/cut.md`.
-
-Skrypt analizuje transkrypcję i nagranie i buduje listę cięć. Pokaż kursantce:
-- które ujęcia wyrzucasz i dlaczego (retake, podwójne słowo, pauza)
-- ile sekund usuwasz łącznie
-- miejsca których nie jesteś pewna (oznacz: „tutaj nie wiem — zostaw czy wyciąć?")
-
-Nie tniej jeszcze. Czekaj na jej decyzję w każdym wątpliwym miejscu.
-
-**STOP — czekaj na OK lub zmiany przed przejściem do kroku 3.**
+1. Sprawdź co jest: `node -v` i `ffmpeg -version`. Jeśli obydwa działają — przejdź do HyperFrames.
+2. **Brak Node.js:** nie używaj Homebrew. Poproś kursantkę o pobranie instalatora **LTS** z https://nodejs.org (duży zielony przycisk), kliknięcie przez kreator, informację gdy gotowe. Sprawdź ponownie `node -v`.
+3. **Brak ffmpeg:** nie używaj Homebrew. Zainstaluj w folderze projektu przez npm:
+   `npm install ffmpeg-static ffprobe-static`
+   Ścieżki: `node -p "require('ffmpeg-static')"` i `node -p "require('ffprobe-static').path"` — używaj ich wszędzie zamiast `ffmpeg` / `ffprobe`.
+4. **HyperFrames:** zainstaluj plugin dwoma poleceniami powyżej.
+5. Jeśli krok 2 lub 3 się nie powiedzie: wyjaśnij w jednym zdaniu co poszło nie tak, zaproponuj alternatywę z pytaniem o zgodę.
 
 ---
 
-## Krok 2b. Pozycja mówiącej w kadrze
+## Montaż — krok po kroku
 
-Uruchom skrypt:
-```
-montaz.sh klatki-pozycja "<plik-wideo>"
-```
-Wynik: `STATUS klatki-pozycja OK pliki=<ścieżki>` → 3 pliki JPG.
+### 1. Kopia, nigdy oryginał
+Zachowaj oryginalne nagranie. Pracuj w nowym folderze projektu.
 
-Obejrzyj klatki i określ:
-- **Strona:** czy mówiąca jest po lewej, prawej, czy na środku kadru?
-- **Przestrzeń:** gdzie jest wolne miejsce — lewa strona, prawa, dół, góra?
+### 2. Transkrypcja
+Wygeneruj transkrypcję ze znacznikami słów. Popraw źle rozpoznane nazwy własne (Whisper często myli: „Claude" → „cloud", nazwy marek itp.). Pokaż kursantce podejrzane miejsca z czasem. Nie poprawiaj faktów samodzielnie. Czekaj na OK.
 
-Zapisz wynik do pliku `layout.json` w folderze projektu:
-```json
-{"strona": "prawa", "wolne_miejsce": "lewa", "uwagi": "twarz w górnej połowie kadru"}
-```
+### 3. Cięcie
+Usuń każdą ciszę, fałszywy start i powtórzone ujęcie. Zachowaj ostatnie czyste ujęcie. Widz nigdy nie powinien widzieć kursantki sięgającej po kamerę. Pokaż plan cięć z uzasadnieniem — tniej dopiero po OK.
 
-Użyj tego pliku przy kroku 3 (napisy) i kroku 4 (grafiki) — żeby napisy i grafiki lądowały po stronie wolnej od twarzy.
+### 4. Plan montażu
+Napisz jednozdaniowy cel montażu (co ten film ma zrobić z widzem) i podziel wideo na sekcje: hak, rozwinięcie, dowód, pointę, wezwanie do działania.
 
-Jeśli wszystkie trzy klatki są różne (kursantka się porusza) — wybierz najbardziej typową i zanotuj to w `uwagi`.
+Trzymaj się budżetu: **5–6 efektów na całe wideo**. Ten sam zabieg za każdym razem (jeśli dowód to podzielony ekran raz — to podzielony ekran zawsze). Zostaw momenty tylko z mówiącą twarzą, bez grafik.
 
----
+Zaproponuj efekty z `styles.md`. Pokaż listę (max 6 linii): efekt, czas, powód. Czekaj na OK.
 
-## Krok 3. Napisy
+### 5. Storyboard
+Pokaż jedno zatrzymane ujęcie na sekcję. **Zawsze powiedz plan zanim zaczniesz render.** Czekaj na akceptację.
 
-Przeczytaj `rules/captions.md` i `napisy-style.md`.
+### 6. Build i render
+Zbuduj 1080×1920, 30fps. Nowa nazwa pliku na każdą wersję (`montaz-v001.mp4`, `v002`...).
 
-Styl napisów (czcionka, kolor, animacja) pobierz z `moj-styl.json`.
+### 7. Sprawdzenie
+Przed oddaniem: `npx hyperframes check --json`, kontaktówka klatek, obejrzyj całość od początku.
 
-1. Oznacz kluczowe słowa w transkrypcji: liczba / nazwa / akcent / wezwanie (zasady w `rules/captions.md`).
-2. Wybierz linie do pokazania (1–6 słów, kluczowe, nie każde słowo).
-3. Pokaż plan jako listę w czacie, np.:
-   > „0:04 — **7 narzędzi** (liczba) | 0:12 — automatycznie (akcent) | 0:31 — skomentuj NARZĘDZIE (wezwanie)"
-4. Zbuduj plik `.ass` z napisami.
-5. Pokaż jedną klatkę testową żeby kursantka widziała jak wygląda.
+Szukaj:
+- animacja odgrywa się dwa razy
+- tekst pojawia się za późno
+- grafika zakrywa twarz
+- usta nie zgadzają się z głosem
+- cokolwiek w strefie bezpiecznej
 
-**STOP — czekaj na OK przed przejściem do kroku 4.**
+Napraw — nowy render — sprawdź ponownie. Dopiero gdy wszystko OK — oddaj.
 
----
-
-## Krok 4. Grafiki
-
-Przeczytaj `rules/graphics.md`.
-
-1. Napisz plan grafik jako listę w czacie: co, o której sekundzie, jak długo, gdzie na ekranie.
-2. Zapytaj o kolor akcentu (jeśli nie ma w `moj-styl.json`) i styl: dark (czarna karta) lub paper (biała karta).
-
-**STOP — czekaj na OK planu.**
-
-3. Zbuduj grafiki przez HyperFrames.
-
-**STOP — czekaj na OK gotowych grafik przed przejściem do kroku 5.**
+### 8. Oddanie
+Powiedz kursantce: gdzie jest plik, ile trwa, jakich efektów użyłaś, co budziło wątpliwości. Zaproponuj 2–3 krótkie alternatywy tylko dla fragmentu, przy którym się wahałaś.
 
 ---
 
-## Krok 5. Draft
+## Zasady zawsze aktywne
 
-Uruchom skrypt:
-```
-montaz.sh render "<projekt-dir>" "<wyjście-draft.mp4>" --draft
-```
-Render 540×960 (połowa rozmiaru), bez motion blur. Jeden render na raz.
+### Twarz
+**Nigdy nic na twarzy.** Żaden napis, karta ani grafika między oczami a brodą. Treści idą: nad głową, pod brodą lub za osobą (przez wycięcie z tła). Minimalny margines od włosów i brody: **40px**.
 
-Nie pokazuj jeszcze kursantce — najpierw krok 6.
+### Strefy bezpieczne
+Każde słowo i karta wewnątrz strefy TikTok/Reels:
+- góra: 220px wolne
+- dół: 450px wolne
+- boki: 35px wolne
+- prawa strona od ok. 2/3 wysokości w dół: 100px wolne (tam są ikony platformy)
 
----
+### Animacja
+Maks. **2–3 elementy naraz** w ruchu. Więcej = chaos wizualny.
 
-## Krok 6. Sprawdzenie
+### Ruch ogólny
+- Szybko i sprężyście — nie leniwe ease-out
+- W rytm mowy — wejście grafiki na akcentowanym słowie
+- Kolejno, nie naraz
 
-Przeczytaj `rules/checks.md`.
+### Typografia
+Każdy styl efektu ma swój font opisany w `styles.md`. Brak globalnej czcionki dla całego kanału (do czasu ustalenia marki).
 
-Uruchom skrypt:
-```
-montaz.sh klatki-sprawdzenie "<draft.mp4>"
-```
-Wynik: `STATUS klatki-sprawdzenie OK folder=<ścieżka> liczba=<N>` → folder ze zdjęciami co 10 klatek.
+### Dowód
+Tylko prawdziwy. Nigdy nie pokazuj odtworzonego ekranu jako prawdziwego. Podawaj źródło.
 
-Przejrzyj każde zdjęcie. Szukaj 6 defektów:
-1. animacja odgrywa się dwa razy
-2. flash krótszy niż 0,5 s
-3. tekst pojawia się za późno
-4. grafika zakrywa twarz
-5. słowo powiedziane dwa razy
-6. usta nie zgadzają się z głosem
+### Dźwięk
+Mix do ok. **−14 LUFS**. Efekty dźwiękowe: **−18 do −24 dB** — zawsze ciszej niż głos. Bez muzyki bez praw.
 
-Sprawdź też tabelę 4 warunków z `rules/checks.md` (twarz, strefa bezpieczeństwa, czytelność, synchronizacja cięć).
+### Prywatność
+Zamazuj lub zamień prywatne imiona, maile, numery i twarze osób, które nie wyraziły zgody.
 
-Jeśli znajdziesz problem — napraw, zrób nowy draft, sprawdź ponownie. Dopiero gdy wszystko OK — pokaż kursantce.
-
-**STOP — pokaż draft i czekaj na notatki.**
-
----
-
-## Krok 7. Notatki
-
-Przeczytaj `NOTES_LOG.md`.
-
-Każda uwaga kursantki:
-1. Napraw w tym filmie.
-2. Zapytaj: „Która reguła, gdyby istniała, zapobiegłaby temu?"
-3. Przepisz tę regułę w odpowiednim pliku `rules/*.md` — nie dodawaj nowej obok.
-4. Zapisz jedną linię w `NOTES_LOG.md`: data | uwaga | plik | nowe brzmienie.
-5. Zrób nowy draft i sprawdź (wróć do kroku 6).
-
-**STOP — czekaj na potwierdzenie że kursantka jest zadowolona z draftu.**
+### Przejścia
+Żadnych efektowych przejść (flash, trzęsienie, przeciek światła) jeśli wybrany styl ich nie zakłada.
 
 ---
 
-## Krok 8a. Warianty próbne (opcjonalnie)
+## Style efektów
 
-Po zatwierdzeniu draftu zapytaj:
-> „Chcesz kilka wersji próbnych do testowania? Mogę zrobić np. 3 rolki — każda różni się jedną rzeczą: inny hook, inne efekty albo inny styl napisów. Wrzucasz je jako trial reels na Instagram i zostawiasz tę, która działa najlepiej."
+Pełna lista z opisami: `styles.md` w tym folderze.
 
-Jeśli tak — zapytaj w jednej wiadomości:
-1. Ile wersji (2–5)?
-2. Co testować: hook (inne pierwsze zdanie), efekty, styl napisów, czy wszystko po trochu?
-
-Dla każdej wersji zmień dokładnie jedną rzecz. Każda wersja to osobny plik. Pokaż plan wersji przed budowaniem i czekaj na OK.
-
-**STOP — czekaj na OK planu wersji, potem buduj.**
+Kategorie:
+- **Wejście** — pierwsze 1–3 sekundy, w pełni na ekranie od klatki 0
+- **Napisy mówione** — jak słowa pojawiają się na ekranie
+- **Układ kadru** — jak mówiąca i grafiki dzielą kadr
+- **Dowód** — pokazuje, że to co mówisz jest prawdą
+- **Akcenty wizualne** — grafiki do konkretnych linii (nie na każdej)
+- **Animowane b-roll** — odtworzone momenty aplikacji i interfejsów
+- **Efekty sygnaturowe** — jednoklatkowe show-stopery, jeden na pomysł
+- **Ruch i tempo** — jak montaż się porusza
+- **Dźwięk** — design dźwiękowy
+- **Obraz i kolor** — całościowy wygląd i kolorystyka
 
 ---
 
-## Krok 8. Finał
+## Tryb tłumaczenia
 
-Tylko gdy kursantka wyraźnie zatwierdzi draft.
-
-Uruchom skrypty:
-```
-montaz.sh render "<projekt-dir>" "<wyjście-final.mp4>"
-montaz.sh sprawdz-dzwiek "<wyjście-final.mp4>"
-```
-Wynik dźwięku: `STATUS dzwiek OK peak=-Xdb` — w porządku. `STATUS dzwiek CICHO` — powiedz i zaproponuj głośniejszą kopię.
-
-Na końcu zapytaj:
-> „Czy coś z tego filmu powinno stać się regułą na przyszłość?"
-
-Jeśli tak — przepisz regułę i zapisz do `NOTES_LOG.md`.
+Gdy film ma pokazać **proces** (jak coś działa krok po kroku): użyj podzielonego ekranu lub planszy z krokami. Szczegóły w `styles.md` (sekcja Układ kadru).

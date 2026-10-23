@@ -1,0 +1,20 @@
+{
+  "id": "ciepły-kinowy",
+  "kategoria": "obraz-i-kolor",
+  "typ": "grade",
+  "nazwa": "Ciepły kinowy",
+  "opis": "Lekki ciepły grade z winietą i grain. Temperatura +10, odcień +8, ekspozycja −6%, kontrast +20%, nasycenie −14%. Grain 5–8%. Tło za kartami rozmazane. Klimat premium, spokojny, drogi.",
+  "najlepsze_do": "Lifestyle, edukacja premium, dowolny temat gdy chcesz wyglądać poważnie",
+  "status": "opis",
+  "nowosc": true,
+  "wymagania": {
+    "wideo": "9:16, dobre oświetlenie naturalne lub studyjne",
+    "dzwieki": [],
+    "narzedzia": ["ffmpeg", "hyperframes"]
+  },
+  "przepis": {
+    "typ": "ffmpeg-grade",
+    "projekt": null,
+    "instrukcja": "PRZEPIS.md"
+  }
+}
