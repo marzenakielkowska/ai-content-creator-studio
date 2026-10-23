@@ -1,7 +1,11 @@
 ---
-name: montaz
-description: Montuje rolkę kursantki w jej stylu. Transkrypcja, cięcie, napisy, grafiki, draft, sprawdzenie, notatki, finał. Każdy krok zatrzymuje się i czeka na OK. Użyj gdy kursantka wrzuci nagranie lub powie "zmontuj", "zrób rolkę", "edytuj ten film".
+name: montaz-archiwum
+description: "ARCHIWUM — nie używać. Poprzednia wersja skilla zastąpiona przez studio/skills/montaz/SKILL.md (2026-10-24)."
 ---
+
+> **ARCHIWUM — nie używać.**
+> Ten plik to poprzednia wersja skilla montażu, zachowana jako historia.
+> Aktualny skill: `studio/skills/montaz/SKILL.md`
 
 # Montaż rolki (/studio:montaz)
 
