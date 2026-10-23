@@ -5,7 +5,7 @@
   "nazwa": "Orbita",
   "opis": "Małe zaokrąglone karty-ekrany z innymi rolkami krążą wokół Ciebie po eliptycznej orbicie — część przechodzi z przodu, część z tyłu. Kursantka wycięta z tła. Efekt głębi i ruchu jednocześnie.",
   "najlepsze_do": "Podsumowania serii, zapowiedzi kolejnych odcinków, showcase contentu",
-  "status": "opis",
+  "status": "gotowy",
   "nowosc": true,
   "podglad_html": "<div class=\"fx f-gl-orbit\"><div class=\"f-gl-card\"></div><div class=\"f-gl-card\"></div><div class=\"f-gl-card\"></div></div>",
   "wymagania": {
