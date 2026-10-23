@@ -1,230 +1,432 @@
 #!/usr/bin/env python3
 """
-Efekt: Przed i po — wersja Marzeny (v8)
-Użycie: python3 build.py <wideo.mp4> [tekst_po] [tekst_przed] [output.mp4]
+Efekt przed i po — builder HyperFrames.
+Generuje hf/index.html i assets, potem uruchamia npx hyperframes lint.
 
-Domyślne napisy:
-  po:    "Coś angażującego."
-  przed: "Zamień nudne wideo na..."
+Użycie:
+  1. python3 measure.py <wideo>   ← sprawdź klip, odczytaj STATUS
+  2. Uzupełnij blok CLIP poniżej
+  3. python3 build.py             ← generuje HTML + przetwarza wideo + lint
+  4. npx hyperframes render --output wynik.mp4 --quality looks   (w folderze hf/)
 """
 
-import sys, os, subprocess, tempfile
-import cv2
-import numpy as np
-from PIL import Image, ImageDraw, ImageFont
+import os
+import subprocess
+import sys
+import textwrap
+from pathlib import Path
 
-# ── Argumenty ─────────────────────────────────────────────────────────────────
-INPUT_VIDEO = sys.argv[1] if len(sys.argv) > 1 else None
-CAP_PO      = sys.argv[2] if len(sys.argv) > 2 else "Coś angażującego."
-CAP_PRZED   = sys.argv[3] if len(sys.argv) > 3 else "Zamień nudne wideo na..."
-OUTPUT      = sys.argv[4] if len(sys.argv) > 4 else os.path.expanduser("~/Desktop/efekt-przed-i-po.mp4")
+# ══════════════════════════════════════════════════════════════════════════════
+# CLIP — uzupełnij dla tej kursantki, potem uruchom: python3 build.py
+# ══════════════════════════════════════════════════════════════════════════════
 
-if not INPUT_VIDEO:
-    print("Użycie: python3 build.py <wideo.mp4> [tekst_po] [tekst_przed] [output.mp4]")
-    sys.exit(1)
+WIDEO       = ""                          # ścieżka do nagrania kursantki (9:16, ≥7s)
 
-# ── Stałe ─────────────────────────────────────────────────────────────────────
-W, H, FPS   = 1080, 1920, 30
-MAX_FRAMES  = 7 * FPS       # kończymy na 7 sekundzie
+NAPIS_PO    = "Coś angażującego."         # napis na lewej stronie (jasna, "po")
+NAPIS_PRZED = "Zamień nudne wideo na..."  # napis na prawej stronie (ciemna, "przed")
 
-SPT = 3.0   # linia wchodzi
-SPE = 4.2   # linia dochodzi do centrum
-HE  = 5.5   # hold koniec
-EE  = 6.7   # linia wychodzi
+LABEL_PO    = "po"                        # tekst badge na lewej stronie
+LABEL_PRZED = "przed"                     # tekst badge na prawej stronie
 
-POP_DELAY_MS  = 1000
-BADGE_Y       = 220
-CAPTION_Y     = 350
-FONT_SIZE     = 62
-CAPTION_MAX_W = 510
-HANDLE_Y_FRAC = 0.60
+KOLOR_PO    = "rgba(245, 240, 50, 0.84)" # kolor tła badge "po" (żółty)
+                                          # ciemna wersja dla badge "przed":
+KOLOR_PRZED = "rgba(22, 22, 22, 0.84)"  # domyślnie ciemny
 
-AFTER_BRIGHTNESS = -0.12
-AFTER_SATURATION = 0.6
-AFTER_CONTRAST   = 0.82
+REST_X      = "auto"    # gdzie linia czeka: "auto" = 540 (środek)
+                        # lub liczba px (np. 400 gdy twarz jest po prawej stronie)
 
-FONT_BADGE  = '/System/Library/Fonts/HelveticaNeue.ttc'
-FONT_CAP    = '/System/Library/Fonts/Avenir Next.ttc'
-BOLD_IDX    = 1
-HEAVY_IDX   = 8
+SPT         = 3.0       # kiedy linia wchodzi (sekundy); minimum 2.5, max 4.0
+TRIM_FROM   = 0.0       # od której sekundy klipu zaczynamy (0 = od początku)
 
-SKILL_DIR = os.path.dirname(os.path.abspath(__file__))
-SOUNDS_DIR = os.path.join(SKILL_DIR, "..", "..", "..", "dzwieki", "pliki")
+# ══════════════════════════════════════════════════════════════════════════════
 
-TMPDIR = tempfile.mkdtemp(prefix="przed-i-po-")
+SCRIPT_DIR = Path(__file__).parent
+HF_DIR     = SCRIPT_DIR / "hf"
+ASSETS_DIR = HF_DIR / "assets"
 
-# ── Font helpers ───────────────────────────────────────────────────────────────
-def f_badge(size):
-    return ImageFont.truetype(FONT_BADGE, size, index=BOLD_IDX)
+# Parametry przyciemnienia strony "przed"
+BEF_BRIGHTNESS = -0.12
+BEF_SATURATION = 0.6
+BEF_CONTRAST   = 0.82
 
-def f_cap(size):
-    return ImageFont.truetype(FONT_CAP, size, index=HEAVY_IDX)
 
-def text_size(txt, fnt):
-    d = ImageDraw.Draw(Image.new('RGBA', (1,1)))
-    bb = d.textbbox((0,0), txt, font=fnt)
-    return bb[2]-bb[0], bb[3]-bb[1], bb
+def run(*args, check=True, capture=True):
+    r = subprocess.run(list(args), capture_output=capture, text=True)
+    if check and r.returncode != 0:
+        print(f"BŁĄD: {' '.join(str(a) for a in args[:3])}")
+        print(r.stderr[-500:] if r.stderr else "(brak komunikatu)")
+        sys.exit(1)
+    return r
 
-# ── Badge z cieniem i obramówką ────────────────────────────────────────────────
-def make_pill(text, fg, bg, border=(255,255,255,200), font_size=36, pad_x=30, h=72):
-    fnt = f_badge(font_size)
-    tw, th, bb = text_size(text, fnt)
-    w = tw + pad_x*2
-    pad = 8
-    canvas = Image.new('RGBA', (w + pad*2, h + pad*2), (0,0,0,0))
-    d = ImageDraw.Draw(canvas)
-    d.rounded_rectangle([(pad+4, pad+4), (pad+4+w-1, pad+4+h-1)], radius=h//2, fill=(0,0,0,140))
-    d.rounded_rectangle([(pad, pad), (pad+w-1, pad+h-1)], radius=h//2, fill=bg)
-    if border:
-        d.rounded_rectangle([(pad, pad), (pad+w-1, pad+h-1)], radius=h//2, outline=border, width=3)
-    d.text((pad + pad_x - bb[0], pad + (h-th)//2 - bb[1]), text, fill=fg, font=fnt)
-    return np.array(canvas)
 
-# ── Duży napis jak u Tena (Avenir Heavy, tylko cień) ──────────────────────────
-def make_caption(text, max_w, font_size=62):
-    fnt = f_cap(font_size)
-    d0  = ImageDraw.Draw(Image.new('RGBA', (1,1)))
-    words, lines, line = text.split(), [], []
-    for w in words:
-        test = ' '.join(line + [w])
-        bb = d0.textbbox((0,0), test, font=fnt)
-        if bb[2]-bb[0] > max_w - 20 and line:
-            lines.append(' '.join(line)); line = [w]
-        else:
-            line.append(w)
-    if line: lines.append(' '.join(line))
-    lh = font_size + 14
-    total_h = lh * len(lines) + 12
-    PAD = 6
-    actual_w = max(max_w, max(text_size(ln, fnt)[0] for ln in lines))
-    img = Image.new('RGBA', (actual_w + PAD*2, total_h + PAD*2), (0,0,0,0))
-    d   = ImageDraw.Draw(img)
-    for i, ln in enumerate(lines):
-        tw, th, bb = text_size(ln, fnt)
-        x = PAD + (actual_w - tw) // 2
-        y = PAD + i * lh - bb[1]
-        d.text((x+3, y+3), ln, fill=(0,0,0,170), font=fnt)
-        d.text((x, y),     ln, fill=(255,255,255,255), font=fnt)
-    return np.array(img)
+def compute_timing(spt, rest_x):
+    spe = round(spt + 1.2, 2)   # linia dochodzi do REST_X
+    he  = round(spe + 1.3, 2)   # hold end
+    ee  = round(he  + 1.2, 2)   # linia wychodzi
+    dur = round(ee  + 0.3, 2)   # całkowity czas kompozycji
 
-# ── Koło uchwytu ───────────────────────────────────────────────────────────────
-def make_handle(r=58):
-    s = r*2
-    img = Image.new('RGBA', (s,s), (0,0,0,0))
-    d = ImageDraw.Draw(img)
-    d.ellipse([(2,2),(s-3,s-3)], fill=(255,255,255,240))
-    fnt = f_badge(30)
-    txt = "< >"
-    tw, th, bb = text_size(txt, fnt)
-    d.text(((s-tw)//2 - bb[0], (s-th)//2 - bb[1]), txt, fill=(25,25,25,255), font=fnt)
-    return np.array(img)
+    rx  = 540 if rest_x == "auto" else int(rest_x)
+    right_pct = round((1080 - rx) / 1080 * 100, 1)  # clip-path inset right %
 
-# ── Alpha compositing ──────────────────────────────────────────────────────────
-def overlay(base, img_rgba, x, y, x_min=0, x_max=W):
-    ih, iw = img_rgba.shape[:2]
-    x1, y1 = max(x_min, max(0,x)), max(0,y)
-    x2, y2 = min(x_max, min(W, x+iw)), min(H, y+ih)
-    if x1>=x2 or y1>=y2: return
-    ox1, oy1 = x1-x, y1-y
-    ox2, oy2 = ox1+(x2-x1), oy1+(y2-y1)
-    a   = img_rgba[oy1:oy2, ox1:ox2, 3:4].astype(np.float32)/255.
-    rgb = img_rgba[oy1:oy2, ox1:ox2, :3][:,:,::-1]
-    base[y1:y2, x1:x2] = (base[y1:y2, x1:x2]*(1-a) + rgb*a).astype(np.uint8)
+    # Badge "przed": startuje na środku (left=460), przesuwa się do prawej połowy
+    badge_przed_init = 460
+    badge_przed_rest = max(badge_przed_init, (rx + 1080) // 2 - 80)
+    badge_przed_dx   = badge_przed_rest - badge_przed_init
 
-# ── Przygotowanie wersji ───────────────────────────────────────────────────────
-norm_mp4 = os.path.join(TMPDIR, "norm.mp4")
-bef_mp4  = os.path.join(TMPDIR, "bef.mp4")
-raw_mp4  = os.path.join(TMPDIR, "raw.mp4")
+    # Badge "po": startuje z lewej krawędzi, wjeżdża do lewej połowy
+    badge_po_left     = max(15, rx // 2 - 80)
+    badge_po_slide_dx = -badge_po_left
 
-print("1/3 Normalizacja wideo…")
-subprocess.run([
-    "ffmpeg", "-y", "-i", INPUT_VIDEO,
-    "-vf", f"scale={W}:{H},setsar=1",
-    "-r", str(FPS), "-c:v", "libx264", "-crf", "18", "-preset", "fast", "-c:a", "aac",
-    norm_mp4
-], capture_output=True, check=True)
+    cap_fade = round(spt + 0.2, 2)
 
-print("2/3 Wersja 'przed' (przyciemniona)…")
-subprocess.run([
-    "ffmpeg", "-y", "-i", norm_mp4,
-    "-vf", f"eq=brightness={AFTER_BRIGHTNESS}:saturation={AFTER_SATURATION}:contrast={AFTER_CONTRAST}",
-    "-c:v", "libx264", "-crf", "18", "-preset", "fast",
-    bef_mp4
-], capture_output=True, check=True)
+    return {
+        "spt": spt, "spe": spe, "he": he, "ee": ee, "dur": dur,
+        "rx": rx, "right_pct": right_pct,
+        "badge_przed_init": badge_przed_init,
+        "badge_przed_dx": badge_przed_dx,
+        "badge_po_left": badge_po_left,
+        "badge_po_slide_dx": badge_po_slide_dx,
+        "cap_fade": cap_fade,
+    }
 
-# ── Assety graficzne ───────────────────────────────────────────────────────────
-badge_przed = make_pill('przed', (255,255,255,255), (22,22,22,215))
-badge_po    = make_pill('po',    (20,20,20,255),    (245,240,50,215))
-handle      = make_handle(58)
-cap_po      = make_caption(CAP_PO,    CAPTION_MAX_W, FONT_SIZE)
-cap_przed   = make_caption(CAP_PRZED, CAPTION_MAX_W, FONT_SIZE)
 
-bpw = badge_przed.shape[1]; bph = badge_przed.shape[0]
-bpow = badge_po.shape[1];   bpoh = badge_po.shape[0]
-hr = handle.shape[0] // 2
-HANDLE_Y = int(H * HANDLE_Y_FRAC)
+def prepare_assets(wideo_path, trim_from):
+    """Generuje norm.mp4 i bef.mp4 w hf/assets/ przez FFmpeg."""
+    ASSETS_DIR.mkdir(parents=True, exist_ok=True)
 
-def divx(t):
-    if t < SPT:  return 0
-    if t < SPE:  return int((t-SPT)/(SPE-SPT)*(W//2))
-    if t < HE:   return W//2
-    if t < EE:   return int(W//2 + (t-HE)/(EE-HE)*(W//2))
-    return W
+    norm = ASSETS_DIR / "norm.mp4"
+    bef  = ASSETS_DIR / "bef.mp4"
 
-# ── Render klatek ──────────────────────────────────────────────────────────────
-print("3/3 Renderowanie klatek…")
-cap_n = cv2.VideoCapture(norm_mp4)
-cap_b = cv2.VideoCapture(bef_mp4)
-total = int(cap_n.get(cv2.CAP_PROP_FRAME_COUNT))
-frames_to_render = min(total, MAX_FRAMES)
-print(f"  {frames_to_render} klatek ({frames_to_render/FPS:.1f}s)")
+    trim_args = ["-ss", str(trim_from)] if trim_from > 0 else []
 
-fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-wr = cv2.VideoWriter(raw_mp4, fourcc, FPS, (W, H))
+    # Normalizacja: 1080×1920, 30fps, pierwsze 7s
+    print("  FFmpeg: normalizacja → norm.mp4")
+    run("ffmpeg", "-y",
+        *trim_args,
+        "-i", str(wideo_path),
+        "-vf", "scale=1080:1920:force_original_aspect_ratio=decrease,"
+               "pad=1080:1920:(ow-iw)/2:(oh-ih)/2:black",
+        "-t", "7", "-r", "30",
+        "-c:v", "libx264", "-crf", "18", "-preset", "fast",
+        "-c:a", "aac", "-ar", "44100",
+        str(norm))
 
-for fi in range(frames_to_render):
-    r1, fn = cap_n.read(); r2, fb = cap_b.read()
-    if not r1 or not r2: break
-    t = fi / FPS; dx = divx(t)
-    frame = fn.copy()
-    if dx < W: frame[:, dx:] = fb[:, dx:]
-    if SPT <= t < EE and 0 < dx < W:
-        cv2.line(frame, (dx,0), (dx,H), (255,255,255), 3)
-    if SPT <= t < EE and 10 < dx < W-10:
-        overlay(frame, handle, dx-hr, HANDLE_Y-hr)
-    if t < EE:
-        bx = (W-bpw)//2 if t < SPT else (dx+W)//2 - bpw//2
-        overlay(frame, badge_przed, bx, BADGE_Y)
-    if t >= SPT:
-        bx = (W-bpow)//2 if t >= EE else dx//2 - bpow//2
-        overlay(frame, badge_po, bx, BADGE_Y)
-    if SPT <= t < EE:
-        overlay(frame, cap_po,    dx//2 - cap_po.shape[1]//2,     CAPTION_Y, x_min=0,  x_max=dx)
-        overlay(frame, cap_przed, (dx+W)//2 - cap_przed.shape[1]//2, CAPTION_Y, x_min=dx, x_max=W)
-    wr.write(frame)
-    if fi % 30 == 0: print(f"  {fi}/{frames_to_render} ({100*fi/frames_to_render:.0f}%)", flush=True)
+    # Wersja przyciemniona: "przed"
+    print("  FFmpeg: przyciemnianie → bef.mp4")
+    run("ffmpeg", "-y", "-i", str(norm),
+        "-vf", f"eq=brightness={BEF_BRIGHTNESS}:"
+               f"saturation={BEF_SATURATION}:"
+               f"contrast={BEF_CONTRAST}",
+        "-c:v", "libx264", "-crf", "18", "-preset", "fast",
+        "-an",  # bez audio w bef.mp4 (audio idzie z norm.mp4)
+        str(bef))
 
-cap_n.release(); cap_b.release(); wr.release()
+    print(f"  ✓ assets: {norm.name} ({norm.stat().st_size // 1024}KB), "
+          f"{bef.name} ({bef.stat().st_size // 1024}KB)")
 
-# ── Audio ──────────────────────────────────────────────────────────────────────
-whoosh = os.path.join(SOUNDS_DIR, "whoosh.mp3")
-pop    = os.path.join(SOUNDS_DIR, "pop.mp3")
 
-result = subprocess.run([
-    "ffmpeg", "-y",
-    "-i", raw_mp4, "-i", norm_mp4,
-    "-i", whoosh, "-i", pop,
-    "-filter_complex",
-    f"[1:a]atrim=0:{MAX_FRAMES/FPS},volume=1.0[orig];"
-    f"[2:a]adelay=3000|3000,volume=1.2[whoosh];"
-    f"[3:a]adelay={POP_DELAY_MS}|{POP_DELAY_MS},volume=1.8[pop];"
-    "[orig][whoosh][pop]amix=inputs=3:duration=first:dropout_transition=0[outa]",
-    "-map", "0:v", "-map", "[outa]",
-    "-c:v", "copy", "-c:a", "aac", "-t", str(MAX_FRAMES//FPS),
-    OUTPUT
-], capture_output=True, text=True)
+def generate_html(t, napis_po, napis_przed, label_po, label_przed,
+                  kolor_po, kolor_przed):
+    """Generuje hf/index.html z obliczonymi wartościami."""
 
-if result.returncode != 0:
-    print("BŁĄD FFmpeg:", result.stderr[-300:])
-else:
-    print(f"Gotowe → {OUTPUT}")
+    html = textwrap.dedent(f"""\
+        <!doctype html>
+        <html lang="pl" data-resolution="portrait">
+          <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=1080, height=1920" />
+            <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+            <style>
+              @font-face {{
+                font-family: "CaptionFont";
+                src: local("Avenir Next Heavy");
+                font-weight: 900;
+              }}
+
+              * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+
+              html, body {{
+                width: 1080px;
+                height: 1920px;
+                overflow: hidden;
+                background: #000;
+              }}
+
+              #root {{ position: relative; width: 100%; height: 100%; }}
+
+              .vid-fill {{
+                position: absolute; left: 0; top: 0;
+                width: 100%; height: 100%; object-fit: cover;
+              }}
+
+              #vid-po-wrap {{
+                position: absolute; inset: 0; z-index: 2;
+                clip-path: inset(0 100% 0 0);
+              }}
+
+              #divider {{
+                position: absolute; left: 0; top: 0;
+                width: 3px; height: 100%;
+                background: #fff; z-index: 10;
+              }}
+
+              #handle {{
+                position: absolute;
+                left: -58px;
+                top: calc(60% - 58px);
+                width: 116px; height: 116px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.94);
+                box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+                display: flex; align-items: center; justify-content: center;
+                z-index: 11;
+              }}
+
+              #handle-txt {{
+                font-family: Montserrat, sans-serif;
+                font-size: 28px; font-weight: 700;
+                color: #191919; letter-spacing: 2px;
+              }}
+
+              .badge {{
+                position: absolute;
+                top: 220px; height: 72px;
+                border-radius: 36px; padding: 0 30px;
+                display: flex; align-items: center;
+                font-family: Montserrat, sans-serif;
+                font-size: 36px; font-weight: 700;
+                white-space: nowrap; z-index: 20;
+                box-shadow: 4px 4px 0 rgba(0,0,0,0.45);
+              }}
+
+              #badge-przed {{
+                left: {t['badge_przed_init']}px;
+                background: {kolor_przed};
+                border: 3px solid rgba(255,255,255,0.78);
+                color: #fff;
+              }}
+
+              #badge-po {{
+                left: {t['badge_po_left']}px;
+                background: {kolor_po};
+                border: 3px solid rgba(255,255,255,0.78);
+                color: #141414;
+              }}
+
+              .caption {{
+                position: absolute; top: 350px; width: 510px;
+                font-family: "CaptionFont", Montserrat, sans-serif;
+                font-weight: 900; font-size: 62px; line-height: 1.2;
+                color: #fff; text-align: center;
+                text-shadow:
+                  0 0 12px rgba(0,0,0,0.95),
+                  3px 3px 0 rgba(0,0,0,0.85),
+                  -2px -2px 6px rgba(0,0,0,0.85),
+                  2px -2px 6px rgba(0,0,0,0.85),
+                  -2px 2px 6px rgba(0,0,0,0.85);
+                z-index: 20;
+              }}
+
+              #cap-po    {{ left: 15px; }}
+              #cap-przed {{ left: 555px; }}
+            </style>
+          </head>
+          <body>
+            <div id="root"
+              data-composition-id="main"
+              data-start="0"
+              data-duration="{t['dur']}"
+              data-width="1080"
+              data-height="1920"
+            >
+              <!-- przed: przyciemnione, pełny kadr -->
+              <video id="vid-przed" class="clip vid-fill"
+                src="assets/bef.mp4" muted playsinline
+                data-start="0" data-duration="{t['dur']}"
+                data-track-index="0" style="z-index:1">
+              </video>
+
+              <!-- po: normalne, clip-path animowany -->
+              <div id="vid-po-wrap"
+                data-layout-allow-overflow
+                style="position:absolute;inset:0;z-index:2;clip-path:inset(0 100% 0 0)">
+                <video id="vid-po" class="clip vid-fill"
+                  src="assets/norm.mp4" muted playsinline
+                  data-start="0" data-duration="{t['dur']}"
+                  data-track-index="1">
+                </video>
+              </div>
+
+              <!-- Audio: głos kursantki -->
+              <audio id="audio-orig" class="clip"
+                src="assets/norm.mp4"
+                data-start="0" data-duration="{t['dur']}" data-volume="1">
+              </audio>
+
+              <!-- Whoosh przy wejściu linii -->
+              <audio id="audio-whoosh" class="clip"
+                src="assets/whoosh.mp3"
+                data-start="{t['spt']}" data-duration="0.78" data-volume="1.2">
+              </audio>
+
+              <!-- Pop sekundę przed linią -->
+              <audio id="audio-pop" class="clip"
+                src="assets/pop.mp3"
+                data-start="{round(t['spt'] - 1, 2)}" data-duration="0.48" data-volume="1.8">
+              </audio>
+
+              <!-- Linia pionowa -->
+              <div id="divider" class="clip"
+                data-start="{t['spt']}" data-duration="{round(t['ee'] - t['spt'], 2)}"
+                data-track-index="2">
+              </div>
+
+              <!-- Koło uchwytu -->
+              <div id="handle" class="clip"
+                data-start="{t['spt']}" data-duration="{round(t['ee'] - t['spt'], 2)}"
+                data-track-index="3" data-layout-allow-overflow>
+                <span id="handle-txt">&lt; &gt;</span>
+              </div>
+
+              <!-- Badge "przed" -->
+              <div id="badge-przed" class="clip badge"
+                data-start="0" data-duration="{t['ee']}"
+                data-track-index="4">{label_przed}</div>
+
+              <!-- Badge "po" -->
+              <div id="badge-po" class="clip badge"
+                data-start="{t['spt']}" data-duration="{round(t['dur'] - t['spt'], 2)}"
+                data-track-index="5">{label_po}</div>
+
+              <!-- Napis lewa strona -->
+              <div id="cap-po" class="clip caption"
+                data-start="{t['cap_fade']}" data-duration="{round(t['ee'] - t['cap_fade'], 2)}"
+                data-track-index="6" data-layout-allow-overflow>{napis_po}</div>
+
+              <!-- Napis prawa strona -->
+              <div id="cap-przed" class="clip caption"
+                data-start="{t['cap_fade']}" data-duration="{round(t['ee'] - t['cap_fade'], 2)}"
+                data-track-index="7" data-layout-allow-overflow>{napis_przed}</div>
+            </div>
+
+            <script>
+              // Timing: SPT={t['spt']} SPE={t['spe']} HE={t['he']} EE={t['ee']} REST_X={t['rx']}
+              const tl = gsap.timeline({{ paused: true }});
+
+              // Clip-path: odsłania lewą stronę
+              tl.fromTo("#vid-po-wrap",
+                {{ clipPath: "inset(0 100% 0 0)" }},
+                {{ clipPath: "inset(0 {t['right_pct']}% 0 0)", duration: 1.2, ease: "power2.inOut" }},
+                {t['spt']})
+              .to("#vid-po-wrap",
+                {{ clipPath: "inset(0 0% 0 0)", duration: 1.2, ease: "power2.inOut" }},
+                {t['he']});
+
+              // Linia: lewy brzeg → REST_X → prawy brzeg
+              tl.fromTo("#divider",
+                {{ x: 0 }},
+                {{ x: {t['rx']}, duration: 1.2, ease: "power2.inOut" }},
+                {t['spt']})
+              .to("#divider",
+                {{ x: 1077, duration: 1.2, ease: "power2.inOut" }},
+                {t['he']});
+
+              // Uchwyt: center = GSAP x (bo CSS left=-58px)
+              tl.fromTo("#handle",
+                {{ x: 0 }},
+                {{ x: {t['rx']}, duration: 1.2, ease: "power2.inOut" }},
+                {t['spt']})
+              .to("#handle",
+                {{ x: 1077, duration: 1.2, ease: "power2.inOut" }},
+                {t['he']});
+
+              // Badge "przed": przesuwa się do prawej połowy
+              tl.fromTo("#badge-przed",
+                {{ x: 0 }},
+                {{ x: {t['badge_przed_dx']}, duration: 1.2, ease: "power2.inOut" }},
+                {t['spt']});
+
+              // Badge "po": wjeżdża z lewej
+              tl.fromTo("#badge-po",
+                {{ x: {t['badge_po_slide_dx']} }},
+                {{ x: 0, duration: 1.2, ease: "power2.inOut" }},
+                {t['spt']});
+
+              // Napisy: fade in
+              tl.fromTo("#cap-po",
+                {{ opacity: 0 }}, {{ opacity: 1, duration: 0.4, ease: "power2.out" }},
+                {t['cap_fade']});
+              tl.fromTo("#cap-przed",
+                {{ opacity: 0 }}, {{ opacity: 1, duration: 0.4, ease: "power2.out" }},
+                {t['cap_fade']});
+
+              window.__timelines["main"] = tl;
+              tl.seek(0);
+            </script>
+          </body>
+        </html>
+    """)
+    return html
+
+
+def main():
+    # ── Walidacja CLIP ──────────────────────────────────────────────────────────
+    if not WIDEO:
+        print("BŁĄD: uzupełnij WIDEO = \"<ścieżka do pliku>\" w bloku CLIP")
+        sys.exit(1)
+
+    wideo = Path(WIDEO).resolve()
+    if not wideo.exists():
+        print(f"BŁĄD: plik nie istnieje: {WIDEO}")
+        sys.exit(1)
+
+    rest_x = REST_X
+    if rest_x != "auto":
+        try:
+            rx_val = int(rest_x)
+            if not (100 <= rx_val <= 980):
+                print(f"BŁĄD: REST_X={rx_val} poza zakresem (100–980)")
+                sys.exit(1)
+        except ValueError:
+            print(f"BŁĄD: REST_X musi być \"auto\" lub liczbą (np. 400), nie: {rest_x}")
+            sys.exit(1)
+
+    # ── Oblicz timing ───────────────────────────────────────────────────────────
+    t = compute_timing(SPT, rest_x)
+
+    print(f"Budowanie efektu przed-i-po")
+    print(f"  REST_X={t['rx']}px  SPT={t['spt']}s → EE={t['ee']}s  CZAS={t['dur']}s")
+    print()
+
+    # ── Assets: norm.mp4 + bef.mp4 ─────────────────────────────────────────────
+    print("Krok 1/3: przygotowanie wideo…")
+    prepare_assets(wideo, TRIM_FROM)
+    print()
+
+    # ── Generuj index.html ──────────────────────────────────────────────────────
+    print("Krok 2/3: generowanie index.html…")
+    html = generate_html(t, NAPIS_PO, NAPIS_PRZED, LABEL_PO, LABEL_PRZED,
+                         KOLOR_PO, KOLOR_PRZED)
+    index_path = HF_DIR / "index.html"
+    index_path.write_text(html, encoding="utf-8")
+    print(f"  ✓ {index_path}")
+    print()
+
+    # ── Lint ────────────────────────────────────────────────────────────────────
+    print("Krok 3/3: npx hyperframes lint…")
+    r = subprocess.run(["npx", "hyperframes", "lint"], cwd=str(HF_DIR),
+                       capture_output=False)
+    if r.returncode != 0:
+        print("\nLint znalazł błędy — popraw je przed renderem.")
+        sys.exit(1)
+    print()
+
+    print("── Gotowe ─────────────────────────────────────────────────────────────")
+    print(f"Teraz uruchom w folderze hf/:")
+    print(f"  npx hyperframes snapshot --at 1,3.5,4.5,5.5,6.5")
+    print(f"  npx hyperframes render --output wynik.mp4 --quality looks")
+    print(f"────────────────────────────────────────────────────────────────────────")
+
+
+if __name__ == "__main__":
+    main()

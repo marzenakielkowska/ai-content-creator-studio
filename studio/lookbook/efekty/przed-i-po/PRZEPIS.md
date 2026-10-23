@@ -86,15 +86,35 @@ Animacje:
 
 ---
 
-## Jak aplikować do konkretnego momentu w rolce
+## Workflow (jak u Tena — bez iteracji)
 
-Ten efekt to **samodzielny klip 7s** — nie nakładka na istniejące nagranie. Stosuje się go jako osobny segment:
+Ten efekt to **samodzielny klip 7s** — nie nakładka. Workflow:
 
-1. Kursantka nagrywa scenę specjalnie pod efekt PRZED → PO
-2. Claude generuje `assets/norm.mp4` i `assets/bef.mp4` przez FFmpeg
-3. Claude edytuje napisy i ewentualnie kolory w `hf/index.html`
-4. Render: `npx hyperframes render --output wynik.mp4 --quality looks`
-5. Gotowy plik wchodzi jako segment do montażu rolki (krok 5 w `studio:montaz`)
+```
+1. python3 measure.py <wideo>      ← walidacja, podgląd klatki, STATUS lines
+2. Uzupełnij blok CLIP w build.py  ← tylko 2–3 pola (WIDEO, napisy)
+3. python3 build.py                ← FFmpeg + generuje hf/index.html + lint
+4. (w folderze hf/) npx hyperframes snapshot --at 1,3.5,4.5,5.5,6.5
+5. (w folderze hf/) npx hyperframes render --output wynik.mp4 --quality looks
+```
+
+Claude wypełnia tylko blok CLIP — NIE edytuje ręcznie `index.html`. `build.py` robi resztę.
+
+### Blok CLIP w build.py (co Claude zmienia per kursantka)
+
+| Pole | Co wpisać |
+|---|---|
+| `WIDEO` | ścieżka do nagrania kursantki |
+| `NAPIS_PO` | tekst na lewej (jasnej) stronie, max 4 słowa |
+| `NAPIS_PRZED` | tekst na prawej (ciemnej) stronie, max 4 słowa |
+| `LABEL_PO` | badge na lewej (domyślnie "po") |
+| `LABEL_PRZED` | badge na prawej (domyślnie "przed") |
+| `KOLOR_PO` | kolor badge "po" (domyślnie żółty) |
+| `REST_X` | gdzie czeka linia: "auto"=540 lub px gdy twarz jest z boku |
+| `SPT` | kiedy linia wchodzi (domyślnie 3.0s) |
+| `TRIM_FROM` | od której sekundy klipu zaczynamy (0 = od początku) |
+
+`build.py` automatycznie oblicza SPE, HE, EE, DURATION, clip-path %, pozycje badge'y.
 
 ---
 
