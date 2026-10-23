@@ -76,6 +76,7 @@ section.block{padding-block:56px 8px}
 .frame::before{content:"";position:absolute;left:50%;top:22%;width:38%;aspect-ratio:1;border-radius:50%;transform:translateX(-50%);background:rgba(255,240,232,.28)}
 .frame::after{content:"";position:absolute;left:50%;top:44%;width:74%;height:60%;border-radius:45% 45% 0 0;transform:translateX(-50%);background:rgba(255,240,232,.2)}
 .frame .vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.frame .vid-v{opacity:0;transition:opacity .2s ease}
 .zoom::before,.zoom::after{animation:zoomin 3s ease-in infinite}
 @keyframes zoomin{0%{scale:1}80%{scale:1.18}100%{scale:1}}
 .empty-txt{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--accent);font-weight:900;font-size:20px;letter-spacing:-.02em;padding:12px}
@@ -260,7 +261,9 @@ function buildFrame(item, typ) {
   const cls = 'frame' + (isEmpty ? ' empty' : '') + (hasZoom ? ' zoom' : '') + (item.podglad_frame ? ' ' + item.podglad_frame : '');
   let inner;
   if (item.ma_podglad) {
-    inner = `<video class="vid" src="/podglad/${typ}/${item.id}" muted playsinline loop></video>` +
+    const poster = item.ma_poster ? ` poster="/poster/${typ}/${item.id}"` : '';
+    const postImg = item.ma_poster ? `<img class="vid" src="/poster/${typ}/${item.id}" alt="">` : '';
+    inner = `${postImg}<video class="vid vid-v" src="/podglad/${typ}/${item.id}"${poster} muted playsinline loop></video>` +
             `<button class="snd" aria-pressed="false" aria-label="Włącz dźwięk">${SND}</button>`;
   } else if (isEmpty) {
     inner = `<div class="empty-txt">${item.id === 'bez-napisow' ? 'bez napisów' : ''}</div>`;
@@ -295,11 +298,21 @@ function card(item, kind, typ, maps) {
   if (item.najlepsze_do) html += `<div class="best"><b>Najlepsze do</b>${item.najlepsze_do}</div>`;
   el.innerHTML = html;
 
-  const vid = el.querySelector('.vid');
+  const vid = el.querySelector('.vid-v');
+  const frame = el.querySelector('.frame');
   if (vid) {
-    el.addEventListener('mouseenter', () => vid.play().catch(() => {}));
-    el.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
-    el.addEventListener('touchstart', () => { vid.paused ? vid.play().catch(() => {}) : vid.pause(); }, { passive: true });
+    const play = () => {
+      vid.style.opacity = '1';
+      vid.play().catch(() => {});
+    };
+    const stop = () => {
+      vid.pause();
+      vid.currentTime = 0;
+      vid.style.opacity = '0';
+    };
+    el.addEventListener('mouseenter', play);
+    el.addEventListener('mouseleave', stop);
+    el.addEventListener('touchstart', () => { vid.paused ? play() : stop(); }, { passive: true });
   }
   const sndBtn = el.querySelector('.snd');
   if (sndBtn) {

@@ -39,7 +39,11 @@ function readItems(dir, file) {
         try {
           const data = JSON.parse(fs.readFileSync(p, 'utf8'));
           if (data.status !== 'gotowy') return [];
-          return [{ ...data, ma_podglad: fs.existsSync(path.join(dir, e.name, 'podglad.mp4')) }];
+          const folderPath = path.join(dir, e.name);
+          return [{ ...data,
+            ma_podglad: fs.existsSync(path.join(folderPath, 'podglad.mp4')),
+            ma_poster:  fs.existsSync(path.join(folderPath, 'podglad.jpg')),
+          }];
         } catch { return []; }
       });
   } catch { return []; }
@@ -150,6 +154,13 @@ function startServer(port) {
     const videoM = p.match(/^\/podglad\/(napisy|efekty|gotowe)\/([^/]+)$/);
     if (videoM) {
       serveVideo(path.join(LOOKBOOK, videoM[1], videoM[2], 'podglad.mp4'), req, res);
+      return;
+    }
+
+    // Poster (thumbnail) serving
+    const posterM = p.match(/^\/poster\/(napisy|efekty|gotowe)\/([^/]+)$/);
+    if (posterM) {
+      serveStatic(path.join(LOOKBOOK, posterM[1], posterM[2], 'podglad.jpg'), res);
       return;
     }
 
