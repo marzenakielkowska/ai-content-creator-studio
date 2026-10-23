@@ -9,7 +9,15 @@
 ## Czego potrzeba
 
 ### Wideo od kursantki
-- Kursantka wycięta z tła: `npx hyperframes remove-background wideo.mp4 --output cutout.webm`
+- Kursantka wycięta z tła:
+  ```bash
+  npx hyperframes remove-background wideo.mp4 --output cutout.webm
+  ```
+  Jeśli pojawi się błąd planu — użyj lokalnego narzędzia (działa bez internetu, bez opłat):
+  ```bash
+  pip install rembg[cli]          # instalacja raz
+  rembg i wideo.mp4 cutout.webm   # wycięcie tła
+  ```
 - Format 9:16, 1080×1920
 - Bez ruchu tła (usuwa je remove-background)
 
