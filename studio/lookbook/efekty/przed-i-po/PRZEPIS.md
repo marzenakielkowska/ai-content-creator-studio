@@ -86,7 +86,7 @@ Animacje:
 
 ---
 
-## Workflow (jak u Tena — bez iteracji)
+## Workflow — bez iteracji
 
 Ten efekt to **samodzielny klip 7s** — nie nakładka. Workflow:
 
