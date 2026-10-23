@@ -40,7 +40,7 @@ h3 small{font-size:14px;color:var(--muted);font-weight:600;letter-spacing:0}
 .mode{all:unset;cursor:pointer;background:var(--surface);border:1.5px solid var(--line);border-radius:24px;padding:22px 24px;display:grid;gap:4px}
 .mode b{font-size:22px;letter-spacing:-.02em}
 .mode span{color:var(--muted);font-size:15px}
-.mode[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.mode[aria-selected="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
 .mode:focus-visible,.card:focus-visible,.chip:focus-visible,.btn:focus-visible,.link:focus-visible,.switch:focus-visible,.swatch:focus-visible,.snd-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 
 section.block{padding-block:56px 8px}
@@ -156,6 +156,16 @@ section.block{padding-block:56px 8px}
 .snd-tick{position:absolute;top:10px;right:12px;font-size:13px;font-weight:900;color:var(--accent);opacity:0}
 .snd-card[aria-pressed="true"] .snd-tick{opacity:1}
 
+/* Pasek postępu wideo */
+.prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(0,0,0,.15);opacity:0;z-index:2;transition:opacity .2s}
+.prog i{display:block;height:100%;width:0;background:var(--accent)}
+
+/* Chipy w dolnym pasku */
+#sum{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-width:0}
+.sum-chip{all:unset;cursor:pointer;font-size:13px;font-weight:700;padding:4px 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);white-space:nowrap;transition:border-color .15s,color .15s}
+.sum-chip:hover{border-color:var(--accent);color:var(--accent)}
+.sum-chip.dim{color:var(--muted);cursor:default}
+
 /* Pasek dolny */
 .bar{position:sticky;bottom:0;z-index:5;background:var(--surface);border-top:1.5px solid var(--line);margin-top:64px;padding-bottom:env(safe-area-inset-bottom,0px)}
 .bar .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding-block:14px}
@@ -179,9 +189,9 @@ section.block{padding-block:56px 8px}
     <span class="pill">Lookbook</span>
     <h1>Wybierz swój styl.</h1>
     <p class="lead">Najedź na kartę, żeby zobaczyć animowany wzór. Zaznacz to, co do Ciebie pasuje, i kliknij „Zapisz mój styl". Claude zmontuje każdy Twój film w tym stylu.</p>
-    <div class="modes" role="group" aria-label="Sposób wyboru">
-      <button class="mode" id="m-ready" aria-pressed="false"><b>Jeden gotowy styl</b><span>Jeden wybór ustala napisy, efekty, tempo i wygląd obrazu.</span></button>
-      <button class="mode" id="m-own" aria-pressed="true"><b>Skomponuj własny</b><span>Twoje napisy i Twoje efekty. Ty decydujesz, gdzie się pojawiają.</span></button>
+    <div class="modes" role="tablist" aria-label="Sposób wyboru">
+      <button class="mode" id="m-ready" role="tab" aria-selected="false" aria-controls="sec-ready"><b>Jeden gotowy styl</b><span>Jeden wybór ustala napisy, efekty, tempo i wygląd obrazu.</span></button>
+      <button class="mode" id="m-own" role="tab" aria-selected="true" aria-controls="sec-caps"><b>Skomponuj własny</b><span>Twoje napisy i Twoje efekty. Ty decydujesz, gdzie się pojawiają.</span></button>
     </div>
   </div></div>
 
@@ -264,6 +274,7 @@ function buildFrame(item, typ) {
     const poster = item.ma_poster ? ` poster="/poster/${typ}/${item.id}"` : '';
     const postImg = item.ma_poster ? `<img class="vid" src="/poster/${typ}/${item.id}" alt="">` : '';
     inner = `${postImg}<video class="vid vid-v" src="/podglad/${typ}/${item.id}"${poster} muted playsinline loop></video>` +
+            `<div class="prog"><i></i></div>` +
             `<button class="snd" aria-pressed="false" aria-label="Włącz dźwięk">${SND}</button>`;
   } else if (isEmpty) {
     inner = `<div class="empty-txt">${item.id === 'bez-napisow' ? 'bez napisów' : ''}</div>`;
@@ -301,15 +312,22 @@ function card(item, kind, typ, maps) {
   const vid = el.querySelector('.vid-v');
   const frame = el.querySelector('.frame');
   if (vid) {
+    const prog = frame && frame.querySelector('.prog');
+    const fill = prog && prog.querySelector('i');
     const play = () => {
       vid.style.opacity = '1';
+      if (prog) prog.style.opacity = '1';
       vid.play().catch(() => {});
     };
     const stop = () => {
       vid.pause();
       vid.currentTime = 0;
       vid.style.opacity = '0';
+      if (prog) { prog.style.opacity = '0'; if (fill) fill.style.width = '0'; }
     };
+    vid.addEventListener('timeupdate', () => {
+      if (vid.duration && fill) fill.style.width = (vid.currentTime / vid.duration * 100).toFixed(1) + '%';
+    });
     el.addEventListener('mouseenter', play);
     el.addEventListener('mouseleave', stop);
     el.addEventListener('touchstart', () => { vid.paused ? play() : stop(); }, { passive: true });
@@ -474,8 +492,8 @@ function sndCard(item) {
 }
 
 function render() {
-  $('#m-ready').setAttribute('aria-pressed', mode === 'ready');
-  $('#m-own').setAttribute('aria-pressed', mode === 'own');
+  $('#m-ready').setAttribute('aria-selected', mode === 'ready');
+  $('#m-own').setAttribute('aria-selected', mode === 'own');
   $('#sec-ready').hidden = mode !== 'ready';
   $('#sec-caps').hidden = mode !== 'own';
   $('#sec-fx').hidden = mode !== 'own';
@@ -514,22 +532,37 @@ function render() {
 
   const nFx = Object.keys(fx).length;
   const nSnd = snd.size;
-  let txt = 'Nic jeszcze nie wybrano', ok = false;
+  let ok = false;
+  const sumEl = $('#sum');
+  sumEl.innerHTML = '';
+
+  const addChip = (text, to, dim) => {
+    const b = document.createElement('button');
+    b.className = 'sum-chip' + (dim ? ' dim' : '');
+    b.textContent = text;
+    if (to && !dim) b.addEventListener('click', () => {
+      const sec = document.getElementById(to);
+      if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    sumEl.appendChild(b);
+  };
 
   if (mode === 'ready' && ready) {
     const el = $(`#ready-${ready}`);
-    txt = `<b>${el?.querySelector('.title')?.textContent || ready}</b> · gotowy styl`;
+    addChip((el?.querySelector('.title')?.textContent || ready) + ' · gotowy styl', 'sec-ready');
     ok = true;
   } else if (mode === 'own' && cap) {
     const el = $(`#cap-${cap}`);
-    txt = `<b>${el?.querySelector('.title')?.textContent || cap}</b>`;
-    if (nFx) txt += ` · ${nFx}${fxPlural(nFx)}` + (partsOn ? ' według części' : '');
-    if (nSnd) txt += ` · ${nSnd}${sndPlural(nSnd)}`;
+    addChip((el?.querySelector('.title')?.textContent || cap) + ' · napisy', 'sec-caps');
+    if (nFx) addChip(nFx + fxPlural(nFx) + (partsOn ? ' według części' : ''), 'sec-fx');
+    if (nSnd) addChip(nSnd + sndPlural(nSnd), 'sec-snd');
     ok = true;
   } else if (mode === 'own' && nFx) {
-    txt = 'Wybierz jeszcze styl napisów';
+    addChip('Wybierz jeszcze styl napisów', 'sec-caps', true);
+  } else {
+    addChip('Nic jeszcze nie wybrano', null, true);
   }
-  $('#sum').innerHTML = txt;
+
   $('#save').disabled = !ok;
 }
 
