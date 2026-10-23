@@ -18,17 +18,18 @@
 
 ### Przygotowanie plików assets
 Efekt używa dwóch wersji wideo:
-- `assets/norm.mp4` — wersja jasna ("po"), bezpośrednio z nagrania kursantki (przycięta do 7s, 1080×1920, 30fps)
-- `assets/bef.mp4` — ta sama wersja, tylko przyciemniona (brightness −0.12, saturation 0.6, contrast 0.82)
+- `assets/norm.mp4` — wersja "po", bezpośrednio z nagrania kursantki (przycięta do 7s, 1080×1920, 30fps)
+- `assets/bef.mp4` — wersja "przed" — generowana na jeden z dwóch sposobów (patrz niżej)
 
-Generowanie przez FFmpeg:
-```bash
-# Normalizacja do 1080x1920, 30fps, pierwsze 7 sekund
-ffmpeg -i <oryginal.mp4> -vf "scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2" -t 7 -r 30 -c:v libx264 -preset fast -crf 18 -c:a aac assets/norm.mp4
+#### Tryb 1: jedno nagranie + filtr (domyślny)
+`WIDEO_PRZED = ""` — `build.py` przyciemnia `norm.mp4` filtrem FFmpeg i zapisuje jako `bef.mp4`.
 
-# Wersja przyciemniona ("przed")
-ffmpeg -i assets/norm.mp4 -vf "eq=brightness=-0.12:saturation=0.6:contrast=0.82" -c:a copy assets/bef.mp4
-```
+Sprawdza się gdy "przed" i "po" to ta sama scena — różnica tylko w edycji, oświetleniu czy designie.
+
+#### Tryb 2: dwa nagrania (beauty, metamorfoza)
+`WIDEO_PRZED = "ścieżka/do/przed.mp4"` — `build.py` normalizuje to drugie nagranie do `bef.mp4` bez filtra.
+
+Sprawdza się gdy kursantka ma dwa osobne nagrania — np. twarz bez makijażu i z makijażem. Wtedy filtr jest niepotrzebny: kontrast jest autentyczny.
 
 Pliki dźwiękowe (`assets/whoosh.mp3`, `assets/pop.mp3`) są już w repo — nie trzeba ich generować.
 
@@ -104,7 +105,8 @@ Claude wypełnia tylko blok CLIP — NIE edytuje ręcznie `index.html`. `build.p
 
 | Pole | Co wpisać |
 |---|---|
-| `WIDEO` | ścieżka do nagrania kursantki |
+| `WIDEO` | ścieżka do nagrania kursantki (wersja "po") |
+| `WIDEO_PRZED` | opcjonalnie: drugie nagranie jako "przed" — puste = filtr ciemności, podane = prawdziwe "przed" |
 | `NAPIS_PO` | tekst na lewej (jasnej) stronie, max 4 słowa |
 | `NAPIS_PRZED` | tekst na prawej (ciemnej) stronie, max 4 słowa |
 | `LABEL_PO` | badge na lewej (domyślnie "po") |

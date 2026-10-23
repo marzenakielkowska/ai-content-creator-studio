@@ -21,6 +21,9 @@ from pathlib import Path
 # ══════════════════════════════════════════════════════════════════════════════
 
 WIDEO       = ""                          # ścieżka do nagrania kursantki (9:16, ≥7s)
+WIDEO_PRZED = ""                          # opcjonalne: drugie nagranie jako "przed"
+                                          # puste = filtr ciemności nakładany automatycznie
+                                          # podane = prawdziwe "przed" (makijaż, metamorfoza itp.)
 
 NAPIS_PO    = "Coś angażującego."         # napis na lewej stronie (jasna, "po")
 NAPIS_PRZED = "Zamień nudne wideo na..."  # napis na prawej stronie (ciemna, "przed")
@@ -90,8 +93,13 @@ def compute_timing(spt, rest_x):
     }
 
 
-def prepare_assets(wideo_path, trim_from):
-    """Generuje norm.mp4 i bef.mp4 w hf/assets/ przez FFmpeg."""
+def prepare_assets(wideo_path, wideo_przed_path, trim_from):
+    """Generuje norm.mp4 i bef.mp4 w hf/assets/ przez FFmpeg.
+
+    Tryby:
+      wideo_przed_path=None  → bef.mp4 powstaje przez przyciemnienie norm.mp4
+      wideo_przed_path=Path  → bef.mp4 to znormalizowane drugie nagranie (bez filtra)
+    """
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
 
     norm = ASSETS_DIR / "norm.mp4"
@@ -99,7 +107,7 @@ def prepare_assets(wideo_path, trim_from):
 
     trim_args = ["-ss", str(trim_from)] if trim_from > 0 else []
 
-    # Normalizacja: 1080×1920, 30fps, pierwsze 7s
+    # Normalizacja nagrania "po": 1080×1920, 30fps, pierwsze 7s
     print("  FFmpeg: normalizacja → norm.mp4")
     run("ffmpeg", "-y",
         *trim_args,
@@ -111,15 +119,27 @@ def prepare_assets(wideo_path, trim_from):
         "-c:a", "aac", "-ar", "44100",
         str(norm))
 
-    # Wersja przyciemniona: "przed"
-    print("  FFmpeg: przyciemnianie → bef.mp4")
-    run("ffmpeg", "-y", "-i", str(norm),
-        "-vf", f"eq=brightness={BEF_BRIGHTNESS}:"
-               f"saturation={BEF_SATURATION}:"
-               f"contrast={BEF_CONTRAST}",
-        "-c:v", "libx264", "-crf", "18", "-preset", "fast",
-        "-an",  # bez audio w bef.mp4 (audio idzie z norm.mp4)
-        str(bef))
+    if wideo_przed_path:
+        # Drugie nagranie: normalizacja bez filtra
+        print("  FFmpeg: normalizacja nagrania 'przed' → bef.mp4")
+        run("ffmpeg", "-y",
+            "-i", str(wideo_przed_path),
+            "-vf", "scale=1080:1920:force_original_aspect_ratio=decrease,"
+                   "pad=1080:1920:(ow-iw)/2:(oh-ih)/2:black",
+            "-t", "7", "-r", "30",
+            "-c:v", "libx264", "-crf", "18", "-preset", "fast",
+            "-an",
+            str(bef))
+    else:
+        # Filtr automatyczny: przyciemnienie norm.mp4
+        print("  FFmpeg: przyciemnianie → bef.mp4")
+        run("ffmpeg", "-y", "-i", str(norm),
+            "-vf", f"eq=brightness={BEF_BRIGHTNESS}:"
+                   f"saturation={BEF_SATURATION}:"
+                   f"contrast={BEF_CONTRAST}",
+            "-c:v", "libx264", "-crf", "18", "-preset", "fast",
+            "-an",
+            str(bef))
 
     print(f"  ✓ assets: {norm.name} ({norm.stat().st_size // 1024}KB), "
           f"{bef.name} ({bef.stat().st_size // 1024}KB)")
@@ -398,9 +418,20 @@ def main():
     print(f"  REST_X={t['rx']}px  SPT={t['spt']}s → EE={t['ee']}s  CZAS={t['dur']}s")
     print()
 
+    # ── Walidacja WIDEO_PRZED (opcjonalne) ─────────────────────────────────────
+    wideo_przed = None
+    if WIDEO_PRZED:
+        wideo_przed = Path(WIDEO_PRZED).resolve()
+        if not wideo_przed.exists():
+            print(f"BŁĄD: plik WIDEO_PRZED nie istnieje: {WIDEO_PRZED}")
+            sys.exit(1)
+
     # ── Assets: norm.mp4 + bef.mp4 ─────────────────────────────────────────────
-    print("Krok 1/3: przygotowanie wideo…")
-    prepare_assets(wideo, TRIM_FROM)
+    if wideo_przed:
+        print("Krok 1/3: przygotowanie wideo (tryb dwóch nagrań)…")
+    else:
+        print("Krok 1/3: przygotowanie wideo (tryb filtra)…")
+    prepare_assets(wideo, wideo_przed, TRIM_FROM)
     print()
 
     # ── Generuj index.html ──────────────────────────────────────────────────────
