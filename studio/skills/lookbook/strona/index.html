@@ -147,6 +147,13 @@ section.block{padding-block:56px 8px}
 .snd-tick{position:absolute;top:10px;right:12px;font-size:13px;font-weight:900;color:var(--accent);opacity:0}
 .snd-card[aria-pressed="true"] .snd-tick{opacity:1}
 
+/* Filtr kategorii efektów */
+.fx-filter{position:sticky;top:0;z-index:8;background:var(--bg);padding:10px 0 8px;margin:18px 0 0;overflow-x:auto;white-space:nowrap;scrollbar-width:none;border-bottom:1.5px solid var(--line)}
+.fx-filter::-webkit-scrollbar{display:none}
+.fx-pill{all:unset;cursor:pointer;display:inline-block;border:1.5px solid var(--line);border-radius:999px;padding:7px 18px;font-size:14px;font-weight:700;margin-right:8px;background:var(--surface);color:var(--ink);white-space:nowrap;transition:background .15s,color .15s,border-color .15s}
+.fx-pill[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fx-group{margin-top:0}
+
 /* Pasek postępu wideo */
 .prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(0,0,0,.15);opacity:0;z-index:2;transition:opacity .2s}
 .prog i{display:block;height:100%;width:0;background:var(--accent)}
@@ -258,6 +265,7 @@ section.block{padding-block:56px 8px}
         </button>
         <button class="link" id="all">Zaznacz wszystkie</button>
       </div>
+      <div id="fx-filter" class="fx-filter"></div>
       <div id="fx-cats"></div>
     </section>
 
@@ -615,12 +623,42 @@ async function init() {
     napisy.forEach(n => $('#g-caps').appendChild(card(n, 'cap', 'napisy', maps)));
 
     efektyGrupy.forEach(kat => {
+      const wrap = document.createElement('div');
+      wrap.className = 'fx-group';
+      wrap.dataset.kat = kat.id || kat.nazwa;
       const h = document.createElement('h3');
       h.innerHTML = `${kat.nazwa} <small>${kat.hint}</small>`;
       const g = document.createElement('div');
       g.className = 'grid';
       kat.efekty.forEach(e => g.appendChild(card(e, 'fx', 'efekty', maps)));
-      $('#fx-cats').append(h, g);
+      wrap.append(h, g);
+      $('#fx-cats').append(wrap);
+    });
+
+    // Filtr kategorii
+    const filterBar = $('#fx-filter');
+    const grupy = $('#fx-cats').querySelectorAll('.fx-group');
+    const wszystko = document.createElement('button');
+    wszystko.className = 'fx-pill';
+    wszystko.setAttribute('aria-pressed', 'true');
+    wszystko.textContent = 'Wszystko';
+    wszystko.onclick = () => {
+      filterBar.querySelectorAll('.fx-pill').forEach(p => p.setAttribute('aria-pressed', 'false'));
+      wszystko.setAttribute('aria-pressed', 'true');
+      grupy.forEach(g => g.hidden = false);
+    };
+    filterBar.appendChild(wszystko);
+    efektyGrupy.forEach(kat => {
+      const btn = document.createElement('button');
+      btn.className = 'fx-pill';
+      btn.setAttribute('aria-pressed', 'false');
+      btn.textContent = kat.nazwa;
+      btn.onclick = () => {
+        filterBar.querySelectorAll('.fx-pill').forEach(p => p.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+        grupy.forEach(g => { g.hidden = g.dataset.kat !== (kat.id || kat.nazwa); });
+      };
+      filterBar.appendChild(btn);
     });
 
     gotowe.forEach(s => $('#g-ready').appendChild(card(s, 'ready', 'gotowe', maps)));
