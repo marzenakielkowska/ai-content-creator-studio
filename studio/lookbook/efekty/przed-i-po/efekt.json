@@ -1,12 +1,29 @@
 {
   "id": "przed-i-po",
   "kategoria": "porownanie",
+  "typ": "standalone",
   "nazwa": "Przed i po",
-  "opis": "Pionowa linia wjeżdża od lewej (t=3s), odsłania lewą stronę jasną (\"po\") i prawą przyciemnioną (\"przed\"). Koło uchwytu <>, dwa badge, napisy nad głową, whoosh przy wejściu linii i pop przy dotknięciu ekranu.",
-  "najlepsze_do": "Transformacje, tutoriale stylizacji, porównania efektów",
+  "opis": "Pionowa linia odsłania jasną stronę po i przyciemnioną przed. Idealne na transformacje i tutoriale stylizacji.",
+  "najlepsze_do": "Stylizacja, makijaż, edycja zdjęć, metamorfozy",
   "status": "gotowy",
   "nowosc": true,
-  "podglad_html": null,
+  "podglad_html": "<div class=\"fx f-pp-d\"></div><div class=\"fx f-pp-line\"></div>",
+  "personalizacja": {
+    "kolor_po": {
+      "typ": "kolor",
+      "domyslnie": "rgba(245,240,50,0.84)",
+      "opcje": [
+        { "id": "zolty",        "kolor": "rgba(245,240,50,0.84)",  "nazwa": "Żółty" },
+        { "id": "bialy",        "kolor": "rgba(255,255,255,0.90)", "nazwa": "Biały" },
+        { "id": "rozowy",       "kolor": "rgba(255,150,190,0.85)", "nazwa": "Różowy" },
+        { "id": "mieta",        "kolor": "rgba(90,215,155,0.85)",  "nazwa": "Miętowy" },
+        { "id": "niebieski",    "kolor": "rgba(90,175,255,0.85)",  "nazwa": "Niebieski" },
+        { "id": "pomaranczowy", "kolor": "rgba(255,130,50,0.85)",  "nazwa": "Pomarańczowy" }
+      ]
+    },
+    "label_po":    { "typ": "tekst", "domyslnie": "po",    "hint": "Etykieta jasnej strony" },
+    "label_przed": { "typ": "tekst", "domyslnie": "przed", "hint": "Etykieta ciemnej strony" }
+  },
   "wymagania": {
     "wideo": "9:16, kamera nieruchoma, ta sama scena przed i po",
     "dzwieki": ["whoosh.mp3", "pop.mp3"],

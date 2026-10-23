@@ -5,11 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lookbook · AI Content Creator Studio</title>
 <style>
-/* Czcionka: Nunito z systemu, jeśli zainstalowana, lub najbliższy odpowiednik.
-   Docelowo: dodaj pliki strona/fonts/Nunito-*.woff2 i odkomentuj @font-face poniżej. */
-/* @font-face { font-family:'Nunito'; font-weight:400 900; font-display:swap;
-   src:url('fonts/Nunito-variable.woff2') format('woff2 supports variations'),
-       url('fonts/Nunito-variable.woff2') format('woff2'); } */
 :root{
   --bg:#FDF9F5; --band:#FAEFEC; --surface:#FFFCF9; --ink:#33292A; --muted:#6E5F5C;
   --accent:#A9532D; --accent-ink:#FFFFFF; --rose:#D4A895; --line:#EBD9D2;
@@ -46,7 +41,7 @@ h3 small{font-size:14px;color:var(--muted);font-weight:600;letter-spacing:0}
 .mode b{font-size:22px;letter-spacing:-.02em}
 .mode span{color:var(--muted);font-size:15px}
 .mode[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
-.mode:focus-visible,.card:focus-visible,.chip:focus-visible,.btn:focus-visible,.link:focus-visible,.switch:focus-visible,.snd:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.mode:focus-visible,.card:focus-visible,.chip:focus-visible,.btn:focus-visible,.link:focus-visible,.switch:focus-visible,.swatch:focus-visible,.snd-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 
 section.block{padding-block:56px 8px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:18px;margin-top:18px}
@@ -72,6 +67,7 @@ section.block{padding-block:56px 8px}
 .layers dt{color:var(--muted);font-weight:700}
 .layers dd{margin:0;font-weight:700}
 
+/* Frame podglądu */
 .frame{aspect-ratio:9/16;max-width:100%;border-radius:16px;overflow:hidden;position:relative;background:linear-gradient(170deg,var(--frame-b),var(--frame-a) 55%,var(--frame-c))}
 .frame.warm{background:linear-gradient(170deg,#E3B98F,#9C6A4E 55%,#4E3528)}
 .frame.bright{background:linear-gradient(170deg,#F3DCD3,#C99C8B 55%,#7C5A50)}
@@ -93,6 +89,8 @@ section.block{padding-block:56px 8px}
 .c4 i:nth-child(2){animation-delay:.3s}.c4 i:nth-child(3){animation-delay:.6s}
 .c5{top:58%;line-height:1.05}.c5 b{display:block;font-size:24px;letter-spacing:-.04em;color:#FCE3D6}.c5 small{display:block;font-size:12px;font-weight:400}
 @keyframes pop{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(1)}}
+
+/* Istniejące animacje efektów */
 .fx{position:absolute;z-index:1}
 .f1{top:16%;left:-30%;width:70%;height:12%;border-radius:12px;background:rgba(255,255,255,.85);animation:slide 2.4s ease-in-out infinite}
 @keyframes slide{0%,20%{left:-70%}45%,80%{left:15%}100%{left:110%}}
@@ -113,6 +111,23 @@ section.block{padding-block:56px 8px}
 @keyframes fly{0%,100%{transform:translateY(-10%) rotate(-6deg)}50%{transform:translateY(6%) rotate(4deg)}}
 .f9{top:10%;left:50%;translate:-50% 0;color:#fff;font-weight:900;font-size:22px;animation:pop 1.4s infinite}
 
+/* Animacja efektu Przed i po */
+.f-pp-d{position:absolute;inset:0;background:rgba(0,0,0,.42);filter:saturate(.35);z-index:1;animation:ppd 3s ease-in-out infinite}
+.f-pp-line{position:absolute;top:0;bottom:0;width:2px;background:rgba(255,255,255,.95);box-shadow:0 0 10px rgba(255,255,255,.7),0 0 2px #fff;z-index:2;animation:ppl 3s ease-in-out infinite}
+@keyframes ppd{0%,8%{clip-path:inset(0 0 0 0)}45%,65%{clip-path:inset(0 0 0 50%)}88%,100%{clip-path:inset(0 0 0 101%)}}
+@keyframes ppl{0%,8%{left:0}45%,65%{left:calc(50% - 1px)}88%,100%{left:100%}}
+
+/* Panel personalizacji efektu */
+.pers{display:grid;gap:8px;padding:10px 4px 2px;border-top:1px solid var(--line);margin-top:4px}
+.pers-row{display:flex;align-items:center;gap:10px;min-height:28px}
+.pers-lbl{font-size:12px;font-weight:700;color:var(--muted);width:46px;flex-shrink:0}
+.swatches{display:flex;gap:5px;flex-wrap:wrap}
+.swatch{all:unset;cursor:pointer;width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15);transition:outline .12s}
+.swatch[aria-pressed="true"]{outline:2px solid var(--accent);outline-offset:2px}
+.pers-inp{background:var(--surface);border:1.5px solid var(--line);border-radius:8px;padding:4px 10px;font-size:13px;font-weight:700;font-family:inherit;color:var(--ink);width:88px}
+.pers-inp:focus{outline:none;border-color:var(--accent)}
+
+/* Pasek opcji efektów */
 .fxbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin-top:26px;background:var(--surface);border:1.5px solid var(--line);border-radius:20px;padding:14px 18px}
 .switch{all:unset;cursor:pointer;display:flex;align-items:center;gap:12px;min-width:0}
 .switch .tr{flex:none;width:44px;height:26px;border-radius:999px;background:var(--line);position:relative;transition:background .2s}
@@ -127,6 +142,20 @@ section.block{padding-block:56px 8px}
 .chip{all:unset;cursor:pointer;font-size:13px;font-weight:700;padding:4px 12px;border-radius:999px;border:1.5px solid var(--rose);color:var(--accent);background:var(--surface)}
 .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 
+/* Sekcja dźwięków */
+.snd-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+.snd-card{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:8px;border-radius:20px;padding:12px 14px 14px;border:1.5px solid var(--line);background:var(--surface);position:relative}
+.snd-card[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.snd-card-top{display:flex;align-items:center;gap:8px}
+.snd-play{all:unset;cursor:pointer;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;flex:none;transition:opacity .15s}
+.snd-play:hover{opacity:.82}
+.snd-play svg{width:13px;height:13px;fill:currentColor}
+.snd-name{font-weight:800;font-size:15px;letter-spacing:-.01em;line-height:1.2}
+.snd-desc{color:var(--muted);font-size:13px;line-height:1.4}
+.snd-tick{position:absolute;top:10px;right:12px;font-size:13px;font-weight:900;color:var(--accent);opacity:0}
+.snd-card[aria-pressed="true"] .snd-tick{opacity:1}
+
+/* Pasek dolny */
 .bar{position:sticky;bottom:0;z-index:5;background:var(--surface);border-top:1.5px solid var(--line);margin-top:64px;padding-bottom:env(safe-area-inset-bottom,0px)}
 .bar .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding-block:14px}
 .sum{min-width:0;font-size:15px}
@@ -173,7 +202,7 @@ section.block{padding-block:56px 8px}
     <section class="block" id="sec-fx">
       <div class="eyebrow">Krok 2 · Efekty</div>
       <h2>Twoje efekty.</h2>
-      <p class="lead">Zaznacz tyle, ile chcesz. Claude użyje efektu tylko tam, gdzie pasuje do słów, które właśnie mówisz, więc wiele zaznaczonych efektów nie oznacza ich nadmiaru w filmie.</p>
+      <p class="lead">Zaznacz tyle, ile chcesz. Efekty na rolce Claude doda tam, gdzie pasują do treści. Efekty samodzielne (jak Przed i po) powstaną z osobnego nagrania.</p>
       <div class="fxbar">
         <button class="switch" id="parts" role="switch" aria-checked="false">
           <span class="tr"></span>
@@ -182,6 +211,13 @@ section.block{padding-block:56px 8px}
         <button class="link" id="all">Zaznacz wszystkie</button>
       </div>
       <div id="fx-cats"></div>
+    </section>
+
+    <section class="block" id="sec-snd">
+      <div class="eyebrow">Krok 3 · Dźwięki</div>
+      <h2>Twoje dźwięki.</h2>
+      <p class="lead">Zaznacz dźwięki, których lubisz używać. Claude doda je tam, gdzie pasują do ruchu i efektów. Bez zaznaczenia — Claude zdecyduje sam.</p>
+      <div class="grid snd-grid" id="g-snd"></div>
     </section>
   </div>
 </div>
@@ -201,15 +237,21 @@ section.block{padding-block:56px 8px}
 
 <script>
 let mode = 'own', ready = null, cap = null, fx = {}, partsOn = false;
+let snd = new Set();
 let allFxIds = [];
 const PARTS = [['poczatek','Początek'],['srodek','Środek'],['koniec','Koniec']];
 const SND = '<svg class="off" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6M16 9l6 6"/></svg><svg class="on" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>';
 const $ = s => document.querySelector(s);
 
-function plural(n) {
+function fxPlural(n) {
   if (n === 1) return ' efekt';
   if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) return ' efekty';
   return ' efektów';
+}
+function sndPlural(n) {
+  if (n === 1) return ' dźwięk';
+  if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) return ' dźwięki';
+  return ' dźwięków';
 }
 
 function buildFrame(item, typ) {
@@ -259,18 +301,19 @@ function card(item, kind, typ, maps) {
     el.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
     el.addEventListener('touchstart', () => { vid.paused ? vid.play().catch(() => {}) : vid.pause(); }, { passive: true });
   }
-  const snd = el.querySelector('.snd');
-  if (snd) {
-    snd.addEventListener('click', e => {
+  const sndBtn = el.querySelector('.snd');
+  if (sndBtn) {
+    sndBtn.addEventListener('click', e => {
       e.stopPropagation();
-      const on = snd.getAttribute('aria-pressed') !== 'true';
-      snd.setAttribute('aria-pressed', on);
-      snd.setAttribute('aria-label', on ? 'Wycisz' : 'Włącz dźwięk');
+      const on = sndBtn.getAttribute('aria-pressed') !== 'true';
+      sndBtn.setAttribute('aria-pressed', on);
+      sndBtn.setAttribute('aria-label', on ? 'Wycisz' : 'Włącz dźwięk');
       if (vid) vid.muted = !on;
     });
   }
 
-  if (kind === 'fx') {
+  // Panel "gdzie w filmie" — tylko dla efektów nakładkowych
+  if (kind === 'fx' && !item.personalizacja) {
     const w = document.createElement('div');
     w.className = 'where';
     w.hidden = true;
@@ -280,6 +323,7 @@ function card(item, kind, typ, maps) {
       const ch = e.target.closest('.chip');
       if (!ch) return;
       e.stopPropagation();
+      if (!Array.isArray(fx[item.id])) return;
       const set = new Set(fx[item.id] || []);
       set.has(ch.dataset.p) ? set.delete(ch.dataset.p) : set.add(ch.dataset.p);
       fx[item.id] = [...set];
@@ -288,16 +332,121 @@ function card(item, kind, typ, maps) {
     el.appendChild(w);
   }
 
+  // Panel personalizacji — dla efektów standalone (np. przed-i-po)
+  if (kind === 'fx' && item.personalizacja) {
+    const pers = document.createElement('div');
+    pers.className = 'pers';
+    pers.hidden = true;
+
+    for (const [field, cfg] of Object.entries(item.personalizacja)) {
+      const row = document.createElement('div');
+      row.className = 'pers-row';
+      const lbl = document.createElement('span');
+      lbl.className = 'pers-lbl';
+      lbl.textContent = field === 'kolor_po' ? 'Kolor' : field === 'label_po' ? '"po"' : '"przed"';
+      row.appendChild(lbl);
+
+      if (cfg.typ === 'kolor') {
+        const sw = document.createElement('div');
+        sw.className = 'swatches';
+        cfg.opcje.forEach(opt => {
+          const s = document.createElement('button');
+          s.className = 'swatch';
+          s.style.background = opt.kolor;
+          s.title = opt.nazwa;
+          s.setAttribute('aria-pressed', opt.kolor === cfg.domyslnie ? 'true' : 'false');
+          s.addEventListener('click', e => {
+            e.stopPropagation();
+            if (fx[item.id] && typeof fx[item.id] === 'object' && !Array.isArray(fx[item.id])) {
+              fx[item.id][field] = opt.kolor;
+            }
+            sw.querySelectorAll('.swatch').forEach(b => b.setAttribute('aria-pressed', b === s));
+          });
+          sw.appendChild(s);
+        });
+        row.appendChild(sw);
+      } else if (cfg.typ === 'tekst') {
+        const inp = document.createElement('input');
+        inp.className = 'pers-inp';
+        inp.value = cfg.domyslnie;
+        inp.maxLength = 14;
+        inp.placeholder = cfg.hint;
+        inp.addEventListener('click', e => e.stopPropagation());
+        inp.addEventListener('input', () => {
+          if (fx[item.id] && typeof fx[item.id] === 'object' && !Array.isArray(fx[item.id])) {
+            fx[item.id][field] = inp.value;
+          }
+        });
+        row.appendChild(inp);
+      }
+      pers.appendChild(row);
+    }
+    el.appendChild(pers);
+  }
+
   const act = () => {
-    if (kind === 'cap') cap = cap === item.id ? null : item.id;
-    else if (kind === 'fx') { fx[item.id] !== undefined ? delete fx[item.id] : (fx[item.id] = []); }
-    else ready = ready === item.id ? null : item.id;
+    if (kind === 'cap') {
+      cap = cap === item.id ? null : item.id;
+    } else if (kind === 'fx') {
+      if (fx[item.id] !== undefined) {
+        delete fx[item.id];
+      } else if (item.personalizacja) {
+        const defaults = {};
+        for (const [f, cfg] of Object.entries(item.personalizacja)) {
+          defaults[f] = cfg.domyslnie;
+        }
+        fx[item.id] = defaults;
+      } else {
+        fx[item.id] = [];
+      }
+    } else {
+      ready = ready === item.id ? null : item.id;
+    }
     render();
   };
-  el.addEventListener('click', e => { if (e.target.closest('.where,.snd')) return; act(); });
+  el.addEventListener('click', e => { if (e.target.closest('.where,.snd,.pers')) return; act(); });
   el.addEventListener('keydown', e => {
     if (e.target !== el) return;
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); act(); }
+  });
+  return el;
+}
+
+function sndCard(item) {
+  const el = document.createElement('button');
+  el.className = 'snd-card';
+  el.id = `snd-${item.id}`;
+  el.setAttribute('role', 'button');
+  el.setAttribute('aria-pressed', 'false');
+  el.innerHTML = `
+    <div class="snd-card-top">
+      <button class="snd-play" aria-label="Odtwórz ${item.nazwa}" type="button">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <span class="snd-name">${item.nazwa}</span>
+    </div>
+    <span class="snd-desc">${item.opis}</span>
+    <span class="snd-tick">✓</span>
+  `;
+
+  let audio = null;
+  const playBtn = el.querySelector('.snd-play');
+  playBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    if (!audio) audio = new Audio(`/dzwiek/${item.id}`);
+    if (audio.paused) {
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    } else {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  });
+
+  el.addEventListener('click', e => {
+    if (e.target.closest('.snd-play')) return;
+    snd.has(item.id) ? snd.delete(item.id) : snd.add(item.id);
+    render();
   });
   return el;
 }
@@ -308,6 +457,7 @@ function render() {
   $('#sec-ready').hidden = mode !== 'ready';
   $('#sec-caps').hidden = mode !== 'own';
   $('#sec-fx').hidden = mode !== 'own';
+  $('#sec-snd').hidden = mode !== 'own';
   $('#parts').setAttribute('aria-checked', partsOn);
 
   const allOn = allFxIds.length > 0 && allFxIds.every(id => fx[id] !== undefined);
@@ -323,26 +473,38 @@ function render() {
     if (!el) return;
     const on = fx[id] !== undefined;
     el.setAttribute('aria-pressed', on);
-    const w = el.querySelector('.where');
-    if (w) {
-      w.hidden = !(on && partsOn);
-      w.querySelectorAll('.chip').forEach(ch =>
-        ch.setAttribute('aria-pressed', on && (fx[id] || []).includes(ch.dataset.p)));
+
+    const where = el.querySelector('.where');
+    if (where) {
+      where.hidden = !(on && partsOn);
+      where.querySelectorAll('.chip').forEach(ch =>
+        ch.setAttribute('aria-pressed', on && Array.isArray(fx[id]) && fx[id].includes(ch.dataset.p)));
+    }
+
+    const pers = el.querySelector('.pers');
+    if (pers) {
+      pers.hidden = !on;
     }
   });
 
-  const n = Object.keys(fx).length;
+  document.querySelectorAll('[id^="snd-"]').forEach(el =>
+    el.setAttribute('aria-pressed', snd.has(el.id.slice(4))));
+
+  const nFx = Object.keys(fx).length;
+  const nSnd = snd.size;
   let txt = 'Nic jeszcze nie wybrano', ok = false;
+
   if (mode === 'ready' && ready) {
     const el = $(`#ready-${ready}`);
     txt = `<b>${el?.querySelector('.title')?.textContent || ready}</b> · gotowy styl`;
     ok = true;
   } else if (mode === 'own' && cap) {
     const el = $(`#cap-${cap}`);
-    txt = `<b>${el?.querySelector('.title')?.textContent || cap}</b> · ` +
-          (n ? n + plural(n) + (partsOn ? ' według części' : '') : 'bez efektów');
+    txt = `<b>${el?.querySelector('.title')?.textContent || cap}</b>`;
+    if (nFx) txt += ` · ${nFx}${fxPlural(nFx)}` + (partsOn ? ' według części' : '');
+    if (nSnd) txt += ` · ${nSnd}${sndPlural(nSnd)}`;
     ok = true;
-  } else if (mode === 'own' && n) {
+  } else if (mode === 'own' && nFx) {
     txt = 'Wybierz jeszcze styl napisów';
   }
   $('#sum').innerHTML = txt;
@@ -355,9 +517,15 @@ async function zapisz() {
     out = { tryb: 'gotowy', styl: ready };
   } else {
     const efekty = {};
-    for (const [k, v] of Object.entries(fx))
-      efekty[k] = partsOn && v.length ? v : 'wszedzie';
+    for (const [k, v] of Object.entries(fx)) {
+      if (v !== null && typeof v === 'object' && !Array.isArray(v)) {
+        efekty[k] = v;
+      } else {
+        efekty[k] = partsOn && Array.isArray(v) && v.length ? v : 'wszedzie';
+      }
+    }
     out = { tryb: 'wlasny', napisy: cap, efekty };
+    if (snd.size > 0) out.dzwieki = [...snd];
   }
   out.zapisano = new Date().toISOString().slice(0, 10);
 
@@ -383,10 +551,11 @@ async function zapisz() {
 
 async function init() {
   try {
-    const [napisy, efektyGrupy, gotowe] = await Promise.all([
+    const [napisy, efektyGrupy, gotowe, dzwieki] = await Promise.all([
       fetch('/api/napisy').then(r => r.json()),
       fetch('/api/efekty').then(r => r.json()),
       fetch('/api/gotowe').then(r => r.json()),
+      fetch('/api/dzwieki').then(r => r.json()).catch(() => []),
     ]);
 
     const napisyMap = Object.fromEntries(napisy.map(n => [n.id, n]));
@@ -408,6 +577,8 @@ async function init() {
 
     gotowe.forEach(s => $('#g-ready').appendChild(card(s, 'ready', 'gotowe', maps)));
 
+    dzwieki.forEach(d => $('#g-snd').appendChild(sndCard(d)));
+
     document.querySelectorAll('[data-count]').forEach(el => {
       let n = 0;
       setInterval(() => { n = (n + 7) % 100; el.textContent = n; }, 120);
@@ -416,7 +587,6 @@ async function init() {
     $('#loading').hidden = true;
     $('#app').hidden = false;
 
-    // Domyślne zaznaczenie jak w podglądzie
     if (napisyMap['biale-pod-broda']) cap = 'biale-pod-broda';
     if (efektyMap['pop-in']) fx['pop-in'] = [];
     if (efektyMap['wjazd-z-boku']) fx['wjazd-z-boku'] = [];
@@ -431,7 +601,23 @@ $('#m-own').onclick = () => { mode = 'own'; render(); };
 $('#parts').onclick = () => { partsOn = !partsOn; render(); };
 $('#all').onclick = () => {
   const allOn = allFxIds.every(id => fx[id] !== undefined);
-  if (allOn) { fx = {}; } else { allFxIds.forEach(id => { if (fx[id] === undefined) fx[id] = []; }); }
+  if (allOn) {
+    fx = {};
+  } else {
+    allFxIds.forEach(id => {
+      if (fx[id] === undefined) {
+        const efektEl = $(`#fx-${id}`);
+        if (efektEl) {
+          const persEl = efektEl.querySelector('.pers');
+          if (persEl) {
+            // standalone — nie dodajemy przez "zaznacz wszystkie"
+            return;
+          }
+        }
+        fx[id] = [];
+      }
+    });
+  }
   render();
 };
 $('#save').onclick = zapisz;

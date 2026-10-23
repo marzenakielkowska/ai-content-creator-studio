@@ -24,6 +24,9 @@ Przed każdym krokiem przeczytaj odpowiedni plik reguł:
 
 Styl kursantki (czcionka, kolory, efekty, dźwięki) pochodzi z `~/.ai-content-creator-studio/moj-styl.json`.
 
+Efekty z Lookbooka i jak je wykonać → `SK/../../lookbook/efekty/INDEX.md`
+Efekty samodzielne (np. "Przed i po") to osobne klipy — nie nakładki. Uruchom je zgodnie z INDEX.md, zanim zaczniesz montaż rolki.
+
 Jeśli plik nie istnieje — zanim cokolwiek zrobisz, zapytaj:
 
 > „Nie masz jeszcze zapisanego stylu. Jak chcesz żebym montowała?

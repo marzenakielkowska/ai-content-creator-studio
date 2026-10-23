@@ -8,6 +8,7 @@ import { exec } from 'child_process';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const STRONA = path.join(__dirname, 'strona');
 const LOOKBOOK = path.join(__dirname, '..', '..', 'lookbook');
+const DZWIEKI = path.join(__dirname, '..', '..', 'dzwieki');
 const STYL_DIR = path.join(os.homedir(), '.ai-content-creator-studio');
 const STYL_PLIK = path.join(STYL_DIR, 'moj-styl.json');
 const PORT_START = 9731;
@@ -18,6 +19,7 @@ const MIME = {
   '.js':   'text/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
   '.mp4':  'video/mp4',
+  '.mp3':  'audio/mpeg',
   '.woff2':'font/woff2',
   '.woff': 'font/woff',
   '.svg':  'image/svg+xml',
@@ -114,7 +116,7 @@ function startServer(port) {
 
     if (req.method !== 'GET') { res.writeHead(405); res.end(); return; }
 
-    // Data API
+    // Data APIs
     if (p === '/api/napisy') {
       res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
       res.end(JSON.stringify(readItems(path.join(LOOKBOOK, 'napisy'), 'styl.json')));
@@ -135,11 +137,30 @@ function startServer(port) {
       res.end(JSON.stringify(readItems(path.join(LOOKBOOK, 'gotowe'), 'gotowy.json')));
       return;
     }
+    if (p === '/api/dzwieki') {
+      const katalog = path.join(DZWIEKI, 'katalog.json');
+      try {
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(fs.readFileSync(katalog));
+      } catch { res.writeHead(500); res.end(); }
+      return;
+    }
 
     // Video streaming
     const videoM = p.match(/^\/podglad\/(napisy|efekty|gotowe)\/([^/]+)$/);
     if (videoM) {
       serveVideo(path.join(LOOKBOOK, videoM[1], videoM[2], 'podglad.mp4'), req, res);
+      return;
+    }
+
+    // Audio streaming
+    const audioM = p.match(/^\/dzwiek\/([a-z0-9_-]+)$/);
+    if (audioM) {
+      const audioPath = path.join(DZWIEKI, 'pliki', audioM[1] + '.mp3');
+      if (!audioPath.startsWith(path.join(DZWIEKI, 'pliki') + path.sep)) {
+        res.writeHead(403); res.end(); return;
+      }
+      serveStatic(audioPath, res);
       return;
     }
 
