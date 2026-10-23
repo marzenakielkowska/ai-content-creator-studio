@@ -319,7 +319,16 @@ function card(item, kind, typ, maps) {
     sndBtn.addEventListener('click', e => {
       e.stopPropagation();
       const on = sndBtn.getAttribute('aria-pressed') !== 'true';
-      sndBtn.setAttribute('aria-pressed', on);
+      if (on) {
+        document.querySelectorAll('.snd[aria-pressed="true"]').forEach(btn => {
+          if (btn === sndBtn) return;
+          btn.setAttribute('aria-pressed', 'false');
+          btn.setAttribute('aria-label', 'Włącz dźwięk');
+          const v = btn.closest('.card')?.querySelector('.vid-v');
+          if (v) v.muted = true;
+        });
+      }
+      sndBtn.setAttribute('aria-pressed', String(on));
       sndBtn.setAttribute('aria-label', on ? 'Wycisz' : 'Włącz dźwięk');
       if (vid) vid.muted = !on;
     });
