@@ -15,55 +15,95 @@ Wtyczka instaluje się przez: `claude plugin marketplace add marzenakielkowska/a
 
 ---
 
-## Co już działa (wersja 0.3.1)
+## Co już działa (wersja 0.4.0)
 
 | Skill | Komenda | Co robi |
 |---|---|---|
-| start | `/studio:start` | Instaluje narzędzia: Node, FFmpeg, HyperFrames, model mowy, przeglądarka do renderu |
+| start | `/studio:start` | Instaluje narzędzia: Node, FFmpeg, HyperFrames, model mowy, przeglądarka do renderu, Pillow i numpy; włącza automatyczne aktualizacje |
 | witaj | `/studio:witaj` | Sprawdza czy wtyczka działa |
 | lookbook | `/studio:lookbook` | Kursantka wybiera styl napisów i efektów, zapisuje do `moj-styl.json` |
 | dzwieki | `/studio:dzwieki` | Kursantka wybiera dźwięki, zapisuje do `moj-styl.json` |
+| montaz | `/studio:montaz` | Montaż rolki: 8 kroków z zatrzymaniem na OK po każdym (szczegóły niżej) |
 
-Stos techniczny: Node.js + Shell (Mac) / PowerShell (Windows). Bez Pythona, bez sudo.
-Narzędzia lądują w `~/.ai-content-studio/`. Nic nie jest instalowane systemowo.
+Stos techniczny: Node.js + Shell (Mac) / PowerShell (Windows) + Python 3 do części efektów (Pillow, numpy;
+rembg tylko na żądanie, gdy efekt tego wymaga). Bez sudo.
+
+Foldery na komputerze kursantki:
+- `~/.ai-content-studio/` — narzędzia, Pillow (`python-packages`), biblioteka wzorców (`wzorce/`)
+- `~/.ai-content-creator-studio/` — zapisany styl (`moj-styl.json`), używany przez lookbook, dzwieki i montaz
 
 ---
 
-## Co jest w budowie — skill montażu
+## Skill montażu (`studio/skills/montaz/`)
 
-Kolejny skill: `/studio:montaz` — właściwy montaż rolek. Jeszcze nie istnieje.
+Kroki w `SKILL.md`: 1 transkrypcja → 2 cięcie → 2b pozycja mówiącej w kadrze → 3 napisy → 4 grafiki →
+5 draft → 6 sprawdzenie → 7 notatki → 8a warianty próbne (opcjonalnie) → 8 finał.
 
-### Pliki już zapisane w repo (`studio/skills/montaz/`)
+Komendy skryptu (`scripts/montaz.mjs`, uruchamiane przez `montaz.sh` / `montaz.ps1`):
+`transkrypcja`, `klatki-pozycja`, `klatki-sprawdzenie`, `sprawdz-dzwiek`, `tnij`, `render`,
+`overlay-image` (Python + Pillow), `analizuj-wzorzec` / `zbadaj-wzorzec`, `zapisz-wzorzec`, `lista-wzorcow`.
 
-| Plik | Status | Co zawiera |
-|---|---|---|
-| `rules/cut.md` | ✅ gotowe | 9 zasad cięcia po polsku |
-| `rules/captions.md` | ✅ gotowe | Zasady napisów + system oznaczania słów |
-| `napisy-style.md` | ✅ gotowe | Lista 23 stylów napisów z czcionkami |
-
-### Pliki do napisania
-
-| Plik | Status |
+| Plik | Co zawiera |
 |---|---|
-| `rules/graphics.md` | ✅ gotowe | 14 zasad grafik: plan→zatwierdzenie, kolory, czas, strefa bezpieczeństwa |
-| `rules/checks.md` | ✅ gotowe | 6 defektów + tabela 4 warunków + procedura poprawek |
-| `NOTES_LOG.md` | ✅ gotowe | Dziennik uwag i przepisanych reguł, format tabeli + przykład |
-| `SKILL.md` | ✅ gotowe | 8-krokowy pipeline z zatrzymaniami na OK |
+| `rules/cut.md` | Zasady cięcia (w tym cisza wewnątrz słowa, formuła głośności) |
+| `rules/captions.md` | Zasady napisów + system oznaczania słów |
+| `rules/graphics.md` | 14 zasad grafik: plan→zatwierdzenie, kolory, czas, strefa bezpieczeństwa |
+| `rules/motion.md` | Zasady animowania warstw graficznych (GSAP, nie CSS @keyframes) |
+| `rules/checks.md` | 6 defektów + tabela 4 warunków + procedura poprawek |
+| `rules/gotchas.md` | Znane błędy HyperFrames i FFmpeg — dla Claude, kursantka go nie widzi |
+| `rules/wzorzec.md` | Pomiar filmu wzorcowego i biblioteka zapisanych wzorców |
+| `napisy-style.md` | Lista 23 stylów napisów z czcionkami |
+| `gifs.md` | Wstawianie GIF-ów do rolek |
+| `replicate.md` | Kursantka pokazuje rolkę → Claude odbudowuje styl (`styl-wzorzec.json`) |
+| `NOTES_LOG.md` | Dziennik uwag i przepisanych reguł |
+
+Gdy brak `moj-styl.json`, montaż pyta: film wzorcowy, opis słowami albo lookbook (patrz niżej).
+
+---
+
+## Lookbook (`studio/lookbook/`)
+
+- `gotowe/` — 3 gotowe zestawy: ciepły wieczór, delikatna siła, energia
+- `napisy/` — 6 stylów napisów (stare; 23 nowe czekają na prawdziwe podglądy)
+- `efekty/` — 13 efektów, opis wykonania w `efekty/INDEX.md`
+- Efekt „Przed i po” (październik 2026) ma pełne wykonanie: HyperFrames (`hf/`), `PRZEPIS.md`,
+  `measure.py`, `build.py`, podgląd wideo z dźwiękiem. To efekt samodzielny (osobny klip, nie nakładka),
+  z opcją dwóch nagrań bez filtra ciemności. Wybór koloru i etykiet usunięty z Lookbooka.
+- Dodawanie stylów: `lookbook/JAK-DODAC-STYL.md`
+
+---
+
+## Otwarte sprawy do decyzji
+
+1. **Linki do filmów wzorcowych — trzy pliki mówią co innego.**
+   - `SKILL.md` montażu: „wrzuć plik albo powiedz skąd go pobrać”
+   - `rules/wzorzec.md`: `zbadaj-wzorzec` przyjmuje bezpośredni URL do pliku MP4 (np. z Apify), pobiera
+     tymczasowo, analizuje i usuwa
+   - `replicate.md`: jeśli kursantka da link, ma sama pobrać plik — Claude nie pobiera z zewnętrznych serwisów
+
+   Decyzję podejmuje Marzena (dotyczy tego, co obiecuje kursantkom i regulaminów Instagrama/TikToka/YouTube).
+   Rozważane było też narzędzie yt-dlp. Po decyzji ujednolicić wszystkie trzy pliki.
+2. **`co-nowego.json` przy 0.4.0** opisuje tylko Lookbook, a montaż też wszedł w tej wersji.
+3. **README obiecuje „jeden folder Studio”**, a są dwa (patrz wyżej). Do wyboru: ujednolicić folder
+   (zmiana w serwer.mjs lookbooka i dźwięków + SKILL.md) albo poprawić opis w README.
+4. **README mówi, że nic nie jest instalowane w systemie**, a numpy i rembg instalują się przez
+   `pip install --user` (poza folderem Studio). Pillow trafia do folderu Studio. Do ujednolicenia.
+5. **Python nie jest instalowany przez Studio** — skrypty korzystają z `python3`, jeśli jest na komputerze.
+   Na Windowsie często go nie ma. README nie wymienia Pythona w wymaganiach.
 
 ---
 
 ## Kluczowe decyzje projektowe
 
-### Profile klientów (do zrobienia po skillach)
+### Profile klientów (do zrobienia)
 Kursantki montują też dla swoich klientów. Planowana zmiana struktury:
 - `moj-styl.json` → `profil-moj.json` (własny styl)
 - `profil-[nazwa].json` dla każdego klienta
 - `aktywny-profil.txt` — jeden plik z nazwą aktywnego profilu
 - Zmiana w `serwer.mjs` Lookbooka: przyjmuje argument `--profil <nazwa>`
 - Szacowany nakład: ~20 linii kodu
-- **Priorytet: po zbudowaniu skilla montażu**
 
-### Stan lookbooka i ścieżka kursantki — DO ZROBIENIA PÓŹNIEJ
+### Stan lookbooka i ścieżka kursantki
 
 **Teraz (wersja testowa):**
 Kursantka nie przechodzi przez lookbook przy pierwszym uruchomieniu. Gdy wpisuje `/studio:montaz` bez `moj-styl.json`, Claude pyta jak chce montować: film wzorcowy, opis słowami, albo lookbook. To pozwala testować montaż zanim lookbook będzie gotowy.
@@ -92,26 +132,29 @@ Gdy Marzena nagra i zatwierdzi style → wtedy budujemy lookbook z prawdziwymi p
 - Publikowanie na Instagram/TikTok (kursantka robi to sama po pobraniu)
 - Integracja z zewnętrznymi narzędziami do planowania postów
 
-### Warianty rolek do testowania (do zbudowania)
+### Warianty rolek do testowania
 
 Kursantka po zmontowaniu rolki może poprosić o N wersji próbnych. Claude pyta:
 > „Chcesz 3 wersje próbne z innym hookiem albo innym zestawem efektów?"
 
 Każda wersja różni się jedną rzeczą (inny hook, inne efekty, inny styl napisów). Kursantka testuje która działa najlepiej na Instagramie.
 
-**Priorytet: po ukończeniu podstawowego skilla montażu.**
+Krok 8a w `SKILL.md` montażu już to opisuje. Szczegółowy plik zasad wariantów — jeszcze nie powstał.
 
 ### Kolejność budowania
 1. ✅ Reguły grafik → checks → NOTES_LOG → SKILL.md skilla montażu
 2. ✅ Uzupełnienia do cut.md (cisza wewnątrz słowa, formuła głośności)
 3. ✅ Wykrycie pozycji mówiącej (krok 2b, layout.json)
-4. ⏳ `gotchas.md` — znane błędy HyperFrames i FFmpeg (dla Claude, nie kursantki)
-5. ⏳ `motion.md` — zasady animowania warstw graficznych
-6. ⏳ `gifs.md` — wstawianie GIF-ów do rolek
-7. ⏳ `replicate.md` — kursantka pokazuje rolkę → Claude odbudowuje styl (duża funkcja)
-8. Podglądy stylów w Lookbooku (po nagraniu testowym)
-9. Warianty rolek — szczegółowy plik zasad
-10. Profile klientów (zmiana Lookbooka)
+4. ✅ `gotchas.md` — znane błędy HyperFrames i FFmpeg
+5. ✅ `motion.md` — zasady animowania warstw graficznych
+6. ✅ `gifs.md` — wstawianie GIF-ów do rolek
+7. ✅ `replicate.md` + `wzorzec.md` — kopiowanie stylu z rolki wzorcowej, biblioteka wzorców
+8. ✅ Skrypty montażu, wersja 0.4.0
+9. ✅ Efekt „Przed i po” w Lookbooku z podglądem wideo
+10. ⏳ Ujednolicić sprawy z sekcji „Otwarte sprawy do decyzji”
+11. ⏳ Podglądy stylów w Lookbooku (po nagraniu testowym)
+12. ⏳ Warianty rolek — szczegółowy plik zasad
+13. ⏳ Profile klientów (zmiana Lookbooka)
 
 **Uwaga do gotchas.md:** To plik dla Claude — kursantka go nie widzi. Claude czyta go gdy HyperFrames lub FFmpeg zwraca błąd i stosuje znane rozwiązanie automatycznie, bez angażowania kursantki.
 
@@ -181,6 +224,7 @@ Nie budować podglądów na sucho — czekamy na nagranie testowe.
 ## ⚠️ Przed oddaniem projektu klientom
 
 Ten plik musi zostać usunięty z GitHuba zanim projekt trafi do klientów.
+Repozytorium jest publiczne, więc do tego czasu ten plik (z planami) jest widoczny dla każdego.
 
 1. `git rm KONTEKST.md`
 2. Dodaj `KONTEKST.md` do `.gitignore`
@@ -189,4 +233,4 @@ Ten plik musi zostać usunięty z GitHuba zanim projekt trafi do klientów.
 
 ---
 
-*Ostatnia aktualizacja: 2026-10-22*
+*Ostatnia aktualizacja: 2026-10-23*
