@@ -13,7 +13,9 @@
   ```bash
   npx hyperframes remove-background wideo.mp4 --output cutout.webm
   ```
-  Jeśli pojawi się błąd planu — użyj lokalnego narzędzia (działa bez internetu, bez opłat):
+  Jeśli pojawi się błąd planu — zaproponuj kursantce lokalne narzędzie i poczekaj na jej zgodę:
+  > „Potrzebuję zainstalować dodatkowe narzędzie do wycięcia tła (`rembg`, bezpłatne, działa lokalnie). Czy mogę?"
+  Po „tak":
   ```bash
   pip install rembg[cli]          # instalacja raz
   rembg i wideo.mp4 cutout.webm   # wycięcie tła
