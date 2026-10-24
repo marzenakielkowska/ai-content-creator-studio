@@ -171,6 +171,8 @@ section.block{padding-block:56px 8px}
 .sum .eyebrow{display:block;font-size:11px}
 .btn{all:unset;cursor:pointer;background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:17px;padding:14px 30px;border-radius:999px;text-align:center}
 .btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn-ghost{background:transparent;color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
+.bar-actions{display:flex;gap:12px;align-items:center;flex-shrink:0}
 #loading{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:99}
 .spinner{width:36px;height:36px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -295,7 +297,10 @@ section.block{padding-block:56px 8px}
 
 <div class="bar" id="bar"><div class="wrap">
   <div class="sum"><span class="eyebrow">Twój wybór</span><span id="sum">Nic jeszcze nie wybrano</span></div>
-  <button class="btn" id="save" disabled>Zapisz mój styl</button>
+  <div class="bar-actions">
+    <button class="btn btn-ghost" id="clear" disabled onclick="clearAll()">Wyczyść wybór</button>
+    <button class="btn" id="save" disabled>Zapisz mój styl</button>
+  </div>
 </div></div>
 
 <script>
@@ -563,6 +568,17 @@ function render() {
   }
 
   $('#save').disabled = !ok;
+  const hasAny = ready !== null || cap !== null || Object.keys(fx).length > 0 || snd.size > 0 || styl !== null;
+  $('#clear').disabled = !hasAny;
+}
+
+function clearAll() {
+  fx = {};
+  cap = null;
+  snd = new Set();
+  styl = null;
+  ready = null;
+  render();
 }
 
 async function zapisz() {
