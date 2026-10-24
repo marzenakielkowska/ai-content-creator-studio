@@ -90,6 +90,8 @@ Gdy brak `moj-styl.json`, montaż pyta: film wzorcowy, opis słowami albo lookbo
    `pip install --user` (poza folderem Studio). Pillow trafia do folderu Studio. Do ujednolicenia.
 5. **Python nie jest instalowany przez Studio** — skrypty korzystają z `python3`, jeśli jest na komputerze.
    Na Windowsie często go nie ma. README nie wymienia Pythona w wymaganiach.
+6. **README: usunąć słowo „testowa"** — gdy studio wyjdzie z fazy testów (lookbook gotowy, ścieżka
+   onboardingowa działa), usunąć „Wersja testowa." z bloku info w README.md oraz z sekcji „Stan lookbooka".
 
 ---
 
