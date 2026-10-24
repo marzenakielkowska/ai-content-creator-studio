@@ -21,7 +21,7 @@ Sprawdź, czy istnieje plik `~/.ai-content-creator-studio/moj-styl.json`. Jeśli
 
 Gdy potrzebujesz nagrania od kursantki, napisz dokładnie tak:
 
-> Wrzuć swoje nagranie tutaj — przeciągnij plik na to okno czatu albo kliknij spinacz 📎 przy polu wiadomości. Możesz od razu dopisać w jednym zdaniu, czego dotyczy klip — co ma zrobić z widzem.
+> Wrzuć swoje nagranie tutaj — przeciągnij plik na to okno czatu albo kliknij spinacz 📎 przy polu wiadomości. Zacznę od razu: najpierw transkrypcja, potem pokażę Ci plan montażu do zatwierdzenia.
 
 **Nigdy nie pisz:** „podaj ścieżkę do pliku", „wpisz ścieżkę", „podaj lokalizację pliku". Kursantka nie zna ścieżek — drag-and-drop lub spinacz to jej jedyna opcja.
 
