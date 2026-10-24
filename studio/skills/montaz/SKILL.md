@@ -11,6 +11,22 @@ Wszystkie dostępne style efektów są w `styles.md` w tym folderze. Przeczytaj 
 
 ---
 
+## Zanim zaczniesz
+
+### Styl kursantki
+
+Sprawdź, czy istnieje plik `~/.ai-content-creator-studio/moj-styl.json`. Jeśli tak — odczytaj go i powiedz kursantce jednym zdaniem co zapamiętałaś (styl efektu i napisy). Jeśli nie — zapytaj, jak chce montować: film wzorcowy, opis słowami, albo lookbook (`/studio:lookbook`).
+
+### Jak prosić o plik wideo
+
+Gdy potrzebujesz nagrania od kursantki, napisz dokładnie tak:
+
+> Wrzuć swoje nagranie tutaj — przeciągnij plik na to okno czatu albo kliknij spinacz 📎 przy polu wiadomości. Możesz od razu dopisać w jednym zdaniu, czego dotyczy klip — co ma zrobić z widzem.
+
+**Nigdy nie pisz:** „podaj ścieżkę do pliku", „wpisz ścieżkę", „podaj lokalizację pliku". Kursantka nie zna ścieżek — drag-and-drop lub spinacz to jej jedyna opcja.
+
+---
+
 ## Narzędzia
 
 - `ffmpeg` i `ffprobe` — cięcie, audio, sprawdzanie pliku
