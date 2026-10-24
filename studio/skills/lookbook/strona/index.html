@@ -554,15 +554,15 @@ function render() {
     const el = $(`#ready-${ready}`);
     addChip((el?.querySelector('.title')?.textContent || ready) + ' · gotowy styl', 'sec-ready');
     ok = true;
-  } else if (mode === 'own' && cap) {
-    const el = $(`#cap-${cap}`);
-    addChip((el?.querySelector('.title')?.textContent || cap) + ' · napisy', 'sec-caps');
+  } else if (mode === 'own' && (cap || nFx > 0)) {
+    if (cap) {
+      const el = $(`#cap-${cap}`);
+      addChip((el?.querySelector('.title')?.textContent || cap) + ' · napisy', 'sec-caps');
+    }
     if (nFx) addChip(nFx + fxPlural(nFx) + (partsOn ? ' według części' : ''), 'sec-fx');
     if (nSnd) addChip(nSnd + sndPlural(nSnd), 'sec-snd');
     if (styl) { const sel = document.getElementById('styl-' + styl); addChip((sel?.querySelector('.styl-name')?.textContent || styl) + ' · styl', 'sec-styl'); }
     ok = true;
-  } else if (mode === 'own' && nFx) {
-    addChip('Wybierz jeszcze styl napisów', 'sec-caps', true);
   } else {
     addChip('Nic jeszcze nie wybrano', null, true);
   }
