@@ -50,7 +50,12 @@ Odczytaj JSON z linii `ZAPISANO:` i powiedz kursantce, co wybrała:
 
 - `"tryb": "gotowy"`: „Zapisałam Twój styl: **[nazwa]**. Od teraz każdy film będzie montowany w tym stylu."
 - `"tryb": "wlasny"` z napisami i efektami: „Zapisałam Twój wybór: napisy **[nazwa napisów]** i [liczba] efektów. Od teraz każdy film będzie montowany w tym stylu."
+- `"tryb": "wlasny"` tylko efekty (bez napisów): „Zapisałam Twój wybór: efekt **[nazwa efektu]**, bez napisów. Od teraz każdy film będzie montowany w tym stylu."
 - `"tryb": "wlasny"` tylko napisy: „Zapisałam: napisy **[nazwa napisów]**, bez efektów."
+
+Po każdym wariancie dopisz od razu w nowej linii:
+
+> Kiedy będziesz gotowa — wrzuć swoje wideo i wpisz `/studio:montaz`. Możesz też najpierw zmienić wybór wpisując `/studio:lookbook`.
 
 Nazwy napisów i efektów możesz odczytać z plików `SK/../../lookbook/napisy/<id>/styl.json` i `SK/../../lookbook/efekty/<id>/efekt.json` (pole `nazwa`).
 
