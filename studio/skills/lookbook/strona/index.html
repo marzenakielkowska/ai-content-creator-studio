@@ -215,6 +215,20 @@ section.block{padding-block:56px 8px}
 .f-gl-chips span:nth-child(2){animation-delay:.3s}.f-gl-chips span:nth-child(3){animation-delay:.6s}
 @keyframes gl-chip{0%,15%{opacity:0;transform:scale(.8)}45%,100%{opacity:1;transform:scale(1)}}
 
+/* Odręczne strzałki */
+.f-strzalki-card{top:30%;left:14%;right:14%;background:rgba(255,255,255,.9);border-radius:8px;padding:7px 9px;box-shadow:0 2px 10px rgba(0,0,0,.15);animation:pop .8s ease-out both}
+.f-strzalki-card span{display:block;font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#333}
+.f-strzalki-card::after{content:"";display:block;height:4px;border-radius:2px;background:linear-gradient(90deg,#6C63FF,#A89CFF);margin-top:5px;width:72%}
+.f-strzalki-annot{top:10%;right:3%;width:54%;animation:strzalka-in 2.4s ease-in-out infinite}
+@keyframes strzalka-in{0%,15%{opacity:0;transform:translateX(6px)}30%,85%{opacity:1;transform:translateX(0)}100%{opacity:0}}
+/* Zoom w dok */
+.f-dok-desk{top:12%;left:8%;right:8%;bottom:34%;background:rgba(255,255,255,.08);border-radius:8px;border:1px solid rgba(255,255,255,.12)}
+.f-dok-zoom{top:12%;left:8%;right:8%;bottom:34%;border:2px solid rgba(108,99,255,.85);border-radius:8px;box-shadow:0 0 12px rgba(108,99,255,.4);animation:dok-zoom 2.8s ease-in-out infinite;pointer-events:none}
+@keyframes dok-zoom{0%,15%{transform:scale(1);opacity:0}28%,60%{transform:scale(1);opacity:1}80%,100%{transform:scale(2.6) translate(5%,28%);opacity:0}}
+.f-dok-bar{bottom:7%;left:50%;transform:translateX(-50%);display:flex;gap:4px;align-items:flex-end;background:rgba(255,255,255,.14);border-radius:10px;padding:5px 7px}
+.f-dok-bar span{width:18px;height:18px;border-radius:5px;flex:none}
+.f-dok-bounce{animation:dok-bounce 2.8s ease-in-out infinite}
+@keyframes dok-bounce{0%,35%{transform:translateY(0)}45%{transform:translateY(-12px)}55%{transform:translateY(0)}65%{transform:translateY(-6px)}75%,100%{transform:translateY(0)}}
 /* Styl wizualny — karty */
 .styl-card{background:var(--surface);border:1.5px solid var(--line);border-radius:20px;padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer}
 .styl-card[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
@@ -334,6 +348,25 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 .dekor-kolor-section{margin-top:4px}
 .dekor-kolor-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
 .dekor-kolor-row-label{font-size:12px;font-weight:700;color:var(--muted);min-width:60px}
+/* ── Płótno ── */
+.plotno-layout{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:start}
+@media(max-width:640px){.plotno-layout{grid-template-columns:1fr}}
+.plotno-preview-col{position:sticky;top:80px}
+.plotno-frame-wrap .frame{max-width:100%;margin:0}
+.pp-bg{position:absolute;inset:0;border-radius:16px;transition:background .4s ease;z-index:0}
+.pp-number{position:absolute;top:18%;left:0;right:0;text-align:center;z-index:2;font-size:clamp(28px,12vw,56px);font-weight:900;letter-spacing:-.05em;line-height:1;color:#FFFFFF;text-shadow:0 2px 12px rgba(0,0,0,.18)}
+.pp-label{position:absolute;top:42%;left:0;right:0;text-align:center;z-index:2;font-size:clamp(7px,2.5vw,12px);font-weight:700;color:rgba(255,255,255,.88);letter-spacing:.02em;padding:0 8%}
+.pp-chart{position:absolute;bottom:28%;left:10%;right:10%;height:28%;display:flex;align-items:flex-end;gap:4px;z-index:2}
+.pp-chart-bar{flex:1;border-radius:4px 4px 0 0;background:rgba(255,255,255,.75);animation:pp-bar 2s ease-out infinite}
+.pp-chart-bar.hi{background:rgba(255,255,255,.95)}
+.pp-chart-bar:nth-child(1){animation-delay:0s;--h:45%}
+.pp-chart-bar:nth-child(2){animation-delay:.18s;--h:72%}
+.pp-chart-bar:nth-child(3){animation-delay:.36s;--h:55%}
+.pp-chart-bar:nth-child(4){animation-delay:.54s;--h:88%}
+@keyframes pp-bar{0%,10%{height:0}70%,100%{height:var(--h,60%)}}
+.pp-sticker{position:absolute;bottom:10%;right:6%;width:30%;z-index:3;pointer-events:none;animation:pp-float 3s ease-in-out infinite}
+@keyframes pp-float{0%,100%{transform:translateY(0) rotate(2deg)}50%{transform:translateY(-6%) rotate(-1deg)}}
+.pp-sticker svg{width:100%;height:auto;display:block}
 .tempo-cards{display:flex;flex-direction:column;gap:10px;margin-top:4px}
 .tempo-card{all:unset;display:flex;align-items:center;gap:16px;padding:16px;border-radius:16px;border:2px solid var(--line);background:var(--surface);cursor:pointer;width:100%;box-sizing:border-box;transition:border-color .15s,background .15s}
 .tempo-card[data-active="1"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}

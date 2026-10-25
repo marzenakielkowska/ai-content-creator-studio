@@ -1,0 +1,17 @@
+{
+  "id": "zoom-w-dok",
+  "kategoria": "animowany-broll",
+  "nazwa": "Zoom w dok",
+  "opis": "Kamera wjeżdża w dok Maca, ikona podskakuje przy otwieraniu aplikacji.",
+  "najlepsze_do": "Tutoriale krok po kroku, nagrania ekranu, poradniki z Makiem",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div class=\"fx f-dok-desk\"></div><div class=\"fx f-dok-zoom\"></div><div class=\"fx f-dok-bar\"><span style='background:linear-gradient(135deg,#5AF,#06F)'></span><span class='f-dok-bounce' style='background:linear-gradient(135deg,#FA0,#F60)'></span><span style='background:linear-gradient(135deg,#6F6,#0A0)'></span><span style='background:linear-gradient(135deg,#F9A,#F36)'></span></div>",
+  "przepis": {
+    "typ": "broll-ekranowy",
+    "animacja": "zbliżenie kamery na dok, kliknięcie wybranej ikony, ikona podskakuje animacją bounce przy otwieraniu",
+    "platform": "macOS",
+    "czas_efektu_s": 2.5,
+    "opis_efektu": "Kamera powoli wjeżdża w dolną część ekranu Maca (dok), następnie kursor klika wskazaną ikonę. Ikona podskakuje charakterystycznym ruchem bounce — jak przy otwieraniu aplikacji na macOS. Sprawdza się w tutorialach krok po kroku i poradnikach z nagraniem ekranu."
+  }
+}
