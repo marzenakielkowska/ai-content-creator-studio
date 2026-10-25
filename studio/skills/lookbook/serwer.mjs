@@ -42,7 +42,8 @@ function readItems(dir, file) {
           const folderPath = path.join(dir, e.name);
           return [{ ...data,
             ma_podglad: fs.existsSync(path.join(folderPath, 'podglad.mp4')),
-            ma_poster:  fs.existsSync(path.join(folderPath, 'podglad.jpg')),
+            ma_poster:  fs.existsSync(path.join(folderPath, 'podglad.jpg')) ||
+                        fs.existsSync(path.join(folderPath, 'podglad.svg')),
           }];
         } catch { return []; }
       });
@@ -165,7 +166,10 @@ function startServer(port) {
     // Poster (thumbnail) serving
     const posterM = p.match(/^\/poster\/(napisy|efekty|gotowe)\/([^/]+)$/);
     if (posterM) {
-      serveStatic(path.join(LOOKBOOK, posterM[1], posterM[2], 'podglad.jpg'), res);
+      const base = path.join(LOOKBOOK, posterM[1], posterM[2]);
+      const jpg = path.join(base, 'podglad.jpg');
+      const svg = path.join(base, 'podglad.svg');
+      serveStatic(fs.existsSync(jpg) ? jpg : svg, res);
       return;
     }
 

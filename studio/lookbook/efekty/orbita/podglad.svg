@@ -1,0 +1,36 @@
+<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" width="360" height="640">
+  <rect width="360" height="640" fill="#faf4f5"/>
+
+  <!-- tylna karta (za postacią) -->
+  <rect x="210" y="160" width="72" height="128" rx="12" fill="rgba(201,164,174,0.22)" stroke="white" stroke-width="1.5" transform="rotate(-8,246,224)"/>
+
+  <!-- elipsa orbity pozioma -->
+  <ellipse cx="180" cy="310" rx="155" ry="60" fill="none" stroke="white" stroke-width="1.2" stroke-dasharray="10 7" opacity="0.55"/>
+
+  <!-- elipsa orbity pionowa -->
+  <ellipse cx="180" cy="310" rx="90" ry="155" fill="none" stroke="white" stroke-width="1.2" stroke-dasharray="10 7" opacity="0.4"/>
+
+  <!-- karta orbity — lewa -->
+  <rect x="14" y="256" width="60" height="107" rx="10" fill="rgba(201,164,174,0.28)" stroke="white" stroke-width="1.5"/>
+
+  <!-- karta orbity — góra -->
+  <rect x="148" y="120" width="64" height="114" rx="10" fill="rgba(201,164,174,0.28)" stroke="white" stroke-width="1.5"/>
+
+  <!-- karta orbity — prawa -->
+  <rect x="286" y="280" width="58" height="103" rx="10" fill="rgba(201,164,174,0.28)" stroke="white" stroke-width="1.5"/>
+
+  <!-- punkciki na orbicie -->
+  <circle cx="180" cy="155" r="5" fill="white" opacity="0.7"/>
+  <circle cx="335" cy="310" r="5" fill="white" opacity="0.7"/>
+  <circle cx="25"  cy="310" r="5" fill="white" opacity="0.5"/>
+  <circle cx="180" cy="465" r="5" fill="white" opacity="0.5"/>
+
+  <!-- postać — ramiona/tułów (kopuła) -->
+  <path d="M20 640 Q20 498 180 498 Q340 498 340 640 Z" fill="#c9a4ae" stroke="white" stroke-width="2.2"/>
+
+  <!-- postać — głowa -->
+  <circle cx="180" cy="434" r="66" fill="#c9a4ae" stroke="white" stroke-width="2.2"/>
+
+  <!-- przednia karta (przed postacią) -->
+  <rect x="76" y="390" width="68" height="120" rx="12" fill="rgba(201,164,174,0.35)" stroke="white" stroke-width="1.8"/>
+</svg>
