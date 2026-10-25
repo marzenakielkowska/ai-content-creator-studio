@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" width="360" height="640">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5dce6"/><stop offset="55%" stop-color="#c8909e"/><stop offset="100%" stop-color="#8a5060"/></linearGradient></defs><rect width="360" height="640" fill="url(#bg)"/>
+
+  <!-- ramka zewnętrzna (przed zoomem) -->
+  <rect x="16" y="16" width="328" height="580" rx="4" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
+  <!-- ramka wewnętrzna (po zoomie) -->
+  <rect x="55" y="75" width="250" height="440" rx="4" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.8"/>
+  <!-- narożniki zoomu -->
+  <path d="M55 75 L55 105 M55 75 L85 75" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <path d="M305 75 L305 105 M305 75 L275 75" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <path d="M55 515 L55 485 M55 515 L85 515" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <path d="M305 515 L305 485 M305 515 L275 515" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <!-- strzałki do środka -->
+  <path d="M100 200 L155 255" stroke="rgba(255,255,255,.3)" stroke-width="1.5" stroke-dasharray="5 3" stroke-linecap="round"/>
+  <path d="M260 200 L205 255" stroke="rgba(255,255,255,.3)" stroke-width="1.5" stroke-dasharray="5 3" stroke-linecap="round"/>
+
+<path d="M0 640 Q0 500 180 500 Q360 500 360 640 Z" fill="#c9a4ae" stroke="white" stroke-width="2.2"/><circle cx="180" cy="430" r="64" fill="#c9a4ae" stroke="white" stroke-width="2.2"/>
+</svg>

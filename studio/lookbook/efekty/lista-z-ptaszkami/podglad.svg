@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" width="360" height="640">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5dce6"/><stop offset="55%" stop-color="#c8909e"/><stop offset="100%" stop-color="#8a5060"/></linearGradient></defs><rect width="360" height="640" fill="url(#bg)"/>
+
+  <!-- ptaszki przy punktach -->
+  <text x="62" y="116" font-size="28" fill="white" opacity=".9">✓</text>
+  <rect x="96" y="100" width="170" height="13" rx="6.5" fill="rgba(255,255,255,.5)"/>
+  <line x1="96" y1="106" x2="266" y2="106" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+
+  <text x="62" y="164" font-size="28" fill="white" opacity=".9">✓</text>
+  <rect x="96" y="148" width="140" height="13" rx="6.5" fill="rgba(255,255,255,.5)"/>
+  <line x1="96" y1="154" x2="236" y2="154" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+
+  <text x="62" y="212" font-size="28" fill="white" opacity=".9">✓</text>
+  <rect x="96" y="196" width="155" height="13" rx="6.5" fill="rgba(255,255,255,.5)"/>
+  <line x1="96" y1="202" x2="251" y2="202" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+
+  <!-- ostatni pusty -->
+  <circle cx="75" cy="252" r="10" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.4)" stroke-width="1.5"/>
+  <rect x="96" y="245" width="130" height="13" rx="6.5" fill="rgba(255,255,255,.25)"/>
+
+<path d="M0 640 Q0 500 180 500 Q360 500 360 640 Z" fill="#c9a4ae" stroke="white" stroke-width="2.2"/><circle cx="180" cy="430" r="64" fill="#c9a4ae" stroke="white" stroke-width="2.2"/>
+</svg>

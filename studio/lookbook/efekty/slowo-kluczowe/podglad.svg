@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" width="360" height="640">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5dce6"/><stop offset="55%" stop-color="#c8909e"/><stop offset="100%" stop-color="#8a5060"/></linearGradient></defs><rect width="360" height="640" fill="url(#bg)"/>
+
+  <!-- tło tekstu mówionego – linie -->
+  <rect x="50" y="70" width="260" height="12" rx="6" fill="rgba(255,255,255,.25)"/>
+  <rect x="50" y="92" width="200" height="12" rx="6" fill="rgba(255,255,255,.2)"/>
+  <!-- podświetlone słowo kluczowe -->
+  <rect x="50" y="126" width="260" height="50" rx="10" fill="#c9a4ae" opacity=".35" stroke="white" stroke-width="1.8"/>
+  <rect x="68" y="142" width="180" height="18" rx="9" fill="white" opacity=".7"/>
+  <!-- dalszy tekst -->
+  <rect x="50" y="196" width="240" height="12" rx="6" fill="rgba(255,255,255,.2)"/>
+  <rect x="50" y="218" width="180" height="12" rx="6" fill="rgba(255,255,255,.15)"/>
+  <!-- akcent – mała iskierka przy słowie -->
+  <text x="322" y="160" font-size="20" fill="white" opacity=".8">✦</text>
+
+<path d="M0 640 Q0 500 180 500 Q360 500 360 640 Z" fill="#c9a4ae" stroke="white" stroke-width="2.2"/><circle cx="180" cy="430" r="64" fill="#c9a4ae" stroke="white" stroke-width="2.2"/>
+</svg>

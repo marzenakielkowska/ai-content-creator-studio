@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" width="360" height="640">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5dce6"/><stop offset="55%" stop-color="#c8909e"/><stop offset="100%" stop-color="#8a5060"/></linearGradient></defs><rect width="360" height="640" fill="url(#bg)"/>
+
+  <!-- telefon -->
+  <rect x="120" y="60" width="120" height="220" rx="18" fill="rgba(255,255,255,.12)" stroke="white" stroke-width="2.2"/>
+  <rect x="128" y="76" width="104" height="188" rx="10" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.3)" stroke-width=".8"/>
+  <!-- wgłębienie górne telefonu -->
+  <rect x="158" y="66" width="44" height="8" rx="4" fill="rgba(255,255,255,.35)"/>
+  <!-- treść ekranu — linie -->
+  <rect x="136" y="100" width="88" height="10" rx="5" fill="rgba(255,255,255,.45)"/>
+  <rect x="136" y="118" width="64" height="8" rx="4" fill="rgba(255,255,255,.3)"/>
+  <rect x="136" y="148" width="88" height="52" rx="6" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
+  <rect x="136" y="210" width="60" height="8" rx="4" fill="rgba(255,255,255,.25)"/>
+  <rect x="136" y="226" width="44" height="8" rx="4" fill="rgba(255,255,255,.2)"/>
+
+<path d="M0 640 Q0 500 180 500 Q360 500 360 640 Z" fill="#c9a4ae" stroke="white" stroke-width="2.2"/><circle cx="180" cy="430" r="64" fill="#c9a4ae" stroke="white" stroke-width="2.2"/>
+</svg>

@@ -1,0 +1,15 @@
+<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" width="360" height="640">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5dce6"/><stop offset="55%" stop-color="#c8909e"/><stop offset="100%" stop-color="#8a5060"/></linearGradient></defs><rect width="360" height="640" fill="url(#bg)"/>
+
+  <!-- karta 1 -->
+  <rect x="30" y="80" width="90" height="120" rx="12" fill="rgba(255,255,255,.14)" stroke="white" stroke-width="1.8" transform="rotate(-8,75,140)"/>
+  <text x="75" y="152" text-anchor="middle" font-size="40" fill="white" opacity=".7" transform="rotate(-8,75,140)">★</text>
+  <!-- karta 2 środkowa -->
+  <rect x="130" y="60" width="100" height="140" rx="14" fill="rgba(255,255,255,.2)" stroke="white" stroke-width="2"/>
+  <text x="180" y="148" text-anchor="middle" font-size="50" fill="white" opacity=".8">♥</text>
+  <!-- karta 3 -->
+  <rect x="240" y="90" width="86" height="118" rx="12" fill="rgba(255,255,255,.14)" stroke="white" stroke-width="1.8" transform="rotate(7,283,149)"/>
+  <text x="283" y="160" text-anchor="middle" font-size="38" fill="white" opacity=".7" transform="rotate(7,283,149)">✦</text>
+
+<path d="M0 640 Q0 500 180 500 Q360 500 360 640 Z" fill="#c9a4ae" stroke="white" stroke-width="2.2"/><circle cx="180" cy="430" r="64" fill="#c9a4ae" stroke="white" stroke-width="2.2"/>
+</svg>

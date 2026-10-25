@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" width="360" height="640">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5dce6"/><stop offset="55%" stop-color="#c8909e"/><stop offset="100%" stop-color="#8a5060"/></linearGradient></defs><rect width="360" height="640" fill="url(#bg)"/>
+
+  <!-- osie wykresu -->
+  <line x1="50" y1="360" x2="50" y2="70" stroke="rgba(255,255,255,.35)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="50" y1="360" x2="320" y2="360" stroke="rgba(255,255,255,.35)" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- siatka pozioma -->
+  <line x1="50" y1="280" x2="320" y2="280" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+  <line x1="50" y1="200" x2="320" y2="200" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+  <line x1="50" y1="120" x2="320" y2="120" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+  <!-- słupki rosnące -->
+  <rect x="70"  y="290" width="40" height="70" rx="6" fill="#c9a4ae" stroke="white" stroke-width="1.5" opacity=".8"/>
+  <rect x="124" y="240" width="40" height="120" rx="6" fill="#c9a4ae" stroke="white" stroke-width="1.5" opacity=".85"/>
+  <rect x="178" y="180" width="40" height="180" rx="6" fill="#c9a4ae" stroke="white" stroke-width="1.8" opacity=".9"/>
+  <rect x="232" y="110" width="40" height="250" rx="6" fill="#c9a4ae" stroke="white" stroke-width="2"/>
+  <!-- strzałka trendu -->
+  <path d="M78 300 Q148 250 200 185 Q240 130 258 115" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
+  <path d="M248 108 L262 112 L260 127" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+
+<path d="M0 640 Q0 500 180 500 Q360 500 360 640 Z" fill="#c9a4ae" stroke="white" stroke-width="2.2"/><circle cx="180" cy="430" r="64" fill="#c9a4ae" stroke="white" stroke-width="2.2"/>
+</svg>

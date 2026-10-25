@@ -1,0 +1,20 @@
+<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" width="360" height="640">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5dce6"/><stop offset="55%" stop-color="#c8909e"/><stop offset="100%" stop-color="#8a5060"/></linearGradient></defs><rect width="360" height="640" fill="url(#bg)"/>
+
+  <!-- telefon wysuwający się z prawej -->
+  <!-- lekko wychodzi za krawędź, sugeruje ruch -->
+  <rect x="160" y="50" width="170" height="330" rx="24" fill="rgba(255,255,255,.15)" stroke="white" stroke-width="2.4"/>
+  <rect x="170" y="68" width="150" height="296" rx="14" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+  <!-- wgłębienie -->
+  <rect x="218" y="57" width="66" height="10" rx="5" fill="rgba(255,255,255,.35)"/>
+  <!-- treść ekranu -->
+  <rect x="180" y="98" width="130" height="80" rx="8" fill="rgba(255,255,255,.12)"/>
+  <rect x="180" y="192" width="130" height="12" rx="6" fill="rgba(255,255,255,.35)"/>
+  <rect x="180" y="212" width="96" height="10" rx="5" fill="rgba(255,255,255,.25)"/>
+  <rect x="180" y="244" width="130" height="44" rx="10" fill="rgba(255,255,255,.12)"/>
+  <!-- strzałka wjazdu -->
+  <path d="M60 215 L140 215" stroke="white" stroke-width="2" stroke-dasharray="6 4" opacity=".5" stroke-linecap="round"/>
+  <path d="M128 205 L148 215 L128 225" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+
+<path d="M0 640 Q0 500 180 500 Q360 500 360 640 Z" fill="#c9a4ae" stroke="white" stroke-width="2.2"/><circle cx="180" cy="430" r="64" fill="#c9a4ae" stroke="white" stroke-width="2.2"/>
+</svg>

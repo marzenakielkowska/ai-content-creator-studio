@@ -1,0 +1,14 @@
+<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" width="360" height="640">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5dce6"/><stop offset="55%" stop-color="#c8909e"/><stop offset="100%" stop-color="#8a5060"/></linearGradient></defs><rect width="360" height="640" fill="url(#bg)"/>
+
+  <!-- tło cyfry -->
+  <circle cx="180" cy="200" r="110" fill="rgba(255,255,255,.1)" stroke="white" stroke-width="2"/>
+  <!-- duża cyfra -->
+  <text x="180" y="250" text-anchor="middle" font-size="130" font-weight="900" fill="white" opacity=".9" font-family="system-ui,sans-serif">3</text>
+  <!-- małe kółka odliczania -->
+  <circle cx="100" cy="370" r="16" fill="rgba(255,255,255,.3)" stroke="white" stroke-width="1.5"/>
+  <circle cx="180" cy="370" r="16" fill="rgba(255,255,255,.5)" stroke="white" stroke-width="1.5"/>
+  <circle cx="260" cy="370" r="16" fill="rgba(255,255,255,.15)" stroke="white" stroke-width="1.5"/>
+
+<path d="M0 640 Q0 500 180 500 Q360 500 360 640 Z" fill="#c9a4ae" stroke="white" stroke-width="2.2"/><circle cx="180" cy="430" r="64" fill="#c9a4ae" stroke="white" stroke-width="2.2"/>
+</svg>

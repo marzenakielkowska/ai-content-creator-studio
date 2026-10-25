@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" width="360" height="640">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5dce6"/><stop offset="55%" stop-color="#c8909e"/><stop offset="100%" stop-color="#8a5060"/></linearGradient></defs><rect width="360" height="640" fill="url(#bg)"/>
+
+  <!-- duża karta-ramka rolki -->
+  <rect x="60" y="60" width="240" height="320" rx="18" fill="rgba(255,255,255,.1)" stroke="white" stroke-width="2.2"/>
+  <!-- pasek górny karty -->
+  <rect x="60" y="60" width="240" height="50" rx="18" fill="rgba(255,255,255,.15)"/>
+  <rect x="60" y="90" width="240" height="20" fill="rgba(255,255,255,.08)"/>
+  <!-- awatar w karcie -->
+  <circle cx="88" cy="85" r="18" fill="rgba(255,255,255,.3)" stroke="white" stroke-width="1.4"/>
+  <!-- linie tekstu w karcie -->
+  <rect x="112" y="78" width="100" height="9" rx="4.5" fill="rgba(255,255,255,.45)"/>
+  <rect x="112" y="92" width="70" height="7" rx="3.5" fill="rgba(255,255,255,.3)"/>
+  <!-- miniatura wideo w karcie -->
+  <rect x="78" y="126" width="204" height="230" rx="10" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+  <!-- play button -->
+  <circle cx="180" cy="241" r="28" fill="rgba(255,255,255,.2)" stroke="white" stroke-width="1.8"/>
+  <polygon points="172,230 172,252 196,241" fill="white" opacity=".8"/>
+
+<path d="M0 640 Q0 500 180 500 Q360 500 360 640 Z" fill="#c9a4ae" stroke="white" stroke-width="2.2"/><circle cx="180" cy="430" r="64" fill="#c9a4ae" stroke="white" stroke-width="2.2"/>
+</svg>

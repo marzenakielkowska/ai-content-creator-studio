@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" width="360" height="640">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5dce6"/><stop offset="55%" stop-color="#c8909e"/><stop offset="100%" stop-color="#8a5060"/></linearGradient></defs><rect width="360" height="640" fill="url(#bg)"/>
+
+  <!-- element wjeżdżający z prawej – karta -->
+  <rect x="130" y="80" width="210" height="280" rx="18" fill="rgba(255,255,255,.16)" stroke="white" stroke-width="2"/>
+  <!-- treść karty -->
+  <rect x="150" y="108" width="170" height="100" rx="10" fill="rgba(255,255,255,.12)"/>
+  <rect x="150" y="222" width="170" height="13" rx="6.5" fill="rgba(255,255,255,.4)"/>
+  <rect x="150" y="244" width="120" height="11" rx="5.5" fill="rgba(255,255,255,.28)"/>
+  <rect x="150" y="264" width="140" height="11" rx="5.5" fill="rgba(255,255,255,.22)"/>
+  <!-- strzałki ruchu z prawej strony -->
+  <path d="M30 220 L110 220" stroke="rgba(255,255,255,.5)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="8 5"/>
+  <path d="M98 208 L118 220 L98 232" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- cień głębi -->
+  <rect x="120" y="90" width="18" height="260" rx="9" fill="rgba(0,0,0,.1)"/>
+
+<path d="M0 640 Q0 500 180 500 Q360 500 360 640 Z" fill="#c9a4ae" stroke="white" stroke-width="2.2"/><circle cx="180" cy="430" r="64" fill="#c9a4ae" stroke="white" stroke-width="2.2"/>
+</svg>

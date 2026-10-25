@@ -1,0 +1,18 @@
+<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" width="360" height="640">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5dce6"/><stop offset="55%" stop-color="#c8909e"/><stop offset="100%" stop-color="#8a5060"/></linearGradient></defs><rect width="360" height="640" fill="url(#bg)"/>
+
+  <!-- kółko profilu -->
+  <circle cx="180" cy="130" r="66" fill="rgba(255,255,255,.15)" stroke="white" stroke-width="2.5"/>
+  <circle cx="180" cy="130" r="52" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+  <!-- badge LIVE -->
+  <rect x="148" y="182" width="64" height="22" rx="11" fill="#e05070" stroke="white" stroke-width="1.5"/>
+  <text x="180" y="197" text-anchor="middle" font-size="12" font-weight="900" fill="white" letter-spacing="2" font-family="system-ui">LIVE</text>
+  <!-- linia obserwujących -->
+  <rect x="80" y="225" width="200" height="12" rx="6" fill="rgba(255,255,255,.35)"/>
+  <rect x="110" y="244" width="140" height="10" rx="5" fill="rgba(255,255,255,.2)"/>
+  <!-- przycisk CTA -->
+  <rect x="80" y="268" width="200" height="44" rx="22" fill="white" opacity=".9"/>
+  <rect x="90" y="282" width="130" height="16" rx="8" fill="#c9a4ae" opacity=".7"/>
+
+<path d="M0 640 Q0 500 180 500 Q360 500 360 640 Z" fill="#c9a4ae" stroke="white" stroke-width="2.2"/><circle cx="180" cy="430" r="64" fill="#c9a4ae" stroke="white" stroke-width="2.2"/>
+</svg>

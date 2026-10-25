@@ -1,0 +1,22 @@
+<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" width="360" height="640">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5dce6"/><stop offset="55%" stop-color="#c8909e"/><stop offset="100%" stop-color="#8a5060"/></linearGradient></defs><rect width="360" height="640" fill="url(#bg)"/>
+
+  <!-- siatka miniatur 3×3 -->
+  <rect x="30" y="55" width="94" height="94" rx="8" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+  <rect x="134" y="55" width="94" height="94" rx="8" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+  <rect x="238" y="55" width="94" height="94" rx="8" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+  <rect x="30" y="159" width="94" height="94" rx="8" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+  <rect x="134" y="159" width="94" height="94" rx="8" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+  <rect x="238" y="159" width="94" height="94" rx="8" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+  <rect x="30" y="263" width="94" height="94" rx="8" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+  <rect x="134" y="263" width="94" height="94" rx="8" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+  <rect x="238" y="263" width="94" height="94" rx="8" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+  <!-- kilka ma "zdjęcie" – jaśniejszy blok wewnątrz -->
+  <rect x="38" y="63" width="78" height="78" rx="5" fill="rgba(255,255,255,.18)"/>
+  <rect x="246" y="63" width="78" height="78" rx="5" fill="rgba(255,255,255,.18)"/>
+  <rect x="142" y="167" width="78" height="78" rx="5" fill="rgba(255,255,255,.18)"/>
+  <rect x="38" y="271" width="78" height="78" rx="5" fill="rgba(255,255,255,.18)"/>
+  <rect x="246" y="271" width="78" height="78" rx="5" fill="rgba(255,255,255,.18)"/>
+
+<path d="M0 640 Q0 500 180 500 Q360 500 360 640 Z" fill="#c9a4ae" stroke="white" stroke-width="2.2"/><circle cx="180" cy="430" r="64" fill="#c9a4ae" stroke="white" stroke-width="2.2"/>
+</svg>

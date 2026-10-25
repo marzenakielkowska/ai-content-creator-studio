@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" width="360" height="640">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5dce6"/><stop offset="55%" stop-color="#c8909e"/><stop offset="100%" stop-color="#8a5060"/></linearGradient></defs><rect width="360" height="640" fill="url(#bg)"/>
+
+  <!-- lewa strona (ciemna – "przed") -->
+  <rect x="0" y="0" width="180" height="640" fill="rgba(100,60,70,.35)"/>
+  <!-- prawa strona (jasna – "po") -->
+  <rect x="180" y="0" width="180" height="640" fill="rgba(255,255,255,.08)"/>
+  <!-- linia podziału -->
+  <line x1="180" y1="0" x2="180" y2="640" stroke="white" stroke-width="3"/>
+  <!-- uchwyt na linii -->
+  <circle cx="180" cy="260" r="22" fill="white" opacity=".9"/>
+  <path d="M164 260 L156 260 M170 252 L156 260 L170 268" stroke="#c9a4ae" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M196 260 L204 260 M190 252 L204 260 L190 268" stroke="#c9a4ae" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- etykiety -->
+  <rect x="20" y="85" width="120" height="22" rx="11" fill="rgba(255,255,255,.2)" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+  <rect x="34" y="92" width="80" height="10" rx="5" fill="rgba(255,255,255,.4)"/>
+  <rect x="200" y="85" width="130" height="22" rx="11" fill="rgba(255,255,255,.25)" stroke="rgba(255,255,255,.35)" stroke-width="1"/>
+  <rect x="214" y="92" width="90" height="10" rx="5" fill="rgba(255,255,255,.5)"/>
+
+<path d="M0 640 Q0 500 180 500 Q360 500 360 640 Z" fill="#c9a4ae" stroke="white" stroke-width="2.2"/><circle cx="180" cy="430" r="64" fill="#c9a4ae" stroke="white" stroke-width="2.2"/>
+</svg>
