@@ -318,6 +318,11 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 .fmini-name{font-size:11px;font-weight:700;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .fmini-role{font-size:10px;color:var(--muted);font-weight:600}
 .fonts-mini-empty{font-size:11px;color:var(--muted);padding:4px 0;font-style:italic}
+.reset-link{background:none;border:none;padding:0;font-size:11px;color:var(--accent);font-weight:700;cursor:pointer;text-decoration:underline;opacity:.7}
+.reset-link:hover{opacity:1}
+.dekor-kolor-section{margin-top:4px}
+.dekor-kolor-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.dekor-kolor-row-label{font-size:12px;font-weight:700;color:var(--muted);min-width:60px}
 </style>
 </head>
 <body>
@@ -390,11 +395,41 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
             </div>
           </div>
           <div class="fonts-mini" id="kolor-fonts-mini"></div>
+          <div class="dekor-kolor-section">
+            <span class="kolor-group-label kolor-rows-label" style="margin-top:14px">Styl tekstu</span>
+            <div class="dekor-kolor-row">
+              <span class="dekor-kolor-row-label">Napisy</span>
+              <div class="dekor-chips" id="dekor-napisy-chips">
+                <button class="dekor-chip" data-rola="napisy" data-val="bez">Bez</button>
+                <button class="dekor-chip" data-rola="napisy" data-val="cien">Cień</button>
+                <button class="dekor-chip" data-rola="napisy" data-val="obramowka">Obramówka</button>
+              </div>
+              <div class="dekor-kolor-wrap" id="dekor-napisy-kolor-wrap">
+                <label for="dekor-napisy-kolor">Kolor</label>
+                <input type="color" class="dekor-kolor" id="dekor-napisy-kolor" value="#000000">
+              </div>
+            </div>
+            <div class="dekor-kolor-row">
+              <span class="dekor-kolor-row-label">Nagłówek</span>
+              <div class="dekor-chips" id="dekor-naglowek-chips">
+                <button class="dekor-chip" data-rola="naglowek" data-val="bez">Bez</button>
+                <button class="dekor-chip" data-rola="naglowek" data-val="cien">Cień</button>
+                <button class="dekor-chip" data-rola="naglowek" data-val="obramowka">Obramówka</button>
+              </div>
+              <div class="dekor-kolor-wrap" id="dekor-naglowek-kolor-wrap">
+                <label for="dekor-naglowek-kolor">Kolor</label>
+                <input type="color" class="dekor-kolor" id="dekor-naglowek-kolor" value="#000000">
+              </div>
+            </div>
+          </div>
         </div>
         <div>
           <span class="kolor-group-label">Palety</span>
           <div class="kolor-palety" id="g-palety"></div>
-          <span class="kolor-group-label kolor-rows-label">Twoje kolory</span>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:28px;margin-bottom:10px">
+            <span class="kolor-group-label" style="margin:0">Twoje kolory</span>
+            <button id="btn-reset-kolory" class="reset-link" onclick="kolory={...KOLORY_DEFAULT};paletaAktywna=null;renderKolory();render()">Wyczyść</button>
+          </div>
           <div class="kolor-rows">
             <div class="kolor-row">
               <div class="kolor-row-info"><span class="kolor-row-name">Napisy</span><span class="kolor-row-desc">tekst mówiony</span></div>
@@ -486,32 +521,6 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
                 <span class="suwak-edge">duże</span>
               </div>
             </div>
-            <div class="suwak-row">
-              <div class="suwak-header"><span class="suwak-name">Napisy — styl tekstu</span></div>
-              <p class="suwak-desc">efekt nałożony na czcionkę napisów</p>
-              <div class="dekor-chips" id="dekor-napisy-chips">
-                <button class="dekor-chip" data-rola="napisy" data-val="bez">Bez</button>
-                <button class="dekor-chip" data-rola="napisy" data-val="cien">Cień</button>
-                <button class="dekor-chip" data-rola="napisy" data-val="obramowka">Obramówka</button>
-              </div>
-              <div class="dekor-kolor-wrap" id="dekor-napisy-kolor-wrap">
-                <label for="dekor-napisy-kolor">Kolor obramówki</label>
-                <input type="color" class="dekor-kolor" id="dekor-napisy-kolor" value="#000000">
-              </div>
-            </div>
-            <div class="suwak-row">
-              <div class="suwak-header"><span class="suwak-name">Nagłówek — styl tekstu</span></div>
-              <p class="suwak-desc">efekt nałożony na czcionkę nagłówka</p>
-              <div class="dekor-chips" id="dekor-naglowek-chips">
-                <button class="dekor-chip" data-rola="naglowek" data-val="bez">Bez</button>
-                <button class="dekor-chip" data-rola="naglowek" data-val="cien">Cień</button>
-                <button class="dekor-chip" data-rola="naglowek" data-val="obramowka">Obramówka</button>
-              </div>
-              <div class="dekor-kolor-wrap" id="dekor-naglowek-kolor-wrap">
-                <label for="dekor-naglowek-kolor">Kolor obramówki</label>
-                <input type="color" class="dekor-kolor" id="dekor-naglowek-kolor" value="#000000">
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -577,7 +586,8 @@ let pickerRola = null;
 const UKLAD_DEFAULT = { napisy: 25, naglowek: 18, napisy_rozmiar: 100, naglowek_rozmiar: 100, napisy_dekor: 'cien', napisy_dekor_kolor: '#000000', naglowek_dekor: 'cien', naglowek_dekor_kolor: '#000000' };
 let uklad = { ...UKLAD_DEFAULT };
 function hasCustomUklad() {
-  return Object.keys(UKLAD_DEFAULT).some(k => uklad[k] !== UKLAD_DEFAULT[k]);
+  const DEKOR_KEYS = new Set(['napisy_dekor','napisy_dekor_kolor','naglowek_dekor','naglowek_dekor_kolor']);
+  return Object.keys(UKLAD_DEFAULT).some(k => !DEKOR_KEYS.has(k) && uklad[k] !== UKLAD_DEFAULT[k]);
 }
 function applyDekorEl(el, dekor, kolor) {
   if (!el) return;
@@ -637,8 +647,6 @@ function renderUklad() {
   const sgr = $('#suwak-naglowek-rozm'), sgrv = $('#suwak-naglowek-rozm-val');
   if (sgr) sgr.value = uklad.naglowek_rozmiar;
   if (sgrv) sgrv.textContent = uklad.naglowek_rozmiar + '%';
-  updateDekorChips('napisy');
-  updateDekorChips('naglowek');
   // Apply chosen fonts to layout preview frame
   const fG = fonts.glowna ? CZCIONKI.find(x => x.id === fonts.glowna) : null;
   const fA = fonts.akcent ? CZCIONKI.find(x => x.id === fonts.akcent) : null;
@@ -752,6 +760,14 @@ function renderKolory() {
   if (ka && cfA) { ka.style.fontFamily = `'${cfA.rodzina}'`; ka.style.fontWeight = cfA.waga; ka.style.fontStyle = cfA.styl || 'normal'; }
   if (kg && cfA) { kg.style.fontFamily = `'${cfA.rodzina}'`; kg.style.fontWeight = cfA.waga; kg.style.fontStyle = cfA.styl || 'normal'; }
   if (kc && cfO) { kc.style.fontFamily = `'${cfO.rodzina}'`; kc.style.fontWeight = cfO.waga; kc.style.fontStyle = cfO.styl || 'normal'; }
+  applyDekorEl(kn, uklad.napisy_dekor, uklad.napisy_dekor_kolor);
+  applyDekorEl(ka, uklad.napisy_dekor, uklad.napisy_dekor_kolor);
+  applyDekorEl(kg, uklad.naglowek_dekor, uklad.naglowek_dekor_kolor);
+  applyDekorEl(kc, uklad.naglowek_dekor, uklad.naglowek_dekor_kolor);
+  updateDekorChips('napisy');
+  updateDekorChips('naglowek');
+  const btnReset = $('#btn-reset-kolory');
+  if (btnReset) btnReset.hidden = !hasCustomKolory();
   renderFontsMini('kolor-fonts-mini');
 }
 
