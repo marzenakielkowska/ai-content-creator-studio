@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@900&family=Barlow+Condensed:wght@700&family=Montserrat:wght@700&family=Figtree:wght@700&family=Nunito:wght@800&family=Space+Grotesk:wght@600&family=Archivo:wght@800&family=Bebas+Neue&family=Anton&family=Abril+Fatface&family=DM+Serif+Display&family=Playfair+Display:ital@1&family=Newsreader:ital,wght@1,400&family=Instrument+Serif&family=Cormorant:ital@1&family=Elsie+Swash+Caps&family=Caveat:wght@600&family=Marck+Script&family=Pixelify+Sans:wght@600&family=JetBrains+Mono:wght@500&display=swap">
 <title>Lookbook · AI Content Creator Studio</title>
 <style>
 :root{
@@ -160,9 +161,11 @@ section.block{padding-block:56px 8px}
 
 /* Chipy w dolnym pasku */
 #sum{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-width:0}
-.sum-chip{all:unset;cursor:pointer;font-size:13px;font-weight:700;padding:4px 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);white-space:nowrap;transition:border-color .15s,color .15s}
+.sum-chip{all:unset;cursor:pointer;font-size:13px;font-weight:700;padding:4px 10px 4px 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);white-space:nowrap;transition:border-color .15s,color .15s;display:inline-flex;align-items:center;gap:6px}
 .sum-chip:hover{border-color:var(--accent);color:var(--accent)}
 .sum-chip.dim{color:var(--muted);cursor:default}
+.sum-chip .chip-x{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;font-size:11px;line-height:1;opacity:.55;flex-shrink:0;transition:opacity .15s,background .15s}
+.sum-chip .chip-x:hover{opacity:1;background:color-mix(in srgb,var(--accent) 15%,transparent)}
 
 /* Pasek dolny */
 .bar{position:sticky;bottom:0;z-index:5;background:var(--surface);border-top:1.5px solid var(--line);margin-top:64px;padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -223,6 +226,85 @@ section.block{padding-block:56px 8px}
 .styl-name{font-weight:800;font-size:16px;line-height:1.2}
 .styl-desc{color:var(--muted);font-size:13px;margin-top:3px;line-height:1.4}
 .styl-best{font-size:12px;margin-top:4px;color:var(--accent);font-weight:700}
+
+/* ── Font picker ── */
+.font-roles-bar{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 24px}
+.font-role-tab{all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px 18px;font-weight:800;font-size:15px;line-height:1}
+.font-role-tab small{font-size:11px;font-weight:500;color:var(--muted);margin-left:2px}
+.font-role-tab[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.frtab-dot{width:10px;height:10px;border-radius:50%;background:var(--line);flex:none;transition:background .25s}
+.frtab-dot.assigned{background:var(--accent)}
+.font-layout{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:start}
+@media(max-width:640px){.font-layout{grid-template-columns:1fr}.font-preview-col{display:flex;gap:16px}.font-frame-wrap{width:120px;flex:none}}
+.font-preview-col{position:sticky;top:80px}
+.font-frame-wrap .frame{max-width:100%;margin:0}
+.fp-glowna{position:absolute;bottom:30%;left:0;right:0;text-align:center;z-index:1;color:#fff;font-weight:700;font-size:clamp(6px,2.2vw,11px);padding:0 6px;line-height:1.25;text-shadow:0 1px 4px rgba(0,0,0,.4);transition:font-family .25s,font-weight .25s}
+.fp-akcent{position:absolute;bottom:22%;left:0;right:0;text-align:center;z-index:1;color:#FCE3D6;font-size:clamp(14px,5.5vw,27px);font-weight:900;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.3);transition:font-family .25s,font-weight .25s}
+.fp-odreczna{position:absolute;bottom:14%;right:10%;z-index:1;color:rgba(255,255,255,.9);font-size:clamp(7px,2vw,10px);font-weight:400;transition:font-family .25s}
+.font-chosen-list{margin-top:10px;display:flex;flex-direction:column;gap:5px}
+.fchosen-item{font-size:11px;line-height:1.3;display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.fchosen-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none}
+.fchosen-name{font-weight:800;color:var(--ink)}
+.fchosen-role{color:var(--muted)}
+.fcard-sample{padding:6px 4px 4px;line-height:1;color:var(--ink);height:70px;display:flex;align-items:center;overflow:hidden;white-space:nowrap}
+.fcard-role-badge{position:absolute;top:12px;right:12px;background:var(--accent);color:var(--accent-ink);font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:2px 8px;z-index:3}
+.fcard .fcard-cat{font-size:10px;color:var(--muted);font-weight:700;padding:0 4px;margin-top:1px;letter-spacing:.06em;text-transform:uppercase}
+/* ── Kolory ── */
+.kolor-layout{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:start}
+@media(max-width:640px){.kolor-layout{grid-template-columns:1fr}}
+.kolor-preview-col{position:sticky;top:80px}
+.kolor-frame-wrap .frame{max-width:100%;margin:0}
+.kp-naglowek{position:absolute;top:18%;left:0;right:0;text-align:center;z-index:1;font-size:clamp(10px,2.8vw,14px);font-weight:900;letter-spacing:.04em;text-shadow:0 1px 4px rgba(0,0,0,.3)}
+.kp-napisy{position:absolute;bottom:30%;left:0;right:0;text-align:center;z-index:1;font-weight:700;font-size:clamp(6px,2.2vw,11px);padding:0 6px;line-height:1.25;text-shadow:0 1px 4px rgba(0,0,0,.4)}
+.kp-akcent{position:absolute;bottom:22%;left:0;right:0;text-align:center;z-index:1;font-size:clamp(14px,5.5vw,27px);font-weight:900;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.3)}
+.kp-cta{position:absolute;bottom:13%;right:10%;z-index:1;font-size:clamp(7px,2vw,10px);font-style:italic;text-shadow:0 1px 3px rgba(0,0,0,.3)}
+.kolor-group-label{font-size:11px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;display:block}
+.kolor-rows-label{margin-top:28px}
+.kolor-palety{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:4px}
+.kpalet{all:unset;cursor:pointer;border-radius:14px;overflow:hidden;border:1.5px solid var(--line);transition:border-color .15s,box-shadow .15s;display:block}
+.kpalet[aria-selected="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.kpalet-dots{display:flex;gap:7px;padding:14px 12px 10px;background:#EDE8F5}
+.kpalet-dot{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(0,0,0,.13);flex-shrink:0}
+.kpalet-nazw{font-size:11px;font-weight:700;padding:0 12px 10px;color:var(--ink);background:#EDE8F5}
+.kolor-rows{border:1.5px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface)}
+.kolor-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;gap:12px;border-bottom:1px solid var(--line)}
+.kolor-row:last-child{border-bottom:none}
+.kolor-row-info{flex:1;min-width:0}
+.kolor-row-name{font-size:15px;font-weight:700;display:block}
+.kolor-row-desc{font-size:12px;color:var(--muted)}
+.kolor-swatch{all:unset;cursor:pointer;width:32px;height:32px;border-radius:8px;border:1.5px solid rgba(0,0,0,.15);flex-shrink:0;transition:transform .1s,box-shadow .15s;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.kolor-swatch:hover{transform:scale(1.1);box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.kolor-popup{position:fixed;z-index:200;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px;box-shadow:0 8px 32px rgba(0,0,0,.22);width:196px}
+.kpop-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin-bottom:10px}
+.kpop-dot{all:unset;cursor:pointer;width:24px;height:24px;border-radius:6px;border:1.5px solid rgba(0,0,0,.1);transition:transform .1s,box-shadow .1s}
+.kpop-dot:hover{transform:scale(1.15);box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.kpop-dot.kpop-ak{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--accent)}
+.kpop-hex-row{display:flex;align-items:center;gap:6px;border-top:1px solid var(--line);padding-top:10px}
+.kpop-hex-row > span{color:var(--muted);font-weight:700;font-size:13px}
+.kpop-hex{all:unset;flex:1;font-family:monospace;font-size:13px;letter-spacing:.06em;color:var(--ink);text-transform:uppercase;border-bottom:1.5px solid var(--line);padding:2px 4px}
+.kpop-hex:focus{border-bottom-color:var(--accent)}
+.kpop-native{width:26px;height:26px;padding:0;border:1.5px solid var(--line);border-radius:6px;cursor:pointer;background:none;flex-shrink:0}
+
+/* ── Układ ── */
+.uklad-layout{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:start}
+@media(max-width:640px){.uklad-layout{grid-template-columns:1fr}}
+.uklad-preview-col{position:sticky;top:80px}
+.uklad-frame-wrap .frame{max-width:100%;margin:0}
+.up-napisy{position:absolute;left:0;right:0;text-align:center;z-index:2;color:#fff;font-weight:700;font-size:clamp(7px,2.2vw,11px);padding:0 6px;line-height:1.2;text-shadow:0 1px 4px rgba(0,0,0,.5);transition:bottom .12s}
+.up-naglowek{position:absolute;left:0;right:0;text-align:center;z-index:2;font-size:clamp(10px,2.8vw,14px);font-weight:900;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.4);transition:top .12s}
+.suwak-group{display:flex;flex-direction:column;gap:0}
+.suwak-row{padding:20px 0}
+.suwak-row+.suwak-row{border-top:1.5px solid var(--line)}
+.suwak-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.suwak-name{font-size:15px;font-weight:700}
+.suwak-val{font-size:13px;color:var(--accent);font-variant-numeric:tabular-nums;font-weight:800}
+.suwak-desc{font-size:12px;color:var(--muted);margin:0 0 12px}
+.suwak-track{display:flex;align-items:center;gap:10px}
+.suwak-edge{font-size:10px;color:var(--muted);white-space:nowrap;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+input[type=range].suwak{-webkit-appearance:none;appearance:none;flex:1;height:6px;border-radius:999px;background:var(--line);outline:none;cursor:pointer}
+input[type=range].suwak::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.25);transition:transform .1s}
+input[type=range].suwak:hover::-webkit-slider-thumb{transform:scale(1.15)}
+input[type=range].suwak::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:none;box-shadow:0 1px 4px rgba(0,0,0,.25)}
 </style>
 </head>
 <body>
@@ -256,8 +338,122 @@ section.block{padding-block:56px 8px}
       <div class="grid" id="g-caps"></div>
     </section>
 
+    <section class="block" id="sec-czcionki">
+      <div class="eyebrow">Krok 2 · Czcionki</div>
+      <h2>Twoje czcionki.</h2>
+      <p class="lead">Skomponuj zestaw do 3 krojów. Główna prowadzi napisy mówione. Akcent wyróżnia kluczowe słowo. Odręczna daje filmowi charakter.</p>
+      <div class="font-roles-bar" id="font-roles-bar">
+        <button class="font-role-tab" id="ftab-glowna" data-role="glowna" aria-pressed="true"><span class="frtab-dot"></span>Główna<small>napisy mówione</small></button>
+        <button class="font-role-tab" id="ftab-akcent" data-role="akcent" aria-pressed="false"><span class="frtab-dot"></span>Akcent<small>jedno słowo kluczowe</small></button>
+        <button class="font-role-tab" id="ftab-odreczna" data-role="odreczna" aria-pressed="false"><span class="frtab-dot"></span>Odręczna<small>charakter, adnotacje</small></button>
+      </div>
+      <div class="font-layout">
+        <div class="font-preview-col">
+          <div class="font-frame-wrap">
+            <div class="frame warm">
+              <div class="fp-glowna" id="fp-glowna-el">jak nagrać pierwszą rolkę</div>
+              <div class="fp-akcent" id="fp-akcent-el">3 triki</div>
+              <div class="fp-odreczna" id="fp-odreczna-el">↑ to działa</div>
+            </div>
+          </div>
+          <div class="font-chosen-list" id="font-chosen-list"></div>
+        </div>
+        <div><div class="grid" id="g-czcionki"></div></div>
+      </div>
+    </section>
+
+    <section class="block" id="sec-kolory">
+      <div class="eyebrow">Krok 3 · Kolory</div>
+      <h2>Twoje kolory.</h2>
+      <p class="lead">Wybierz paletę lub ustaw każdy kolor osobno. Podgląd odświeża się na żywo.</p>
+      <div class="kolor-layout">
+        <div class="kolor-preview-col">
+          <div class="kolor-frame-wrap">
+            <div class="frame warm">
+              <div class="kp-naglowek" id="kp-naglowek-el">Mój styl</div>
+              <div class="kp-napisy" id="kp-napisy-el">jak nagrać pierwszą rolkę</div>
+              <div class="kp-akcent" id="kp-akcent-el">3 triki</div>
+              <div class="kp-cta" id="kp-cta-el">↓ zapisz to</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <span class="kolor-group-label">Palety</span>
+          <div class="kolor-palety" id="g-palety"></div>
+          <span class="kolor-group-label kolor-rows-label">Twoje kolory</span>
+          <div class="kolor-rows">
+            <div class="kolor-row">
+              <div class="kolor-row-info"><span class="kolor-row-name">Napisy</span><span class="kolor-row-desc">tekst mówiony</span></div>
+              <button class="kolor-swatch" id="ks-napisy" data-rola="napisy"></button>
+            </div>
+            <div class="kolor-row">
+              <div class="kolor-row-info"><span class="kolor-row-name">Akcent</span><span class="kolor-row-desc">wyróżnione słowo</span></div>
+              <button class="kolor-swatch" id="ks-akcent" data-rola="akcent"></button>
+            </div>
+            <div class="kolor-row">
+              <div class="kolor-row-info"><span class="kolor-row-name">Nagłówek</span><span class="kolor-row-desc">tytuł na początku</span></div>
+              <button class="kolor-swatch" id="ks-naglowek" data-rola="naglowek"></button>
+            </div>
+            <div class="kolor-row">
+              <div class="kolor-row-info"><span class="kolor-row-name">CTA</span><span class="kolor-row-desc">wezwanie na końcu</span></div>
+              <button class="kolor-swatch" id="ks-cta" data-rola="cta"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="kolor-popup" id="kolor-popup" hidden>
+      <div class="kpop-grid" id="kpop-grid"></div>
+      <div class="kpop-hex-row"><span>#</span><input class="kpop-hex" id="kpop-hex" maxlength="6" spellcheck="false" autocomplete="off"><input type="color" class="kpop-native" id="kpop-native"></div>
+    </div>
+
+    <section class="block" id="sec-uklad">
+      <div class="eyebrow">Krok 4 · Układ</div>
+      <h2>Twój układ.</h2>
+      <p class="lead">Ustaw, gdzie pojawiają się napisy i nagłówek. Wybierz też typ kadru — bliski kadr zostawia więcej miejsca na dole.</p>
+      <div class="uklad-layout">
+        <div class="uklad-preview-col">
+          <div class="uklad-frame-wrap">
+            <div class="frame warm">
+              <div class="up-naglowek" id="up-naglowek-el" style="top:18%">Mój styl</div>
+              <div class="up-napisy" id="up-napisy-el" style="bottom:25%">jak nagrać pierwszą rolkę</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="suwak-group">
+            <div class="suwak-row">
+              <div class="suwak-header">
+                <span class="suwak-name">Napisy</span>
+                <span class="suwak-val" id="suwak-napisy-val">25%</span>
+              </div>
+              <p class="suwak-desc">odległość napisów od dołu ekranu</p>
+              <div class="suwak-track">
+                <span class="suwak-edge">dół</span>
+                <input type="range" class="suwak" id="suwak-napisy" min="8" max="55" value="25" step="1">
+                <span class="suwak-edge">góra</span>
+              </div>
+            </div>
+            <div class="suwak-row">
+              <div class="suwak-header">
+                <span class="suwak-name">Nagłówek</span>
+                <span class="suwak-val" id="suwak-naglowek-val">18%</span>
+              </div>
+              <p class="suwak-desc">odległość tytułu od góry ekranu</p>
+              <div class="suwak-track">
+                <span class="suwak-edge">góra</span>
+                <input type="range" class="suwak" id="suwak-naglowek" min="8" max="50" value="18" step="1">
+                <span class="suwak-edge">dół</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="block" id="sec-fx">
-      <div class="eyebrow">Krok 2 · Efekty</div>
+      <div class="eyebrow">Krok 5 · Efekty</div>
       <h2>Twoje efekty.</h2>
       <p class="lead">Zaznacz tyle, ile chcesz. Efekty na rolce Claude doda tam, gdzie pasują do treści. Efekty samodzielne (jak Przed i po) powstaną z osobnego nagrania.</p>
       <div class="fxbar">
@@ -272,14 +468,14 @@ section.block{padding-block:56px 8px}
     </section>
 
     <section class="block" id="sec-snd">
-      <div class="eyebrow">Krok 3 · Dźwięki</div>
+      <div class="eyebrow">Krok 6 · Dźwięki</div>
       <h2>Twoje dźwięki.</h2>
       <p class="lead">Zaznacz dźwięki, których lubisz używać. Claude doda je tam, gdzie pasują do ruchu i efektów. Bez zaznaczenia — Claude zdecyduje sam.</p>
       <div class="grid snd-grid" id="g-snd"></div>
     </section>
 
     <section class="block" id="sec-styl">
-      <div class="eyebrow">Krok 4 · Styl wizualny</div>
+      <div class="eyebrow">Krok 7 · Styl wizualny</div>
       <h2>Wygląd obrazu.</h2>
       <p class="lead">Wybierz jeden styl kolorystyczny dla całego filmu. Ciepłe tony, wysoki kontrast albo brak filtra — jedno kliknięcie ustala nastrój całej rolki.</p>
       <div id="g-styl" style="display:grid;gap:12px;margin-top:18px"></div>
@@ -307,6 +503,183 @@ section.block{padding-block:56px 8px}
 let mode = 'own', ready = null, cap = null, fx = {}, partsOn = false;
 let snd = new Set(), styl = null;
 let allFxIds = [];
+let fonts = { glowna: null, akcent: null, odreczna: null };
+let fontRole = 'glowna';
+const KOLORY_DEFAULT = { napisy: '#FFFFFF', akcent: '#FCE3D6', naglowek: '#FFFFFF', cta: '#FCE3D6' };
+let kolory = { ...KOLORY_DEFAULT };
+let paletaAktywna = null;
+let pickerRola = null;
+const UKLAD_DEFAULT = { napisy: 25, naglowek: 18 };
+let uklad = { ...UKLAD_DEFAULT };
+function hasCustomUklad() {
+  return uklad.napisy !== UKLAD_DEFAULT.napisy || uklad.naglowek !== UKLAD_DEFAULT.naglowek;
+}
+function renderUklad() {
+  const napEl = $('#up-napisy-el'), nagEl = $('#up-naglowek-el');
+  if (napEl) napEl.style.bottom = uklad.napisy + '%';
+  if (nagEl) nagEl.style.top = uklad.naglowek + '%';
+  const sn = $('#suwak-napisy'), snv = $('#suwak-napisy-val');
+  if (sn) sn.value = uklad.napisy;
+  if (snv) snv.textContent = uklad.napisy + '%';
+  const sg = $('#suwak-naglowek'), sgv = $('#suwak-naglowek-val');
+  if (sg) sg.value = uklad.naglowek;
+  if (sgv) sgv.textContent = uklad.naglowek + '%';
+}
+const KOLORY_PRESET = [
+  '#FFFFFF','#F5F0E8','#FCE3D6','#FFB8C6','#FF6B6B','#E63946',
+  '#FFD166','#FF9F1C','#A8D8EA','#5B9BD5','#6C63FF','#9B59B6',
+  '#06D6A0','#00F5D4','#1A1A1A','#4A3F3C','#8B7355','#C9A493',
+];
+const PALETY_KOLOROW = [
+  { id:'naturalny', nazwa:'Naturalny', tlo:'#4A3F3C', napisy:'#FFFFFF', akcent:'#F0E6D3', naglowek:'#FFFFFF', cta:'#F0E6D3' },
+  { id:'rozany',    nazwa:'Różany',    tlo:'#7B3B5E', napisy:'#FFFFFF', akcent:'#FFCCE0', naglowek:'#FFFFFF', cta:'#FFCCE0' },
+  { id:'klasyczny', nazwa:'Klasyczny', tlo:'#1A1A1A', napisy:'#FFFFFF', akcent:'#E8E8E8', naglowek:'#FFFFFF', cta:'#E8E8E8' },
+  { id:'cieply',    nazwa:'Ciepły',    tlo:'#6B4226', napisy:'#FFFFFF', akcent:'#FFD166', naglowek:'#FFF8E1', cta:'#FFD166' },
+  { id:'zimny',     nazwa:'Zimny',     tlo:'#2C4A7C', napisy:'#FFFFFF', akcent:'#A8D8EA', naglowek:'#EEF6FA', cta:'#A8D8EA' },
+  { id:'nocny',     nazwa:'Nocny',     tlo:'#0D0D1A', napisy:'#FFFFFF', akcent:'#00F5D4', naglowek:'#FFFFFF', cta:'#00F5D4' },
+];
+function hasCustomKolory() {
+  return paletaAktywna !== null || Object.keys(kolory).some(k => kolory[k] !== KOLORY_DEFAULT[k]);
+}
+function rgbToHex(rgb) {
+  const m = (rgb || '').match(/\d+/g);
+  if (!m || m.length < 3) return '#000000';
+  return '#' + m.slice(0, 3).map(x => (+x).toString(16).padStart(2, '0')).join('').toUpperCase();
+}
+function buildPalety() {
+  const g = $('#g-palety');
+  if (!g) return;
+  g.innerHTML = '';
+  PALETY_KOLOROW.forEach(p => {
+    const btn = document.createElement('button');
+    btn.className = 'kpalet';
+    btn.id = 'kpalet-' + p.id;
+    btn.setAttribute('aria-selected', 'false');
+    btn.innerHTML = `<div class="kpalet-dots"><span class="kpalet-dot" style="background:${p.napisy}" title="Napisy"></span><span class="kpalet-dot" style="background:${p.akcent}" title="Akcent"></span><span class="kpalet-dot" style="background:${p.naglowek}" title="Nagłówek"></span><span class="kpalet-dot" style="background:${p.cta}" title="CTA"></span></div><div class="kpalet-nazw">${p.nazwa}</div>`;
+    btn.addEventListener('click', () => {
+      paletaAktywna = p.id;
+      kolory.napisy = p.napisy; kolory.akcent = p.akcent;
+      kolory.naglowek = p.naglowek; kolory.cta = p.cta;
+      closePicker(); renderKolory(); render();
+    });
+    g.appendChild(btn);
+  });
+}
+function openPicker(rola) {
+  pickerRola = rola;
+  const popup = $('#kolor-popup'), swatch = $(`#ks-${rola}`);
+  if (!popup || !swatch) return;
+  const grid = $('#kpop-grid');
+  grid.innerHTML = '';
+  const curr = (kolory[rola] || '#FFFFFF').toUpperCase();
+  KOLORY_PRESET.forEach(c => {
+    const d = document.createElement('button');
+    d.className = 'kpop-dot' + (c.toUpperCase() === curr ? ' kpop-ak' : '');
+    d.style.background = c;
+    d.title = c;
+    d.addEventListener('click', e => { e.stopPropagation(); paletaAktywna = null; setKolor(rola, c); });
+    grid.appendChild(d);
+  });
+  $('#kpop-hex').value = curr.replace('#', '');
+  $('#kpop-native').value = curr;
+  popup.hidden = false;
+  requestAnimationFrame(() => {
+    const r = swatch.getBoundingClientRect(), pw = 196, ph = popup.offsetHeight;
+    let top = r.bottom + 6, left = r.right - pw;
+    if (top + ph > window.innerHeight - 10) top = r.top - ph - 6;
+    if (left < 10) left = 10;
+    if (left + pw > window.innerWidth - 10) left = window.innerWidth - pw - 10;
+    popup.style.top = top + 'px'; popup.style.left = left + 'px';
+  });
+}
+function closePicker() {
+  const p = $('#kolor-popup');
+  if (p) p.hidden = true;
+  pickerRola = null;
+}
+function setKolor(rola, hex) {
+  if (!hex.startsWith('#')) hex = '#' + hex;
+  if (!/^#[0-9A-Fa-f]{6}$/.test(hex)) return;
+  kolory[rola] = hex.toUpperCase();
+  renderKolory(); render();
+}
+function renderKolory() {
+  ['napisy','akcent','naglowek','cta'].forEach(r => {
+    const sw = $(`#ks-${r}`);
+    if (sw) sw.style.background = kolory[r] || '';
+  });
+  PALETY_KOLOROW.forEach(p => {
+    const btn = $(`#kpalet-${p.id}`);
+    if (btn) btn.setAttribute('aria-selected', paletaAktywna === p.id);
+  });
+  if (pickerRola) {
+    const curr = (kolory[pickerRola] || '').toUpperCase();
+    document.querySelectorAll('.kpop-dot').forEach(d => {
+      d.classList.toggle('kpop-ak', rgbToHex(d.style.backgroundColor) === curr);
+    });
+  }
+  const kn = $('#kp-napisy-el'), ka = $('#kp-akcent-el'), kg = $('#kp-naglowek-el'), kc = $('#kp-cta-el');
+  if (kn) kn.style.color = kolory.napisy;
+  if (ka) ka.style.color = kolory.akcent;
+  if (kg) kg.style.color = kolory.naglowek;
+  if (kc) kc.style.color = kolory.cta;
+}
+
+const CZCIONKI = [
+  { id:'inter-tight',  nazwa:'Inter Tight',       rodzina:'Inter Tight',       waga:900, styl:'normal',  kat:'sans',     role:['glowna','akcent'],          opis:'Mocne i czytelne' },
+  { id:'barlow',       nazwa:'Barlow Condensed',   rodzina:'Barlow Condensed',  waga:700, styl:'normal',  kat:'sans',     role:['glowna','akcent'],          opis:'Sportowa energia' },
+  { id:'montserrat',   nazwa:'Montserrat',          rodzina:'Montserrat',        waga:700, styl:'normal',  kat:'sans',     role:['glowna','akcent'],          opis:'Klasyczna pewność' },
+  { id:'figtree',      nazwa:'Figtree',             rodzina:'Figtree',           waga:700, styl:'normal',  kat:'sans',     role:['glowna'],                   opis:'Miękka, cozy' },
+  { id:'nunito',       nazwa:'Nunito',              rodzina:'Nunito',            waga:800, styl:'normal',  kat:'sans',     role:['glowna'],                   opis:'Zaokrąglona, ciepła' },
+  { id:'space-grotesk',nazwa:'Space Grotesk',       rodzina:'Space Grotesk',     waga:600, styl:'normal',  kat:'sans',     role:['glowna','akcent'],          opis:'Tech, biznes' },
+  { id:'archivo',      nazwa:'Archivo',             rodzina:'Archivo',           waga:800, styl:'normal',  kat:'sans',     role:['glowna','akcent'],          opis:'Rytm, pewność' },
+  { id:'bebas',        nazwa:'Bebas Neue',          rodzina:'Bebas Neue',        waga:400, styl:'normal',  kat:'display',  role:['glowna','akcent'],          opis:'Caps, kontur, siła' },
+  { id:'anton',        nazwa:'Anton',               rodzina:'Anton',             waga:400, styl:'normal',  kat:'display',  role:['glowna','akcent'],          opis:'Bardzo mocna' },
+  { id:'abril',        nazwa:'Abril Fatface',       rodzina:'Abril Fatface',     waga:400, styl:'normal',  kat:'display',  role:['akcent'],                   opis:'Retro plakat' },
+  { id:'dm-serif',     nazwa:'DM Serif Display',    rodzina:'DM Serif Display',  waga:400, styl:'normal',  kat:'serif',    role:['glowna','akcent'],          opis:'Elegancki szeryf' },
+  { id:'playfair',     nazwa:'Playfair Display',    rodzina:'Playfair Display',  waga:400, styl:'italic',  kat:'serif',    role:['glowna','akcent'],          opis:'Editorial, italic' },
+  { id:'newsreader',   nazwa:'Newsreader',          rodzina:'Newsreader',        waga:400, styl:'italic',  kat:'serif',    role:['glowna'],                   opis:'Kinowy, prasowy' },
+  { id:'instrument',   nazwa:'Instrument Serif',    rodzina:'Instrument Serif',  waga:400, styl:'normal',  kat:'serif',    role:['akcent'],                   opis:'Delikatny szeryf' },
+  { id:'cormorant',    nazwa:'Cormorant',           rodzina:'Cormorant',         waga:400, styl:'italic',  kat:'serif',    role:['akcent','odreczna'],        opis:'Fashion, raffinowany' },
+  { id:'elsie',        nazwa:'Elsie Swash Caps',    rodzina:'Elsie Swash Caps',  waga:400, styl:'normal',  kat:'display',  role:['akcent'],                   opis:'Ozdobne majuskuły' },
+  { id:'caveat',       nazwa:'Caveat',              rodzina:'Caveat',            waga:600, styl:'normal',  kat:'odręczna', role:['odreczna','akcent'],        opis:'Notatnik, szkic' },
+  { id:'marck',        nazwa:'Marck Script',        rodzina:'Marck Script',      waga:400, styl:'normal',  kat:'odręczna', role:['odreczna'],                 opis:'Kursywa, podpis' },
+  { id:'pixelify',     nazwa:'Pixelify Sans',       rodzina:'Pixelify Sans',     waga:600, styl:'normal',  kat:'pixel',    role:['akcent'],                   opis:'Pixel art, tech' },
+  { id:'jetbrains',    nazwa:'JetBrains Mono',      rodzina:'JetBrains Mono',    waga:500, styl:'normal',  kat:'mono',     role:['akcent'],                   opis:'Terminal, dane' },
+];
+
+const RLABEL = { glowna:'Główna', akcent:'Akcent', odreczna:'Odręczna' };
+
+function buildFontGrid() {
+  const grid = $('#g-czcionki');
+  grid.innerHTML = '';
+  CZCIONKI.forEach(f => {
+    if (!f.role.includes(fontRole)) return;
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.id = `fnt-${f.id}`;
+    el.tabIndex = 0;
+    el.setAttribute('role', 'button');
+    el.setAttribute('aria-pressed', 'false');
+    const sampleTxt = (f.kat === 'display' && f.styl !== 'italic') ? 'AA' : 'Aa';
+    el.innerHTML = `<span class="tick"></span>
+      <div class="fcard-sample" style="font-family:'${f.rodzina}';font-weight:${f.waga};font-style:${f.styl||'normal'};font-size:52px">${sampleTxt}</div>
+      <div class="title">${f.nazwa}</div>
+      <div class="fcard-cat">${f.kat}</div>
+      ${f.opis ? `<div class="desc">${f.opis}</div>` : ''}`;
+    el.addEventListener('click', () => {
+      if (fonts[fontRole] === f.id) {
+        fonts[fontRole] = null;
+      } else {
+        Object.keys(fonts).forEach(r => { if (fonts[r] === f.id) fonts[r] = null; });
+        fonts[fontRole] = f.id;
+      }
+      render();
+    });
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); } });
+    grid.appendChild(el);
+  });
+}
 const PARTS = [['poczatek','Początek'],['srodek','Środek'],['koniec','Koniec']];
 const SND = '<svg class="off" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6M16 9l6 6"/></svg><svg class="on" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>';
 const $ = s => document.querySelector(s);
@@ -499,9 +872,59 @@ function render() {
   $('#m-own').setAttribute('aria-selected', mode === 'own');
   $('#sec-ready').hidden = mode !== 'ready';
   $('#sec-caps').hidden = mode !== 'own';
+  $('#sec-czcionki').hidden = mode !== 'own';
+  $('#sec-kolory').hidden = mode !== 'own';
+  $('#sec-uklad').hidden = mode !== 'own';
   $('#sec-fx').hidden = mode !== 'own';
   $('#sec-snd').hidden = mode !== 'own';
   $('#sec-styl').hidden = mode !== 'own';
+  renderKolory();
+  renderUklad();
+
+  // Font role tabs
+  ['glowna','akcent','odreczna'].forEach(r => {
+    const tab = $(`#ftab-${r}`);
+    if (!tab) return;
+    tab.setAttribute('aria-pressed', fontRole === r);
+    const dot = tab.querySelector('.frtab-dot');
+    if (dot) dot.classList.toggle('assigned', fonts[r] !== null);
+  });
+  // Font cards
+  document.querySelectorAll('[id^="fnt-"]').forEach(el => {
+    const fId = el.id.slice(4);
+    const f = CZCIONKI.find(x => x.id === fId);
+    if (!f) return;
+    const assignedRole = Object.entries(fonts).find(([,id]) => id === f.id)?.[0];
+    el.setAttribute('aria-pressed', fonts[fontRole] === f.id);
+    let badge = el.querySelector('.fcard-role-badge');
+    if (assignedRole) {
+      if (!badge) { badge = document.createElement('span'); badge.className='fcard-role-badge'; el.appendChild(badge); }
+      badge.textContent = RLABEL[assignedRole];
+    } else if (badge) { badge.remove(); }
+    const tick = el.querySelector('.tick');
+    if (tick) tick.textContent = fonts[fontRole] === f.id ? '✓' : '';
+  });
+  // Live phone preview
+  const fpG=$('#fp-glowna-el'), fpA=$('#fp-akcent-el'), fpO=$('#fp-odreczna-el');
+  if (fpG) [['glowna',fpG],['akcent',fpA],['odreczna',fpO]].forEach(([r,el]) => {
+    const f = CZCIONKI.find(x => x.id === fonts[r]);
+    if (f) { el.style.fontFamily=`'${f.rodzina}'`; el.style.fontWeight=f.waga; el.style.fontStyle=f.styl||'normal'; }
+    else { el.style.fontFamily=''; el.style.fontWeight=''; el.style.fontStyle=''; }
+  });
+  // Chosen font list
+  const chosenList = $('#font-chosen-list');
+  if (chosenList) {
+    chosenList.innerHTML = '';
+    Object.entries(fonts).forEach(([r,fId]) => {
+      if (!fId) return;
+      const f = CZCIONKI.find(x => x.id === fId);
+      if (!f) return;
+      const item = document.createElement('div');
+      item.className = 'fchosen-item';
+      item.innerHTML = `<span class="fchosen-dot"></span><span class="fchosen-name">${f.nazwa}</span><span class="fchosen-role"> · ${RLABEL[r]}</span>`;
+      chosenList.appendChild(item);
+    });
+  }
 
   document.querySelectorAll('[id^="styl-"]').forEach(el =>
     el.setAttribute('aria-pressed', styl === el.id.slice(5)));
@@ -539,36 +962,55 @@ function render() {
   const sumEl = $('#sum');
   sumEl.innerHTML = '';
 
-  const addChip = (text, to, dim) => {
+  const addChip = (text, to, dim, onRemove) => {
     const b = document.createElement('button');
     b.className = 'sum-chip' + (dim ? ' dim' : '');
-    b.textContent = text;
-    if (to && !dim) b.addEventListener('click', () => {
+    const label = document.createTextNode(text);
+    b.appendChild(label);
+    if (to && !dim) b.addEventListener('click', (e) => {
+      if (e.target.closest('.chip-x')) return;
       const sec = document.getElementById(to);
       if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
+    if (onRemove && !dim) {
+      const x = document.createElement('span');
+      x.className = 'chip-x';
+      x.textContent = '✕';
+      x.title = 'Usuń';
+      x.addEventListener('click', (e) => { e.stopPropagation(); onRemove(); render(); });
+      b.appendChild(x);
+    }
     sumEl.appendChild(b);
   };
 
   if (mode === 'ready' && ready) {
     const el = $(`#ready-${ready}`);
-    addChip((el?.querySelector('.title')?.textContent || ready) + ' · gotowy styl', 'sec-ready');
+    addChip((el?.querySelector('.title')?.textContent || ready) + ' · gotowy styl', 'sec-ready', false, () => { ready = null; });
     ok = true;
-  } else if (mode === 'own' && (cap || nFx > 0)) {
+  } else if (mode === 'own' && (cap || nFx > 0 || fonts.glowna || fonts.akcent || fonts.odreczna)) {
     if (cap) {
       const el = $(`#cap-${cap}`);
-      addChip((el?.querySelector('.title')?.textContent || cap) + ' · napisy', 'sec-caps');
+      addChip((el?.querySelector('.title')?.textContent || cap) + ' · napisy', 'sec-caps', false, () => { cap = null; });
     }
-    if (nFx) addChip(nFx + fxPlural(nFx) + (partsOn ? ' według części' : ''), 'sec-fx');
-    if (nSnd) addChip(nSnd + sndPlural(nSnd), 'sec-snd');
-    if (styl) { const sel = document.getElementById('styl-' + styl); addChip((sel?.querySelector('.styl-name')?.textContent || styl) + ' · styl', 'sec-styl'); }
+    const nFonts = Object.values(fonts).filter(Boolean).length;
+    if (nFonts) addChip(nFonts + (nFonts === 1 ? ' czcionka' : nFonts < 5 ? ' czcionki' : ' czcionek'), 'sec-czcionki', false, () => { fonts = { glowna: null, akcent: null, odreczna: null }; });
+    if (hasCustomKolory()) {
+      const pnazwa = paletaAktywna ? (PALETY_KOLOROW.find(p => p.id === paletaAktywna)?.nazwa || 'Paleta') + ' · kolory' : 'Własne kolory';
+      addChip(pnazwa, 'sec-kolory', false, () => { kolory = { ...KOLORY_DEFAULT }; paletaAktywna = null; });
+    }
+    if (hasCustomUklad()) {
+      addChip('Własny układ', 'sec-uklad', false, () => { uklad = { ...UKLAD_DEFAULT }; });
+    }
+    if (nFx) addChip(nFx + fxPlural(nFx) + (partsOn ? ' według części' : ''), 'sec-fx', false, () => { fx = {}; });
+    if (nSnd) addChip(nSnd + sndPlural(nSnd), 'sec-snd', false, () => { snd = new Set(); });
+    if (styl) { const sel = document.getElementById('styl-' + styl); addChip((sel?.querySelector('.styl-name')?.textContent || styl) + ' · styl', 'sec-styl', false, () => { styl = null; }); }
     ok = true;
   } else {
     addChip('Nic jeszcze nie wybrano', null, true);
   }
 
   $('#save').disabled = !ok;
-  const hasAny = ready !== null || cap !== null || Object.keys(fx).length > 0 || snd.size > 0 || styl !== null;
+  const hasAny = ready !== null || cap !== null || Object.keys(fx).length > 0 || snd.size > 0 || styl !== null || hasCustomUklad() || hasCustomKolory() || Object.values(fonts).some(Boolean);
   $('#clear').disabled = !hasAny;
 }
 
@@ -578,6 +1020,10 @@ function clearAll() {
   snd = new Set();
   styl = null;
   ready = null;
+  fonts = { glowna: null, akcent: null, odreczna: null };
+  kolory = { ...KOLORY_DEFAULT };
+  paletaAktywna = null;
+  uklad = { ...UKLAD_DEFAULT };
   render();
 }
 
@@ -597,6 +1043,15 @@ async function zapisz() {
     out = { tryb: 'wlasny', napisy: cap, efekty };
     if (snd.size > 0) out.dzwieki = [...snd];
     if (styl) out.styl = styl;
+    const anyFont = fonts.glowna || fonts.akcent || fonts.odreczna;
+    if (anyFont) {
+      out.czcionki = {};
+      if (fonts.glowna) out.czcionki.glowna = fonts.glowna;
+      if (fonts.akcent) out.czcionki.akcent = fonts.akcent;
+      if (fonts.odreczna) out.czcionki.odreczna = fonts.odreczna;
+    }
+    if (hasCustomKolory()) out.kolory = { ...kolory };
+    if (hasCustomUklad()) out.uklad = { ...uklad };
   }
   out.zapisano = new Date().toISOString().slice(0, 10);
 
@@ -701,6 +1156,9 @@ async function init() {
     $('#loading').hidden = true;
     $('#app').hidden = false;
 
+    buildFontGrid();
+    buildPalety();
+
     if (napisyMap['biale-pod-broda']) cap = 'biale-pod-broda';
     if (efektyMap['pop-in']) fx['pop-in'] = [];
     if (efektyMap['wjazd-z-boku']) fx['wjazd-z-boku'] = [];
@@ -732,6 +1190,39 @@ $('#all').onclick = () => {
   render();
 };
 $('#save').onclick = zapisz;
+
+document.querySelectorAll('.kolor-swatch').forEach(sw => {
+  sw.addEventListener('click', e => {
+    e.stopPropagation();
+    const rola = sw.dataset.rola;
+    if (pickerRola === rola) { closePicker(); return; }
+    openPicker(rola);
+  });
+});
+$('#kpop-hex')?.addEventListener('input', e => {
+  const v = e.target.value.replace(/[^0-9a-fA-F]/g, '');
+  e.target.value = v;
+  if (v.length === 6 && pickerRola) setKolor(pickerRola, '#' + v);
+});
+$('#kpop-native')?.addEventListener('input', e => {
+  if (pickerRola) { paletaAktywna = null; setKolor(pickerRola, e.target.value); }
+});
+document.addEventListener('click', e => {
+  if (pickerRola && !e.target.closest('#kolor-popup') && !e.target.closest('.kolor-swatch')) closePicker();
+});
+
+$('#suwak-napisy')?.addEventListener('input', e => { uklad.napisy = +e.target.value; renderUklad(); });
+$('#suwak-napisy')?.addEventListener('change', () => render());
+$('#suwak-naglowek')?.addEventListener('input', e => { uklad.naglowek = +e.target.value; renderUklad(); });
+$('#suwak-naglowek')?.addEventListener('change', () => render());
+
+document.querySelectorAll('.font-role-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    fontRole = btn.dataset.role;
+    buildFontGrid();
+    render();
+  });
+});
 
 init();
 </script>
