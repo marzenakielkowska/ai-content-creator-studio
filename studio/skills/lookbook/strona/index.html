@@ -320,6 +320,15 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 .fonts-mini-empty{font-size:11px;color:var(--muted);padding:4px 0;font-style:italic}
 .reset-link{background:none;border:none;padding:0;font-size:11px;color:var(--accent);font-weight:700;cursor:pointer;text-decoration:underline;opacity:.7}
 .reset-link:hover{opacity:1}
+/* ── Zakładki Moja marka / Co dodać ── */
+.lb-tabs{display:flex;gap:0;border-bottom:2px solid var(--line);margin:32px 0 0;overflow-x:auto;scrollbar-width:none}
+.lb-tabs::-webkit-scrollbar{display:none}
+.lb-tab{all:unset;cursor:pointer;font-size:15px;font-weight:800;padding:14px 22px;color:var(--muted);transition:color .15s;flex:none;position:relative}
+.lb-tab::after{content:"";position:absolute;bottom:-2px;left:0;right:0;height:2px;background:transparent;transition:background .15s}
+.lb-tab[aria-selected="true"]{color:var(--accent)}
+.lb-tab[aria-selected="true"]::after{background:var(--accent)}
+.lb-tab:hover:not([aria-selected="true"]){color:var(--ink)}
+.marka-hint{font-size:11px;color:var(--muted);margin-top:4px;text-align:center;line-height:1.35}
 .dekor-kolor-section{margin-top:4px}
 .dekor-kolor-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
 .dekor-kolor-row-label{font-size:12px;font-weight:700;color:var(--muted);min-width:60px}
@@ -351,6 +360,11 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
   </div></div>
 
   <div class="wrap">
+    <div class="lb-tabs" id="lb-tabs" hidden>
+      <button class="lb-tab" id="lt-marka" data-tab="marka" aria-selected="true">Moja marka</button>
+      <button class="lb-tab" id="lt-efekty" data-tab="efekty" aria-selected="false">Co dodać do tego filmu</button>
+    </div>
+
     <section class="block looks" id="sec-ready" hidden>
       <div class="eyebrow">Gotowe style</div>
       <h2>Cały look jednym kliknięciem.</h2>
@@ -592,13 +606,18 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
   <div class="sum"><span class="eyebrow">Twój wybór</span><span id="sum">Nic jeszcze nie wybrano</span></div>
   <div class="bar-actions">
     <button class="btn btn-ghost" id="clear" disabled onclick="clearAll()">Wyczyść wybór</button>
-    <button class="btn" id="save" disabled>Zapisz mój styl</button>
+    <div id="marka-action" hidden style="display:flex;flex-direction:column;align-items:center">
+      <button class="btn" id="save-marka" disabled>Zapisz moją markę</button>
+      <div class="marka-hint">Wróć tu kiedy chcesz i zmień dowolne ustawienie</div>
+    </div>
+    <button class="btn" id="save" disabled>Zapisz wybór efektów</button>
   </div>
 </div></div>
 
 <script>
 let mode = 'own', ready = null, cap = null, fx = {}, partsOn = false;
 let snd = new Set(), styl = null, tempo = null, zoom = null;
+let lbTab = 'marka';
 let allFxIds = [];
 let fonts = { glowna: null, akcent: null, odreczna: null };
 let fontRole = 'glowna';
@@ -1078,15 +1097,20 @@ function render() {
   $('#m-ready').setAttribute('aria-selected', mode === 'ready');
   $('#m-own').setAttribute('aria-selected', mode === 'own');
   $('#sec-ready').hidden = mode !== 'ready';
-  $('#sec-caps').hidden = mode !== 'own';
-  $('#sec-czcionki').hidden = mode !== 'own';
-  $('#sec-kolory').hidden = mode !== 'own';
-  $('#sec-uklad').hidden = mode !== 'own';
-  $('#sec-tempo').hidden = mode !== 'own';
-  $('#sec-zoom').hidden = mode !== 'own';
-  $('#sec-fx').hidden = mode !== 'own';
-  $('#sec-snd').hidden = mode !== 'own';
-  $('#sec-styl').hidden = mode !== 'own';
+  const isMarka = mode === 'own' && lbTab === 'marka';
+  const isEfekty = mode === 'own' && lbTab === 'efekty';
+  $('#lb-tabs').hidden = mode !== 'own';
+  $('#lt-marka')?.setAttribute('aria-selected', lbTab === 'marka');
+  $('#lt-efekty')?.setAttribute('aria-selected', lbTab === 'efekty');
+  $('#sec-caps').hidden = !isEfekty;
+  $('#sec-czcionki').hidden = !isMarka;
+  $('#sec-kolory').hidden = !isMarka;
+  $('#sec-uklad').hidden = !isMarka;
+  $('#sec-tempo').hidden = !isMarka;
+  $('#sec-zoom').hidden = !isMarka;
+  $('#sec-fx').hidden = !isEfekty;
+  $('#sec-snd').hidden = !isMarka;
+  $('#sec-styl').hidden = !isEfekty;
   renderKolory();
   renderUklad();
   buildTempo();
@@ -1194,34 +1218,43 @@ function render() {
     sumEl.appendChild(b);
   };
 
+  const hasMarkaData = Object.values(fonts).some(Boolean) || hasCustomKolory() || hasCustomUklad() || tempo !== null || zoom !== null || snd.size > 0;
   if (mode === 'ready' && ready) {
     const el = $(`#ready-${ready}`);
     addChip((el?.querySelector('.title')?.textContent || ready) + ' · gotowy styl', 'sec-ready', false, () => { ready = null; });
     ok = true;
-  } else if (mode === 'own' && (cap || nFx > 0 || fonts.glowna || fonts.akcent || fonts.odreczna || hasCustomKolory() || hasCustomUklad() || tempo || zoom)) {
-    if (cap) {
-      const el = $(`#cap-${cap}`);
-      addChip((el?.querySelector('.title')?.textContent || cap) + ' · napisy', 'sec-caps', false, () => { cap = null; });
-    }
+  } else if (mode === 'own' && lbTab === 'marka') {
     const nFonts = Object.values(fonts).filter(Boolean).length;
     if (nFonts) addChip(nFonts + (nFonts === 1 ? ' czcionka' : nFonts < 5 ? ' czcionki' : ' czcionek'), 'sec-czcionki', false, () => { fonts = { glowna: null, akcent: null, odreczna: null }; });
     if (hasCustomKolory()) {
       const pnazwa = paletaAktywna ? (PALETY_KOLOROW.find(p => p.id === paletaAktywna)?.nazwa || 'Paleta') + ' · kolory' : 'Własne kolory';
       addChip(pnazwa, 'sec-kolory', false, () => { kolory = { ...KOLORY_DEFAULT }; paletaAktywna = null; });
     }
-    if (hasCustomUklad()) {
-      addChip('Własny układ', 'sec-uklad', false, () => { uklad = { ...UKLAD_DEFAULT }; });
-    }
+    if (hasCustomUklad()) addChip('Własny układ', 'sec-uklad', false, () => { uklad = { ...UKLAD_DEFAULT }; });
     if (tempo) { const opt = TEMPO_OPTIONS.find(o => o.id === tempo); addChip('Tempo: ' + (opt?.nazwa || tempo), 'sec-tempo', false, () => { tempo = null; }); }
     if (zoom) { const opt = ZOOM_OPTIONS.find(o => o.id === zoom); addChip('Zoom: ' + (opt?.nazwa || zoom), 'sec-zoom', false, () => { zoom = null; }); }
-    if (nFx) addChip(nFx + fxPlural(nFx) + (partsOn ? ' według części' : ''), 'sec-fx', false, () => { fx = {}; });
     if (nSnd) addChip(nSnd + sndPlural(nSnd), 'sec-snd', false, () => { snd = new Set(); });
+    if (!hasMarkaData) addChip('Nic jeszcze nie wybrano', null, true);
+    ok = hasMarkaData;
+  } else if (mode === 'own' && lbTab === 'efekty') {
+    if (cap) {
+      const el = $(`#cap-${cap}`);
+      addChip((el?.querySelector('.title')?.textContent || cap) + ' · napisy', 'sec-caps', false, () => { cap = null; });
+    }
+    if (nFx) addChip(nFx + fxPlural(nFx) + (partsOn ? ' według części' : ''), 'sec-fx', false, () => { fx = {}; });
     if (styl) { const sel = document.getElementById('styl-' + styl); addChip((sel?.querySelector('.styl-name')?.textContent || styl) + ' · styl', 'sec-styl', false, () => { styl = null; }); }
-    ok = true;
+    if (!cap && !nFx && !styl) addChip('Nic jeszcze nie wybrano', null, true);
+    ok = cap !== null || nFx > 0 || styl !== null;
   } else {
     addChip('Nic jeszcze nie wybrano', null, true);
   }
 
+  const markaAction = $('#marka-action');
+  const saveEfekty = $('#save');
+  if (markaAction) markaAction.hidden = !(mode === 'own' && lbTab === 'marka');
+  if (saveEfekty) saveEfekty.hidden = mode === 'own' && lbTab === 'marka';
+  const saveMBtn = $('#save-marka');
+  if (saveMBtn) saveMBtn.disabled = !hasMarkaData;
   $('#save').disabled = !ok;
   const hasAny = ready !== null || cap !== null || Object.keys(fx).length > 0 || snd.size > 0 || styl !== null || hasCustomUklad() || hasCustomKolory() || Object.values(fonts).some(Boolean) || tempo !== null || zoom !== null;
   $('#clear').disabled = !hasAny;
@@ -1287,7 +1320,41 @@ async function zapisz() {
     $('#zapisano').hidden = false;
   } catch {
     btn.disabled = false;
-    btn.textContent = 'Zapisz mój styl';
+    btn.textContent = 'Zapisz wybór efektów';
+    alert('Nie udało się zapisać. Sprawdź, czy okno terminala jest nadal otwarte, i spróbuj jeszcze raz.');
+  }
+}
+
+async function zapiszMarke() {
+  const out = { zapisano: new Date().toISOString().slice(0, 10) };
+  const anyFont = fonts.glowna || fonts.akcent || fonts.odreczna;
+  if (anyFont) {
+    out.czcionki = {};
+    if (fonts.glowna) out.czcionki.glowna = fonts.glowna;
+    if (fonts.akcent) out.czcionki.akcent = fonts.akcent;
+    if (fonts.odreczna) out.czcionki.odreczna = fonts.odreczna;
+  }
+  if (hasCustomKolory()) out.kolory = { ...kolory };
+  if (hasCustomUklad()) out.uklad = { ...uklad };
+  if (tempo) out.tempo = tempo;
+  if (zoom) out.zoom = zoom;
+  if (snd.size > 0) out.dzwieki = [...snd];
+
+  const btn = $('#save-marka');
+  btn.disabled = true;
+  btn.textContent = 'Zapisuję…';
+  try {
+    const r = await fetch('/api/zapisz-brand', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(out),
+    });
+    if (!r.ok) throw new Error('server');
+    btn.textContent = 'Marka zapisana ✓';
+    setTimeout(() => { btn.textContent = 'Zapisz moją markę'; render(); }, 2500);
+  } catch {
+    btn.disabled = false;
+    btn.textContent = 'Zapisz moją markę';
     alert('Nie udało się zapisać. Sprawdź, czy okno terminala jest nadal otwarte, i spróbuj jeszcze raz.');
   }
 }
@@ -1407,6 +1474,10 @@ $('#all').onclick = () => {
   render();
 };
 $('#save').onclick = zapisz;
+$('#save-marka').onclick = zapiszMarke;
+document.querySelectorAll('.lb-tab').forEach(btn => {
+  btn.addEventListener('click', () => { lbTab = btn.dataset.tab; render(); });
+});
 
 document.querySelectorAll('.kolor-swatch').forEach(sw => {
   sw.addEventListener('click', e => {

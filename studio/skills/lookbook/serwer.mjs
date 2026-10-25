@@ -11,6 +11,7 @@ const LOOKBOOK = path.join(__dirname, '..', '..', 'lookbook');
 const DZWIEKI = path.join(__dirname, '..', '..', 'dzwieki');
 const STYL_DIR = path.join(os.homedir(), '.ai-content-creator-studio');
 const STYL_PLIK = path.join(STYL_DIR, 'moj-styl.json');
+const BRAND_PLIK = path.join(STYL_DIR, 'moj-brand.json');
 const PORT_START = 9731;
 
 const MIME = {
@@ -97,6 +98,26 @@ function startServer(port) {
     res.setHeader('Access-Control-Allow-Origin', 'null');
     const url = new URL(req.url, `http://127.0.0.1`);
     const p = url.pathname;
+
+    // Save brand
+    if (req.method === 'POST' && p === '/api/zapisz-brand') {
+      let body = '';
+      req.on('data', c => { body += c; });
+      req.on('end', () => {
+        try {
+          const brand = JSON.parse(body);
+          fs.mkdirSync(STYL_DIR, { recursive: true });
+          fs.writeFileSync(BRAND_PLIK, JSON.stringify(brand, null, 2), 'utf8');
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ ok: true }));
+          process.stdout.write(`ZAPISANO_BRAND: ${JSON.stringify(brand)}\n`);
+        } catch (e) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ ok: false, blad: String(e.message) }));
+        }
+      });
+      return;
+    }
 
     // Save choice
     if (req.method === 'POST' && p === '/api/zapisz') {
