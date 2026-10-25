@@ -323,6 +323,15 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 .dekor-kolor-section{margin-top:4px}
 .dekor-kolor-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
 .dekor-kolor-row-label{font-size:12px;font-weight:700;color:var(--muted);min-width:60px}
+.tempo-cards{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.tempo-card{all:unset;display:flex;align-items:center;gap:16px;padding:16px;border-radius:16px;border:2px solid var(--line);background:var(--surface);cursor:pointer;width:100%;box-sizing:border-box;transition:border-color .15s,background .15s}
+.tempo-card[data-active="1"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.tempo-card:hover:not([data-active="1"]){border-color:var(--rose)}
+.tempo-timing{font-size:22px;font-weight:900;color:var(--accent);min-width:68px;text-align:center;line-height:1.1;letter-spacing:-.02em}
+.tempo-info{flex:1;min-width:0}
+.tempo-name{font-size:14px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tempo-rec{font-size:10px;font-weight:900;background:var(--accent);color:var(--accent-ink);padding:2px 8px;border-radius:99px;letter-spacing:.06em;text-transform:uppercase}
+.tempo-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}
 </style>
 </head>
 <body>
@@ -526,6 +535,13 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
       </div>
     </section>
 
+    <section class="block" id="sec-tempo">
+      <div class="eyebrow">Krok 5 · Tempo</div>
+      <h2>Jak dynamiczne mają być Twoje rolki?</h2>
+      <p class="lead">To ustawienie mówi, jak szybko ma się zmieniać obraz po wycięciu pauz i ciszy. Możesz je zmienić przy każdym montażu.</p>
+      <div class="tempo-cards" id="g-tempo"></div>
+    </section>
+
     <section class="block" id="sec-fx">
       <div class="eyebrow">Krok 5 · Efekty</div>
       <h2>Twoje efekty.</h2>
@@ -575,7 +591,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 
 <script>
 let mode = 'own', ready = null, cap = null, fx = {}, partsOn = false;
-let snd = new Set(), styl = null;
+let snd = new Set(), styl = null, tempo = null;
 let allFxIds = [];
 let fonts = { glowna: null, akcent: null, odreczna: null };
 let fontRole = 'glowna';
@@ -659,6 +675,25 @@ const KOLORY_PRESET = [
   '#FFD166','#FF9F1C','#A8D8EA','#5B9BD5','#6C63FF','#9B59B6',
   '#06D6A0','#00F5D4','#1A1A1A','#4A3F3C','#8B7355','#C9A493',
 ];
+const TEMPO_OPTIONS = [
+  { id:'spokojne',   nazwa:'Spokojne',   czas:'5–8 s',   opis:'Tutoriale, wyjaśnienia krok po kroku, spokojny lifestyle. Widz ma czas na zapamiętanie każdego fragmentu.' },
+  { id:'naturalne',  nazwa:'Naturalne',  czas:'3–5 s',   opis:'Standardowa rolka, everyday content. Dobry punkt startowy dla większości tematów.', rec:true },
+  { id:'dynamiczne', nazwa:'Dynamiczne', czas:'1,5–3 s', opis:'Motywacja, sport, szybkie wskazówki, haki na uwagę. Energetyczny montaż, który wciąga od pierwszej sekundy.' },
+];
+function buildTempo() {
+  const g = $('#g-tempo');
+  if (!g) return;
+  g.innerHTML = '';
+  TEMPO_OPTIONS.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'tempo-card';
+    btn.id = 'tempo-' + opt.id;
+    btn.dataset.active = tempo === opt.id ? '1' : '0';
+    btn.innerHTML = `<div class="tempo-timing">${opt.czas}</div><div class="tempo-info"><div class="tempo-name">${opt.nazwa}${opt.rec ? '<span class="tempo-rec">Polecane</span>' : ''}</div><div class="tempo-desc">${opt.opis}</div></div>`;
+    btn.addEventListener('click', () => { tempo = opt.id; buildTempo(); render(); });
+    g.appendChild(btn);
+  });
+}
 const PALETY_KOLOROW = [
   { id:'naturalny', nazwa:'Naturalny', tlo:'#4A3F3C', napisy:'#FFFFFF', akcent:'#F0E6D3', naglowek:'#FFFFFF', cta:'#F0E6D3' },
   { id:'rozany',    nazwa:'Różany',    tlo:'#7B3B5E', napisy:'#FFFFFF', akcent:'#FFCCE0', naglowek:'#FFFFFF', cta:'#FFCCE0' },
@@ -1021,11 +1056,13 @@ function render() {
   $('#sec-czcionki').hidden = mode !== 'own';
   $('#sec-kolory').hidden = mode !== 'own';
   $('#sec-uklad').hidden = mode !== 'own';
+  $('#sec-tempo').hidden = mode !== 'own';
   $('#sec-fx').hidden = mode !== 'own';
   $('#sec-snd').hidden = mode !== 'own';
   $('#sec-styl').hidden = mode !== 'own';
   renderKolory();
   renderUklad();
+  buildTempo();
 
   // Font role tabs
   ['glowna','akcent','odreczna'].forEach(r => {
@@ -1133,7 +1170,7 @@ function render() {
     const el = $(`#ready-${ready}`);
     addChip((el?.querySelector('.title')?.textContent || ready) + ' · gotowy styl', 'sec-ready', false, () => { ready = null; });
     ok = true;
-  } else if (mode === 'own' && (cap || nFx > 0 || fonts.glowna || fonts.akcent || fonts.odreczna || hasCustomKolory() || hasCustomUklad())) {
+  } else if (mode === 'own' && (cap || nFx > 0 || fonts.glowna || fonts.akcent || fonts.odreczna || hasCustomKolory() || hasCustomUklad() || tempo)) {
     if (cap) {
       const el = $(`#cap-${cap}`);
       addChip((el?.querySelector('.title')?.textContent || cap) + ' · napisy', 'sec-caps', false, () => { cap = null; });
@@ -1147,6 +1184,7 @@ function render() {
     if (hasCustomUklad()) {
       addChip('Własny układ', 'sec-uklad', false, () => { uklad = { ...UKLAD_DEFAULT }; });
     }
+    if (tempo) { const opt = TEMPO_OPTIONS.find(o => o.id === tempo); addChip('Tempo: ' + (opt?.nazwa || tempo), 'sec-tempo', false, () => { tempo = null; }); }
     if (nFx) addChip(nFx + fxPlural(nFx) + (partsOn ? ' według części' : ''), 'sec-fx', false, () => { fx = {}; });
     if (nSnd) addChip(nSnd + sndPlural(nSnd), 'sec-snd', false, () => { snd = new Set(); });
     if (styl) { const sel = document.getElementById('styl-' + styl); addChip((sel?.querySelector('.styl-name')?.textContent || styl) + ' · styl', 'sec-styl', false, () => { styl = null; }); }
@@ -1156,7 +1194,7 @@ function render() {
   }
 
   $('#save').disabled = !ok;
-  const hasAny = ready !== null || cap !== null || Object.keys(fx).length > 0 || snd.size > 0 || styl !== null || hasCustomUklad() || hasCustomKolory() || Object.values(fonts).some(Boolean);
+  const hasAny = ready !== null || cap !== null || Object.keys(fx).length > 0 || snd.size > 0 || styl !== null || hasCustomUklad() || hasCustomKolory() || Object.values(fonts).some(Boolean) || tempo !== null;
   $('#clear').disabled = !hasAny;
 }
 
@@ -1170,6 +1208,7 @@ function clearAll() {
   kolory = { ...KOLORY_DEFAULT };
   paletaAktywna = null;
   uklad = { ...UKLAD_DEFAULT };
+  tempo = null;
   render();
 }
 
@@ -1198,6 +1237,7 @@ async function zapisz() {
     }
     if (hasCustomKolory()) out.kolory = { ...kolory };
     if (hasCustomUklad()) out.uklad = { ...uklad };
+    if (tempo) out.tempo = tempo;
   }
   out.zapisano = new Date().toISOString().slice(0, 10);
 
