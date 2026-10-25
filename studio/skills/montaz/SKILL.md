@@ -42,7 +42,10 @@ Jeśli kursantka wkleja URL (Instagram, TikTok, YouTube itp.), pobierz wideo yt-
 
 Jeśli `yt-dlp` nie ma w `narzedzia.json`: poproś kursantkę o uruchomienie `/studio:start` najpierw.
 
-Jeśli yt-dlp zawiedzie (błąd, brak dostępu, nieobsługiwana platforma): powiedz kursantce: „Nie udało mi się pobrać wideo. Możesz skorzystać z Apify — dodaj konektor Apify w ustawieniach Claude, a ja pobiorę przez niego."
+Jeśli yt-dlp zawiedzie (błąd, brak dostępu, nieobsługiwana platforma): powiedz kursantce:
+
+> Nie udało mi się pobrać wideo automatycznie. Mogę spróbować przez Apify — dodaj konektor Apify w ustawieniach Claude, a pobiorę przez niego.
+> **Uwaga:** Apify ma darmowy limit użyć, po jego przekroczeniu jest płatne. Sprawdź swój stan konta na apify.com przed użyciem.
 
 ---
 
