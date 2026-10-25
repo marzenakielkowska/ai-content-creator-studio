@@ -327,6 +327,10 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 .lb-tab[aria-selected="true"]{background:#6C63FF;border-color:#6C63FF;color:#FFFFFF;box-shadow:0 2px 12px rgba(108,99,255,.35)}
 .lb-tab:hover:not([aria-selected="true"]){border-color:var(--muted);color:var(--ink)}
 .marka-hint{font-size:11px;color:var(--muted);margin-top:4px;text-align:center;line-height:1.35}
+.plotno-swatch{width:48px;height:48px;border-radius:10px;flex:none;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.08)}
+.plotno-custom-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.plotno-custom-label{font-size:13px;font-weight:700;color:var(--muted);white-space:nowrap}
+.plotno-usun{color:var(--muted);font-size:11px}
 .dekor-kolor-section{margin-top:4px}
 .dekor-kolor-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
 .dekor-kolor-row-label{font-size:12px;font-weight:700;color:var(--muted);min-width:60px}
@@ -547,15 +551,28 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
       </div>
     </section>
 
+    <section class="block" id="sec-plotno">
+      <div class="eyebrow">Krok 4 · Płótno</div>
+      <h2>Twoje płótno.</h2>
+      <p class="lead">Jeśli nagrywasz bez twarzy albo chcesz slajdy z czystym tłem — wybierz kolory płótna. Możesz wybrać do 3. Claude użyje ich tam, gdzie pasują.</p>
+      <div class="tempo-cards" id="g-plotno"></div>
+      <div class="plotno-custom-row">
+        <span class="plotno-custom-label">Własny kolor</span>
+        <input type="color" id="plotno-picker" value="#FFFFFF" oninput="const h=$('#plotno-hex');if(h)h.value=this.value">
+        <input type="text" id="plotno-hex" class="kpop-hex" maxlength="7" placeholder="#FFD166" spellcheck="false" oninput="const v=this.value.replace(/^#*/,'#');if(/^#[0-9A-Fa-f]{6}$/.test(v)){const p=$('#plotno-picker');if(p)p.value=v}">
+        <button class="btn btn-ghost" style="padding:8px 16px;font-size:13px" onclick="addCustomPlotno()">Dodaj</button>
+      </div>
+    </section>
+
     <section class="block" id="sec-tempo">
-      <div class="eyebrow">Krok 4 · Tempo</div>
+      <div class="eyebrow">Krok 5 · Tempo</div>
       <h2>Jak dynamiczne mają być Twoje rolki?</h2>
       <p class="lead">To ustawienie mówi, jak szybko ma się zmieniać obraz po wycięciu pauz i ciszy. Możesz je zmienić przy każdym montażu.</p>
       <div class="tempo-cards" id="g-tempo"></div>
     </section>
 
     <section class="block" id="sec-zoom">
-      <div class="eyebrow">Krok 5 · Zoom</div>
+      <div class="eyebrow">Krok 6 · Zoom</div>
       <h2>Czy kamera ma się poruszać?</h2>
       <p class="lead">Zoom to ruch wewnątrz klipu — przybliżanie lub oddalanie — niezależnie od cięć. Możesz go pominąć albo dodać subtelnie lub dynamicznie.</p>
       <div class="tempo-cards" id="g-zoom"></div>
@@ -577,7 +594,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
     </section>
 
     <section class="block" id="sec-snd">
-      <div class="eyebrow">Krok 6 · Dźwięki</div>
+      <div class="eyebrow">Krok 7 · Dźwięki</div>
       <h2>Twoje dźwięki.</h2>
       <p class="lead">Zaznacz dźwięki, których lubisz używać. Claude doda je tam, gdzie pasują do ruchu i efektów. Bez zaznaczenia — Claude zdecyduje sam.</p>
       <div class="grid snd-grid" id="g-snd"></div>
@@ -614,7 +631,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 
 <script>
 let mode = 'own', ready = null, cap = null, fx = {}, partsOn = false;
-let snd = new Set(), styl = null, tempo = null, zoom = null;
+let snd = new Set(), plotno = [], styl = null, tempo = null, zoom = null;
 let lbTab = 'marka';
 let allFxIds = [];
 let fonts = { glowna: null, akcent: null, odreczna: null };
@@ -699,6 +716,47 @@ const KOLORY_PRESET = [
   '#FFD166','#FF9F1C','#A8D8EA','#5B9BD5','#6C63FF','#9B59B6',
   '#06D6A0','#00F5D4','#1A1A1A','#4A3F3C','#8B7355','#C9A493',
 ];
+const PLOTNO_OPTIONS = [
+  { id:'maslane-zolte', nazwa:'Maślane żółte', kolor:'#FDE68A', opis:'Płaskie żółte tło, biały tekst i białe ramki kart. Rozpoznawalny wygląd serii.' },
+  { id:'miekki-blekit', nazwa:'Miękki błękit', kolor:'#C5E3F7', opis:'Pastelowoniebieskie tło z zabawnymi naklejkami.' },
+];
+function buildPlotno() {
+  const g = $('#g-plotno');
+  if (!g) return;
+  g.innerHTML = '';
+  PLOTNO_OPTIONS.forEach(opt => {
+    const active = plotno.some(p => p.id === opt.id);
+    const btn = document.createElement('button');
+    btn.className = 'tempo-card';
+    btn.dataset.active = active ? '1' : '0';
+    btn.innerHTML = `<div class="plotno-swatch" style="background:${opt.kolor}"></div><div class="tempo-info"><div class="tempo-name">${opt.nazwa}</div><div class="tempo-desc">${opt.opis}</div></div>`;
+    btn.addEventListener('click', () => {
+      if (active) { plotno = plotno.filter(p => p.id !== opt.id); }
+      else if (plotno.length < 3) { plotno.push({ id: opt.id, kolor: opt.kolor, nazwa: opt.nazwa }); }
+      buildPlotno(); render();
+    });
+    g.appendChild(btn);
+  });
+  plotno.filter(p => !PLOTNO_OPTIONS.find(o => o.id === p.id)).forEach(p => {
+    const btn = document.createElement('button');
+    btn.className = 'tempo-card';
+    btn.dataset.active = '1';
+    btn.innerHTML = `<div class="plotno-swatch" style="background:${p.kolor}"></div><div class="tempo-info"><div class="tempo-name">${p.nazwa}</div><div class="tempo-desc plotno-usun">Kliknij, żeby usunąć</div></div>`;
+    btn.addEventListener('click', () => { plotno = plotno.filter(x => x.kolor !== p.kolor); buildPlotno(); render(); });
+    g.appendChild(btn);
+  });
+}
+function addCustomPlotno() {
+  if (plotno.length >= 3) return;
+  const hexIn = $('#plotno-hex');
+  const raw = (hexIn?.value || '').trim().replace(/^#*/, '#');
+  const kolor = /^#[0-9A-Fa-f]{6}$/.test(raw) ? raw : $('#plotno-picker')?.value;
+  if (!kolor) return;
+  if (plotno.some(p => p.kolor.toUpperCase() === kolor.toUpperCase())) return;
+  plotno.push({ id: 'custom-' + Date.now(), kolor, nazwa: 'Własny' });
+  if (hexIn) hexIn.value = '';
+  buildPlotno(); render();
+}
 const TEMPO_OPTIONS = [
   { id:'spokojne',   nazwa:'Spokojne',   czas:'5–8 s',   opis:'Tutoriale, wyjaśnienia krok po kroku, spokojny lifestyle. Widz ma czas na zapamiętanie każdego fragmentu.' },
   { id:'naturalne',  nazwa:'Naturalne',  czas:'3–5 s',   opis:'Standardowa rolka, everyday content. Dobry punkt startowy dla większości tematów.', rec:true },
@@ -1104,6 +1162,7 @@ function render() {
   $('#sec-czcionki').hidden = !isMarka;
   $('#sec-kolory').hidden = !isMarka;
   $('#sec-uklad').hidden = !isMarka;
+  $('#sec-plotno').hidden = !isMarka;
   $('#sec-tempo').hidden = !isMarka;
   $('#sec-zoom').hidden = !isMarka;
   $('#sec-fx').hidden = !isEfekty;
@@ -1111,6 +1170,7 @@ function render() {
   $('#sec-styl').hidden = !isEfekty;
   renderKolory();
   renderUklad();
+  buildPlotno();
   buildTempo();
   buildZoom();
 
@@ -1216,7 +1276,7 @@ function render() {
     sumEl.appendChild(b);
   };
 
-  const hasMarkaData = Object.values(fonts).some(Boolean) || hasCustomKolory() || hasCustomUklad() || tempo !== null || zoom !== null || snd.size > 0;
+  const hasMarkaData = Object.values(fonts).some(Boolean) || hasCustomKolory() || hasCustomUklad() || plotno.length > 0 || tempo !== null || zoom !== null || snd.size > 0;
   if (mode === 'ready' && ready) {
     const el = $(`#ready-${ready}`);
     addChip((el?.querySelector('.title')?.textContent || ready) + ' · gotowy styl', 'sec-ready', false, () => { ready = null; });
@@ -1229,6 +1289,7 @@ function render() {
       addChip(pnazwa, 'sec-kolory', false, () => { kolory = { ...KOLORY_DEFAULT }; paletaAktywna = null; });
     }
     if (hasCustomUklad()) addChip('Własny układ', 'sec-uklad', false, () => { uklad = { ...UKLAD_DEFAULT }; });
+    if (plotno.length > 0) addChip(plotno.length + (plotno.length === 1 ? ' płótno' : ' płótna'), 'sec-plotno', false, () => { plotno = []; });
     if (tempo) { const opt = TEMPO_OPTIONS.find(o => o.id === tempo); addChip('Tempo: ' + (opt?.nazwa || tempo), 'sec-tempo', false, () => { tempo = null; }); }
     if (zoom) { const opt = ZOOM_OPTIONS.find(o => o.id === zoom); addChip('Zoom: ' + (opt?.nazwa || zoom), 'sec-zoom', false, () => { zoom = null; }); }
     if (nSnd) addChip(nSnd + sndPlural(nSnd), 'sec-snd', false, () => { snd = new Set(); });
@@ -1268,6 +1329,7 @@ function clearAll() {
   kolory = { ...KOLORY_DEFAULT };
   paletaAktywna = null;
   uklad = { ...UKLAD_DEFAULT };
+  plotno = [];
   tempo = null;
   zoom = null;
   render();
@@ -1334,6 +1396,7 @@ async function zapiszMarke() {
   }
   if (hasCustomKolory()) out.kolory = { ...kolory };
   if (hasCustomUklad()) out.uklad = { ...uklad };
+  if (plotno.length > 0) out.plotno = plotno.map(p => ({ kolor: p.kolor }));
   if (tempo) out.tempo = tempo;
   if (zoom) out.zoom = zoom;
   if (snd.size > 0) out.dzwieki = [...snd];

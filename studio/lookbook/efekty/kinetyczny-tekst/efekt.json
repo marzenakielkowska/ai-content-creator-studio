@@ -1,0 +1,16 @@
+{
+  "id": "kinetyczny-tekst",
+  "kategoria": "tekst",
+  "nazwa": "Kinetyczny tekst",
+  "opis": "Pełnoekranowe zdanie buduje się słowo po słowie z emoji w tekście.",
+  "najlepsze_do": "Mocne hasła, liczby, cytaty",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div class=\"cap c4\" style=\"font-size:15px;line-height:1.5\"><i>Zrób</i> <i>to</i> <i>👉</i> <i>teraz</i></div>",
+  "przepis": {
+    "typ": "plansza-kinetyczna",
+    "animacja": "slowo-po-slowie",
+    "emoji_w_tekscie": true,
+    "pelny_ekran": true
+  }
+}
