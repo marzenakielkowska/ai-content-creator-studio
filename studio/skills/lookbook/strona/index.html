@@ -355,22 +355,19 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 .plotno-preview-col{position:sticky;top:80px}
 .plotno-frames-row{display:flex;gap:10px}
 .plotno-frames-row .frame{flex:1;min-width:0;transition:background .35s ease}
-/* Ramka 1 — duża liczba */
-.pp-eyebrow-1{position:absolute;top:8%;left:0;right:0;text-align:center;z-index:2;font-size:clamp(5px,1.6vw,6.5px);font-weight:800;letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
-.pp-number{position:absolute;top:16%;left:0;right:0;text-align:center;z-index:2;font-size:clamp(22px,11vw,50px);font-weight:900;letter-spacing:-.05em;line-height:1;transition:color .3s}
-.pp-divider{position:absolute;top:47%;left:14%;right:14%;height:2px;background:currentColor;border-radius:1px;z-index:2;opacity:.2}
-.pp-label{position:absolute;top:52%;left:0;right:0;text-align:center;z-index:2;font-size:clamp(5.5px,1.8vw,8px);font-weight:700;letter-spacing:.02em;padding:0 10%;line-height:1.4;transition:color .3s}
-.pp-sticker{position:absolute;bottom:4%;right:2%;width:38%;z-index:3;pointer-events:none;animation:pp-float 3s ease-in-out infinite}
-@keyframes pp-float{0%,100%{transform:rotate(2deg)}50%{transform:translateY(-5%) rotate(-1deg)}}
-.pp-sticker svg{width:100%;height:auto;display:block}
-/* Ramka 2 — wykres */
-.pp-eyebrow{position:absolute;top:7%;left:0;right:0;text-align:center;z-index:2;font-size:clamp(5px,1.8vw,7px);font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(12,43,110,.55)}
-.pp-title{position:absolute;top:13%;left:0;right:0;text-align:center;z-index:2;font-size:clamp(10px,4vw,18px);font-weight:900;color:#0C2B6E;line-height:1.15;padding:0 6%}
-.pp-subtitle{position:absolute;top:44%;left:0;right:0;text-align:center;z-index:2;font-size:clamp(5px,1.8vw,7.5px);color:#1A4A99;font-weight:600;padding:0 8%}
-.pp-chart{position:absolute;bottom:18%;left:10%;right:10%;height:26%;display:flex;align-items:flex-end;gap:3px;z-index:2}
-.pp-chart-bar{flex:1;border-radius:3px 3px 0 0;background:rgba(12,43,110,.3);animation:pp-bar 2s ease-out infinite}
-.pp-chart-bar.hi{background:rgba(12,43,110,.72)}
-@keyframes pp-bar{0%,8%{height:0}70%,100%{height:var(--h,55%)}}
+/* Ramka 1 — strzałki style */
+.pp-card{position:absolute;top:28%;left:10%;right:10%;background:rgba(255,255,255,.92);border-radius:10px;padding:8px 10px;box-shadow:0 2px 12px rgba(0,0,0,.13);z-index:2}
+.pp-card-eye{display:block;font-size:clamp(4px,1.4vw,6px);font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-bottom:3px}
+.pp-card-title{display:block;font-size:clamp(8px,3.2vw,14px);font-weight:900;color:#111;line-height:1.2;margin-bottom:3px}
+.pp-card-body{display:block;font-size:clamp(4px,1.4vw,6px);color:#555;line-height:1.4}
+.pp-annot{position:absolute;top:8%;right:3%;width:54%;z-index:3;animation:strzalka-in 2.4s ease-in-out infinite}
+/* Ramka 2 — dok style */
+.pp-step{position:absolute;top:10%;left:0;right:0;text-align:center;z-index:2;font-size:clamp(4px,1.4vw,6px);font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:rgba(12,43,110,.55)}
+.pp-step-title{position:absolute;top:17%;left:0;right:0;text-align:center;z-index:2;font-size:clamp(10px,4vw,18px);font-weight:900;color:#0C2B6E;line-height:1.2}
+.pp-step-sub{position:absolute;top:58%;left:0;right:0;text-align:center;z-index:2;font-size:clamp(4px,1.2vw,5.5px);font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:rgba(12,43,110,.4)}
+.pp-dock{position:absolute;bottom:6%;left:50%;transform:translateX(-50%);display:flex;gap:4px;background:rgba(255,255,255,.45);border-radius:10px;padding:5px 7px;z-index:2}
+.pp-dock span{width:18px;height:18px;border-radius:5px;flex:none}
+.pp-dock-bounce{animation:dok-bounce 2.8s ease-in-out infinite}
 .tempo-cards{display:flex;flex-direction:column;gap:10px;margin-top:4px}
 .tempo-card{all:unset;display:flex;align-items:center;gap:16px;padding:16px;border-radius:16px;border:2px solid var(--line);background:var(--surface);cursor:pointer;width:100%;box-sizing:border-box;transition:border-color .15s,background .15s}
 .tempo-card[data-active="1"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
@@ -596,32 +593,28 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
         <div class="plotno-preview-col">
           <div class="plotno-frames-row">
             <div class="frame" id="pp-frame-1" style="background:#FDE68A">
-              <div class="pp-eyebrow-1" id="pp-eyebrow-1">Stat tygodnia</div>
-              <div class="pp-number" id="pp-num-1">87%</div>
-              <div class="pp-divider"></div>
-              <div class="pp-label" id="pp-lbl-1">marketerów<br>używa AI</div>
-              <div class="pp-sticker">
-                <svg viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="30" cy="14" r="12" fill="#FADADD"/>
-                  <ellipse cx="30" cy="56" rx="18" ry="26" fill="#FF6B9D"/>
-                  <rect x="13" y="44" width="10" height="28" rx="5" fill="#FF6B9D"/>
-                  <rect x="37" y="44" width="10" height="28" rx="5" fill="#FF6B9D"/>
-                  <ellipse cx="14" cy="46" rx="7" ry="9" fill="#FF6B9D" transform="rotate(-18 14 46)"/>
-                  <ellipse cx="46" cy="46" rx="7" ry="9" fill="#FF6B9D" transform="rotate(18 46 46)"/>
-                  <path d="M24 19 Q30 24 36 19" stroke="#b06040" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <div class="pp-card">
+                <span class="pp-card-eye">WYNIK</span>
+                <span class="pp-card-title">Wzrost<br>sprzedaży</span>
+                <span class="pp-card-body">Po wdrożeniu strategii wyniki poszły w górę.</span>
+              </div>
+              <div class="pp-annot">
+                <svg viewBox="0 0 90 72" xmlns="http://www.w3.org/2000/svg">
+                  <text x="2" y="17" font-family="Caveat,cursive" font-size="17" fill="#6C63FF" font-weight="600">przed →</text>
+                  <path d="M58 20 Q72 34 62 54" stroke="#6C63FF" stroke-width="2" fill="none" stroke-linecap="round" opacity=".85"/>
                 </svg>
               </div>
             </div>
-            <div class="frame" style="background:#BFDBFE">
-              <div class="pp-eyebrow">Wyniki</div>
-              <div class="pp-title">more ai,<br>less proof…</div>
-              <div class="pp-subtitle">tylko 41% potrafi<br>udowodnić efekty</div>
-              <div class="pp-chart">
-                <div class="pp-chart-bar" style="--h:40%"></div>
-                <div class="pp-chart-bar" style="--h:72%"></div>
-                <div class="pp-chart-bar" style="--h:52%"></div>
-                <div class="pp-chart-bar hi" style="--h:88%"></div>
-                <div class="pp-chart-bar" style="--h:56%"></div>
+            <div class="frame" id="pp-frame-2" style="background:#C5E3F7">
+              <div class="pp-step">KROK 1</div>
+              <div class="pp-step-title">Kliknij<br>Finder</div>
+              <div class="pp-step-sub">MACOS</div>
+              <div class="pp-dock">
+                <span style="background:linear-gradient(135deg,#5AF,#06F)"></span>
+                <span class="pp-dock-bounce" style="background:linear-gradient(135deg,#FA0,#F60)"></span>
+                <span style="background:linear-gradient(135deg,#6F6,#0A0)"></span>
+                <span style="background:linear-gradient(135deg,#F9A,#F36)"></span>
+                <span style="background:linear-gradient(135deg,#C8B,#97A)"></span>
               </div>
             </div>
           </div>
@@ -802,10 +795,6 @@ function updatePlotnoPreview() {
   const r = parseInt(kolor.slice(1,3),16), gg = parseInt(kolor.slice(3,5),16), b = parseInt(kolor.slice(5,7),16);
   const lum = (0.299*r + 0.587*gg + 0.114*b) / 255;
   const textKolor = lum > 0.5 ? 'rgba(20,10,0,.8)' : 'rgba(255,255,255,.92)';
-  const numEl = $('#pp-num-1'), lblEl = $('#pp-lbl-1'), eyEl = $('#pp-eyebrow-1');
-  if (numEl) numEl.style.color = textKolor;
-  if (lblEl) lblEl.style.color = textKolor;
-  if (eyEl) eyEl.style.color = lum > 0.5 ? 'rgba(30,15,0,.45)' : 'rgba(255,255,255,.55)';
 }
 function buildPlotno() {
   const g = $('#g-plotno');
