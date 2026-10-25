@@ -305,6 +305,12 @@ input[type=range].suwak{-webkit-appearance:none;appearance:none;flex:1;height:6p
 input[type=range].suwak::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.25);transition:transform .1s}
 input[type=range].suwak:hover::-webkit-slider-thumb{transform:scale(1.15)}
 input[type=range].suwak::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:none;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.dekor-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.dekor-chip{all:unset;cursor:pointer;font-size:13px;font-weight:700;padding:5px 14px;border-radius:999px;border:1.5px solid var(--line);color:var(--accent);background:var(--surface);transition:background .15s,color .15s,border-color .15s}
+.dekor-chip[data-active="1"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.dekor-kolor-wrap{display:none;align-items:center;gap:10px;margin-top:8px}
+.dekor-kolor-wrap label{font-size:12px;color:var(--muted);font-weight:600}
+input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--line);border-radius:8px;cursor:pointer;padding:2px;background:var(--surface)}
 </style>
 </head>
 <body>
@@ -411,7 +417,7 @@ input[type=range].suwak::-moz-range-thumb{width:20px;height:20px;border-radius:5
     <section class="block" id="sec-uklad">
       <div class="eyebrow">Krok 4 · Układ</div>
       <h2>Twój układ.</h2>
-      <p class="lead">Ustaw, gdzie pojawiają się napisy i nagłówek. Podgląd odświeża się na żywo.</p>
+      <p class="lead">Ustaw pozycję, rozmiar i styl tekstu napisów i nagłówka. Podgląd odświeża się na żywo.</p>
       <div class="uklad-layout">
         <div class="uklad-preview-col">
           <div class="uklad-frame-wrap">
@@ -425,7 +431,7 @@ input[type=range].suwak::-moz-range-thumb{width:20px;height:20px;border-radius:5
           <div class="suwak-group">
             <div class="suwak-row">
               <div class="suwak-header">
-                <span class="suwak-name">Napisy</span>
+                <span class="suwak-name">Napisy — pozycja</span>
                 <span class="suwak-val" id="suwak-napisy-val">25%</span>
               </div>
               <p class="suwak-desc">odległość napisów od dołu ekranu</p>
@@ -437,7 +443,7 @@ input[type=range].suwak::-moz-range-thumb{width:20px;height:20px;border-radius:5
             </div>
             <div class="suwak-row">
               <div class="suwak-header">
-                <span class="suwak-name">Nagłówek</span>
+                <span class="suwak-name">Nagłówek — pozycja</span>
                 <span class="suwak-val" id="suwak-naglowek-val">18%</span>
               </div>
               <p class="suwak-desc">odległość tytułu od góry ekranu</p>
@@ -445,6 +451,56 @@ input[type=range].suwak::-moz-range-thumb{width:20px;height:20px;border-radius:5
                 <span class="suwak-edge">góra</span>
                 <input type="range" class="suwak" id="suwak-naglowek" min="8" max="50" value="18" step="1">
                 <span class="suwak-edge">dół</span>
+              </div>
+            </div>
+            <div class="suwak-row">
+              <div class="suwak-header">
+                <span class="suwak-name">Napisy — rozmiar</span>
+                <span class="suwak-val" id="suwak-napisy-rozm-val">100%</span>
+              </div>
+              <p class="suwak-desc">skala czcionki napisów względem domyślnej</p>
+              <div class="suwak-track">
+                <span class="suwak-edge">małe</span>
+                <input type="range" class="suwak" id="suwak-napisy-rozm" min="50" max="200" value="100" step="5">
+                <span class="suwak-edge">duże</span>
+              </div>
+            </div>
+            <div class="suwak-row">
+              <div class="suwak-header">
+                <span class="suwak-name">Nagłówek — rozmiar</span>
+                <span class="suwak-val" id="suwak-naglowek-rozm-val">100%</span>
+              </div>
+              <p class="suwak-desc">skala czcionki nagłówka względem domyślnej</p>
+              <div class="suwak-track">
+                <span class="suwak-edge">małe</span>
+                <input type="range" class="suwak" id="suwak-naglowek-rozm" min="50" max="200" value="100" step="5">
+                <span class="suwak-edge">duże</span>
+              </div>
+            </div>
+            <div class="suwak-row">
+              <div class="suwak-header"><span class="suwak-name">Napisy — styl tekstu</span></div>
+              <p class="suwak-desc">efekt nałożony na czcionkę napisów</p>
+              <div class="dekor-chips" id="dekor-napisy-chips">
+                <button class="dekor-chip" data-rola="napisy" data-val="bez">Bez</button>
+                <button class="dekor-chip" data-rola="napisy" data-val="cien">Cień</button>
+                <button class="dekor-chip" data-rola="napisy" data-val="obramowka">Obramówka</button>
+              </div>
+              <div class="dekor-kolor-wrap" id="dekor-napisy-kolor-wrap">
+                <label for="dekor-napisy-kolor">Kolor obramówki</label>
+                <input type="color" class="dekor-kolor" id="dekor-napisy-kolor" value="#000000">
+              </div>
+            </div>
+            <div class="suwak-row">
+              <div class="suwak-header"><span class="suwak-name">Nagłówek — styl tekstu</span></div>
+              <p class="suwak-desc">efekt nałożony na czcionkę nagłówka</p>
+              <div class="dekor-chips" id="dekor-naglowek-chips">
+                <button class="dekor-chip" data-rola="naglowek" data-val="bez">Bez</button>
+                <button class="dekor-chip" data-rola="naglowek" data-val="cien">Cień</button>
+                <button class="dekor-chip" data-rola="naglowek" data-val="obramowka">Obramówka</button>
+              </div>
+              <div class="dekor-kolor-wrap" id="dekor-naglowek-kolor-wrap">
+                <label for="dekor-naglowek-kolor">Kolor obramówki</label>
+                <input type="color" class="dekor-kolor" id="dekor-naglowek-kolor" value="#000000">
               </div>
             </div>
           </div>
@@ -509,21 +565,46 @@ const KOLORY_DEFAULT = { napisy: '#FFFFFF', akcent: '#FCE3D6', naglowek: '#FFFFF
 let kolory = { ...KOLORY_DEFAULT };
 let paletaAktywna = null;
 let pickerRola = null;
-const UKLAD_DEFAULT = { napisy: 25, naglowek: 18 };
+const UKLAD_DEFAULT = { napisy: 25, naglowek: 18, napisy_rozmiar: 100, naglowek_rozmiar: 100, napisy_dekor: 'cien', napisy_dekor_kolor: '#000000', naglowek_dekor: 'cien', naglowek_dekor_kolor: '#000000' };
 let uklad = { ...UKLAD_DEFAULT };
 function hasCustomUklad() {
-  return uklad.napisy !== UKLAD_DEFAULT.napisy || uklad.naglowek !== UKLAD_DEFAULT.naglowek;
+  return Object.keys(UKLAD_DEFAULT).some(k => uklad[k] !== UKLAD_DEFAULT[k]);
+}
+function applyDekorEl(el, dekor, kolor) {
+  if (!el) return;
+  el.style.textShadow = dekor === 'cien' ? '0 2px 8px rgba(0,0,0,.7)' : 'none';
+  el.style.webkitTextStroke = dekor === 'obramowka' ? `1.5px ${kolor}` : '';
+  el.style.paintOrder = dekor === 'obramowka' ? 'stroke fill' : '';
+}
+function updateDekorChips(rola) {
+  document.querySelectorAll(`.dekor-chip[data-rola="${rola}"]`).forEach(btn => {
+    btn.dataset.active = btn.dataset.val === uklad[rola + '_dekor'] ? '1' : '0';
+  });
+  const wrap = $(`#dekor-${rola}-kolor-wrap`);
+  if (wrap) wrap.style.display = uklad[rola + '_dekor'] === 'obramowka' ? 'flex' : 'none';
+  const ki = $(`#dekor-${rola}-kolor`);
+  if (ki) ki.value = uklad[rola + '_dekor_kolor'];
 }
 function renderUklad() {
   const napEl = $('#up-napisy-el'), nagEl = $('#up-naglowek-el');
-  if (napEl) napEl.style.bottom = uklad.napisy + '%';
-  if (nagEl) nagEl.style.top = uklad.naglowek + '%';
+  if (napEl) { napEl.style.bottom = uklad.napisy + '%'; napEl.style.fontSize = `calc(clamp(7px,2.2vw,11px) * ${uklad.napisy_rozmiar / 100})`; }
+  if (nagEl) { nagEl.style.top = uklad.naglowek + '%'; nagEl.style.fontSize = `calc(clamp(10px,2.8vw,14px) * ${uklad.naglowek_rozmiar / 100})`; }
+  applyDekorEl(napEl, uklad.napisy_dekor, uklad.napisy_dekor_kolor);
+  applyDekorEl(nagEl, uklad.naglowek_dekor, uklad.naglowek_dekor_kolor);
   const sn = $('#suwak-napisy'), snv = $('#suwak-napisy-val');
   if (sn) sn.value = uklad.napisy;
   if (snv) snv.textContent = uklad.napisy + '%';
   const sg = $('#suwak-naglowek'), sgv = $('#suwak-naglowek-val');
   if (sg) sg.value = uklad.naglowek;
   if (sgv) sgv.textContent = uklad.naglowek + '%';
+  const snr = $('#suwak-napisy-rozm'), snrv = $('#suwak-napisy-rozm-val');
+  if (snr) snr.value = uklad.napisy_rozmiar;
+  if (snrv) snrv.textContent = uklad.napisy_rozmiar + '%';
+  const sgr = $('#suwak-naglowek-rozm'), sgrv = $('#suwak-naglowek-rozm-val');
+  if (sgr) sgr.value = uklad.naglowek_rozmiar;
+  if (sgrv) sgrv.textContent = uklad.naglowek_rozmiar + '%';
+  updateDekorChips('napisy');
+  updateDekorChips('naglowek');
 }
 const KOLORY_PRESET = [
   '#FFFFFF','#F5F0E8','#FCE3D6','#FFB8C6','#FF6B6B','#E63946',
@@ -1215,6 +1296,23 @@ $('#suwak-napisy')?.addEventListener('input', e => { uklad.napisy = +e.target.va
 $('#suwak-napisy')?.addEventListener('change', () => render());
 $('#suwak-naglowek')?.addEventListener('input', e => { uklad.naglowek = +e.target.value; renderUklad(); });
 $('#suwak-naglowek')?.addEventListener('change', () => render());
+$('#suwak-napisy-rozm')?.addEventListener('input', e => { uklad.napisy_rozmiar = +e.target.value; renderUklad(); });
+$('#suwak-napisy-rozm')?.addEventListener('change', () => render());
+$('#suwak-naglowek-rozm')?.addEventListener('input', e => { uklad.naglowek_rozmiar = +e.target.value; renderUklad(); });
+$('#suwak-naglowek-rozm')?.addEventListener('change', () => render());
+document.querySelectorAll('.dekor-chip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const rola = btn.dataset.rola, val = btn.dataset.val;
+    uklad[rola + '_dekor'] = val;
+    updateDekorChips(rola);
+    renderUklad();
+    render();
+  });
+});
+$('#dekor-napisy-kolor')?.addEventListener('input', e => { uklad.napisy_dekor_kolor = e.target.value; renderUklad(); });
+$('#dekor-napisy-kolor')?.addEventListener('change', () => render());
+$('#dekor-naglowek-kolor')?.addEventListener('input', e => { uklad.naglowek_dekor_kolor = e.target.value; renderUklad(); });
+$('#dekor-naglowek-kolor')?.addEventListener('change', () => render());
 
 document.querySelectorAll('.font-role-tab').forEach(btn => {
   btn.addEventListener('click', () => {
