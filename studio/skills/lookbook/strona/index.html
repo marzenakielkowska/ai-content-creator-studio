@@ -542,8 +542,15 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
       <div class="tempo-cards" id="g-tempo"></div>
     </section>
 
+    <section class="block" id="sec-zoom">
+      <div class="eyebrow">Krok 6 · Zoom</div>
+      <h2>Czy kamera ma się poruszać?</h2>
+      <p class="lead">Zoom to ruch wewnątrz klipu — przybliżanie lub oddalanie — niezależnie od cięć. Możesz go pominąć albo dodać subtelnie lub dynamicznie.</p>
+      <div class="tempo-cards" id="g-zoom"></div>
+    </section>
+
     <section class="block" id="sec-fx">
-      <div class="eyebrow">Krok 5 · Efekty</div>
+      <div class="eyebrow">Krok 7 · Efekty</div>
       <h2>Twoje efekty.</h2>
       <p class="lead">Zaznacz tyle, ile chcesz. Efekty na rolce Claude doda tam, gdzie pasują do treści. Efekty samodzielne (jak Przed i po) powstaną z osobnego nagrania.</p>
       <div class="fxbar">
@@ -591,7 +598,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 
 <script>
 let mode = 'own', ready = null, cap = null, fx = {}, partsOn = false;
-let snd = new Set(), styl = null, tempo = null;
+let snd = new Set(), styl = null, tempo = null, zoom = null;
 let allFxIds = [];
 let fonts = { glowna: null, akcent: null, odreczna: null };
 let fontRole = 'glowna';
@@ -691,6 +698,25 @@ function buildTempo() {
     btn.dataset.active = tempo === opt.id ? '1' : '0';
     btn.innerHTML = `<div class="tempo-timing">${opt.czas}</div><div class="tempo-info"><div class="tempo-name">${opt.nazwa}${opt.rec ? '<span class="tempo-rec">Polecane</span>' : ''}</div><div class="tempo-desc">${opt.opis}</div></div>`;
     btn.addEventListener('click', () => { tempo = opt.id; buildTempo(); render(); });
+    g.appendChild(btn);
+  });
+}
+const ZOOM_OPTIONS = [
+  { id:'bez',       nazwa:'Bez zooma',   czas:'brak',   opis:'Kamera stoi w miejscu. Spokojne nagrania, wywiady, dokumentalne podejście.' },
+  { id:'subtelny',  nazwa:'Subtelny',    czas:'~15 s',  opis:'Delikatne przybliżanie lub oddalanie co około 15 sekund. Dodaje głębi bez rozpraszania — dobre do tutoriali i lifestyle.', rec:true },
+  { id:'dynamiczny',nazwa:'Dynamiczny',  czas:'~5 s',   opis:'Wyraźne zmiany skali co około 5 sekund. Energetyczne rolki, sport, motywacja.' },
+];
+function buildZoom() {
+  const g = $('#g-zoom');
+  if (!g) return;
+  g.innerHTML = '';
+  ZOOM_OPTIONS.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'tempo-card';
+    btn.id = 'zoom-' + opt.id;
+    btn.dataset.active = zoom === opt.id ? '1' : '0';
+    btn.innerHTML = `<div class="tempo-timing">${opt.czas}</div><div class="tempo-info"><div class="tempo-name">${opt.nazwa}${opt.rec ? '<span class="tempo-rec">Polecane</span>' : ''}</div><div class="tempo-desc">${opt.opis}</div></div>`;
+    btn.addEventListener('click', () => { zoom = opt.id; buildZoom(); render(); });
     g.appendChild(btn);
   });
 }
@@ -1057,12 +1083,14 @@ function render() {
   $('#sec-kolory').hidden = mode !== 'own';
   $('#sec-uklad').hidden = mode !== 'own';
   $('#sec-tempo').hidden = mode !== 'own';
+  $('#sec-zoom').hidden = mode !== 'own';
   $('#sec-fx').hidden = mode !== 'own';
   $('#sec-snd').hidden = mode !== 'own';
   $('#sec-styl').hidden = mode !== 'own';
   renderKolory();
   renderUklad();
   buildTempo();
+  buildZoom();
 
   // Font role tabs
   ['glowna','akcent','odreczna'].forEach(r => {
@@ -1170,7 +1198,7 @@ function render() {
     const el = $(`#ready-${ready}`);
     addChip((el?.querySelector('.title')?.textContent || ready) + ' · gotowy styl', 'sec-ready', false, () => { ready = null; });
     ok = true;
-  } else if (mode === 'own' && (cap || nFx > 0 || fonts.glowna || fonts.akcent || fonts.odreczna || hasCustomKolory() || hasCustomUklad() || tempo)) {
+  } else if (mode === 'own' && (cap || nFx > 0 || fonts.glowna || fonts.akcent || fonts.odreczna || hasCustomKolory() || hasCustomUklad() || tempo || zoom)) {
     if (cap) {
       const el = $(`#cap-${cap}`);
       addChip((el?.querySelector('.title')?.textContent || cap) + ' · napisy', 'sec-caps', false, () => { cap = null; });
@@ -1185,6 +1213,7 @@ function render() {
       addChip('Własny układ', 'sec-uklad', false, () => { uklad = { ...UKLAD_DEFAULT }; });
     }
     if (tempo) { const opt = TEMPO_OPTIONS.find(o => o.id === tempo); addChip('Tempo: ' + (opt?.nazwa || tempo), 'sec-tempo', false, () => { tempo = null; }); }
+    if (zoom) { const opt = ZOOM_OPTIONS.find(o => o.id === zoom); addChip('Zoom: ' + (opt?.nazwa || zoom), 'sec-zoom', false, () => { zoom = null; }); }
     if (nFx) addChip(nFx + fxPlural(nFx) + (partsOn ? ' według części' : ''), 'sec-fx', false, () => { fx = {}; });
     if (nSnd) addChip(nSnd + sndPlural(nSnd), 'sec-snd', false, () => { snd = new Set(); });
     if (styl) { const sel = document.getElementById('styl-' + styl); addChip((sel?.querySelector('.styl-name')?.textContent || styl) + ' · styl', 'sec-styl', false, () => { styl = null; }); }
@@ -1194,7 +1223,7 @@ function render() {
   }
 
   $('#save').disabled = !ok;
-  const hasAny = ready !== null || cap !== null || Object.keys(fx).length > 0 || snd.size > 0 || styl !== null || hasCustomUklad() || hasCustomKolory() || Object.values(fonts).some(Boolean) || tempo !== null;
+  const hasAny = ready !== null || cap !== null || Object.keys(fx).length > 0 || snd.size > 0 || styl !== null || hasCustomUklad() || hasCustomKolory() || Object.values(fonts).some(Boolean) || tempo !== null || zoom !== null;
   $('#clear').disabled = !hasAny;
 }
 
@@ -1209,6 +1238,7 @@ function clearAll() {
   paletaAktywna = null;
   uklad = { ...UKLAD_DEFAULT };
   tempo = null;
+  zoom = null;
   render();
 }
 
@@ -1238,6 +1268,7 @@ async function zapisz() {
     if (hasCustomKolory()) out.kolory = { ...kolory };
     if (hasCustomUklad()) out.uklad = { ...uklad };
     if (tempo) out.tempo = tempo;
+    if (zoom) out.zoom = zoom;
   }
   out.zapisano = new Date().toISOString().slice(0, 10);
 
