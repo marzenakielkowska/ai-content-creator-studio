@@ -25,6 +25,19 @@ Gdy potrzebujesz nagrania od kursantki, napisz dokładnie tak:
 
 **Nigdy nie pisz:** „podaj ścieżkę do pliku", „wpisz ścieżkę", „podaj lokalizację pliku". Kursantka nie zna ścieżek — drag-and-drop lub spinacz to jej jedyna opcja.
 
+### Gdy kursantka poda link zamiast pliku
+
+Jeśli kursantka wkleja URL (Instagram, TikTok, YouTube itp.), pobierz wideo yt-dlp przed montażem:
+
+1. Odczytaj ścieżkę do yt-dlp z `~/.ai-content-studio/narzedzia.json` (pole `yt-dlp`).
+2. Pobierz do folderu projektu:
+   ```bash
+   "<yt-dlp>" -o "nagranie.%(ext)s" --merge-output-format mp4 "<URL>"
+   ```
+3. Kontynuuj montaż z pobranym plikiem jak z każdym innym nagraniem.
+
+Jeśli `yt-dlp` nie ma w `narzedzia.json`: poproś kursantkę o uruchomienie `/studio:start` najpierw.
+
 ---
 
 ## Narzędzia
