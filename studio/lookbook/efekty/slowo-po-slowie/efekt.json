@@ -1,0 +1,14 @@
+{
+  "id": "slowo-po-slowie",
+  "kategoria": "tekst",
+  "nazwa": "Słowo po słowie",
+  "opis": "Każde słowo wskakuje osobno.",
+  "najlepsze_do": "Szybkie tempo mówienia, porady",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": "<div class=\"cap c4\"><i>raz</i> <i>dwa</i> <i>trzy</i></div>",
+  "przepis": {
+    "typ": "napisy",
+    "styl": "slowo-po-slowie"
+  }
+}

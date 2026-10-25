@@ -1,0 +1,14 @@
+{
+  "id": "naglowek-i-linia",
+  "kategoria": "tekst",
+  "nazwa": "Nagłówek + linia",
+  "opis": "Mocny nagłówek i delikatny podpis.",
+  "najlepsze_do": "Listy, poradniki krok po kroku",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": "<div class=\"cap c5\"><b>3 kroki</b><small>do pierwszej rolki</small></div>",
+  "przepis": {
+    "typ": "napisy",
+    "styl": "naglowek-i-linia"
+  }
+}

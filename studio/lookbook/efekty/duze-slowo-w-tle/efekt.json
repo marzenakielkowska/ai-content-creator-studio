@@ -1,0 +1,14 @@
+{
+  "id": "duze-slowo-w-tle",
+  "kategoria": "tekst",
+  "nazwa": "Duże słowo w tle",
+  "opis": "Kluczowe słowo ogromne, za Tobą.",
+  "najlepsze_do": "Mocne hasła, opinie, haczyki",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": "<div class=\"cap c2\">styl</div><div class=\"cap c1\" style=\"top:64%;font-size:16px\">w Twoim stylu</div>",
+  "przepis": {
+    "typ": "napisy",
+    "styl": "duze-slowo-w-tle"
+  }
+}
