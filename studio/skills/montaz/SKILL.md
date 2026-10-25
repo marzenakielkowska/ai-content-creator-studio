@@ -32,8 +32,12 @@ Jeśli kursantka wkleja URL (Instagram, TikTok, YouTube itp.), pobierz wideo yt-
 1. Odczytaj ścieżkę do yt-dlp z `~/.ai-content-studio/narzedzia.json` (pole `yt-dlp`).
 2. Pobierz do folderu projektu:
    ```bash
-   "<yt-dlp>" -o "nagranie.%(ext)s" --merge-output-format mp4 "<URL>"
+   "<yt-dlp>" -o "nagranie.%(ext)s" --merge-output-format mp4 \
+     --format "bestvideo[height<=960]+bestaudio/best[height<=960]/best" \
+     --no-playlist --max-filesize 200m \
+     "<URL>"
    ```
+   `height<=960` daje ~540×960 dla pionowych rolek — wystarczy do analizy stylu i montażu, ok. 4× mniejszy plik niż pełna jakość. `--max-filesize 200m` i `--no-playlist` chronią przed przypadkowym pobraniem całej serii.
 3. Kontynuuj montaż z pobranym plikiem jak z każdym innym nagraniem.
 
 Jeśli `yt-dlp` nie ma w `narzedzia.json`: poproś kursantkę o uruchomienie `/studio:start` najpierw.
