@@ -226,6 +226,35 @@ function instalujRembg(python) {
   if (!r.ok) throw new BladKroku('instalacja rembg nie powiodla sie');
 }
 
+// ---------- yt-dlp ----------
+
+function znajdzYtdlp() {
+  const lokalny = path.join(DOM, `yt-dlp${EXE}`);
+  if (fs.existsSync(lokalny)) {
+    const r = uruchom(lokalny, ['--version'], { timeout: 15000 });
+    if (r.ok) return { sciezka: lokalny, wersja: r.out.trim(), zrodlo: 'studio' };
+  }
+  const sys = ktory(WIN ? 'yt-dlp.exe' : 'yt-dlp');
+  if (sys) {
+    const r = uruchom(sys, ['--version'], { timeout: 15000 });
+    if (r.ok) return { sciezka: sys, wersja: r.out.trim(), zrodlo: 'system' };
+  }
+  return null;
+}
+
+function instalujYtdlp() {
+  const url = MAC
+    ? 'https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_macos'
+    : WIN
+      ? 'https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe'
+      : 'https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp';
+  const cel = path.join(DOM, `yt-dlp${EXE}`);
+  if (!pobierzPlik(url, cel)) throw new BladKroku('nie udalo sie pobrac yt-dlp (sprawdz internet)');
+  if (!WIN) fs.chmodSync(cel, 0o755);
+  const sprawdz = uruchom(cel, ['--version'], { timeout: 15000 });
+  if (!sprawdz.ok) throw new BladKroku('yt-dlp pobrany, ale sie nie uruchamia');
+}
+
 // ---------- co jest na komputerze ----------
 
 function wersjaFf(plik) {
@@ -319,6 +348,7 @@ function stan() {
     pillow: python ? sprawdzPillow(python) : false,
     numpy: python ? sprawdzNumpy(python) : false,
     rembg: python ? sprawdzRembg(python) : false,
+    ytdlp: znajdzYtdlp(),
   };
   if (s.hf) {
     // Nie "browser path": ono przy braku przegladarki samo ja pobiera, bez zgody kursanta.
@@ -382,6 +412,8 @@ function wypiszStan(s) {
   else if (s.python && !s.numpy) wypisz('STATUS numpy BRAK');
   if (s.python && s.rembg) wypisz('STATUS rembg OK');
   else if (s.python && !s.rembg) wypisz('STATUS rembg BRAK');
+  if (s.ytdlp) wypisz(`STATUS yt-dlp OK ${s.ytdlp.wersja} ${s.ytdlp.zrodlo}`);
+  else wypisz('STATUS yt-dlp BRAK');
   wypisz(`STATUS autoaktualizacja ${autoAktualizacja(false)}`);
   wypisz(`STATUS do_pobrania_mb ${doPobrania}`);
   const gotowe = narzedziaGotowe(s) && Boolean(s.ustawienia);
@@ -401,6 +433,7 @@ function zapiszNarzedzia(s) {
     wersje: { node: s.node.wersja, ffmpeg: s.ff.wersja, hyperframes: s.hf.wersja },
     jak_uruchomic_hyperframes: '"<node>" "<hyperframes>" <polecenie>, z HYPERFRAMES_FFMPEG_PATH i HYPERFRAMES_FFPROBE_PATH ustawionymi na sciezki powyzej',
   };
+  if (s.ytdlp) dane['yt-dlp'] = s.ytdlp.sciezka;
   fs.writeFileSync(P.narzedzia, JSON.stringify(dane, null, 2) + '\n');
 }
 
@@ -627,6 +660,12 @@ function instaluj() {
   }
 
   // rembg NIE jest instalowane automatycznie — pobierane tylko gdy konkretny efekt tego wymaga
+
+  // yt-dlp (pobieranie rolek z linku)
+  s = stan();
+  if (!s.ytdlp) {
+    krok('yt-dlp', 'okolo 30 MB (pobieranie rolek z internetu)', () => instalujYtdlp());
+  }
 
   wypisz(`KROK autoaktualizacja ${autoAktualizacja(true)}`);
   zapiszZnacznikAktualizacji();
