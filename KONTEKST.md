@@ -169,6 +169,7 @@ Krok 8a w `SKILL.md` montażu już to opisuje. Szczegółowy plik zasad wariant�
 13. ⏳ Podglądy stylów w Lookbooku (po nagraniu testowym)
 14. ⏳ Warianty rolek — szczegółowy plik zasad
 15. ⏳ Profile klientów (zmiana Lookbooka)
+16. ⏳ Ocenić czy przywrócić `replicate.md` z `_stare/` — po przetestowaniu lookbooka z efektami. Plik ma wartościowe instrukcje (wyciąganie klatek, mapowanie stylu, styl-wzorzec.json). Nie przywracać `wzorzec.md` — opisuje komendy których skrypt już nie ma.
 
 **Uwaga do gotchas.md:** To plik dla Claude — kursantka go nie widzi. Claude czyta go gdy HyperFrames lub FFmpeg zwraca błąd i stosuje znane rozwiązanie automatycznie, bez angażowania kursantki.
 
