@@ -1117,7 +1117,7 @@ function render() {
     const el = $(`#ready-${ready}`);
     addChip((el?.querySelector('.title')?.textContent || ready) + ' · gotowy styl', 'sec-ready', false, () => { ready = null; });
     ok = true;
-  } else if (mode === 'own' && (cap || nFx > 0 || fonts.glowna || fonts.akcent || fonts.odreczna)) {
+  } else if (mode === 'own' && (cap || nFx > 0 || fonts.glowna || fonts.akcent || fonts.odreczna || hasCustomKolory() || hasCustomUklad())) {
     if (cap) {
       const el = $(`#cap-${cap}`);
       addChip((el?.querySelector('.title')?.textContent || cap) + ' · napisy', 'sec-caps', false, () => { cap = null; });
