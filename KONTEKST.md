@@ -15,13 +15,13 @@ Wtyczka instaluje się przez: `claude plugin marketplace add marzenakielkowska/a
 
 ---
 
-## Co już działa (wersja 0.4.0)
+## Co już działa (wersja 0.5.13)
 
 | Skill | Komenda | Co robi |
 |---|---|---|
-| start | `/studio:start` | Instaluje narzędzia: Node, FFmpeg, HyperFrames, model mowy, przeglądarka do renderu, Pillow i numpy; włącza automatyczne aktualizacje |
+| start | `/studio:start` | Instaluje narzędzia: Node, FFmpeg, HyperFrames, model mowy, przeglądarka do renderu, Pillow, numpy, **yt-dlp**; włącza automatyczne aktualizacje |
 | witaj | `/studio:witaj` | Sprawdza czy wtyczka działa |
-| lookbook | `/studio:lookbook` | Kursantka wybiera styl napisów i efektów, zapisuje do `moj-styl.json` |
+| lookbook | `/studio:lookbook` | Kursantka wybiera styl napisów, efektów, kolorów, czcionek i układ napisów/nagłówka; zapisuje do `moj-styl.json` |
 | dzwieki | `/studio:dzwieki` | Kursantka wybiera dźwięki, zapisuje do `moj-styl.json` |
 | montaz | `/studio:montaz` | Montaż rolki: 8 kroków z zatrzymaniem na OK po każdym (szczegóły niżej) |
 
@@ -71,18 +71,28 @@ Gdy brak `moj-styl.json`, montaż pyta: film wzorcowy, opis słowami albo lookbo
   z opcją dwóch nagrań bez filtra ciemności. Wybór koloru i etykiet usunięty z Lookbooka.
 - Dodawanie stylów: `lookbook/JAK-DODAC-STYL.md`
 
+### Sekcje Lookbooka (v0.5.x, październik 2026)
+
+Lookbook ma 7 kroków (sekcji):
+1. Krok 1 — Napisy (wybór stylu napisów)
+2. Krok 2 — Efekty (wybór efektów wideo, filtr kategorii)
+3. Krok 3 — Kolory (kolor główny, akcent, nagłówek, CTA)
+4. Krok 4 — **Układ** — suwaki pozycji napisów (8–55% od dołu) i nagłówka (8–50% od góry); podgląd telefonu odświeża się na żywo
+5. Krok 5 — Czcionki (czcionka napisów, nagłówka, CTA)
+6. Krok 6 — Dźwięki
+7. Krok 7 — Styl (gotowy zestaw)
+
+Zapisywanie: możliwe z samym efektem (bez napisów). Przycisk „Wyczyść wybór” kasuje poszczególne sekcje. Po zapisaniu kursantka dostaje podpowiedź `/studio:montaz`.
+
 ---
 
 ## Otwarte sprawy do decyzji
 
-1. **Linki do filmów wzorcowych — trzy pliki mówią co innego.**
-   - `SKILL.md` montażu: „wrzuć plik albo powiedz skąd go pobrać”
-   - `rules/wzorzec.md`: `zbadaj-wzorzec` przyjmuje bezpośredni URL do pliku MP4 (np. z Apify), pobiera
-     tymczasowo, analizuje i usuwa
-   - `replicate.md`: jeśli kursantka da link, ma sama pobrać plik — Claude nie pobiera z zewnętrznych serwisów
-
-   Decyzję podejmuje Marzena (dotyczy tego, co obiecuje kursantkom i regulaminów Instagrama/TikToka/YouTube).
-   Rozważane było też narzędzie yt-dlp. Po decyzji ujednolicić wszystkie trzy pliki.
+1. ✅ **Linki do materiałów wideo — decyzja podjęta (2026-10-25).**
+   Kursantka może podać URL zamiast pliku. Flow: yt-dlp próbuje pobrać → jeśli zawiedzie, Claude przechodzi
+   do Apify i informuje kursantkę jednym zdaniem. Pobieranie ograniczone do 960p (ok. 4× mniejszy plik).
+   Zaktualizowano: `SKILL.md` montażu. `rules/wzorzec.md` i `replicate.md` dotyczą analizy stylu
+   (inny przepływ) — nie wymagają zmian.
 2. **`co-nowego.json` przy 0.4.0** opisuje tylko Lookbook, a montaż też wszedł w tej wersji.
 3. **README obiecuje „jeden folder Studio”**, a są dwa (patrz wyżej). Do wyboru: ujednolicić folder
    (zmiana w serwer.mjs lookbooka i dźwięków + SKILL.md) albo poprawić opis w README.
@@ -153,10 +163,12 @@ Krok 8a w `SKILL.md` montażu już to opisuje. Szczegółowy plik zasad wariant�
 7. ✅ `replicate.md` + `wzorzec.md` — kopiowanie stylu z rolki wzorcowej, biblioteka wzorców
 8. ✅ Skrypty montażu, wersja 0.4.0
 9. ✅ Efekt „Przed i po” w Lookbooku z podglądem wideo
-10. ⏳ Ujednolicić sprawy z sekcji „Otwarte sprawy do decyzji”
-11. ⏳ Podglądy stylów w Lookbooku (po nagraniu testowym)
-12. ⏳ Warianty rolek — szczegółowy plik zasad
-13. ⏳ Profile klientów (zmiana Lookbooka)
+10. ✅ Lookbook v0.5.x: kolory, czcionki, sekcja Układ (suwaki pozycji napisów i nagłówka)
+11. ✅ yt-dlp: automatyczna instalacja w `/studio:start` + obsługa URL w montażu (fallback Apify)
+12. ⏳ Ujednolicić pozostałe sprawy z sekcji „Otwarte sprawy do decyzji” (punkty 2–6)
+13. ⏳ Podglądy stylów w Lookbooku (po nagraniu testowym)
+14. ⏳ Warianty rolek — szczegółowy plik zasad
+15. ⏳ Profile klientów (zmiana Lookbooka)
 
 **Uwaga do gotchas.md:** To plik dla Claude — kursantka go nie widzi. Claude czyta go gdy HyperFrames lub FFmpeg zwraca błąd i stosuje znane rozwiązanie automatycznie, bez angażowania kursantki.
 
@@ -235,4 +247,4 @@ Repozytorium jest publiczne, więc do tego czasu ten plik (z planami) jest widoc
 
 ---
 
-*Ostatnia aktualizacja: 2026-10-23*
+*Ostatnia aktualizacja: 2026-10-25*
