@@ -311,6 +311,13 @@ input[type=range].suwak::-moz-range-thumb{width:20px;height:20px;border-radius:5
 .dekor-kolor-wrap{display:none;align-items:center;gap:10px;margin-top:8px}
 .dekor-kolor-wrap label{font-size:12px;color:var(--muted);font-weight:600}
 input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--line);border-radius:8px;cursor:pointer;padding:2px;background:var(--surface)}
+.fonts-mini{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.fmini-row{display:flex;align-items:baseline;gap:8px;padding:5px 8px;border-radius:8px;background:var(--surface);border:1px solid var(--line)}
+.fmini-sample{font-size:15px;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px}
+.fmini-meta{display:flex;flex-direction:column;gap:1px;flex:1;min-width:0}
+.fmini-name{font-size:11px;font-weight:700;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fmini-role{font-size:10px;color:var(--muted);font-weight:600}
+.fonts-mini-empty{font-size:11px;color:var(--muted);padding:4px 0;font-style:italic}
 </style>
 </head>
 <body>
@@ -382,6 +389,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
               <div class="kp-cta" id="kp-cta-el">↓ zapisz to</div>
             </div>
           </div>
+          <div class="fonts-mini" id="kolor-fonts-mini"></div>
         </div>
         <div>
           <span class="kolor-group-label">Palety</span>
@@ -426,6 +434,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
               <div class="up-napisy" id="up-napisy-el" style="bottom:25%">jak nagrać pierwszą rolkę</div>
             </div>
           </div>
+          <div class="fonts-mini" id="uklad-fonts-mini"></div>
         </div>
         <div>
           <div class="suwak-group">
@@ -585,6 +594,31 @@ function updateDekorChips(rola) {
   const ki = $(`#dekor-${rola}-kolor`);
   if (ki) ki.value = uklad[rola + '_dekor_kolor'];
 }
+function renderFontsMini(containerId) {
+  const c = $('#' + containerId);
+  if (!c) return;
+  c.innerHTML = '';
+  const roles = [['glowna','Główna'],['akcent','Akcent'],['odreczna','Odręczna']];
+  const hasAny = roles.some(([r]) => fonts[r]);
+  if (!hasAny) {
+    const em = document.createElement('div');
+    em.className = 'fonts-mini-empty';
+    em.textContent = 'Brak wybranych czcionek — przejdź do Kroku 2.';
+    c.appendChild(em);
+    return;
+  }
+  roles.forEach(([r, label]) => {
+    const fId = fonts[r];
+    if (!fId) return;
+    const f = CZCIONKI.find(x => x.id === fId);
+    if (!f) return;
+    const row = document.createElement('div');
+    row.className = 'fmini-row';
+    const sample = r === 'glowna' ? 'jak nagrać rolkę' : r === 'akcent' ? '3 triki' : '↑ to działa';
+    row.innerHTML = `<span class="fmini-sample" style="font-family:'${f.rodzina}';font-weight:${f.waga};font-style:${f.styl||'normal'}">${sample}</span><div class="fmini-meta"><span class="fmini-name">${f.nazwa}</span><span class="fmini-role">${label}</span></div>`;
+    c.appendChild(row);
+  });
+}
 function renderUklad() {
   const napEl = $('#up-napisy-el'), nagEl = $('#up-naglowek-el');
   if (napEl) { napEl.style.bottom = uklad.napisy + '%'; napEl.style.fontSize = `calc(clamp(7px,2.2vw,11px) * ${uklad.napisy_rozmiar / 100})`; }
@@ -605,6 +639,12 @@ function renderUklad() {
   if (sgrv) sgrv.textContent = uklad.naglowek_rozmiar + '%';
   updateDekorChips('napisy');
   updateDekorChips('naglowek');
+  // Apply chosen fonts to layout preview frame
+  const fG = fonts.glowna ? CZCIONKI.find(x => x.id === fonts.glowna) : null;
+  const fA = fonts.akcent ? CZCIONKI.find(x => x.id === fonts.akcent) : null;
+  if (napEl && fG) { napEl.style.fontFamily = `'${fG.rodzina}'`; napEl.style.fontWeight = fG.waga; napEl.style.fontStyle = fG.styl || 'normal'; }
+  if (nagEl && fA) { nagEl.style.fontFamily = `'${fA.rodzina}'`; nagEl.style.fontWeight = fA.waga; nagEl.style.fontStyle = fA.styl || 'normal'; }
+  renderFontsMini('uklad-fonts-mini');
 }
 const KOLORY_PRESET = [
   '#FFFFFF','#F5F0E8','#FCE3D6','#FFB8C6','#FF6B6B','#E63946',
@@ -704,6 +744,15 @@ function renderKolory() {
   if (ka) ka.style.color = kolory.akcent;
   if (kg) kg.style.color = kolory.naglowek;
   if (kc) kc.style.color = kolory.cta;
+  // Apply chosen fonts to color preview frame
+  const cfG = fonts.glowna ? CZCIONKI.find(x => x.id === fonts.glowna) : null;
+  const cfA = fonts.akcent ? CZCIONKI.find(x => x.id === fonts.akcent) : null;
+  const cfO = fonts.odreczna ? CZCIONKI.find(x => x.id === fonts.odreczna) : null;
+  if (kn && cfG) { kn.style.fontFamily = `'${cfG.rodzina}'`; kn.style.fontWeight = cfG.waga; kn.style.fontStyle = cfG.styl || 'normal'; }
+  if (ka && cfA) { ka.style.fontFamily = `'${cfA.rodzina}'`; ka.style.fontWeight = cfA.waga; ka.style.fontStyle = cfA.styl || 'normal'; }
+  if (kg && cfA) { kg.style.fontFamily = `'${cfA.rodzina}'`; kg.style.fontWeight = cfA.waga; kg.style.fontStyle = cfA.styl || 'normal'; }
+  if (kc && cfO) { kc.style.fontFamily = `'${cfO.rodzina}'`; kc.style.fontWeight = cfO.waga; kc.style.fontStyle = cfO.styl || 'normal'; }
+  renderFontsMini('kolor-fonts-mini');
 }
 
 const CZCIONKI = [
