@@ -25,24 +25,34 @@ Gdy potrzebujesz nagrania od kursantki, napisz dokładnie tak:
 
 **Nigdy nie pisz:** „podaj ścieżkę do pliku", „wpisz ścieżkę", „podaj lokalizację pliku". Kursantka nie zna ścieżek — drag-and-drop lub spinacz to jej jedyna opcja.
 
-### Gdy kursantka poda link zamiast pliku
+### Gdy kursantka poda link — do czegokolwiek
 
-Jeśli kursantka wkleja URL (Instagram, TikTok, YouTube itp.), pobierz wideo yt-dlp przed montażem:
+Kursantka może podać URL w trzech sytuacjach. We wszystkich trzech pobierz wideo tym samym poleceniem:
 
-1. Odczytaj ścieżkę do yt-dlp z `~/.ai-content-studio/narzedzia.json` (pole `yt-dlp`).
-2. Pobierz do folderu projektu:
-   ```bash
-   "<yt-dlp>" -o "nagranie.%(ext)s" --merge-output-format mp4 \
-     --format "bestvideo[height<=960]+bestaudio/best[height<=960]/best" \
-     --no-playlist --max-filesize 200m \
-     "<URL>"
-   ```
-   `height<=960` daje ~540×960 dla pionowych rolek — wystarczy do analizy stylu i montażu, ok. 4× mniejszy plik niż pełna jakość. `--max-filesize 200m` i `--no-playlist` chronią przed przypadkowym pobraniem całej serii.
-3. Kontynuuj montaż z pobranym plikiem jak z każdym innym nagraniem.
+```bash
+"<yt-dlp>" -o "wideo.%(ext)s" --merge-output-format mp4 \
+  --format "bestvideo[height<=960]+bestaudio/best[height<=960]/best" \
+  --no-playlist --max-filesize 200m \
+  "<URL>"
+```
 
-Jeśli `yt-dlp` nie ma w `narzedzia.json`: poproś kursantkę o uruchomienie `/studio:start` najpierw.
+Ścieżkę do yt-dlp odczytaj z `~/.ai-content-studio/narzedzia.json` (pole `yt-dlp`).
+Jeśli brak — poproś o uruchomienie `/studio:start`.
+Jeśli yt-dlp zawiedzie — powiedz „Nie udało mi się pobrać automatycznie, korzystam z Apify." i pobierz przez konektor Apify.
 
-Jeśli yt-dlp zawiedzie (błąd, brak dostępu, nieobsługiwana platforma): powiedz kursantce „Nie udało mi się pobrać automatycznie, korzystam z Apify." i pobierz przez konektor Apify. Nie proś kursantki o żadne działanie — po prostu użyj Apify.
+**Sytuacja 1 — materiał do montażu:**
+„Tu mam link do mojego nagrania / rolki którą chcę zmontować."
+→ Pobierz, traktuj jak wrzucony plik, kontynuuj montaż.
+
+**Sytuacja 2 — wzorzec stylu:**
+„Zrób moje rolki jak to wideo / zainspiruj się tym / chcę taki styl."
+→ Pobierz do folderu tymczasowego, przeanalizuj: cięcie, napisy, efekty, rytm, kolory, czcionki.
+→ Opisz kursantce co widzisz (3–5 zdań), zaproponuj jak to przełożyć na jej styl.
+→ Usuń pobrany plik po analizie — to cudzy materiał, nie potrzeba go dłużej.
+
+**Sytuacja 3 — analiza bez montażu:**
+„Przeanalizuj to wideo / powiedz mi co w nim jest."
+→ Pobierz, przeanalizuj, odpowiedz, usuń plik.
 
 ---
 
