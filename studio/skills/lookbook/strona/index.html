@@ -148,6 +148,12 @@ section.block{padding-block:56px 8px}
 .snd-tick{position:absolute;top:10px;right:12px;font-size:13px;font-weight:900;color:var(--accent);opacity:0}
 .snd-card[aria-pressed="true"] .snd-tick{opacity:1}
 
+/* Quick-nav kategorii efektów */
+.fx-quicknav{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0}
+.qnav-pill{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:12px;padding:8px 16px;font-size:13px;font-weight:700;background:var(--surface);color:var(--ink);transition:background .15s,color .15s,border-color .15s}
+.qnav-pill:hover{border-color:var(--accent);color:var(--accent)}
+.qnav-pill .qnav-count{font-size:11px;font-weight:700;opacity:.45;min-width:16px;text-align:right}
+
 /* Filtr kategorii efektów */
 .fx-filter{position:sticky;top:0;z-index:8;background:var(--bg);padding:10px 0 8px;margin:18px 0 0;overflow-x:auto;white-space:nowrap;scrollbar-width:none;border-bottom:1.5px solid var(--line)}
 .fx-filter::-webkit-scrollbar{display:none}
@@ -726,6 +732,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
       <div class="eyebrow">Krok C · Efekty</div>
       <h2>Twoje efekty</h2>
       <p class="lead">Zaznacz tyle, ile chcesz. Efekty na rolce Claude doda tam, gdzie pasują do treści. Efekty samodzielne (jak Przed i po) powstaną z osobnego nagrania.</p>
+      <div id="fx-quicknav" class="fx-quicknav"></div>
       <div class="fxbar">
         <button class="switch" id="parts" role="switch" aria-checked="false">
           <span class="tr"></span>
@@ -1626,27 +1633,46 @@ async function init() {
     // Filtr kategorii
     const filterBar = $('#fx-filter');
     const grupy = $('#fx-cats').querySelectorAll('.fx-group');
+
+    function setFilter(katId, katNazwa) {
+      filterBar.querySelectorAll('.fx-pill').forEach(p => p.setAttribute('aria-pressed', 'false'));
+      if (!katId) {
+        $('#fx-pill-wszystko').setAttribute('aria-pressed', 'true');
+        grupy.forEach(g => g.hidden = false);
+      } else {
+        const pill = filterBar.querySelector(`[data-kat-pill="${katId}"]`);
+        if (pill) pill.setAttribute('aria-pressed', 'true');
+        grupy.forEach(g => { g.hidden = g.dataset.kat !== katId; });
+      }
+      filterBar.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
     const wszystko = document.createElement('button');
     wszystko.className = 'fx-pill';
+    wszystko.id = 'fx-pill-wszystko';
     wszystko.setAttribute('aria-pressed', 'true');
     wszystko.textContent = 'Wszystko';
-    wszystko.onclick = () => {
-      filterBar.querySelectorAll('.fx-pill').forEach(p => p.setAttribute('aria-pressed', 'false'));
-      wszystko.setAttribute('aria-pressed', 'true');
-      grupy.forEach(g => g.hidden = false);
-    };
+    wszystko.onclick = () => setFilter(null);
     filterBar.appendChild(wszystko);
     efektyGrupy.forEach(kat => {
       const btn = document.createElement('button');
       btn.className = 'fx-pill';
       btn.setAttribute('aria-pressed', 'false');
+      btn.setAttribute('data-kat-pill', kat.id || kat.nazwa);
       btn.textContent = kat.nazwa;
-      btn.onclick = () => {
-        filterBar.querySelectorAll('.fx-pill').forEach(p => p.setAttribute('aria-pressed', 'false'));
-        btn.setAttribute('aria-pressed', 'true');
-        grupy.forEach(g => { g.hidden = g.dataset.kat !== (kat.id || kat.nazwa); });
-      };
+      btn.onclick = () => setFilter(kat.id || kat.nazwa);
       filterBar.appendChild(btn);
+    });
+
+    // Quick-nav pod opisem
+    const quickNav = $('#fx-quicknav');
+    efektyGrupy.forEach(kat => {
+      const btn = document.createElement('button');
+      btn.className = 'qnav-pill';
+      btn.innerHTML = `${kat.nazwa}<span class="qnav-count">${kat.efekty.length}</span>`;
+      btn.title = kat.hint || '';
+      btn.onclick = () => setFilter(kat.id || kat.nazwa);
+      quickNav.appendChild(btn);
     });
 
     gotowe.forEach(s => $('#g-ready').appendChild(card(s, 'ready', 'gotowe', maps)));

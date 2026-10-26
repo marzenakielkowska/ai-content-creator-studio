@@ -8,7 +8,6 @@
     { "id": "tekst",      "nazwa": "Tekst na ekranie",   "hint": "Słowa i liczby, które pojawiają się, gdy je mówisz" },
     { "id": "plansze",    "nazwa": "Plansze i karty",    "hint": "Elementy, które wchodzą obok Ciebie" },
     { "id": "ruch",       "nazwa": "Ruch",                "hint": "Jak porusza się obraz i elementy" },
-    { "id": "dzwiek",          "nazwa": "Dźwięk",              "hint": "Subtelne dźwięki pod ruch na ekranie" },
     { "id": "elementy-wizualne", "nazwa": "Elementy wizualne",  "hint": "Odręczne notatki, strzałki i adnotacje nakładane na kadr" },
     { "id": "animowany-broll",   "nazwa": "Animowany B-roll",   "hint": "Krótkie dynamiczne wstawki: zbliżenia ekranu, kliknięcia, przejścia" }
   ]
