@@ -1,0 +1,19 @@
+{
+  "id": "polaroid-w-rogu",
+  "kategoria": "uklad",
+  "typ": "standalone",
+  "nazwa": "Polaroid w rogu",
+  "opis": "Ekran lub klip zajmuje cały kadr jako główna treść. Ty mówisz z małego, lekko pochylonego polaroidu w rogu. Idealne do pokazywania procesu.",
+  "najlepsze_do": "Pokazywanie ekranu Claude, tutoriale krok po kroku, procesy",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#111;display:flex;align-items:center;justify-content:center\"><div style=\"width:78%;height:75%;background:#1e1e2e;border-radius:9px;border:1px solid rgba(255,255,255,.13);display:flex;align-items:center;justify-content:center\"><div style=\"font-size:6px;color:rgba(255,255,255,.3)\">ekran / klip</div></div><div style=\"position:absolute;bottom:13%;right:7%;width:26%;height:36%;background:#fff;border-radius:5px;transform:rotate(-5deg);padding:3px;display:flex;align-items:center;justify-content:center\"><div style=\"width:100%;height:78%;background:#c8bfb0;border-radius:3px;display:flex;align-items:center;justify-content:center\"><div style=\"font-size:5px;color:#333\">Ty</div></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki + nagranie ekranu lub klip źródłowy",
+    "narzedzia": ["ffmpeg", "hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "instrukcja": "PRZEPIS.md"
+  }
+}

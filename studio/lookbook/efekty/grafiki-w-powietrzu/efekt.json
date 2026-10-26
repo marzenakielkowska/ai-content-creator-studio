@@ -1,0 +1,19 @@
+{
+  "id": "grafiki-w-powietrzu",
+  "kategoria": "uklad",
+  "typ": "nakładkowy",
+  "nazwa": "Grafiki w powietrzu",
+  "opis": "Normalny kadr, a grafiki, karty i tytuły unoszą się w wolnej przestrzeni nad Tobą. Twoja twarz zawsze widoczna.",
+  "najlepsze_do": "Listy kroków, statystyki, cytaty, podsumowania",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#1a1520\"><div style=\"position:absolute;top:6%;left:6%;right:6%;height:33%;display:flex;gap:5px;align-items:center\"><div style=\"flex:1;height:80%;background:rgba(255,255,255,.13);border-radius:9px;border:1px solid rgba(255,255,255,.2)\"></div><div style=\"flex:1;height:65%;background:rgba(255,255,255,.09);border-radius:9px;border:1px solid rgba(255,255,255,.15)\"></div></div><div style=\"position:absolute;bottom:0;left:0;right:0;top:40%;background:rgba(255,255,255,.035);display:flex;align-items:center;justify-content:center\"><div style=\"font-size:6px;color:rgba(255,255,255,.25)\">Ty</div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, kursantka w dolnych 55–65% kadru (dużo miejsca nad głową)",
+    "narzedzia": ["ffmpeg", "hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "Normal full-frame shot. Graphics (cards, titles, stats, icons) animate into the empty space above the person's head — the top 35–40% of the frame. Never cover the face. Graphics enter one at a time on the word they illustrate, stay 2–4 seconds, then exit. Use pop-in or slide-up animation. Max 2 graphics visible at once. Keep a 40px margin above the person's hair."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "wycieta-z-tla",
+  "kategoria": "uklad",
+  "typ": "nakładkowy",
+  "nazwa": "Wycięta z tła",
+  "opis": "Twoja sylwetka wycięta z tła stoi przed pływającymi kartami i grafikami. Pokój za Tobą rozmyty — Ty jesteś w centrum.",
+  "najlepsze_do": "Profesjonalne prezentacje, efektowne intro, pokazanie produktów",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,#2d2040,#0e0a1a)\"><div style=\"position:absolute;top:9%;left:10%;right:10%;height:20%;background:rgba(255,255,255,.11);border-radius:10px;border:1px solid rgba(255,255,255,.22);display:flex;align-items:center;gap:6px;padding:0 8px\"><div style=\"width:22%;aspect-ratio:1;background:rgba(255,255,255,.2);border-radius:5px;flex-shrink:0\"></div><div style=\"flex:1\"><div style=\"height:5px;background:rgba(255,255,255,.45);border-radius:3px;margin-bottom:3px\"></div><div style=\"height:4px;width:55%;background:rgba(255,255,255,.25);border-radius:3px\"></div></div></div><div style=\"position:absolute;bottom:6%;left:28%;right:28%;top:32%;background:rgba(255,255,255,.04);border-radius:10px 10px 0 0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px\"><div style=\"font-size:6px;color:rgba(255,255,255,.3)\">sylwetka</div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nieruchome tło, dobry kontrast kursantki z tłem",
+    "narzedzia": ["ffmpeg", "hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "instrukcja": "PRZEPIS.md"
+  }
+}

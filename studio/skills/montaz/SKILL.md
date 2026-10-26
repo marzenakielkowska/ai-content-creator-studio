@@ -27,7 +27,11 @@ Sprawdź, czy istnieje plik `~/.ai-content-creator-studio/moj-styl.json`. Jeśli
 
 - **`hook`** — jeśli pole istnieje, odczytaj `studio/lookbook/hooki/{hook}/hook.json`. Pole `przepis.opis_efektu` to opis efektu dla pierwszych 1–3 sekund (po angielsku, dla Ciebie). Wdróż go dokładnie w HyperFrames na klatce 0.
 - **`napisy`** — jeśli pole istnieje i nie jest `"bez-napisow"`, odczytaj `studio/lookbook/napisy/{napisy}/styl.json`. Pole `przepis` zawiera parametry (czcionka, grubość, rozmiar, kolor, animacja, pozycja), a `przepis.opis_efektu` (jeśli jest) opisuje zachowanie. Zastosuj te parametry do każdej klatki napisów.
-- **`efekty`** — klucze to foldery w `studio/lookbook/efekty/`. Każdy efekt ma `przepis` w `efekt.json` lub `PRZEPIS.md` w swoim folderze.
+- **`efekty`** — klucze to foldery w `studio/lookbook/efekty/`. Każdy efekt ma `przepis` w `efekt.json` lub `PRZEPIS.md` w swoim folderze. Pole `typ` w efekt.json:
+  - `"nakładkowy"` → efekt dodany na istniejący reel podczas montażu (Krok 4)
+  - `"standalone"` → osobny klip generowany przez Claude, niezależny od rolki
+  
+  Efekty układu (`kategoria: "uklad"`) zmieniają kompozycję całego kadru. Czytaj PRZEPIS.md przed wykonaniem.
 - **`styl`** — jeśli pole istnieje, odczytaj `studio/lookbook/styl/{styl}/styl.json`. Pole `przepis.typ` określa jak zastosować:
   - `"brak"` → nie rób żadnej korekcji koloru
   - `"media-treatment"` → zastosuj przez `npx hyperframes media-treatment --preset {przepis.grading.preset}` z parametrami z `przepis.grading.details` (np. `--vignette 0.25`)

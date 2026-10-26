@@ -1,0 +1,19 @@
+{
+  "id": "dowod-na-gorze",
+  "kategoria": "uklad",
+  "typ": "nakładkowy",
+  "nazwa": "Dowód na górze",
+  "opis": "Górna połowa kadru to dowód lub b-roll — zrzut ekranu, nagranie, wynik. Dolna połowa to Ty. Twarde cięcia między momentami.",
+  "najlepsze_do": "Tutoriale, pokazanie rezultatów, narracja z dowodem",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;display:flex;flex-direction:column\"><div style=\"flex:1;background:#1a1a2e;display:flex;align-items:center;justify-content:center;border-bottom:2px solid rgba(255,255,255,.2)\"><div style=\"font-size:6px;color:rgba(255,255,255,.45);text-align:center\">dowód / b-roll</div></div><div style=\"flex:1;background:#231530;display:flex;align-items:center;justify-content:center\"><div style=\"font-size:6px;color:rgba(255,255,255,.35)\">Ty</div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki + materiał dowodowy (zrzut ekranu lub krótki klip)",
+    "narzedzia": ["ffmpeg", "hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "Split the 9:16 frame vertically in half. Top half (y=0 to 50%): proof or b-roll panel — a screenshot card, a screen recording clip, or a photo that backs up what is being said. Bottom half (y=50% to 100%): the talking head. Between sections: hard cut to full talking head, then hard cut back to split layout on the next proof moment. The dividing line is a 2px white line at 50% height. Proof panel switches content on each new claim. Never cover the face in the bottom panel."
+  }
+}

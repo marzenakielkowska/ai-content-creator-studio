@@ -1,0 +1,19 @@
+{
+  "id": "pasmo-u-gory",
+  "kategoria": "uklad",
+  "typ": "nakładkowy",
+  "nazwa": "Pasmo u góry",
+  "opis": "Ty w dolnych dwóch trzecich kadru. Czyste pasmo u góry na cytaty, zdjęcia archiwalne i dowody. Twoja twarz zawsze widoczna.",
+  "najlepsze_do": "Storytelling, kulisy, treści z archiwalnymi zdjęciami lub cytatami",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;display:flex;flex-direction:column\"><div style=\"height:30%;background:#f0ece4;display:flex;align-items:center;justify-content:center;padding:0 8px\"><div style=\"font-size:5.5px;font-weight:600;color:#333;text-align:center;line-height:1.4\">„tu cytat, dowód<br>lub archiwum"</div></div><div style=\"flex:1;background:#1e1530\"></div></div>",
+  "wymagania": {
+    "wideo": "9:16, kursantka mówi z dolnej części kadru",
+    "narzedzia": ["ffmpeg", "hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "Top band occupies the top 28–33% of the frame. Use a solid light color (cream, white or from brand palette) or a semi-transparent overlay. The band holds: a quote card that types in, an archive photo that fades in, or a proof screenshot. Content in the band changes on each new story beat. The talking head fills the bottom two thirds — always fully visible, never cropped. Band content slides in from the top or fades in. A thin 1–2px separator line between the band and the video below is optional."
+  }
+}
