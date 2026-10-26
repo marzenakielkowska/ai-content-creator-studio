@@ -1,0 +1,19 @@
+{
+  "id": "zawroty-glowy",
+  "kategoria": "glowne",
+  "typ": "nakładkowy",
+  "nazwa": "Zawroty głowy",
+  "opis": "Ty zostajesz na miejscu, a pokój za Tobą rozciąga się i odpycha od obiektywu — efekt dolly zoom. Używasz go dokładnie na słowie-rewelacji.",
+  "najlepsze_do": "Dramatyczny reveal, odwrócenie perspektywy, mocna teza, moment szoku",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:linear-gradient(to bottom,#0a0a14,#1a1520);display:flex;align-items:center;justify-content:center;overflow:hidden\"><div style=\"position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,.7) 100%)\"></div><div style=\"width:28px;height:50px;background:rgba(255,255,255,.12);border-radius:10px 10px 5px 5px;z-index:1\"></div><div style=\"position:absolute;font-size:4px;color:rgba(255,255,255,.3);bottom:20%;text-align:center\">tło się oddala →</div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki z wyraźnym tłem (pokój, ściana)",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "Dolly zoom effect on the reveal word. The person's scale stays constant (they do not grow or shrink), but the background stretches and pulls away from the lens simultaneously. Achieved by: scaling the background layer larger while scaling the foreground person-layer slightly smaller to compensate, creating the illusion of the room receding. Duration: 0.8–1.2 seconds, triggered on the key word. The background stretch should be pronounced (scale from 1.0 to 1.4 on background). Slight vignette increases during the effect (0.2 → 0.5). Return to normal slowly or cut to a new shot after the effect."
+  }
+}

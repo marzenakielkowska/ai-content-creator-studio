@@ -1,0 +1,19 @@
+{
+  "id": "papierowy-wycinak",
+  "kategoria": "glowne",
+  "typ": "nakładkowy",
+  "nazwa": "Papierowy wycinak",
+  "opis": "Stajesz się białym wycięciem na tle kolorowej kolażu z podartego papieru — litery jak z gazety, kredkowe bazgroły, kawałki taśmy. Artystyczny chaos.",
+  "najlepsze_do": "Kreatywne, nieoczywiste rolki, tematy kulturowe, estetyka zinu i collage",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#f5e6c8;display:flex;align-items:center;justify-content:center\"><div style=\"position:absolute;top:8%;left:5%;font-size:11px;font-weight:900;color:#222;font-style:italic;transform:rotate(-3deg)\">AI</div><div style=\"position:absolute;top:15%;right:8%;width:25px;height:3px;background:#222;transform:rotate(5deg)\"></div><div style=\"position:absolute;bottom:25%;left:8%;font-size:8px;color:#c00;font-weight:700;transform:rotate(-2deg)\">TERAZ</div><div style=\"position:absolute;bottom:20%;right:10%;width:20px;height:20px;background:#ffd700;opacity:.6;transform:rotate(8deg)\"></div><div style=\"position:absolute;top:35%;left:20%;right:20%;bottom:15%;background:#fff;border:2px solid #222\"><div style=\"position:absolute;inset:0;display:flex;align-items:center;justify-content:center\"><div style=\"font-size:5px;color:rgba(0,0,0,.3)\">sylwetka</div></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki z kontrastowym tłem do wycięcia sylwetki",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "Remove the background from the talking head and replace it with a torn-paper collage. Collage elements: pieces of torn paper in various cream, yellow, red and gray tones; large ransom-note letters cut from newspapers/magazines in the background; crayon scribble lines and marks; small pieces of tape holding things together. The person becomes a white paper cutout silhouette — white fill with a clean cut edge (no soft feathering, hard edge like scissors cut). The overall look is handmade zine/collage aesthetic. Elements in the background should be still images composited as a collage background layer."
+  }
+}

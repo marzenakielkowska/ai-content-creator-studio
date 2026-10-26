@@ -1,0 +1,19 @@
+{
+  "id": "odreczny-kontur",
+  "kategoria": "glowne",
+  "typ": "nakładkowy",
+  "nazwa": "Odreczny kontur",
+  "opis": "Chwiejny, odreczny biały kontur obrysowuje Twoją sylwetkę i faluje klatka po klatce. Wokół głowy pojawiają się i znikają gwiazdki.",
+  "najlepsze_do": "Energetyczne, zabawne rolki, efekt wyluzowanego stylu, lekki klimat twórcy",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#1a1520;display:flex;align-items:center;justify-content:center\"><div style=\"position:relative\"><div style=\"width:30px;height:60px;background:rgba(255,255,255,.08);border-radius:15px 15px 8px 8px;border:1.5px dashed rgba(255,255,255,.4)\"></div><div style=\"position:absolute;top:-8px;right:-10px;font-size:8px\">✦</div><div style=\"position:absolute;top:5px;left:-12px;font-size:6px\">✦</div><div style=\"position:absolute;bottom:10px;right:-14px;font-size:5px\">✦</div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "A white hand-drawn outline traces around the person's silhouette. The outline wobbles frame to frame (boil effect: the path shifts slightly every 2 frames, creating an organic hand-drawn animation feel). Line weight: 2–3px, white, slightly irregular. The outline follows the body edge closely but imperfectly — like drawn quickly with a marker. Around the head area, small 4-pointed star shapes (✦) pop in and out randomly: each star appears with a quick scale-in (0.5 → 1.0, 100ms), holds for 0.3–0.8s, then fades out. Stars are white, sizes 8–16px. 2–4 stars visible at once. Stars appear only, no other shapes."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "powiadomienie-ping",
+  "kategoria": "animowany-broll",
+  "typ": "nakładkowy",
+  "nazwa": "Powiadomienie ping",
+  "opis": "Postać-awatar pinguje — z jej głowy wyskakuje dymek z wiadomością. Uruchamia się na konkretny beat lub słowo.",
+  "najlepsze_do": "Animowana reakcja na event, powiadomienie o zapisie lub sprzedaży, nowy klient",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#f0ede7;display:flex;align-items:center;justify-content:center\"><div style=\"position:relative;display:flex;flex-direction:column;align-items:center\"><div style=\"position:relative\"><div style=\"width:36px;height:36px;border-radius:50%;background:#c9c4bc;display:flex;align-items:center;justify-content:center\"><div style=\"font-size:7px\">👤</div></div><div style=\"position:absolute;top:-18px;left:22px;background:#fff;border-radius:8px 8px 8px 2px;padding:4px 7px;box-shadow:0 2px 8px rgba(0,0,0,.15);white-space:nowrap\"><div style=\"font-size:4.5px;font-weight:700;color:#333\">Nowy klient! 🎉</div></div></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki lub samodzielna plansza",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "A character avatar (round icon, friendly face or initial) sits in the frame. On the trigger moment, the avatar briefly scales up (ping animation: 0.8 → 1.15 → 1.0, 300ms) and a speech bubble pops out from the top-right of the avatar's head. Bubble animates in with a scale from 0 (spring bounce). Speech bubble content: short text message (one line). Bubble shape: rounded rectangle with a small tail pointing at the avatar. After 2–3 seconds, bubble fades out and avatar returns to idle. Position: beside the talking head in empty wall space."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "blyskawiczny-zoom",
+  "kategoria": "glowne",
+  "typ": "nakładkowy",
+  "nazwa": "Błyskawiczny zoom",
+  "opis": "Gwałtowny zoom z szerokiego ujęcia prosto na twarz — na kluczowe słowo. Ostry, bez rozmycia. Jak uderzenie w podbródek.",
+  "najlepsze_do": "Dramatyczne podkreślenie kluczowego słowa, payoff moment, mocna puenta",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#1a1520;display:flex;align-items:center;justify-content:center;overflow:hidden\"><div style=\"position:absolute;inset:-30%;background:linear-gradient(to bottom,#2a2035,#1a1520);opacity:.6\"></div><div style=\"font-size:5px;color:rgba(255,255,255,.4);text-align:center;z-index:1\">→ nagłe przybliżenie →<br>twarz wypełnia kadr</div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "A fast digital push-in zoom: the shot scales from 1.0 to approximately 1.6–1.8 in a single fast move (200–300ms, ease-in then sudden stop). The zoom centers on the face. No motion blur — the snap is instant and hard. Slight vignette appears at the edges after the zoom settles (vignette strength 0.3). The zoom triggers exactly on the key word or beat. Can optionally have a single-frame white flash at the very start of the zoom (1 frame, full white overlay at 40% opacity). Holds the zoomed position for the rest of the segment."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "boty-rozmawiaja",
+  "kategoria": "animowany-broll",
+  "typ": "nakładkowy",
+  "nazwa": "Boty rozmawiają",
+  "opis": "Kilka botów ze swoimi awatarami i imionami prowadzi rozmowę — piszą do siebie, tagują się @nazwą. Jak czat grupowy agentów AI.",
+  "najlepsze_do": "Pokazanie wielu agentów AI pracujących razem, multi-agent workflow, debata AI",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#0e0e1a;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:8%;gap:4px;padding-left:8%;padding-right:8%\"><div style=\"display:flex;align-items:flex-start;gap:4px\"><div style=\"width:14px;height:14px;border-radius:50%;background:#3a5a8a;flex-shrink:0;margin-top:1px\"></div><div><div style=\"font-size:3.5px;color:#7eb8f7;font-weight:700;margin-bottom:1px\">Researcher</div><div style=\"background:#1e2a3a;border-radius:0 8px 8px 8px;padding:4px 7px\"><div style=\"font-size:4px;color:rgba(255,255,255,.75)\">@Writer tu masz dane</div></div></div></div><div style=\"display:flex;align-items:flex-start;gap:4px\"><div style=\"width:14px;height:14px;border-radius:50%;background:#3a6a4a;flex-shrink:0;margin-top:1px\"></div><div><div style=\"font-size:3.5px;color:#7ed8a7;font-weight:700;margin-bottom:1px\">Writer</div><div style=\"background:#1e2e2a;border-radius:0 8px 8px 8px;padding:4px 7px\"><div style=\"font-size:4px;color:rgba(255,255,255,.75)\">Piszę już...<span style=\"opacity:.5\">|</span></div></div></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki lub samodzielna plansza",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "Multiple chat bubbles appear in sequence, each from a different named bot. Each bot has: a small colored avatar circle (unique color per bot), a bold name label above their bubble, and message text. Bots @mention each other in the text. Messages appear bottom-to-top, each one streaming in as a typewriter effect. 2–3 bots, 1–2 messages each. The interface sits in the lower 50% of frame, dark background, slightly transparent. Each bot has a distinct accent color for their name and avatar."
+  }
+}

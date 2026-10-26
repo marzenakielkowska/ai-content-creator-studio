@@ -1,0 +1,19 @@
+{
+  "id": "diagram-konceptu",
+  "kategoria": "animowany-broll",
+  "typ": "nakładkowy",
+  "nazwa": "Diagram konceptu",
+  "opis": "Prosty animowany schemat — chmura, komputery, strzałki łączące elementy systemu. Rysuje się krok po kroku, jak na tablicy.",
+  "najlepsze_do": "Wyjaśnienie architektury systemu, przepływu danych, połączeń między narzędziami",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#1a1520;display:flex;align-items:center;justify-content:center\"><svg width=\"65%\" height=\"50%\" viewBox=\"0 0 180 100\"><ellipse cx=\"90\" cy=\"25\" rx=\"35\" ry=\"18\" fill=\"none\" stroke=\"rgba(255,255,255,.5)\" stroke-width=\"1.5\"/><text x=\"90\" y=\"29\" text-anchor=\"middle\" font-size=\"8\" fill=\"rgba(255,255,255,.7)\">cloud</text><rect x=\"20\" y=\"65\" width=\"35\" height=\"22\" rx=\"4\" fill=\"none\" stroke=\"rgba(255,255,255,.4)\" stroke-width=\"1.5\"/><text x=\"37\" y=\"80\" text-anchor=\"middle\" font-size=\"7\" fill=\"rgba(255,255,255,.6)\">konto A</text><rect x=\"125\" y=\"65\" width=\"35\" height=\"22\" rx=\"4\" fill=\"none\" stroke=\"rgba(255,255,255,.4)\" stroke-width=\"1.5\"/><text x=\"142\" y=\"80\" text-anchor=\"middle\" font-size=\"7\" fill=\"rgba(255,255,255,.6)\">konto B</text><line x1=\"90\" y1=\"43\" x2=\"37\" y2=\"65\" stroke=\"rgba(255,255,255,.3)\" stroke-width=\"1\" stroke-dasharray=\"3,2\"/><line x1=\"90\" y1=\"43\" x2=\"142\" y2=\"65\" stroke=\"rgba(255,255,255,.3)\" stroke-width=\"1\" stroke-dasharray=\"3,2\"/></svg></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki lub samodzielna plansza",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "A simple line-art diagram draws itself on screen using path animation. Elements appear sequentially: first a cloud or server shape in the center, then connecting lines draw outward to 2–3 endpoint nodes (rectangles or circles representing accounts, computers, or services). Each element appears with a brief scale-in after its connecting line arrives. Style: white or light-colored outlines on dark overlay, thin 1.5px strokes, clean minimal shapes. Text labels appear after each element settles (fade in, 200ms). The whole diagram draws in 2–3 seconds. Sits in the upper or side portion of frame, leaving the face visible."
+  }
+}
