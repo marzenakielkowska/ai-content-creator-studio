@@ -23,6 +23,71 @@ Gdy plik istnieje, doczytaj szczegóły z lookbooka:
 - **`napisy`** — jeśli pole istnieje i nie jest `"bez-napisow"`, odczytaj `studio/lookbook/napisy/{napisy}/styl.json`. Pole `przepis` zawiera parametry (czcionka, grubość, rozmiar, kolor, animacja, pozycja), a `przepis.opis_efektu` (jeśli jest) opisuje zachowanie. Zastosuj te parametry do każdej klatki napisów.
 - **`efekty`** — klucze to foldery w `studio/lookbook/efekty/`. Każdy efekt ma `przepis` w `efekt.json` lub `PRZEPIS.md` w swoim folderze.
 
+### Marka kursantki
+
+Sprawdź, czy istnieje plik `~/.ai-content-creator-studio/moj-brand.json`. Jeśli tak — odczytaj go i zastosuj wszystkie zawarte pola przy montażu. Jeśli pliku nie ma, nie wspominaj o tym.
+
+**`czcionki`** — klucze `glowna`, `akcent`, `odreczna`. Wartość to ID czcionki; odwzorowanie ID → CSS:
+
+| id | CSS font-family | weight | font-style |
+|---|---|---|---|
+| inter-tight | Inter Tight | 900 | normal |
+| barlow | Barlow Condensed | 700 | normal |
+| montserrat | Montserrat | 700 | normal |
+| figtree | Figtree | 700 | normal |
+| nunito | Nunito | 800 | normal |
+| space-grotesk | Space Grotesk | 600 | normal |
+| archivo | Archivo | 800 | normal |
+| bebas | Bebas Neue | 400 | normal |
+| anton | Anton | 400 | normal |
+| abril | Abril Fatface | 400 | normal |
+| dm-serif | DM Serif Display | 400 | normal |
+| playfair | Playfair Display | 400 | italic |
+| newsreader | Newsreader | 400 | italic |
+| instrument | Instrument Serif | 400 | normal |
+| cormorant | Cormorant | 400 | italic |
+| elsie | Elsie Swash Caps | 400 | normal |
+| caveat | Caveat | 600 | normal |
+| marck | Marck Script | 400 | normal |
+| pixelify | Pixelify Sans | 600 | normal |
+| jetbrains | JetBrains Mono | 500 | normal |
+
+- `glowna` → czcionka napisów mówionych (caption text) w HyperFrames
+- `akcent` → czcionka kart tytułowych, nagłówków, dużych ozdobnych słów
+- `odreczna` → czcionka odręcznych akcentów i etykiet
+
+**`kolory`** — wartości hex:
+- `napisy` → kolor tekstu napisów (caption text)
+- `akcent` → kolor akcentów (podkreślenia, kluczowe słowa, obwódki)
+- `naglowek` → kolor tekstu nagłówkowego na kartach
+- `cta` → kolor call-to-action (wyróżnienia, przyciski)
+
+**`uklad`**:
+- `napisy` (liczba) → pozycja napisów od dołu kadru w procentach (np. 25 = 25% od dołu)
+- `naglowek` (liczba) → pozycja nagłówka od dołu kadru w procentach
+- `napisy_rozmiar` (liczba) → skala rozmiaru napisów (100 = domyślny, 110 = 10% większy)
+- `naglowek_rozmiar` (liczba) → skala rozmiaru nagłówka
+- `napisy_dekor` → dekoracja tekstu napisów: `cien` = text-shadow, `ramka` = border, `brak` = brak
+- `napisy_dekor_kolor` → kolor cienia lub ramki napisów (hex)
+- `naglowek_dekor` → to samo dla nagłówka
+- `naglowek_dekor_kolor` → kolor cienia lub ramki nagłówka (hex)
+
+**`plotno`**:
+- `kolory` → tablica `[{kolor: "#hex"}]` — użyj jako tło kart graficznych (plansze, tytuły), w tej kolejności
+- `strefa_bezpieczna: true` → bezwzględnie trzymaj się stref bezpiecznych TikTok/Reels
+
+**`tempo`** — rytm cięć:
+- `spokojne` → co 5–8 sekund (tutoriale, wyjaśnienia)
+- `naturalne` → co 3–5 sekund (standardowa rolka)
+- `dynamiczne` → co 1,5–3 sekund (motywacja, energetyczne)
+
+**`zoom`** — efekt Ken Burns:
+- `bez` → kamera nieruchoma, żadnego zooma
+- `subtelny` → delikatne przybliżanie lub oddalanie co ~15 sekund
+- `dynamiczny` → wyraźne zmiany skali co ~5 sekund
+
+**`dzwieki`** — tablica ID efektów dźwiękowych. Lookup w `studio/dzwieki/katalog.json` (pole `opis` mówi kiedy użyć). Stosuj w odpowiednim momencie (wejście elementu, kluczowe słowo, przejście sceny) — nie na każdej klatce. Poziom: −18 do −24 dB, zawsze ciszej niż głos.
+
 ### Jak prosić o plik wideo
 
 Gdy potrzebujesz nagrania od kursantki, napisz dokładnie tak:
@@ -145,7 +210,7 @@ Maks. **2–3 elementy naraz** w ruchu. Więcej = chaos wizualny.
 - Kolejno, nie naraz
 
 ### Typografia
-Każdy styl efektu ma swój font opisany w `styles.md`. Brak globalnej czcionki dla całego kanału (do czasu ustalenia marki).
+Gdy kursantka ma `moj-brand.json` z polem `czcionki`, użyj tych czcionek jako bazy dla całego montażu. Styl wybranego efektu może to zawęzić — wtedy czcionka z efektu wygrywa tylko dla tego konkretnego elementu. Bez marki: każdy styl efektu ma swój font w `styles.md`.
 
 ### Dowód
 Tylko prawdziwy. Nigdy nie pokazuj odtworzonego ekranu jako prawdziwego. Podawaj źródło.
