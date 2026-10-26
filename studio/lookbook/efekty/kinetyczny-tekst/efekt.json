@@ -7,10 +7,12 @@
   "status": "gotowy",
   "nowosc": true,
   "podglad_html": "<div class=\"cap c4\" style=\"font-size:15px;line-height:1.5\"><i>Zrób</i> <i>to</i> <i>👉</i> <i>teraz</i></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki lub samodzielna plansza",
+    "narzedzia": ["hyperframes"]
+  },
   "przepis": {
-    "typ": "plansza-kinetyczna",
-    "animacja": "slowo-po-slowie",
-    "emoji_w_tekscie": true,
-    "pelny_ekran": true
+    "typ": "hyperframes",
+    "opis_efektu": "Full-screen text card: a single sentence appears word by word, each word fading or scaling in (0→1 scale, 120ms per word, 80ms gap between words). Inline emoji icons appear in-place between words as if part of the sentence. Font: bold, large, filling 70–80% of frame width. Color: white on dark background, or brand accent on light canvas color. The sentence reads left to right, wrapping naturally. After the last word lands, the full sentence holds for 1.5 seconds, then the card exits (fast fade or slide out). One sentence per card maximum. Place at the start or end of a segment, never over the talking head."
   }
 }

@@ -1,0 +1,19 @@
+{
+  "id": "karta-kroku",
+  "kategoria": "elementy-wizualne",
+  "typ": "nakładkowy",
+  "nazwa": "Karta kroku",
+  "opis": "Numer kroku i krótka instrukcja wchodzą na kolorową kartę. Każdy krok to osobna karta — wchodzi, gdy o nim mówisz, wychodzi przed następnym.",
+  "najlepsze_do": "Tutoriale, listy kroków, instrukcje, procesy krok po kroku",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#f5f2ec;display:flex;align-items:center;justify-content:center\"><div style=\"position:absolute;bottom:18%;left:8%;right:8%;background:#C5E3F7;border-radius:12px;padding:10px 13px;display:flex;align-items:center;gap:10px\"><div style=\"width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0\"><span style=\"font-size:9px;font-weight:900;color:#1a1520\">1</span></div><div><div style=\"font-size:4px;font-weight:700;letter-spacing:.1em;color:rgba(0,0,0,.4);text-transform:uppercase;margin-bottom:2px\">KROK</div><div style=\"font-size:7px;font-weight:800;color:#1a1520;line-height:1.2\">Kliknij Finder</div></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "Step cards appear one at a time in the lower frame area (bottom 25–30%). Each card: brand canvas color background (from moj-brand.json plotno, second color if available, else light blue #C5E3F7). Card layout: left side has a large bold step number in a circle; right side has a small 'KROK' label above and the step instruction in bold below (2–3 words maximum). Animation: slides in from the right (x from 110% to 0%, spring ease, 350ms). When the next step is spoken, the current card slides out to the left simultaneously as the new card slides in from the right. Steps are numbered automatically (1, 2, 3…). Each card is visible for the duration of the spoken step. The last card exits with a fade after 1 second of silence."
+  }
+}

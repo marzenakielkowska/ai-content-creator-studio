@@ -1,0 +1,19 @@
+{
+  "id": "karta-wyniku",
+  "kategoria": "elementy-wizualne",
+  "typ": "nakładkowy",
+  "nazwa": "Karta wyniku",
+  "opis": "Wynik, liczba lub zmiana pojawia się na kolorowej karcie na tle Twojej marki. Etykieta u góry, duży wynik pośrodku, kontekst pod spodem.",
+  "najlepsze_do": "Podanie rezultatu, statystyki, przychodu, zasięgu, liczby klientów",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#f5f2ec;display:flex;align-items:center;justify-content:center\"><div style=\"position:absolute;bottom:18%;left:8%;right:8%;background:#FDE68A;border-radius:12px;padding:10px 13px\"><div style=\"font-size:4px;font-weight:700;letter-spacing:.12em;color:rgba(0,0,0,.45);text-transform:uppercase;margin-bottom:4px\">WYNIK</div><div style=\"font-size:16px;font-weight:900;color:#1a1520;letter-spacing:-.02em;line-height:1;margin-bottom:3px\">+234%</div><div style=\"font-size:4.5px;color:rgba(0,0,0,.55);line-height:1.4\">wzrost sprzedaży po wdrożeniu strategii</div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "A result card overlays the lower portion of the frame (bottom 30–35%, y=65–100%). Card background: use the brand canvas color from moj-brand.json plotno field (first color in the array); if not set, use warm cream (#FDE68A). Card structure from top to bottom: (1) small all-caps label in letter-spaced muted text (e.g. 'WYNIK', 'ZASIĘG', 'SPRZEDAŻ'), (2) the main result in very large bold weight — number, percentage or short phrase, fills 50% of card height, (3) one line of context text below in smaller regular weight. Animation: card slides up from the bottom (y from 110% to 0%, spring ease, 400ms). The result number counts up from 0 if it's a number (600ms count-up animation). Card holds for 3–4 seconds, then slides back down. Never covers the face — face must be visible in the upper 60% of frame."
+  }
+}
