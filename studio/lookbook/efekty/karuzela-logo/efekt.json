@@ -1,0 +1,19 @@
+{
+  "id": "karuzela-logo",
+  "kategoria": "wizualizacja",
+  "typ": "nakładkowy",
+  "nazwa": "Karuzela logo",
+  "opis": "Loga migają szybko jedno po drugim — jak przewijanie — aż zatrzymuje się na jednym, które jest ważne. Buduje napięcie, skupia uwagę.",
+  "najlepsze_do": "Zaprezentowanie jednej wybranej platformy z wielu, dramatyczny wybór narzędzia",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#0e0e1a;display:flex;align-items:center;justify-content:center\"><div style=\"width:50px;height:50px;background:#2a2a3a;border-radius:10px;display:flex;align-items:center;justify-content:center\"><div style=\"font-size:6px;color:rgba(255,255,255,.5)\">LOGO</div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "A logo tile flickers rapidly through multiple logos — each shown for 80ms, then 60ms, then 40ms, accelerating like a slot machine. After ~10 flickers, slows down to 200ms, 400ms, and lands on the final logo with a satisfying bounce. The final logo holds for 3 seconds, slightly larger than the others (scale 1.1). Position: center frame above the person's head, or side of frame. Background: dark card with rounded corners."
+  }
+}

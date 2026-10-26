@@ -1,0 +1,19 @@
+{
+  "id": "kroki-na-kartach",
+  "kategoria": "wizualizacja",
+  "typ": "nakładkowy",
+  "nazwa": "Kroki na kartach",
+  "opis": "Proces lub kroki pojawiają się jako płaskie karty — jedna za drugą, z numerem i krótkim opisem. Idealne do sekwencji i list.",
+  "najlepsze_do": "Tłumaczenie procesu, pokazanie etapów, lista sponsorów lub partnerów",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#f0ede7;display:flex;align-items:center;justify-content:center;gap:5px\"><div style=\"background:#fff;border-radius:7px;padding:6px;width:25%;box-shadow:0 2px 8px rgba(0,0,0,.1)\"><div style=\"font-size:7px;font-weight:900;color:#333;margin-bottom:2px\">1</div><div style=\"height:3px;background:#c9c4bc;border-radius:2px\"></div></div><div style=\"background:#fff;border-radius:7px;padding:6px;width:25%;box-shadow:0 2px 8px rgba(0,0,0,.1)\"><div style=\"font-size:7px;font-weight:900;color:#333;margin-bottom:2px\">2</div><div style=\"height:3px;background:#c9c4bc;border-radius:2px\"></div></div><div style=\"background:#fff;border-radius:7px;padding:6px;width:25%;box-shadow:0 2px 8px rgba(0,0,0,.1)\"><div style=\"font-size:7px;font-weight:900;color:#333;margin-bottom:2px\">3</div><div style=\"height:3px;background:#c9c4bc;border-radius:2px\"></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki lub samodzielna plansza",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "Flat cards appear one at a time, sliding in from the right. Each card has: large step number (top-left), short label text (1–3 words) below. Cards are white with rounded corners and a subtle shadow. They appear in a horizontal row or stacked vertically on one side of the frame. Each card arrives 0.5s after the previous one. When a new card arrives, the previous ones shift slightly left to make room. Max 4 cards. Cards stay on screen until the segment ends."
+  }
+}

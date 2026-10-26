@@ -1,0 +1,19 @@
+{
+  "id": "liczba-rosnie",
+  "kategoria": "dowod",
+  "typ": "nakładkowy",
+  "nazwa": "Rosnąca liczba",
+  "opis": "Gigantyczna liczba za Twoją głową zlicza się od zera do docelowej wartości. Ty stoisz z przodu — liczba jest tłem, które robi wrażenie.",
+  "najlepsze_do": "Podanie statystyki, wyniku, liczby klientów, przychodu lub zasięgu",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#0e0e1a;display:flex;align-items:center;justify-content:center\"><div style=\"position:absolute;font-size:32px;font-weight:900;color:rgba(255,255,255,.12);letter-spacing:-.02em;line-height:1\">2 847</div><div style=\"position:absolute;bottom:12%;left:25%;right:25%;display:flex;flex-direction:column;align-items:center\"><div style=\"font-size:5.5px;color:rgba(255,255,255,.35)\">kursantka</div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "Behind the talking head, a very large number animates from 0 up to the target value over 2–3 seconds, then holds. Font: bold, condensed, fills 70% of frame width. Color: white at 15% opacity, or brand accent color at 20% opacity — large but clearly background. Person stands in foreground fully visible. As the count-up completes, the number briefly flashes to full white opacity for one frame, then settles at 25% opacity. No border, no card — pure typographic background element."
+  }
+}

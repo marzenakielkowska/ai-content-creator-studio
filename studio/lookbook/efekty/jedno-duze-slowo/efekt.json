@@ -1,0 +1,19 @@
+{
+  "id": "jedno-duze-slowo",
+  "kategoria": "wizualizacja",
+  "typ": "nakładkowy",
+  "nazwa": "Jedno duże słowo",
+  "opis": "Jedno wielkie słowo — tytuł, kategoria lub główna myśl — pojawia się za Tobą lub nad Twoją głową. Proste i mocne.",
+  "najlepsze_do": "Nazwanie tematu rolki, podanie kategorii, zaznaczenie kluczowej tezy",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#1a1520;display:flex;align-items:center;justify-content:center\"><div style=\"font-size:18px;font-weight:900;color:rgba(255,255,255,.9);letter-spacing:-.02em;text-transform:uppercase\">COACHING</div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "One single word in very large bold condensed type appears behind the person. Font fills 80% of frame width. Color: white or brand accent, at 90% opacity. The word scales in from 80% to 100% size (0.4s ease-out). Person stands in front — face and torso always visible. The word can sit centered, or slightly above center to leave space for the face. No card, no box — just the word on the video background."
+  }
+}

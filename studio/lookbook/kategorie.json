@@ -1,6 +1,9 @@
 {
   "kategorie": [
     { "id": "glowne",    "nazwa": "Efekt główny",    "hint": "Jeden duży efekt wizualny, który definiuje całą rolkę" },
+    { "id": "uklad",      "nazwa": "Układ kadru",      "hint": "Jak dzielisz ekran — gdzie stoisz Ty, gdzie pojawia się treść" },
+    { "id": "dowod",      "nazwa": "Dowód i źródło",   "hint": "Liczby, zrzuty ekranu, posty i nagrania, które uwiarygodniają to, co mówisz" },
+    { "id": "wizualizacja", "nazwa": "Wizualizacja",   "hint": "Logo, słowa, kroki i porównania — treść, która zamienia słowa w obraz" },
     { "id": "porownanie", "nazwa": "Przed i po",         "hint": "Samodzielny klip pokazujący transformację" },
     { "id": "tekst",      "nazwa": "Tekst na ekranie",   "hint": "Słowa i liczby, które pojawiają się, gdy je mówisz" },
     { "id": "plansze",    "nazwa": "Plansze i karty",    "hint": "Elementy, które wchodzą obok Ciebie" },

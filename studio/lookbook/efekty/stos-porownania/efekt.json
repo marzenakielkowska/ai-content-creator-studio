@@ -1,0 +1,19 @@
+{
+  "id": "stos-porownania",
+  "kategoria": "wizualizacja",
+  "typ": "nakładkowy",
+  "nazwa": "Stos porównania",
+  "opis": "Małe karty-etykiety wlatują jedna po drugiej i układają się w stos porównania — każda jest produktem, platformą lub opcją. Na końcu wchodzi wyróżniona.",
+  "najlepsze_do": "Porównanie opcji, narzędzi, podejść — gdy jedno jest wyraźnie lepsze",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#f5f2ec;display:flex;align-items:center;justify-content:center\"><div style=\"display:flex;flex-direction:column;gap:3px;align-items:center\"><div style=\"background:#c9c4bc;border-radius:5px;padding:3px 12px;font-size:4.5px;font-weight:700;color:#666\">opcja A</div><div style=\"background:#c9c4bc;border-radius:5px;padding:3px 12px;font-size:4.5px;font-weight:700;color:#666\">opcja B</div><div style=\"background:#333;border-radius:5px;padding:4px 14px;font-size:5px;font-weight:700;color:#fff\">✓ najlepsza</div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "Chips (small rounded-pill cards) fly in from the left one by one, each sliding in and stacking vertically. Non-winning chips: light gray/neutral color, normal weight text. They arrive quickly (100ms each). The winning chip enters last, from the right, slightly larger, in a bold dark color (or brand accent), with a checkmark prefix. Optional: non-winning chips dim to 40% opacity when the winner arrives. Stack sits at center or slightly left of frame."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "logo-z-blaskiem",
+  "kategoria": "wizualizacja",
+  "typ": "nakładkowy",
+  "nazwa": "Logo z blaskiem",
+  "opis": "Logo lub logotyp pojawia się z efektem białego blasku — jakby się włączało lub odkrywało. Prestiżowe i czyste.",
+  "najlepsze_do": "Przedstawienie własnej marki, ogłoszenie partnerstwa, reveal produktu",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#0e0e1a;display:flex;align-items:center;justify-content:center\"><div style=\"position:relative;display:flex;flex-direction:column;align-items:center;gap:5px\"><div style=\"width:35px;height:35px;background:rgba(255,255,255,.12);border-radius:8px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(255,255,255,.3)\"><div style=\"font-size:6px;color:rgba(255,255,255,.7)\">LOGO</div></div><div style=\"font-size:5.5px;font-weight:700;color:rgba(255,255,255,.8);letter-spacing:.1em\">MARKA</div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki lub samodzielna plansza",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "The logo appears from a bright white flash (bloom effect): starts as pure white light, then resolves into the logo over 300ms. After settling, a soft glow pulses once around the logo edges (white, 0.5 opacity, radius 20px, fades in 200ms and out 600ms). Wordmark text fades in below the logo 200ms after the logo settles (letter-spacing animation: from 0.3em to 0.1em). Position: center frame or slightly above center. Dark background recommended for maximum impact."
+  }
+}

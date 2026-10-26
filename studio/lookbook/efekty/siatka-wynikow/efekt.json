@@ -1,0 +1,19 @@
+{
+  "id": "siatka-wynikow",
+  "kategoria": "wizualizacja",
+  "typ": "nakładkowy",
+  "nazwa": "Siatka wyników",
+  "opis": "Dwa rzędy wyników lub osiągnięć zmieniają się co sekundę — każdy nowy wynik wsuwa się w miejsce poprzedniego. Dużo dowodów, szybko.",
+  "najlepsze_do": "Pokazanie wielu wyników klientów, case studies, sukcesów jednocześnie",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#f5f2ec;display:flex;align-items:center;justify-content:center\"><div style=\"display:grid;grid-template-columns:1fr 1fr;gap:4px;width:75%\"><div style=\"background:#fff;border-radius:6px;padding:5px;box-shadow:0 1px 6px rgba(0,0,0,.08)\"><div style=\"font-size:7px;font-weight:900;color:#333;margin-bottom:1px\">+234%</div><div style=\"height:2.5px;background:#c9c4bc;border-radius:2px;width:60%\"></div></div><div style=\"background:#fff;border-radius:6px;padding:5px;box-shadow:0 1px 6px rgba(0,0,0,.08)\"><div style=\"font-size:7px;font-weight:900;color:#333;margin-bottom:1px\">12 klientów</div><div style=\"height:2.5px;background:#c9c4bc;border-radius:2px;width:80%\"></div></div><div style=\"background:#fff;border-radius:6px;padding:5px;box-shadow:0 1px 6px rgba(0,0,0,.08)\"><div style=\"font-size:7px;font-weight:900;color:#333;margin-bottom:1px\">50k zasięg</div><div style=\"height:2.5px;background:#c9c4bc;border-radius:2px;width:70%\"></div></div><div style=\"background:#fff;border-radius:6px;padding:5px;box-shadow:0 1px 6px rgba(0,0,0,.08)\"><div style=\"font-size:7px;font-weight:900;color:#333;margin-bottom:1px\">5 gwiazdek</div><div style=\"height:2.5px;background:#c9c4bc;border-radius:2px;width:55%\"></div></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki lub samodzielna plansza",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "A 2×2 grid of result cards appears in the center of the frame. Cards auto-swap every 1 second: each card flips or slides to reveal a new result. Bold metric at top (number or short phrase), brief context label below. All 4 cards swap independently on staggered timers (card 1 at t=0, card 2 at t=0.25s, card 3 at t=0.5s, card 4 at t=0.75s). White cards, rounded corners, soft shadow. The grid shows 8+ results in rotation over 4–6 seconds. After cycling, can freeze on a final strong set."
+  }
+}

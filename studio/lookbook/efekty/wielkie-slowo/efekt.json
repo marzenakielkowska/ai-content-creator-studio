@@ -1,0 +1,19 @@
+{
+  "id": "wielkie-slowo",
+  "kategoria": "wizualizacja",
+  "typ": "nakładkowy",
+  "nazwa": "Wielkie słowo puentujące",
+  "opis": "Na koncie kluczowego momentu wchodzi jedno ogromne słowo, które zajmuje prawie cały kadr. Puenta. Decyzja. Efekt WOW na koniec zdania.",
+  "najlepsze_do": "Mocna puenta, kluczowy wniosek, kulminacyjny moment rolki",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#0e0e1a;display:flex;align-items:center;justify-content:center\"><div style=\"font-size:22px;font-weight:900;color:#fff;letter-spacing:-.03em;text-transform:uppercase;opacity:.95\">DZIAŁA</div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki lub czysta plansza",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "At the payoff moment — after the person finishes their sentence — cut to a full-frame typography shot. One word fills 90% of the frame width in maximum bold weight. The word SLAMS in: fast scale from 120% to 100% (30ms overshoot, then settle). Color: pure white on dark background, or brand accent on white. Holds for exactly 1 second, then cut back or fade to black. This is a standalone punch moment — does not overlay the talking head."
+  }
+}

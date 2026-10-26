@@ -1,0 +1,19 @@
+{
+  "id": "palec-na-ekranie",
+  "kategoria": "dowod",
+  "typ": "nakładkowy",
+  "nazwa": "Palec na ekranie",
+  "opis": "Trzymasz laptopa lub telefon w rękach i wskazujesz palcem konkretną liczbę lub wynik. Autentyczne, bezpośrednie — jak pokazywanie komuś stojącemu obok.",
+  "najlepsze_do": "Pokazanie realnego wyniki na swoim urządzeniu, żywej reakcji na dane",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#e8e4dc;display:flex;align-items:flex-end;justify-content:center\"><div style=\"position:absolute;bottom:0;left:10%;right:10%;height:75%;background:#2a2a3a;border-radius:12px 12px 0 0;display:flex;align-items:center;justify-content:center\"><div style=\"font-size:5px;color:rgba(255,255,255,.3)\">ekran laptopa</div></div><div style=\"position:absolute;bottom:28%;right:22%;width:14px;height:20px;background:#c8a882;border-radius:4px 4px 6px 6px;transform:rotate(-15deg)\"></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki trzymającej urządzenie z widocznym ekranem",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "The person holds a laptop or phone toward camera, screen visible. Their finger points at a specific number or element on the screen. This is a handheld shot — slight natural camera movement is fine and adds authenticity. A subtle zoom-in (1.1x) on the screen area after the finger points, lasting 2–3 seconds, to make the number readable. Optional: a small circular highlight ring animates around the pointed element. No cursor — the finger IS the pointer. Shot filmed naturally, not screen-recorded."
+  }
+}

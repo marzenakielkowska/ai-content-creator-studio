@@ -1,0 +1,19 @@
+{
+  "id": "komentuj-gradient",
+  "kategoria": "wizualizacja",
+  "typ": "nakładkowy",
+  "nazwa": "Komentuj — gradient",
+  "opis": "Karta CTA z gradientem Instagrama — różowo-pomarańczowy pierścień wokół przycisku lub nazwy profilu. Zachęca do komentarza lub obserwowania.",
+  "najlepsze_do": "CTA na końcu rolki — komentarz, obserwowanie, zapis do linku w bio",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#1a1520;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8%\"><div style=\"background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:10px 16px;width:75%;display:flex;flex-direction:column;align-items:center;gap:5px\"><div style=\"width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);display:flex;align-items:center;justify-content:center\"><div style=\"width:20px;height:20px;border-radius:50%;background:#1a1520;display:flex;align-items:center;justify-content:center\"><div style=\"font-size:5px;color:#fff\">@</div></div></div><div style=\"font-size:5px;font-weight:700;color:#fff\">Napisz w komentarzu</div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "A CTA card slides up from the bottom at the end of the video. Card has a dark semi-transparent background. Center element: a profile avatar placeholder with the Instagram gradient ring (gradient: #f09433 → #e6683c → #dc2743 → cc2366 → #bc1888, rotating border). Below the avatar: bold CTA text ('Napisz w komentarzu' or similar). The gradient ring slowly rotates (one full rotation per 3 seconds). Card stays for the final 3–5 seconds of the clip."
+  }
+}
