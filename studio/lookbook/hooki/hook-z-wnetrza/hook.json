@@ -1,7 +1,7 @@
 {
   "id": "hook-z-wnetrza",
-  "nazwa": "Hook nakręcony w efekcie",
-  "opis": "Mówisz hook z wnętrza rezultatu (miejsce, event, wynik). Sama lokalizacja udowadnia tezę, zanim ją wyjaśnisz.",
+  "nazwa": "Mówię z miejsca",
+  "opis": "Nagrywasz hook będąc już w środku — w miejscu, na evencie, przy wyniku. Samo tło robi robotę zanim cokolwiek powiesz.",
   "najlepsze_do": "Wyniki, relacje z eventów, case study, podróże, spotkania",
   "status": "gotowy",
   "podglad_html": "<div style=\"position:absolute;top:10%;left:0;right:0;text-align:center;z-index:1\"><div style=\"background:rgba(255,255,255,.88);border-radius:20px;margin:0 20%;padding:4px 8px\"><span style=\"font-size:9px;font-weight:700;color:#555\">\"mówię stąd, bo...\"</span></div></div>",

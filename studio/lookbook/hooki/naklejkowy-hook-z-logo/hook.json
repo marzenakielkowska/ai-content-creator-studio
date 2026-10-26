@@ -1,7 +1,7 @@
 {
   "id": "naklejkowy-hook-z-logo",
-  "nazwa": "Naklejkowy hook z logo",
-  "opis": "Naklejki-pigułki ułożone w stos: białe, z grubą czarną ramką, kolorowe nazwy i logotypy marek. Najlepszy do porównań.",
+  "nazwa": "Naklejki z logami",
+  "opis": "Kilka białych naklejek ułożonych w stos, każda z kolorowym logiem innej marki. Mówi o porównaniu zanim zaczniesz mówić.",
   "najlepsze_do": "Porównania narzędzi, zestawienia aplikacji, przegląd opcji",
   "status": "gotowy",
   "podglad_html": "<div style=\"position:absolute;top:10%;left:14%;right:14%;z-index:1;display:flex;flex-direction:column;gap:4px\">" +

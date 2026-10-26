@@ -1,7 +1,7 @@
 {
   "id": "cieple-kapitaliki",
-  "nazwa": "Ciepłe kapitaliki",
-  "opis": "Kremowe kapitaliki z ciemnym obrysem, ułożone w stos. Podtytuł w kolorze karmelu i naklejki emoji. Ciepło i przyjaźnie.",
+  "nazwa": "Kremowe litery",
+  "opis": "Kremowe litery z ciemnym obrysem, ułożone w stos. Pod spodem karmelowy podtytuł i emoji. Ciepło i swojsko.",
   "najlepsze_do": "Lifestyle, coaching, treści o dobrostanie, tematy kobiece",
   "status": "gotowy",
   "podglad_html": "<div style=\"position:absolute;top:12%;left:0;right:0;text-align:center;z-index:1\"><div style=\"color:#F5E6C8;font-size:14px;font-weight:900;letter-spacing:.06em;-webkit-text-stroke:1px rgba(50,20,0,.5)\">CIEPŁE</div><div style=\"color:#F5E6C8;font-size:14px;font-weight:900;letter-spacing:.06em;-webkit-text-stroke:1px rgba(50,20,0,.5);margin-top:1px\">KAPITALIKI</div><div style=\"color:#D4A06A;font-size:8px;margin-top:4px;letter-spacing:.04em\">podtytuł karmelowy</div></div>",
