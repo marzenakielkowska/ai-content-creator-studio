@@ -6,7 +6,7 @@
   "opis": "Animowany efekt 7.65s: faza 1 — ciemny ekran Instagram Live z komentarzami i pływającymi serduszkami (3 komentarze piszą się i wysyłają co 1.5s, serduszka unoszą się po lewej). Faza 2 — przełączenie do profilu kursantki w ramce iPhone, przycisk Obserwuj tapuje się z efektem pulse. Idealne CTA na koniec rolki.",
   "najlepsze_do": "Wezwania do obserwowania, budowania społeczności, wywołania akcji",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style='background:#111;border-radius:12px;padding:12px;width:100px;height:180px;display:flex;align-items:flex-end'><div style='color:white;font-size:8px;opacity:0.8'>LIVE ▶</div></div>",
   "wymagania": {
     "wideo": "screenshot profilu Instagram kursantki (pełna strona, min 982px szerokości)",

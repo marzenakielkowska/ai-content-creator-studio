@@ -6,7 +6,7 @@
   "opis": "Ty zostajesz na miejscu, a pokój za Tobą rozciąga się i odpycha od obiektywu — efekt dolly zoom. Używasz go dokładnie na słowie-rewelacji.",
   "najlepsze_do": "Dramatyczny reveal, odwrócenie perspektywy, mocna teza, moment szoku",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:linear-gradient(to bottom,#0a0a14,#1a1520);display:flex;align-items:center;justify-content:center;overflow:hidden\"><div style=\"position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,.7) 100%)\"></div><div style=\"width:28px;height:50px;background:rgba(255,255,255,.12);border-radius:10px 10px 5px 5px;z-index:1\"></div><div style=\"position:absolute;font-size:4px;color:rgba(255,255,255,.3);bottom:20%;text-align:center\">tło się oddala →</div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki z wyraźnym tłem (pokój, ściana)",

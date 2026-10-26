@@ -6,7 +6,7 @@
   "opis": "Dwa rzędy wyników lub osiągnięć zmieniają się co sekundę — każdy nowy wynik wsuwa się w miejsce poprzedniego. Dużo dowodów, szybko.",
   "najlepsze_do": "Pokazanie wielu wyników klientów, case studies, sukcesów jednocześnie",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#f5f2ec;display:flex;align-items:center;justify-content:center\"><div style=\"display:grid;grid-template-columns:1fr 1fr;gap:4px;width:75%\"><div style=\"background:#fff;border-radius:6px;padding:5px;box-shadow:0 1px 6px rgba(0,0,0,.08)\"><div style=\"font-size:7px;font-weight:900;color:#333;margin-bottom:1px\">+234%</div><div style=\"height:2.5px;background:#c9c4bc;border-radius:2px;width:60%\"></div></div><div style=\"background:#fff;border-radius:6px;padding:5px;box-shadow:0 1px 6px rgba(0,0,0,.08)\"><div style=\"font-size:7px;font-weight:900;color:#333;margin-bottom:1px\">12 klientów</div><div style=\"height:2.5px;background:#c9c4bc;border-radius:2px;width:80%\"></div></div><div style=\"background:#fff;border-radius:6px;padding:5px;box-shadow:0 1px 6px rgba(0,0,0,.08)\"><div style=\"font-size:7px;font-weight:900;color:#333;margin-bottom:1px\">50k zasięg</div><div style=\"height:2.5px;background:#c9c4bc;border-radius:2px;width:70%\"></div></div><div style=\"background:#fff;border-radius:6px;padding:5px;box-shadow:0 1px 6px rgba(0,0,0,.08)\"><div style=\"font-size:7px;font-weight:900;color:#333;margin-bottom:1px\">5 gwiazdek</div><div style=\"height:2.5px;background:#c9c4bc;border-radius:2px;width:55%\"></div></div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki lub samodzielna plansza",

@@ -6,7 +6,7 @@
   "opis": "Karta z postem — jak na X, Threads lub LinkedIn — wsuwa się z dołu. Widać awatar, nazwę konta, treść wpisu i liczbę polubień. Realne, wiarygodne.",
   "najlepsze_do": "Pokazanie reakcji społeczności, cytatu klienta, własnego posta lub komentarza",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#f7f5f0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:10%\"><div style=\"background:#fff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:8px 10px;width:80%\"><div style=\"display:flex;align-items:center;gap:6px;margin-bottom:5px\"><div style=\"width:16px;height:16px;border-radius:50%;background:#c5bfb6\"></div><div><div style=\"height:4px;background:#333;border-radius:2px;width:50px;margin-bottom:2px\"></div><div style=\"height:3px;background:#bbb;border-radius:2px;width:32px\"></div></div></div><div style=\"height:3.5px;background:#555;border-radius:2px;margin-bottom:2px\"></div><div style=\"height:3.5px;background:#555;border-radius:2px;width:75%;margin-bottom:4px\"></div><div style=\"font-size:4px;color:#999\">♡ 847 &nbsp; ↻ 124</div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki + zrzut ekranu posta lub dane do wygenerowania karty",

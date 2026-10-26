@@ -6,7 +6,7 @@
   "opis": "Na koncie kluczowego momentu wchodzi jedno ogromne słowo, które zajmuje prawie cały kadr. Puenta. Decyzja. Efekt WOW na koniec zdania.",
   "najlepsze_do": "Mocna puenta, kluczowy wniosek, kulminacyjny moment rolki",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#0e0e1a;display:flex;align-items:center;justify-content:center\"><div style=\"font-size:22px;font-weight:900;color:#fff;letter-spacing:-.03em;text-transform:uppercase;opacity:.95\">DZIAŁA</div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki lub czysta plansza",

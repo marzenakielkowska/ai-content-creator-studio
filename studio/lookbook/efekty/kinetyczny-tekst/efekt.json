@@ -5,7 +5,7 @@
   "opis": "Pełnoekranowe zdanie buduje się słowo po słowie z emoji w tekście.",
   "najlepsze_do": "Mocne hasła, liczby, cytaty",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div class=\"cap c4\" style=\"font-size:15px;line-height:1.5\"><i>Zrób</i> <i>to</i> <i>👉</i> <i>teraz</i></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki lub samodzielna plansza",

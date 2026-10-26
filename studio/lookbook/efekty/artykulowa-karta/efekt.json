@@ -6,7 +6,7 @@
   "opis": "Karta z nagłówkiem artykułu, miniaturą i nazwą źródła wsuwa się z boku i zatrzymuje obok Ciebie. Żółte podkreślenie animuje się pod kluczowym słowem.",
   "najlepsze_do": "Potwierdzenie faktu badaniem lub artykułem, cytowanie konkretnych danych",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#f5f2ec;display:flex;align-items:center;justify-content:center\"><div style=\"position:absolute;bottom:18%;left:8%;right:8%;background:#fff;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.15);padding:10px 12px;display:flex;gap:8px;align-items:center\"><div style=\"width:30%;aspect-ratio:1.4;background:#d4cfc6;border-radius:5px;flex-shrink:0\"></div><div style=\"flex:1\"><div style=\"height:5px;background:#333;border-radius:2px;margin-bottom:3px;width:90%\"></div><div style=\"height:4px;background:#c5bfb6;border-radius:2px;margin-bottom:3px;width:65%\"></div><div style=\"height:3px;background:#e8c840;border-radius:2px;width:45%\"></div></div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki",

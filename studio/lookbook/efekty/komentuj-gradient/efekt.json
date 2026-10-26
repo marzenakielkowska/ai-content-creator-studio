@@ -6,7 +6,7 @@
   "opis": "Karta CTA z gradientem Instagrama — różowo-pomarańczowy pierścień wokół przycisku lub nazwy profilu. Zachęca do komentarza lub obserwowania.",
   "najlepsze_do": "CTA na końcu rolki — komentarz, obserwowanie, zapis do linku w bio",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#1a1520;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8%\"><div style=\"background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:10px 16px;width:75%;display:flex;flex-direction:column;align-items:center;gap:5px\"><div style=\"width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);display:flex;align-items:center;justify-content:center\"><div style=\"width:20px;height:20px;border-radius:50%;background:#1a1520;display:flex;align-items:center;justify-content:center\"><div style=\"font-size:5px;color:#fff\">@</div></div></div><div style=\"font-size:5px;font-weight:700;color:#fff\">Napisz w komentarzu</div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki",

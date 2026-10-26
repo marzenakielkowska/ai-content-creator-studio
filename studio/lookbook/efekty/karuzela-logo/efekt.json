@@ -6,7 +6,7 @@
   "opis": "Loga migają szybko jedno po drugim — jak przewijanie — aż zatrzymuje się na jednym, które jest ważne. Buduje napięcie, skupia uwagę.",
   "najlepsze_do": "Zaprezentowanie jednej wybranej platformy z wielu, dramatyczny wybór narzędzia",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#0e0e1a;display:flex;align-items:center;justify-content:center\"><div style=\"width:50px;height:50px;background:#2a2a3a;border-radius:10px;display:flex;align-items:center;justify-content:center\"><div style=\"font-size:6px;color:rgba(255,255,255,.5)\">LOGO</div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki",

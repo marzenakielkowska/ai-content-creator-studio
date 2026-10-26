@@ -6,7 +6,7 @@
   "opis": "Ciemny ekran Instagrama z polami komentarzy — słowa kluczowe wpisują się jak żywe. Efekt autentyczności i zaangażowania społeczności.",
   "najlepsze_do": "Pokazanie reakcji obserwujących, popularnego słowa kluczowego, aktywności pod postem",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:10%\"><div style=\"width:80%;display:flex;flex-direction:column;gap:5px\"><div style=\"display:flex;align-items:center;gap:5px\"><div style=\"width:12px;height:12px;border-radius:50%;background:#3a3a4a\"></div><div style=\"background:#1e1e2e;border-radius:10px;padding:3px 7px;font-size:4px;color:rgba(255,255,255,.7)\">super efekt <span style=\"color:#ff6b35\">🔥</span></div></div><div style=\"display:flex;align-items:center;gap:5px\"><div style=\"width:12px;height:12px;border-radius:50%;background:#3a3a4a\"></div><div style=\"background:#1e1e2e;border-radius:10px;padding:3px 7px;font-size:4px;color:rgba(255,255,255,.7)\">chcę wiedzieć więcej|</div></div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki",

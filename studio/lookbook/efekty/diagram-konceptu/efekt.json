@@ -6,7 +6,7 @@
   "opis": "Prosty animowany schemat — chmura, komputery, strzałki łączące elementy systemu. Rysuje się krok po kroku, jak na tablicy.",
   "najlepsze_do": "Wyjaśnienie architektury systemu, przepływu danych, połączeń między narzędziami",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#1a1520;display:flex;align-items:center;justify-content:center\"><svg width=\"65%\" height=\"50%\" viewBox=\"0 0 180 100\"><ellipse cx=\"90\" cy=\"25\" rx=\"35\" ry=\"18\" fill=\"none\" stroke=\"rgba(255,255,255,.5)\" stroke-width=\"1.5\"/><text x=\"90\" y=\"29\" text-anchor=\"middle\" font-size=\"8\" fill=\"rgba(255,255,255,.7)\">cloud</text><rect x=\"20\" y=\"65\" width=\"35\" height=\"22\" rx=\"4\" fill=\"none\" stroke=\"rgba(255,255,255,.4)\" stroke-width=\"1.5\"/><text x=\"37\" y=\"80\" text-anchor=\"middle\" font-size=\"7\" fill=\"rgba(255,255,255,.6)\">konto A</text><rect x=\"125\" y=\"65\" width=\"35\" height=\"22\" rx=\"4\" fill=\"none\" stroke=\"rgba(255,255,255,.4)\" stroke-width=\"1.5\"/><text x=\"142\" y=\"80\" text-anchor=\"middle\" font-size=\"7\" fill=\"rgba(255,255,255,.6)\">konto B</text><line x1=\"90\" y1=\"43\" x2=\"37\" y2=\"65\" stroke=\"rgba(255,255,255,.3)\" stroke-width=\"1\" stroke-dasharray=\"3,2\"/><line x1=\"90\" y1=\"43\" x2=\"142\" y2=\"65\" stroke=\"rgba(255,255,255,.3)\" stroke-width=\"1\" stroke-dasharray=\"3,2\"/></svg></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki lub samodzielna plansza",

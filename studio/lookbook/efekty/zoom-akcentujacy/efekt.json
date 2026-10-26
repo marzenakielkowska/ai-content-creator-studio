@@ -6,7 +6,7 @@
   "opis": "Szybkie wbicie 115–120% na krótkich, mocnych zdaniach. Powolne wejście z cofnięciem na dłuższych. Zawsze centruje twarz. Obraz żyje razem z głosem.",
   "najlepsze_do": "Mówione podkreślenia, zmiana rytmu, emocjonalne momenty, eksperckie stwierdzenia",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#1a1520;display:flex;align-items:center;justify-content:center\"><div style=\"position:relative\"><div style=\"width:32px;height:58px;background:#2a2535;border-radius:8px 8px 4px 4px;border:1.5px solid rgba(255,255,255,.2)\"></div><div style=\"position:absolute;inset:-8px;border:1.5px dashed rgba(255,255,255,.15);border-radius:12px\"></div><div style=\"position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:5px;color:rgba(255,255,255,.4);white-space:nowrap\">→ 115% →</div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki",

@@ -5,7 +5,7 @@
   "opis": "Odręczna notatka pisana wersalikami z narysowaną strzałką wskazuje na element w kadrze.",
   "najlepsze_do": "Wyróżnianie wyników, komentarze 'przed/po', adnotacje do własnej pracy",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div class=\"fx f-strzalki-card\"><span>wynik</span></div><div class=\"fx f-strzalki-annot\"><svg viewBox='0 0 90 72' xmlns='http://www.w3.org/2000/svg'><text x='2' y='17' font-family='Caveat,cursive' font-size='17' fill='#fff' font-weight='600'>przed →</text><path d='M58 20 Q72 34 62 54' stroke='#fff' stroke-width='2' fill='none' stroke-linecap='round' opacity='.85'/></svg></div>",
   "przepis": {
     "typ": "naklejka-odreczna",

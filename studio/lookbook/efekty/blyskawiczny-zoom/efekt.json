@@ -6,7 +6,7 @@
   "opis": "Gwałtowny zoom z szerokiego ujęcia prosto na twarz — na kluczowe słowo. Ostry, bez rozmycia. Jak uderzenie w podbródek.",
   "najlepsze_do": "Dramatyczne podkreślenie kluczowego słowa, payoff moment, mocna puenta",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#1a1520;display:flex;align-items:center;justify-content:center;overflow:hidden\"><div style=\"position:absolute;inset:-30%;background:linear-gradient(to bottom,#2a2035,#1a1520);opacity:.6\"></div><div style=\"font-size:5px;color:rgba(255,255,255,.4);text-align:center;z-index:1\">→ nagłe przybliżenie →<br>twarz wypełnia kadr</div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki",

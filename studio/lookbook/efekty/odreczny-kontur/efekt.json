@@ -6,7 +6,7 @@
   "opis": "Chwiejny, odreczny biały kontur obrysowuje Twoją sylwetkę i faluje klatka po klatce. Wokół głowy pojawiają się i znikają gwiazdki.",
   "najlepsze_do": "Energetyczne, zabawne rolki, efekt wyluzowanego stylu, lekki klimat twórcy",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#1a1520;display:flex;align-items:center;justify-content:center\"><div style=\"position:relative\"><div style=\"width:30px;height:60px;background:rgba(255,255,255,.08);border-radius:15px 15px 8px 8px;border:1.5px dashed rgba(255,255,255,.4)\"></div><div style=\"position:absolute;top:-8px;right:-10px;font-size:8px\">✦</div><div style=\"position:absolute;top:5px;left:-12px;font-size:6px\">✦</div><div style=\"position:absolute;bottom:10px;right:-14px;font-size:5px\">✦</div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki",

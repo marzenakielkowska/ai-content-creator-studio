@@ -6,7 +6,7 @@
   "opis": "Twoja wiadomość wpisuje się i wysyła, a odpowiedź AI streamuje się litera po literze. Jak prawdziwy czat — na żywo, obok Ciebie.",
   "najlepsze_do": "Pokazywanie promptu i odpowiedzi AI, demonstracja procesu pracy z Claude",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#1a1520;display:flex;align-items:flex-end;justify-content:center;padding-bottom:12%\"><div style=\"width:78%;display:flex;flex-direction:column;gap:5px\"><div style=\"background:#2a2535;border-radius:10px 10px 10px 3px;padding:6px 9px;max-width:80%;align-self:flex-end\"><div style=\"font-size:4px;color:rgba(255,255,255,.75)\">Jak napisać dobry hook?</div></div><div style=\"background:#1e3a2f;border-radius:10px 10px 3px 10px;padding:6px 9px;max-width:85%\"><div style=\"font-size:4px;color:rgba(255,255,255,.75)\">Zacznij od prowokacyjnego pytania, które...<span style=\"opacity:.5\">|</span></div></div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki lub samodzielna plansza",

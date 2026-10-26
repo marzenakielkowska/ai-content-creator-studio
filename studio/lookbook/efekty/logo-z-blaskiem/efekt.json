@@ -6,7 +6,7 @@
   "opis": "Logo lub logotyp pojawia się z efektem białego blasku — jakby się włączało lub odkrywało. Prestiżowe i czyste.",
   "najlepsze_do": "Przedstawienie własnej marki, ogłoszenie partnerstwa, reveal produktu",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#0e0e1a;display:flex;align-items:center;justify-content:center\"><div style=\"position:relative;display:flex;flex-direction:column;align-items:center;gap:5px\"><div style=\"width:35px;height:35px;background:rgba(255,255,255,.12);border-radius:8px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(255,255,255,.3)\"><div style=\"font-size:6px;color:rgba(255,255,255,.7)\">LOGO</div></div><div style=\"font-size:5.5px;font-weight:700;color:rgba(255,255,255,.8);letter-spacing:.1em\">MARKA</div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki lub samodzielna plansza",

@@ -6,7 +6,7 @@
   "opis": "Nagranie ekranu wypełnia kadr. Kursor płynnie przesuwa się do liczby lub elementu, zatrzymuje — jakbyś kogoś prowadziła za rękę.",
   "najlepsze_do": "Pokazywanie wyników w dashboardzie, platformie, Excelu, analityce",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#1e1e2e;display:flex;align-items:center;justify-content:center\"><div style=\"width:80%;height:70%;background:#0d0d1a;border-radius:8px;border:1px solid rgba(255,255,255,.12);position:relative;display:flex;align-items:center;justify-content:center\"><div style=\"font-size:5.5px;color:rgba(255,255,255,.3)\">ekran</div><div style=\"position:absolute;top:38%;left:55%;width:8px;height:8px\"><div style=\"width:0;height:0;border-style:solid;border-width:0 4px 7px 0;border-color:transparent #fff transparent transparent\"></div></div><div style=\"position:absolute;top:35%;left:52%;width:18px;height:8px;background:rgba(255,255,0,.25);border-radius:2px\"></div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie ekranu z widocznymi liczbami lub wynikami",

@@ -19,7 +19,7 @@ Sprawdź, czy istnieje plik `~/.ai-content-creator-studio/moj-styl.json`. Jeśli
 
 **Gdy `tryb: "gotowy"`** — odczytaj `studio/lookbook/gotowe/{styl}/gotowy.json`. Pola:
 - `napisy` → traktuj jak pole `napisy` z trybu własnego (czytaj napisy styl.json)
-- `efekty` → tablica ID, traktuj jak klucze z pola `efekty` (każdy "wszedzie")
+- `efekty` → tablica ID, traktuj jak klucze z pola `efekty` (każdy "wszedzie" — brak podziału na części)
 - `tempo` → opis słowny tempa (zastosuj odpowiedni rytm cięć)
 - `obraz` → opis słowny wyglądu obrazu (zastosuj jako wskazówkę do grading, jeśli brak pola `styl`)
 
@@ -27,7 +27,15 @@ Sprawdź, czy istnieje plik `~/.ai-content-creator-studio/moj-styl.json`. Jeśli
 
 - **`hook`** — jeśli pole istnieje, odczytaj `studio/lookbook/hooki/{hook}/hook.json`. Pole `przepis.opis_efektu` to opis efektu dla pierwszych 1–3 sekund (po angielsku, dla Ciebie). Wdróż go dokładnie w HyperFrames na klatce 0.
 - **`napisy`** — jeśli pole istnieje i nie jest `"bez-napisow"`, odczytaj `studio/lookbook/napisy/{napisy}/styl.json`. Pole `przepis` zawiera parametry (czcionka, grubość, rozmiar, kolor, animacja, pozycja), a `przepis.opis_efektu` (jeśli jest) opisuje zachowanie. Zastosuj te parametry do każdej klatki napisów.
-- **`efekty`** — klucze to foldery w `studio/lookbook/efekty/`. Każdy efekt ma `przepis` w `efekt.json` lub `PRZEPIS.md` w swoim folderze. Pole `typ` w efekt.json:
+- **`efekty`** — obiekt, gdzie klucze to ID efektów (foldery w `studio/lookbook/efekty/`), a wartości to:
+  - `"wszedzie"` → efekt może pojawić się w dowolnym miejscu rolki (domyślne)
+  - `["poczatek"]`, `["srodek"]`, `["koniec"]` lub ich kombinacje → efekt TYLKO w tej części:
+    - `"poczatek"` — pierwsze ~25–30% rolki
+    - `"srodek"` — środkowe ~40–50% rolki
+    - `"koniec"` — ostatnie ~25–30% rolki
+    - np. `["poczatek","srodek"]` → efekt w obu tych częściach, nie na końcu
+  
+  Każdy efekt ma `przepis` w `efekt.json` lub `PRZEPIS.md` w swoim folderze. Pole `typ` w efekt.json:
   - `"nakładkowy"` → efekt dodany na istniejący reel podczas montażu (Krok 4)
   - `"standalone"` → osobny klip generowany przez Claude, niezależny od rolki
   

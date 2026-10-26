@@ -6,7 +6,7 @@
   "opis": "Wynik, liczba lub zmiana pojawia się na kolorowej karcie na tle Twojej marki. Etykieta u góry, duży wynik pośrodku, kontekst pod spodem.",
   "najlepsze_do": "Podanie rezultatu, statystyki, przychodu, zasięgu, liczby klientów",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#f5f2ec;display:flex;align-items:center;justify-content:center\"><div style=\"position:absolute;bottom:18%;left:8%;right:8%;background:#FDE68A;border-radius:12px;padding:10px 13px\"><div style=\"font-size:4px;font-weight:700;letter-spacing:.12em;color:rgba(0,0,0,.45);text-transform:uppercase;margin-bottom:4px\">WYNIK</div><div style=\"font-size:16px;font-weight:900;color:#1a1520;letter-spacing:-.02em;line-height:1;margin-bottom:3px\">+234%</div><div style=\"font-size:4.5px;color:rgba(0,0,0,.55);line-height:1.4\">wzrost sprzedaży po wdrożeniu strategii</div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki",

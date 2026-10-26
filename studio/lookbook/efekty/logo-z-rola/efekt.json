@@ -6,7 +6,7 @@
   "opis": "Logo firmy lub marki pojawia się z wyskakującą etykietką jednego słowa — rola, rezultat lub wartość. Czyste, szybkie, profesjonalne.",
   "najlepsze_do": "Przedstawienie klientów, partnerów, platform, z którymi pracujesz",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#f0ede7;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;padding:15%\"><div style=\"display:flex;flex-direction:column;align-items:center;gap:3px\"><div style=\"width:22px;height:22px;background:#c9c4bc;border-radius:5px\"></div><div style=\"background:#333;color:#fff;font-size:4px;font-weight:700;padding:1.5px 5px;border-radius:3px;letter-spacing:.05em\">KLIENT</div></div><div style=\"display:flex;flex-direction:column;align-items:center;gap:3px\"><div style=\"width:22px;height:22px;background:#b8b0a6;border-radius:5px\"></div><div style=\"background:#333;color:#fff;font-size:4px;font-weight:700;padding:1.5px 5px;border-radius:3px;letter-spacing:.05em\">PARTNER</div></div><div style=\"display:flex;flex-direction:column;align-items:center;gap:3px\"><div style=\"width:22px;height:22px;background:#d4cfc8;border-radius:5px\"></div><div style=\"background:#333;color:#fff;font-size:4px;font-weight:700;padding:1.5px 5px;border-radius:3px;letter-spacing:.05em\">NARZĘDZIE</div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki lub samodzielna plansza",

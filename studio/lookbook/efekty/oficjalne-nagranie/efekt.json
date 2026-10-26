@@ -6,7 +6,7 @@
   "opis": "Klip lub zrzut ekranu z oficjalnym materiałem pojawia się jako panel obok Ciebie — z etykietą źródła u góry. Mówisz, nagranie potwierdza.",
   "najlepsze_do": "Pokazanie oficjalnej demonstracji, fragmentu wideo, nagrania konferencji lub ogłoszenia",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#1a1a2e;display:flex\"><div style=\"flex:1;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:8%\"><div style=\"font-size:5.5px;color:rgba(255,255,255,.4)\">kursantka</div></div><div style=\"width:42%;background:#0d0d1a;border-left:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column\"><div style=\"background:#1c2a4a;padding:4px 6px\"><div style=\"font-size:4.5px;color:#7eb8f7;font-weight:700;letter-spacing:.05em\">ŹRÓDŁO</div></div><div style=\"flex:1;background:#111;display:flex;align-items:center;justify-content:center\"><div style=\"font-size:5px;color:rgba(255,255,255,.3)\">klip</div></div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki + klip źródłowy lub zrzut ekranu",

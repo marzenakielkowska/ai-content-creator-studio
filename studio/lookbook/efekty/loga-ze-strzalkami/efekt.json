@@ -6,7 +6,7 @@
   "opis": "Loga połączone narysowanymi strzałkami — jak mapa przepływu. Idealne do pokazania ekosystemu narzędzi lub ścieżki klienta.",
   "najlepsze_do": "Pokazanie stosu narzędzi, procesu, przepływu między platformami",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#f5f2ec;display:flex;align-items:center;justify-content:center\"><svg width=\"70%\" height=\"40%\" viewBox=\"0 0 200 80\"><rect x=\"5\" y=\"25\" width=\"40\" height=\"30\" rx=\"6\" fill=\"#c9c4bc\"/><rect x=\"80\" y=\"25\" width=\"40\" height=\"30\" rx=\"6\" fill=\"#b8b0a6\"/><rect x=\"155\" y=\"25\" width=\"40\" height=\"30\" rx=\"6\" fill=\"#d4cfc8\"/><line x1=\"45\" y1=\"40\" x2=\"78\" y2=\"40\" stroke=\"#555\" stroke-width=\"2\" stroke-dasharray=\"4,2\"/><polygon points=\"78,36 86,40 78,44\" fill=\"#555\"/><line x1=\"120\" y1=\"40\" x2=\"153\" y2=\"40\" stroke=\"#555\" stroke-width=\"2\" stroke-dasharray=\"4,2\"/><polygon points=\"153,36 161,40 153,44\" fill=\"#555\"/></svg></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki lub samodzielna plansza",

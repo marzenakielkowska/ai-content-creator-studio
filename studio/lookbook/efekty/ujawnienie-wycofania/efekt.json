@@ -5,7 +5,7 @@
   "opis": "Ekran odsłania nową scenę przez efekt wipe lub rozsunięcia — dramatyczne przejście do nowego miejsca lub stanu.",
   "najlepsze_do": "Metamorfozy, zmiany sceny, reveal produktu, transformacje",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div class=\"fx f-gl-reveal\"></div>",
   "wymagania": { "wideo": "9:16, dwa ujęcia: przed i po transformacji", "narzedzia": ["ffmpeg", "hyperframes"] },
   "przepis": { "typ": "hyperframes", "instrukcja": "Wipe poziomy lub pionowy odsłania drugie ujęcie. Implementacja: dwa wideo jedno na drugim, górne ma clip-path: inset(0 100% 0 0) → inset(0 0% 0 0) przez 0.8s ease-in-out. Opcjonalnie: świetlna linia na krawędzi wipu (1px white glow)." }

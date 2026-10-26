@@ -6,7 +6,7 @@
   "opis": "Postać-awatar pinguje — z jej głowy wyskakuje dymek z wiadomością. Uruchamia się na konkretny beat lub słowo.",
   "najlepsze_do": "Animowana reakcja na event, powiadomienie o zapisie lub sprzedaży, nowy klient",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#f0ede7;display:flex;align-items:center;justify-content:center\"><div style=\"position:relative;display:flex;flex-direction:column;align-items:center\"><div style=\"position:relative\"><div style=\"width:36px;height:36px;border-radius:50%;background:#c9c4bc;display:flex;align-items:center;justify-content:center\"><div style=\"font-size:7px\">👤</div></div><div style=\"position:absolute;top:-18px;left:22px;background:#fff;border-radius:8px 8px 8px 2px;padding:4px 7px;box-shadow:0 2px 8px rgba(0,0,0,.15);white-space:nowrap\"><div style=\"font-size:4.5px;font-weight:700;color:#333\">Nowy klient! 🎉</div></div></div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki lub samodzielna plansza",

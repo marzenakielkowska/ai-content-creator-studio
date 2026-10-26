@@ -6,7 +6,7 @@
   "opis": "Pionowa linia odsłania jasną stronę po i przyciemnioną przed. Idealne na transformacje i tutoriale stylizacji.",
   "najlepsze_do": "Stylizacja, makijaż, edycja zdjęć, metamorfozy",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div class=\"fx f-pp-d\"></div><div class=\"fx f-pp-line\"></div>",
   "wymagania": {
     "wideo": "9:16, kamera nieruchoma, ta sama scena przed i po",

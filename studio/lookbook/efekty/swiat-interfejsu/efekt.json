@@ -6,7 +6,7 @@
   "opis": "Twoje tło zamienia się w czysty, jasny interfejs czatu. Pasek wpisywania tekstu pojawia się nad Twoją głową i sam wpisuje Twój prompt.",
   "najlepsze_do": "Demonstracja pracy z AI, pokazanie promptu na żywo, rolka o narzędziach AI",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#f8f8f6;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:22%\"><div style=\"width:80%;background:#fff;border:1.5px solid #e0ddd8;border-radius:12px;padding:7px 10px;box-shadow:0 2px 8px rgba(0,0,0,.07)\"><div style=\"font-size:4.5px;color:#333\">Napisz mi hook do rolki o...<span style=\"background:#333;width:1px;height:7px;display:inline-block;vertical-align:middle;margin-left:1px\"></span></div></div><div style=\"position:absolute;bottom:10%;right:10%;width:18px;height:18px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center\"><div style=\"font-size:7px;color:#fff\">↑</div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki z jednolitym tłem lub łatwym do zastąpienia",

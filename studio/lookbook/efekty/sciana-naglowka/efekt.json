@@ -5,7 +5,7 @@
   "opis": "Mocny nagłówek lub hasło wypełnia cały ekran za Tobą.",
   "najlepsze_do": "Mocne stwierdzenia, opinie, hasła, cytaty",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div class=\"fx f-gl-wall\"><span></span><span></span><span></span></div>",
   "wymagania": { "wideo": "9:16", "narzedzia": ["ffmpeg", "hyperframes"] },
   "przepis": { "typ": "hyperframes", "instrukcja": "Duży tekst (font-size 120–160px, font-weight 900) powtórzony w 3–4 wierszach, lekko pochylony (rotate -3deg), opacity 0.18–0.25, z-index pod osobą. Tekst bierze się z transkrypcji — najkrótsze mocne zdanie z tej części rolki." }

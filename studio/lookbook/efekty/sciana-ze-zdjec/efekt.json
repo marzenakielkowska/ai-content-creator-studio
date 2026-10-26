@@ -5,7 +5,7 @@
   "opis": "Siatka zrzutów ekranu lub zdjęć pojawia się za Tobą jak feed.",
   "najlepsze_do": "Portfolio, wyniki, dowody społeczne, zaproszenie do przejrzenia profilu",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div class=\"fx f-gl-grid\"><span></span><span></span><span></span><span></span><span></span><span></span></div>",
   "wymagania": { "wideo": "9:16, przynajmniej 4–6 zdjęć lub zrzutów ekranu", "narzedzia": ["ffmpeg", "hyperframes"] },
   "przepis": { "typ": "hyperframes", "instrukcja": "Siatka 2×3 kafelków ze zdjęciami lub zrzutami ekranu. Kafelki wchodzą jeden po drugim z lekkim opóźnieniem (stagger 0.1s). Tło: wideo z osobą. Kafelki: absolute, równomierne rozłożenie po całym kadrze, lekka przezroczystość (opacity 0.85), border-radius 12px." }

@@ -6,7 +6,7 @@
   "opis": "Gdy cytujesz kogoś, jego słowa wpisują się w cudzysłowie w górnym paśmie kadru. Jak dymek — tylko elegancki.",
   "najlepsze_do": "Cytowanie klientów, ekspertów, własnych obserwacji, powiedzeń",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div style=\"position:absolute;inset:0;background:#f5f2ec\"><div style=\"position:absolute;top:8%;left:6%;right:6%;background:#fff;border-radius:10px;padding:9px 12px;box-shadow:0 2px 10px rgba(0,0,0,.08)\"><div style=\"font-size:9px;color:#b0a898;font-family:Georgia,serif;line-height:1;margin-bottom:3px\">&ldquo;</div><div style=\"height:3.5px;background:#333;border-radius:2px;margin-bottom:2px;width:85%\"></div><div style=\"height:3.5px;background:#333;border-radius:2px;margin-bottom:2px;width:70%\"></div><div style=\"height:3.5px;background:#333;border-radius:2px;width:45%\"></div><div style=\"display:flex;align-items:center;gap:5px;margin-top:5px\"><div style=\"width:11px;height:11px;border-radius:50%;background:#c9c4bc\"></div><div style=\"height:3px;background:#c9c4bc;border-radius:2px;width:35%\"></div></div></div></div>",
   "wymagania": {
     "wideo": "9:16, nagranie kursantki",

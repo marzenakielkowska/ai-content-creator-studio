@@ -5,7 +5,7 @@
   "opis": "Małe karty z ikoną i tekstem wyskakują jedna po drugiej przy każdym punkcie.",
   "najlepsze_do": "Listy z ikonami, ekspertyza, certyfikaty, funkcje produktu",
   "status": "gotowy",
-  "nowosc": true,
+  "nowosc": false,
   "podglad_html": "<div class=\"fx f-gl-chips\"><span></span><span></span><span></span></div>",
   "wymagania": { "wideo": "9:16, lista 3–5 punktów z ikonami (emoji lub SVG)", "narzedzia": ["ffmpeg", "hyperframes"] },
   "przepis": { "typ": "hyperframes", "instrukcja": "Karty (border-radius 16px, backdrop-filter blur, białe tło 80%) z emoji + tekstem pojawiają się z animacją scale 0.7→1 + opacity 0→1, stagger 0.25s. Układ: środek dolnej połowy kadru, pionowo jedna pod drugą lub poziomo w rzędzie." }
