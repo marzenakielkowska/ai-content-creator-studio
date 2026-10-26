@@ -150,15 +150,10 @@ section.block{padding-block:56px 8px}
 
 /* Quick-nav kategorii efektów */
 .fx-quicknav{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0}
-.qnav-pill{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:12px;padding:8px 16px;font-size:13px;font-weight:700;background:var(--surface);color:var(--ink);transition:background .15s,color .15s,border-color .15s}
-.qnav-pill:hover{border-color:var(--accent);color:var(--accent)}
-.qnav-pill .qnav-count{font-size:11px;font-weight:700;opacity:.45;min-width:16px;text-align:right}
-
-/* Filtr kategorii efektów */
-.fx-filter{position:sticky;top:0;z-index:8;background:var(--bg);padding:10px 0 8px;margin:18px 0 0;overflow-x:auto;white-space:nowrap;scrollbar-width:none;border-bottom:1.5px solid var(--line)}
-.fx-filter::-webkit-scrollbar{display:none}
-.fx-pill{all:unset;cursor:pointer;display:inline-block;border:1.5px solid var(--line);border-radius:999px;padding:7px 18px;font-size:14px;font-weight:700;margin-right:8px;background:var(--surface);color:var(--ink);white-space:nowrap;transition:background .15s,color .15s,border-color .15s}
-.fx-pill[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.qnav-pill{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:12px;padding:8px 16px;font-size:13px;font-weight:700;background:var(--surface);color:var(--ink);transition:background .15s,color .15s,border-color .15s,box-shadow .15s}
+.qnav-pill:hover:not([aria-pressed="true"]){border-color:#6C63FF;color:#6C63FF}
+.qnav-pill[aria-pressed="true"]{background:#6C63FF;border-color:#6C63FF;color:#fff;box-shadow:0 2px 10px rgba(108,99,255,.3)}
+.qnav-pill .qnav-count{font-size:11px;font-weight:700;opacity:.6;min-width:16px;text-align:right}
 .fx-group{margin-top:0}
 
 /* Pasek postępu wideo */
@@ -740,7 +735,6 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
         </button>
         <button class="link" id="all">Zaznacz wszystkie</button>
       </div>
-      <div id="fx-filter" class="fx-filter"></div>
       <div id="fx-cats"></div>
     </section>
 
@@ -1630,45 +1624,40 @@ async function init() {
       $('#fx-cats').append(wrap);
     });
 
-    // Filtr kategorii
-    const filterBar = $('#fx-filter');
+    // Nawigacja kategorii (quick-nav)
     const grupy = $('#fx-cats').querySelectorAll('.fx-group');
+    const quickNav = $('#fx-quicknav');
+    let activeQnav = null;
 
-    function setFilter(katId, katNazwa) {
-      filterBar.querySelectorAll('.fx-pill').forEach(p => p.setAttribute('aria-pressed', 'false'));
+    function setFilter(katId) {
+      quickNav.querySelectorAll('.qnav-pill').forEach(p => p.setAttribute('aria-pressed', 'false'));
       if (!katId) {
-        $('#fx-pill-wszystko').setAttribute('aria-pressed', 'true');
+        activeQnav = null;
         grupy.forEach(g => g.hidden = false);
+        const allBtn = quickNav.querySelector('[data-qnav="wszystko"]');
+        if (allBtn) allBtn.setAttribute('aria-pressed', 'true');
       } else {
-        const pill = filterBar.querySelector(`[data-kat-pill="${katId}"]`);
-        if (pill) pill.setAttribute('aria-pressed', 'true');
+        activeQnav = katId;
         grupy.forEach(g => { g.hidden = g.dataset.kat !== katId; });
+        const btn = quickNav.querySelector(`[data-qnav="${katId}"]`);
+        if (btn) btn.setAttribute('aria-pressed', 'true');
       }
-      filterBar.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
-    const wszystko = document.createElement('button');
-    wszystko.className = 'fx-pill';
-    wszystko.id = 'fx-pill-wszystko';
-    wszystko.setAttribute('aria-pressed', 'true');
-    wszystko.textContent = 'Wszystko';
-    wszystko.onclick = () => setFilter(null);
-    filterBar.appendChild(wszystko);
-    efektyGrupy.forEach(kat => {
-      const btn = document.createElement('button');
-      btn.className = 'fx-pill';
-      btn.setAttribute('aria-pressed', 'false');
-      btn.setAttribute('data-kat-pill', kat.id || kat.nazwa);
-      btn.textContent = kat.nazwa;
-      btn.onclick = () => setFilter(kat.id || kat.nazwa);
-      filterBar.appendChild(btn);
-    });
+    // "Wszystko" jako pierwszy kafelek
+    const wszystkoBtn = document.createElement('button');
+    wszystkoBtn.className = 'qnav-pill';
+    wszystkoBtn.setAttribute('aria-pressed', 'true');
+    wszystkoBtn.setAttribute('data-qnav', 'wszystko');
+    wszystkoBtn.textContent = 'Wszystko';
+    wszystkoBtn.onclick = () => setFilter(null);
+    quickNav.appendChild(wszystkoBtn);
 
-    // Quick-nav pod opisem
-    const quickNav = $('#fx-quicknav');
     efektyGrupy.forEach(kat => {
       const btn = document.createElement('button');
       btn.className = 'qnav-pill';
+      btn.setAttribute('aria-pressed', 'false');
+      btn.setAttribute('data-qnav', kat.id || kat.nazwa);
       btn.innerHTML = `${kat.nazwa}<span class="qnav-count">${kat.efekty.length}</span>`;
       btn.title = kat.hint || '';
       btn.onclick = () => setFilter(kat.id || kat.nazwa);
