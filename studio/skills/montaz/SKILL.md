@@ -183,6 +183,23 @@ Wygeneruj transkrypcję ze znacznikami słów. Popraw źle rozpoznane nazwy wła
 Usuń każdą ciszę, fałszywy start i powtórzone ujęcie. Zachowaj ostatnie czyste ujęcie. Widz nigdy nie powinien widzieć kursantki sięgającej po kamerę. Pokaż plan cięć z uzasadnieniem — tniej dopiero po OK.
 
 ### 4. Plan montażu
+
+**Najpierw — analiza semantyczna transkryptu.** Zanim zaproponujesz efekty, przejrzyj transkrypt i oznacz momenty, które warto wizualnie podkreślić:
+
+| Co słyszysz w transkrypcie | Efekt do zaproponowania |
+|---|---|
+| Liczba / statystyka / wynik | wycieta-z-tla z cyfrą lub wykresem |
+| Sekwencja kroków ("najpierw… potem… na końcu…") | karty-kroków lub lista z ptaszkami |
+| Porównanie ("zamiast X → Y", "stare/nowe") | hook z przekreśloną ikoną lub przed-i-po |
+| Workflow / proces krok po kroku | animacja procesu lub plansza z krokami |
+| Moment kulminacyjny / CTA / "obserwuj" | karta-wyniku lub live-profile-cta |
+| "Pokazuję coś na ekranie" / nagranie ekranu | screen recording lub polaroid-w-rogu |
+| Kilka elementów naraz / wyliczanka | orbita lub lista równoległa |
+
+Kursantka nie zawsze wie, że te momenty warto podkreślić — Ty to widzisz i proponujesz.
+
+---
+
 Napisz jednozdaniowy cel montażu (co ten film ma zrobić z widzem) i podziel wideo na sekcje: hak, rozwinięcie, dowód, pointę, wezwanie do działania.
 
 Trzymaj się budżetu: **5–6 efektów na całe wideo**. Ten sam zabieg za każdym razem (jeśli dowód to podzielony ekran raz — to podzielony ekran zawsze). Zostaw momenty tylko z mówiącą twarzą, bez grafik.
@@ -214,8 +231,40 @@ Powiedz kursantce: gdzie jest plik, ile trwa, jakich efektów użyłaś, co budz
 
 ## Zasady zawsze aktywne
 
-### Twarz
+### Twarz — reguła nadrzędna
+
+> **Tej reguły nie można pominąć ani skrócić. Stosuje się do każdego efektu, każdej kompozycji, każdej klatki.**
+
 **Nigdy nic na twarzy.** Żaden napis, karta ani grafika między oczami a brodą. Treści idą: nad głową, pod brodą lub za osobą (przez wycięcie z tła). Minimalny margines od włosów i brody: **40px**.
+
+#### Strefa twarzy w formacie 1080×1920 (pionowy, gadająca głowa)
+
+| Oś | Zakres | Co tam jest |
+|---|---|---|
+| Y (góra→dół) | 250–1400px | twarz: oczy, nos, usta, broda |
+| X (lewo→prawo) | 200–880px | centrum kadru |
+
+Twarz jest w tej strefie **zawsze** gdy osoba mówi do kamery. Wyjątki: widoczna tylko sylwetka z boku/tyłu, efekt wycieta-z-tla (wtedy grafiki muszą mieć `data-track-index` niższy niż cutout).
+
+#### Gdzie wolno umieszczać grafikę przy gadającej głowie
+
+| Strefa | Y | X | Co tam pasuje |
+|---|---|---|---|
+| Nad głową | `top: 0–220px` | dowolne | ikony hooka, nagłówki, banery |
+| Pod brodą | `top: 1000–1360px` | 50–1030px | listy, karty, statystyki |
+| Za głową (cutout) | dowolne | dowolne | tylko przez efekt wycieta-z-tla |
+| Boki ekranu | `top: 0–450px` | `left < 60px` lub `right < 60px` | wąskie ikony, wskaźniki |
+
+#### Obowiązkowy check przed wdrożeniem każdego efektu graficznego
+
+Dla każdego elementu `.clip` z grafiką nałożoną na wideo z gadającą głową:
+
+1. Sprawdź `top` — czy mieści się w zakresie Y 250–1400px?
+2. Sprawdź `left`/`right`/`width` — czy środek elementu wpada w zakres X 200–880px?
+3. Jeśli TAK na obydwa → przesuń powyżej 220px, poniżej 1000px, lub zastosuj cutout.
+4. Sprawdź czy `font-size` × tekst nie wychodzi poza dolną granicę strefy bezpiecznej.
+
+**Nigdy nie zgaduj. Przelicz. Jeden piksel na twarzy = poprawka od kursantki.**
 
 ### Strefy bezpieczne
 Każde słowo i karta wewnątrz strefy TikTok/Reels:

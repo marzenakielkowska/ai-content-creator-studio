@@ -1,5 +1,9 @@
 # Efekt: Zestawienie obok siebie
 
+
+
+> ⚠️ **Sprawdzenie twarzy:** żaden element tego efektu nie może nachodzić na strefę twarzy (Y:250–1400px × X:200–880px przy 1080×1920). Patrz: sekcja **"Twarz — reguła nadrzędna"** w `studio/skills/montaz/SKILL.md`.
+
 **Co robi:** Dwa klipy grają jednocześnie obok siebie na wspólnym tle. Mała karta po lewej (stary stan / "przed"), duża karta po prawej (nowy stan / "po"). Nagłówek u góry. Oba klipy grają jednocześnie — widz widzi zmianę wprost.
 
 **Różnica od efektu "Przed i po":** Tamten efekt to wipe/reveal — jedna scena z przesuwaną linią. Ten efekt to dwa oddzielne klipy grające równolegle na wspólnym tle.

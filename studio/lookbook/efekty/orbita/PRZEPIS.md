@@ -1,5 +1,9 @@
 # Efekt: Orbita
 
+
+
+> ⚠️ **Sprawdzenie twarzy:** żaden element tego efektu nie może nachodzić na strefę twarzy (Y:250–1400px × X:200–880px przy 1080×1920). Patrz: sekcja **"Twarz — reguła nadrzędna"** w `studio/skills/montaz/SKILL.md`.
+
 **Co robi:** małe zaokrąglone karty-ekrany (inne rolki kursantki) krążą wokół niej po eliptycznej ścieżce — część przechodzi z tyłu (z-index < kursantka), część z przodu (z-index > kursantka). Kursantka wycięta z tła stoi na środku. Daje efekt głębi i ruchu jednocześnie.
 
 **Czas trwania:** 6s (loopable). Użyj jako standalone klip.

@@ -1,5 +1,9 @@
 # Efekt: Ciepły kinowy
 
+
+
+> ⚠️ **Sprawdzenie twarzy:** żaden element tego efektu nie może nachodzić na strefę twarzy (Y:250–1400px × X:200–880px przy 1080×1920). Patrz: sekcja **"Twarz — reguła nadrzędna"** w `studio/skills/montaz/SKILL.md`.
+
 **Co robi:** nakłada ciepły grade z winietą i grain na całe nagranie przez FFmpeg. Nie wymaga HyperFrames — to filtr na wideo.
 
 **Wynik:** nowy plik wideo z gradingiem, gotowy do dalszego montażu lub bezpośredniej publikacji.

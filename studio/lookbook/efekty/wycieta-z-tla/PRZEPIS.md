@@ -1,5 +1,9 @@
 # Efekt: Wycięta z tła
 
+
+
+> ⚠️ **Sprawdzenie twarzy:** żaden element tego efektu nie może nachodzić na strefę twarzy (Y:250–1400px × X:200–880px przy 1080×1920). Patrz: sekcja **"Twarz — reguła nadrzędna"** w `studio/skills/montaz/SKILL.md`.
+
 **Co robi:** Kursantka wycięta z tła stoi na tle rozmytego pokoju. Pływające karty z grafikami, logotypami i tytułami pojawiają się wokół niej — część za nią, część przed nią. Efekt głębi 3D.
 
 **Kiedy używać:** Przez cały film lub w wybranych sekcjach (intro, kluczowe punkty). Każda karta wchodzi na słowo które ilustruje.

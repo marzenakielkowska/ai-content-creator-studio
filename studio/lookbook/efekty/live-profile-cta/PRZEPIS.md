@@ -1,5 +1,9 @@
 # Efekt: Live profil CTA
 
+
+
+> ⚠️ **Sprawdzenie twarzy:** żaden element tego efektu nie może nachodzić na strefę twarzy (Y:250–1400px × X:200–880px przy 1080×1920). Patrz: sekcja **"Twarz — reguła nadrzędna"** w `studio/skills/montaz/SKILL.md`.
+
 **Co robi:** Animowany klip 7.65s w dwóch fazach:
 
 **Faza 1 (0–4.5s):** Ciemny ekran Instagram Live. Trzy komentarze piszą się jeden po drugim i wysyłają z animowanym sercem. Po lewej stronie unoszą się pływające serduszka. Widoczna liczba widzów. Wygląda jak prawdziwy Instagram Live.
