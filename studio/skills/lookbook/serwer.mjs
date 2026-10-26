@@ -181,6 +181,22 @@ function startServer(port) {
       } catch { res.writeHead(500); res.end(); }
       return;
     }
+    if (p === '/api/moj-styl') {
+      try {
+        const data = fs.existsSync(STYL_PLIK) ? fs.readFileSync(STYL_PLIK, 'utf8') : 'null';
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(data);
+      } catch { res.writeHead(500); res.end('null'); }
+      return;
+    }
+    if (p === '/api/moj-brand') {
+      try {
+        const data = fs.existsSync(BRAND_PLIK) ? fs.readFileSync(BRAND_PLIK, 'utf8') : 'null';
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(data);
+      } catch { res.writeHead(500); res.end('null'); }
+      return;
+    }
 
     // Video streaming
     const videoM = p.match(/^\/podglad\/(napisy|efekty|gotowe)\/([^/]+)$/);

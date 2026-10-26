@@ -1615,13 +1615,15 @@ async function zapiszMarke() {
 
 async function init() {
   try {
-    const [napisy, efektyGrupy, gotowe, dzwieki, styleLista, hooki] = await Promise.all([
+    const [napisy, efektyGrupy, gotowe, dzwieki, styleLista, hooki, savedBrand, savedStyl] = await Promise.all([
       fetch('/api/napisy').then(r => r.json()),
       fetch('/api/efekty').then(r => r.json()),
       fetch('/api/gotowe').then(r => r.json()),
       fetch('/api/dzwieki').then(r => r.json()).catch(() => []),
       fetch('/api/styl').then(r => r.json()).catch(() => []),
       fetch('/api/hooki').then(r => r.json()).catch(() => []),
+      fetch('/api/moj-brand').then(r => r.json()).catch(() => null),
+      fetch('/api/moj-styl').then(r => r.json()).catch(() => null),
     ]);
 
     const napisyMap = Object.fromEntries(napisy.map(n => [n.id, n]));
@@ -1715,10 +1717,58 @@ async function init() {
     buildFontGrid();
     buildPalety();
 
-    if (napisyMap['biale-pod-broda']) cap = 'biale-pod-broda';
-    if (efektyMap['pop-in']) fx['pop-in'] = [];
-    if (efektyMap['wjazd-z-boku']) fx['wjazd-z-boku'] = [];
-    plotno = PLOTNO_OPTIONS.map(o => ({ id: o.id, kolor: o.kolor, nazwa: o.nazwa }));
+    // Pre-load marka
+    if (savedBrand) {
+      if (savedBrand.czcionki) fonts = { glowna: null, akcent: null, odreczna: null, ...savedBrand.czcionki };
+      if (savedBrand.kolory) kolory = { ...KOLORY_DEFAULT, ...savedBrand.kolory };
+      if (savedBrand.uklad) uklad = { ...UKLAD_DEFAULT, ...savedBrand.uklad };
+      if (savedBrand.plotno?.kolory?.length) {
+        plotno = savedBrand.plotno.kolory.map(p => {
+          const match = PLOTNO_OPTIONS.find(o => o.kolor === p.kolor);
+          return match ? { ...match } : { kolor: p.kolor };
+        });
+      }
+      if (savedBrand.tempo) tempo = savedBrand.tempo;
+      if (savedBrand.zoom) zoom = savedBrand.zoom;
+      if (savedBrand.dzwieki) savedBrand.dzwieki.forEach(d => snd.add(d));
+    }
+
+    // Pre-load efekty i styl
+    if (savedStyl) {
+      if (savedStyl.tryb === 'gotowy') {
+        mode = 'ready';
+        ready = savedStyl.styl || null;
+      } else {
+        mode = 'own';
+        if (savedStyl.napisy && napisyMap[savedStyl.napisy]) cap = savedStyl.napisy;
+        if (savedStyl.hook) hook = savedStyl.hook;
+        if (savedStyl.efekty) {
+          fx = {};
+          for (const [id, val] of Object.entries(savedStyl.efekty)) {
+            if (efektyMap[id]) fx[id] = val;
+          }
+          partsOn = Object.values(fx).some(v => Array.isArray(v) && v.length > 0);
+        }
+        if (savedStyl.styl) styl = savedStyl.styl;
+        if (savedStyl.czcionki) fonts = { glowna: null, akcent: null, odreczna: null, ...savedStyl.czcionki };
+        if (savedStyl.kolory) kolory = { ...kolory, ...savedStyl.kolory };
+        if (savedStyl.uklad) uklad = { ...uklad, ...savedStyl.uklad };
+        if (savedStyl.tempo) tempo = savedStyl.tempo;
+        if (savedStyl.zoom) zoom = savedStyl.zoom;
+        if (savedStyl.dzwieki) savedStyl.dzwieki.forEach(d => snd.add(d));
+      }
+    }
+
+    // Domyślne zaznaczenia tylko gdy brak zapisanego stanu
+    if (!savedStyl && !savedBrand) {
+      if (napisyMap['biale-pod-broda']) cap = 'biale-pod-broda';
+      if (efektyMap['pop-in']) fx['pop-in'] = [];
+      if (efektyMap['wjazd-z-boku']) fx['wjazd-z-boku'] = [];
+    }
+    if (!savedBrand?.plotno && plotno.length === 0) {
+      plotno = PLOTNO_OPTIONS.map(o => ({ id: o.id, kolor: o.kolor, nazwa: o.nazwa }));
+    }
+
     render();
   } catch {
     $('#loading').innerHTML = '<p style="text-align:center;color:var(--muted);padding:40px 16px;max-width:400px;margin:0 auto">Nie można połączyć się z serwerem. Odśwież stronę lub zamknij i otwórz Lookbook ponownie.</p>';
