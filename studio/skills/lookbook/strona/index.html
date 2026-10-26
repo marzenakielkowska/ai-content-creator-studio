@@ -379,6 +379,34 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 .tempo-name{font-size:14px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .tempo-rec{font-size:10px;font-weight:900;background:var(--accent);color:var(--accent-ink);padding:2px 8px;border-radius:99px;letter-spacing:.06em;text-transform:uppercase}
 .tempo-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}
+
+/* Sekcja "Jak to działa" */
+.intro-band{background:var(--band);border-bottom:1.5px solid var(--line)}
+.intro-wrap{padding-block:40px 44px}
+.intro-wrap .eyebrow{margin-bottom:8px}
+.intro-wrap h2{font-size:clamp(28px,4vw,44px);margin-bottom:8px}
+.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+@media(max-width:600px){.intro-grid{grid-template-columns:1fr}}
+.intro-card{background:var(--surface);border:1.5px solid var(--line);border-radius:20px;padding:20px 22px 18px;border-top-width:3px}
+.intro-card-marka{border-top-color:#6C63FF}
+.intro-card-efekty{border-top-color:var(--accent)}
+.intro-card-lbl{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.intro-card-marka .intro-card-lbl{color:#6C63FF}
+.intro-card-efekty .intro-card-lbl{color:var(--accent)}
+.intro-card-title{font-size:19px;font-weight:900;letter-spacing:-.02em;margin-bottom:3px}
+.intro-card-sub{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.4}
+.intro-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.intro-steps li{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:500}
+.isn{width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:800;display:grid;place-items:center;flex-shrink:0}
+.intro-card-marka .isn{background:#6C63FF;color:#fff}
+.intro-card-efekty .isn{background:color-mix(in srgb,var(--accent) 18%,var(--surface));color:var(--accent)}
+.intro-card-note{margin-top:14px;font-size:12px;color:var(--muted);padding:8px 10px;background:var(--bg);border-radius:8px;line-height:1.4}
+.intro-card-note code{font-family:ui-monospace,monospace;font-size:11px;color:var(--accent)}
+.intro-palette{display:flex;gap:7px;margin-top:10px;align-items:center}
+.intro-palette-dot{width:16px;height:16px;border-radius:50%;border:1px solid rgba(0,0,0,.07)}
+.intro-palette-label{font-size:11px;color:var(--muted);margin-left:2px}
+.intro-footer{margin-top:16px;font-size:13.5px;color:var(--muted);padding:12px 16px;background:var(--surface);border:1px solid var(--line);border-radius:12px;line-height:1.5}
+.intro-footer strong{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -386,6 +414,50 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 <div id="loading"><div class="spinner"></div></div>
 
 <div id="app" hidden>
+
+  <div class="intro-band"><div class="wrap intro-wrap">
+    <div class="eyebrow">Zanim zaczniesz</div>
+    <h2>Jak to działa</h2>
+    <p class="lead">Lookbook składa się z dwóch zakładek. Wypełnij obie, a Claude będzie montować każdy Twój film dokładnie tak, jak lubisz.</p>
+    <div class="intro-grid">
+      <div class="intro-card intro-card-marka">
+        <div class="intro-card-lbl">Moja marka</div>
+        <div class="intro-card-title">Ustawiasz raz</div>
+        <div class="intro-card-sub">Zostaje we wszystkich filmach, dopóki nie zmienisz.</div>
+        <ul class="intro-steps">
+          <li><span class="isn">1</span> Czcionki</li>
+          <li><span class="isn">2</span> Kolory</li>
+          <li><span class="isn">3</span> Układ</li>
+          <li><span class="isn">4</span> Tempo cięcia</li>
+          <li><span class="isn">5</span> Zoom</li>
+        </ul>
+        <div class="intro-card-note">Zapisuje do <code>moj-brand.json</code></div>
+        <div class="intro-palette">
+          <span class="intro-palette-dot" style="background:#FDE68A" title="Masełko"></span>
+          <span class="intro-palette-dot" style="background:#C5E3F7" title="Błękit"></span>
+          <span class="intro-palette-dot" style="background:#E8D5F5" title="Lila"></span>
+          <span class="intro-palette-label">palety kolorów</span>
+        </div>
+      </div>
+      <div class="intro-card intro-card-efekty">
+        <div class="intro-card-lbl">Co dodać do tego filmu</div>
+        <div class="intro-card-title">Dobierasz przed każdym filmem</div>
+        <div class="intro-card-sub">Możesz zmieniać przy każdym montażu.</div>
+        <ul class="intro-steps">
+          <li><span class="isn">A</span> Hooki</li>
+          <li><span class="isn">B</span> Napisy</li>
+          <li><span class="isn">C</span> Efekty wizualne</li>
+          <li><span class="isn">D</span> Styl obrazu</li>
+          <li><span class="isn">E</span> Dźwięki</li>
+        </ul>
+        <div class="intro-card-note">Zapisuje do <code>moj-styl.json</code></div>
+      </div>
+    </div>
+    <div class="intro-footer">
+      <strong>Przy montażu:</strong> Claude czyta oba pliki. Brand zawsze wygrywa dla czcionek i kolorów. Efekty dodają animacje i ruch, nie zmieniają identyfikacji wizualnej.
+    </div>
+  </div></div>
+
   <div class="band"><div class="wrap">
     <div class="brand">AI Content Creator Studio</div>
     <span class="pill">Lookbook</span>
