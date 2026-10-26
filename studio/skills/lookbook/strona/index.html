@@ -37,16 +37,10 @@ h3 small{font-size:14px;color:var(--muted);font-weight:600;letter-spacing:0}
 .lead{max-width:62ch;color:var(--muted);font-size:18px;margin:0}
 .eyebrow{color:var(--accent);font-weight:800;font-size:13px;letter-spacing:.13em;text-transform:uppercase}
 
-.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:36px}
-.mode{all:unset;cursor:pointer;background:var(--surface);border:1.5px solid var(--line);border-radius:24px;padding:22px 24px;display:grid;gap:4px}
-.mode b{font-size:22px;letter-spacing:-.02em}
-.mode span{color:var(--muted);font-size:15px}
-.mode[aria-selected="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
-.mode:focus-visible,.card:focus-visible,.chip:focus-visible,.btn:focus-visible,.link:focus-visible,.switch:focus-visible,.snd-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.card:focus-visible,.chip:focus-visible,.btn:focus-visible,.link:focus-visible,.switch:focus-visible,.snd-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 
 section.block{padding-block:56px 8px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px;margin-top:18px}
-.looks .grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
 .card{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:10px;border-radius:24px;padding:12px 12px 16px;border:1.5px solid var(--line);position:relative;min-width:0}
 .card:nth-child(3n+1){background:var(--tint-pink)}
 .card:nth-child(3n+2){background:var(--tint-peach)}
@@ -420,10 +414,6 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
     <span class="pill">Lookbook</span>
     <h1>Wybierz swój styl</h1>
     <p class="lead">Rozgość się, rozejrzyj. Skomponuj animowany styl lub wybierz efekty. Zaznacz to, co do Ciebie pasuje, i kliknij „Zapisz mój styl". Claude zmontuje Twój film w wybranym stylu.</p>
-    <div class="modes" role="tablist" aria-label="Sposób wyboru">
-      <button class="mode" id="m-ready" role="tab" aria-selected="false" aria-controls="sec-ready"><b>Jeden gotowy styl</b><span>Jeden wybór ustala napisy, efekty, tempo i wygląd obrazu.</span></button>
-      <button class="mode" id="m-own" role="tab" aria-selected="true" aria-controls="sec-caps"><b>Skomponuj własny</b><span>Twoje napisy i Twoje efekty. Ty decydujesz, gdzie się pojawiają.</span></button>
-    </div>
   </div></div>
 
   <div class="intro-band"><div class="wrap intro-wrap">
@@ -473,12 +463,6 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
       <button class="lb-tab" id="lt-efekty" data-tab="efekty" aria-selected="false">Co dodać do tego filmu</button>
     </div>
 
-    <section class="block looks" id="sec-ready" hidden>
-      <div class="eyebrow">Gotowe style</div>
-      <h2>Cały look jednym kliknięciem</h2>
-      <p class="lead">Każdy gotowy styl to komplet: napisy, efekty, tempo montażu i wygląd obrazu.</p>
-      <div class="grid" id="g-ready"></div>
-    </section>
 
     <section class="block" id="sec-caps">
       <div class="eyebrow">Krok 1 · Napisy</div>
@@ -769,7 +753,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 </div></div>
 
 <script>
-let mode = 'own', ready = null, cap = null, fx = {}, partsOn = false;
+let cap = null, fx = {}, partsOn = false;
 let snd = new Set(), plotno = [], styl = null, tempo = null, zoom = null;
 let lbTab = 'marka';
 let allFxIds = [];
@@ -1163,16 +1147,6 @@ function card(item, kind, typ, maps) {
   let html = buildFrame(item, typ);
   html += `<div class="title">${item.nazwa}</div>`;
   if (item.opis) html += `<div class="desc">${item.opis}</div>`;
-  if (kind === 'ready' && maps) {
-    const nNazwa = maps.napisy[item.napisy]?.nazwa || item.napisy;
-    const eNazwy = (item.efekty || []).map(id => maps.efekty[id]?.nazwa || id).join(', ');
-    html += `<dl class="layers">
-      <div><dt>Napisy</dt><dd>${nNazwa}</dd></div>
-      <div><dt>Efekty</dt><dd>${eNazwy}</dd></div>
-      <div><dt>Tempo</dt><dd>${item.tempo}</dd></div>
-      <div><dt>Obraz</dt><dd>${item.obraz}</dd></div>
-    </dl>`;
-  }
   if (item.najlepsze_do) html += `<div class="best"><b>Najlepsze do</b>${item.najlepsze_do}</div>`;
   el.innerHTML = html;
 
@@ -1304,12 +1278,8 @@ function sndCard(item) {
 }
 
 function render() {
-  $('#m-ready').setAttribute('aria-selected', mode === 'ready');
-  $('#m-own').setAttribute('aria-selected', mode === 'own');
-  $('#sec-ready').hidden = mode !== 'ready';
-  const isMarka = mode === 'own' && lbTab === 'marka';
-  const isEfekty = mode === 'own' && lbTab === 'efekty';
-  $('#lb-tabs').hidden = mode !== 'own';
+  const isMarka = lbTab === 'marka';
+  const isEfekty = lbTab === 'efekty';
   $('#lt-marka')?.setAttribute('aria-selected', lbTab === 'marka');
   $('#lt-efekty')?.setAttribute('aria-selected', lbTab === 'efekty');
   $('#sec-caps').hidden = !isEfekty;
@@ -1431,11 +1401,7 @@ function render() {
   };
 
   const hasMarkaData = Object.values(fonts).some(Boolean) || hasCustomKolory() || hasCustomUklad() || plotno.length > 0 || tempo !== null || zoom !== null || snd.size > 0;
-  if (mode === 'ready' && ready) {
-    const el = $(`#ready-${ready}`);
-    addChip((el?.querySelector('.title')?.textContent || ready) + ' · gotowy styl', 'sec-ready', false, () => { ready = null; });
-    ok = true;
-  } else if (mode === 'own' && lbTab === 'marka') {
+  if (lbTab === 'marka') {
     const nFonts = Object.values(fonts).filter(Boolean).length;
     if (nFonts) addChip(nFonts + (nFonts === 1 ? ' czcionka' : nFonts < 5 ? ' czcionki' : ' czcionek'), 'sec-czcionki', false, () => { fonts = { glowna: null, akcent: null, odreczna: null }; });
     if (hasCustomKolory()) {
@@ -1449,7 +1415,7 @@ function render() {
     if (nSnd) addChip(nSnd + sndPlural(nSnd), 'sec-snd', false, () => { snd = new Set(); });
     if (!hasMarkaData) addChip('Nic jeszcze nie wybrano', null, true);
     ok = hasMarkaData;
-  } else if (mode === 'own' && lbTab === 'efekty') {
+  } else if (lbTab === 'efekty') {
     if (cap) {
       const el = $(`#cap-${cap}`);
       addChip((el?.querySelector('.title')?.textContent || cap) + ' · napisy', 'sec-caps', false, () => { cap = null; });
@@ -1491,9 +1457,7 @@ function clearAll() {
 
 async function zapisz() {
   let out;
-  if (mode === 'ready') {
-    out = { tryb: 'gotowy', styl: ready };
-  } else {
+  {
     const efekty = {};
     for (const [k, v] of Object.entries(fx)) {
       if (v !== null && typeof v === 'object' && !Array.isArray(v)) {
@@ -1631,7 +1595,6 @@ async function init() {
       filterBar.appendChild(btn);
     });
 
-    gotowe.forEach(s => $('#g-ready').appendChild(card(s, 'ready', 'gotowe', maps)));
 
     dzwieki.forEach(d => $('#g-snd').appendChild(sndCard(d)));
 
@@ -1668,8 +1631,7 @@ async function init() {
   }
 }
 
-$('#m-ready').onclick = () => { mode = 'ready'; render(); };
-$('#m-own').onclick = () => { mode = 'own'; render(); };
+
 $('#parts').onclick = () => { partsOn = !partsOn; render(); };
 $('#all').onclick = () => {
   const allOn = allFxIds.every(id => fx[id] !== undefined);
