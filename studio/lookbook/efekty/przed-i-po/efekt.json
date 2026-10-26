@@ -16,6 +16,6 @@
   "przepis": {
     "typ": "hyperframes",
     "projekt": "hf/",
-    "instrukcja": "PRZEPIS.md"
+    "opis_efektu": "PRZEPIS.md"
   }
 }

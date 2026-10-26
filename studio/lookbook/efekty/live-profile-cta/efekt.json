@@ -1,6 +1,6 @@
 {
   "id": "live-profile-cta",
-  "kategoria": "akcent-wizualny",
+  "kategoria": "elementy-wizualne",
   "typ": "standalone",
   "nazwa": "Live profil CTA",
   "opis": "Animowany efekt 7.65s: faza 1 — ciemny ekran Instagram Live z komentarzami i pływającymi serduszkami (3 komentarze piszą się i wysyłają co 1.5s, serduszka unoszą się po lewej). Faza 2 — przełączenie do profilu kursantki w ramce iPhone, przycisk Obserwuj tapuje się z efektem pulse. Idealne CTA na koniec rolki.",
@@ -16,6 +16,6 @@
   "przepis": {
     "typ": "hyperframes",
     "projekt": "hf/",
-    "instrukcja": "PRZEPIS.md"
+    "opis_efektu": "PRZEPIS.md"
   }
 }

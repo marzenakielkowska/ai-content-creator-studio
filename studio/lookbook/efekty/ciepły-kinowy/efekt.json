@@ -15,6 +15,6 @@
   "przepis": {
     "typ": "ffmpeg-grade",
     "projekt": null,
-    "instrukcja": "PRZEPIS.md"
+    "opis_efektu": "PRZEPIS.md"
   }
 }
