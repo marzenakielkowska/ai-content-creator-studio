@@ -147,8 +147,9 @@ Domyślne wartości: Mac `~/Downloads` i `~/ai-studio-projekty`; Windows `C:/Use
 ### Krok 5. Test
 
 Uruchom `test`.
-- `STATUS test OK`: powiedz, że wszystko działa, i co dalej (w tej wersji Studio montaż jedną komendą dopiero
-  powstaje; zapowiedz go jednym zdaniem).
+- `STATUS test OK`: powiedz, że wszystko działa, i podaj kolejne kroki jednym akapitem:
+  1. Wpisz `/studio:lookbook` — otworzysz stronę, na której wybierasz efekty i styl montażu. Zaznaczasz co chcesz i zapisujesz.
+  2. Wrzuć swoje wideo do czatu i wpisz `/studio:montaz` — Claude zmontuje gotową rolkę w wybranym stylu.
 - `STATUS test BLAD <lista>`: przejdź do sekcji poniżej.
 
 Po udanej instalacji skrypt zapisuje w folderze Studio plik `narzedzia.json` ze ścieżkami do narzędzi. Pozostałe

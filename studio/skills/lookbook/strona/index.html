@@ -755,10 +755,34 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 </div>
 
 <div id="zapisano" hidden>
-  <div class="band"><div class="wrap" style="padding-block:72px;text-align:center">
-    <div class="eyebrow">Gotowe</div>
-    <h2 style="margin:12px 0 16px">Twój styl zapisany&nbsp;✓</h2>
-    <p class="lead" style="margin:0 auto">Claude zmontuje każdy Twój film w wybranym stylu.<br>Możesz zamknąć to okno.</p>
+  <div class="band"><div class="wrap" style="padding-block:64px 80px;max-width:560px">
+    <div class="eyebrow" style="text-align:center">Gotowe</div>
+    <h2 style="margin:12px 0 20px;text-align:center">Twój styl zapisany&nbsp;✓</h2>
+    <p class="lead" style="text-align:center;margin:0 0 40px">Claude pamięta Twój wybór. Za każdym razem gdy wrzucisz wideo, zmontuje je dokładnie w tym stylu.</p>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;gap:16px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0">1</div>
+        <div>
+          <div style="font-weight:800;font-size:16px;margin-bottom:4px">Zamknij to okno</div>
+          <div style="color:var(--muted);font-size:14px;line-height:1.5">Wróć do Claude Code — do tego okna, gdzie rozmawiasz z Claudem.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0">2</div>
+        <div>
+          <div style="font-weight:800;font-size:16px;margin-bottom:4px">Wrzuć swoje wideo</div>
+          <div style="color:var(--muted);font-size:14px;line-height:1.5">Przeciągnij plik wideo do okna czatu lub podaj ścieżkę do nagrania.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0">3</div>
+        <div>
+          <div style="font-weight:800;font-size:16px;margin-bottom:4px">Wpisz <code style="background:var(--line);padding:2px 8px;border-radius:6px;font-size:14px">/studio:montaz</code></div>
+          <div style="color:var(--muted);font-size:14px;line-height:1.5">Claude weźmie Twoje wideo i efekty, które właśnie wybrałaś, i zmontuje gotową rolkę.</div>
+        </div>
+      </div>
+    </div>
+    <p style="margin:32px 0 0;text-align:center;font-size:13px;color:var(--muted)">Chcesz zmienić wybór? Wróć tu wpisując <strong>/studio:lookbook</strong></p>
   </div></div>
 </div>
 
