@@ -1,0 +1,19 @@
+{
+  "id": "zoom-akcentujacy",
+  "kategoria": "ruch",
+  "typ": "nakładkowy",
+  "nazwa": "Zoom akcentujący",
+  "opis": "Szybkie wbicie 115–120% na krótkich, mocnych zdaniach. Powolne wejście z cofnięciem na dłuższych. Zawsze centruje twarz. Obraz żyje razem z głosem.",
+  "najlepsze_do": "Mówione podkreślenia, zmiana rytmu, emocjonalne momenty, eksperckie stwierdzenia",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#1a1520;display:flex;align-items:center;justify-content:center\"><div style=\"position:relative\"><div style=\"width:32px;height:58px;background:#2a2535;border-radius:8px 8px 4px 4px;border:1.5px solid rgba(255,255,255,.2)\"></div><div style=\"position:absolute;inset:-8px;border:1.5px dashed rgba(255,255,255,.15);border-radius:12px\"></div><div style=\"position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:5px;color:rgba(255,255,255,.4);white-space:nowrap\">→ 115% →</div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "Two zoom behaviors tied to sentence length and emphasis: (1) Short emphasis lines (under 4 words, spoken with force): quick punch-in zoom from 1.0 to 1.15–1.20 scale in 100ms, holds for the line's duration, then snaps back to 1.0 on the cut. (2) Longer lines (full sentences): slow push-in from 1.0 to 1.08 over the sentence duration, then eases back to 1.0 by the end of the sentence or on the cut. Both behaviors: always re-center on the face after scaling — never let the face drift to the edge. Never zoom past 1.25. Apply selectively — not on every line, only on lines that deserve emphasis based on the script."
+  }
+}

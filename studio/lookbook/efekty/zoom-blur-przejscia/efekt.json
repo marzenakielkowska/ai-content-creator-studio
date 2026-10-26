@@ -1,0 +1,19 @@
+{
+  "id": "zoom-blur-przejscia",
+  "kategoria": "ruch",
+  "typ": "nakładkowy",
+  "nazwa": "Zoom-blur przejścia",
+  "opis": "Każde cięcie do wstawki wchodzi przez szybki zoom z rozmyciem ruchu. Wypływa ciepłym rozbłyskiem światła. Miękkie, filmowe przejścia.",
+  "najlepsze_do": "Wstawki b-roll, przejścia między scenami, klimatyczne rolki lifestylowe",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#1a1208;display:flex;align-items:center;justify-content:center;overflow:hidden\"><div style=\"position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(255,200,100,.18),transparent 70%)\"></div><div style=\"width:60%;height:60%;background:rgba(255,255,255,.06);border-radius:8px;display:flex;align-items:center;justify-content:center;filter:blur(1.5px)\"><div style=\"font-size:5px;color:rgba(255,255,255,.3)\">b-roll</div></div><div style=\"position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(255,180,60,.08) 100%)\"></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki + klipy b-roll lub wstawki",
+    "narzedzia": ["hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "On every cut into a cutaway or b-roll clip: apply a fast zoom-blur transition. Out-transition: scale from 1.0 to 1.3 while adding radial motion blur (blur strength 8–12px), duration 150ms. In-transition on the cutaway: reverse — starts scaled 1.3 with blur, settles to 1.0 in 150ms. Simultaneously add a soft warm light leak: a warm orange-white radial gradient overlay that flashes at 30–40% opacity at the cut point and fades to 0 in 200ms. Apply this transition on BOTH cuts — into the cutaway and back to the talking head. The talking head segments themselves have no zoom or blur."
+  }
+}
