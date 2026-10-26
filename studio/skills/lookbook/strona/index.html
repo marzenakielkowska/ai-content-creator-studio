@@ -9,18 +9,18 @@
 :root{
   --bg:#FDF9F5; --band:#FAEFEC; --surface:#FFFCF9; --ink:#33292A; --muted:#6E5F5C;
   --accent:#A9532D; --accent-ink:#FFFFFF; --rose:#D4A895; --line:#EBD9D2;
-  --tint-pink:#FBEFEC; --tint-peach:#FDF3EC; --tint-blue:#EEF6FA;
+  --tint-pink:#FEF8D8; --tint-peach:#EBF6FF; --tint-blue:#F3EBFF;
   --frame-a:#8A6B60; --frame-b:#C9A493; --frame-c:#5E4842;
   --font:"Nunito",ui-rounded,"Segoe UI",system-ui,sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#1F1918; --band:#2A211F; --surface:#2A2220; --ink:#F6ECE6; --muted:#C2B1AA;
   --accent:#E08A5E; --accent-ink:#1F1918; --rose:#C99583; --line:#43352F;
-  --tint-pink:#33262A; --tint-peach:#352A24; --tint-blue:#232C31; color-scheme:dark}}
+  --tint-pink:#2A2900; --tint-peach:#0F2030; --tint-blue:#21183A; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#1F1918; --band:#2A211F; --surface:#2A2220; --ink:#F6ECE6; --muted:#C2B1AA;
   --accent:#E08A5E; --accent-ink:#1F1918; --rose:#C99583; --line:#43352F;
-  --tint-pink:#33262A; --tint-peach:#352A24; --tint-blue:#232C31; color-scheme:dark}
+  --tint-pink:#2A2900; --tint-peach:#0F2030; --tint-blue:#21183A; color-scheme:dark}
 
 [hidden]{display:none!important}
 *{box-sizing:border-box}
@@ -389,7 +389,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
   <div class="band"><div class="wrap">
     <div class="brand">AI Content Creator Studio</div>
     <span class="pill">Lookbook</span>
-    <h1>Wybierz swój styl.</h1>
+    <h1>Wybierz swój styl</h1>
     <p class="lead">Najedź na kartę, żeby zobaczyć animowany wzór. Zaznacz to, co do Ciebie pasuje, i kliknij „Zapisz mój styl". Claude zmontuje każdy Twój film w tym stylu.</p>
     <div class="modes" role="tablist" aria-label="Sposób wyboru">
       <button class="mode" id="m-ready" role="tab" aria-selected="false" aria-controls="sec-ready"><b>Jeden gotowy styl</b><span>Jeden wybór ustala napisy, efekty, tempo i wygląd obrazu.</span></button>
@@ -405,21 +405,21 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 
     <section class="block looks" id="sec-ready" hidden>
       <div class="eyebrow">Gotowe style</div>
-      <h2>Cały look jednym kliknięciem.</h2>
+      <h2>Cały look jednym kliknięciem</h2>
       <p class="lead">Każdy gotowy styl to komplet: napisy, efekty, tempo montażu i wygląd obrazu.</p>
       <div class="grid" id="g-ready"></div>
     </section>
 
     <section class="block" id="sec-caps">
       <div class="eyebrow">Krok 1 · Napisy</div>
-      <h2>Twoje napisy.</h2>
+      <h2>Twoje napisy</h2>
       <p class="lead">Wybierz jeden styl napisów do tego, co mówisz. Pod każdym wzorem znajdziesz podpowiedź, do jakich treści pasuje najlepiej.</p>
       <div class="grid" id="g-caps"></div>
     </section>
 
     <section class="block" id="sec-czcionki">
       <div class="eyebrow">Krok 1 · Czcionki</div>
-      <h2>Twoje czcionki.</h2>
+      <h2>Twoje czcionki</h2>
       <p class="lead">Skomponuj zestaw do 3 krojów. Główna prowadzi napisy mówione. Akcent wyróżnia kluczowe słowo. Odręczna daje filmowi charakter.</p>
       <div class="font-roles-bar" id="font-roles-bar">
         <button class="font-role-tab" id="ftab-glowna" data-role="glowna" aria-pressed="true"><span class="frtab-dot"></span>Główna<small>napisy mówione</small></button>
@@ -443,7 +443,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 
     <section class="block" id="sec-kolory">
       <div class="eyebrow">Krok 2 · Kolory</div>
-      <h2>Twoje kolory.</h2>
+      <h2>Twoje kolory</h2>
       <p class="lead">Wybierz paletę lub ustaw każdy kolor osobno. Podgląd odświeża się na żywo.</p>
       <div class="kolor-layout">
         <div class="kolor-preview-col">
@@ -520,7 +520,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 
     <section class="block" id="sec-uklad">
       <div class="eyebrow">Krok 3 · Układ</div>
-      <h2>Twój układ.</h2>
+      <h2>Twój układ</h2>
       <p class="lead">Ustaw pozycję, rozmiar i styl tekstu napisów i nagłówka. Podgląd odświeża się na żywo.</p>
       <div class="uklad-layout">
         <div class="uklad-preview-col">
@@ -536,7 +536,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
           <div class="suwak-group">
             <div class="suwak-row">
               <div class="suwak-header">
-                <span class="suwak-name">Napisy — pozycja</span>
+                <span class="suwak-name">Napisy: pozycja</span>
                 <span class="suwak-val" id="suwak-napisy-val">25%</span>
               </div>
               <p class="suwak-desc">odległość napisów od dołu ekranu</p>
@@ -548,7 +548,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
             </div>
             <div class="suwak-row">
               <div class="suwak-header">
-                <span class="suwak-name">Nagłówek — pozycja</span>
+                <span class="suwak-name">Nagłówek: pozycja</span>
                 <span class="suwak-val" id="suwak-naglowek-val">18%</span>
               </div>
               <p class="suwak-desc">odległość tytułu od góry ekranu</p>
@@ -560,7 +560,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
             </div>
             <div class="suwak-row">
               <div class="suwak-header">
-                <span class="suwak-name">Napisy — rozmiar</span>
+                <span class="suwak-name">Napisy: rozmiar</span>
                 <span class="suwak-val" id="suwak-napisy-rozm-val">100%</span>
               </div>
               <p class="suwak-desc">skala czcionki napisów względem domyślnej</p>
@@ -572,7 +572,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
             </div>
             <div class="suwak-row">
               <div class="suwak-header">
-                <span class="suwak-name">Nagłówek — rozmiar</span>
+                <span class="suwak-name">Nagłówek: rozmiar</span>
                 <span class="suwak-val" id="suwak-naglowek-rozm-val">100%</span>
               </div>
               <p class="suwak-desc">skala czcionki nagłówka względem domyślnej</p>
@@ -589,8 +589,8 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 
     <section class="block" id="sec-plotno">
       <div class="eyebrow">Krok 4 · Płótno</div>
-      <h2>Twoje płótno.</h2>
-      <p class="lead">Jeśli nagrywasz bez twarzy albo chcesz slajdy z czystym tłem — wybierz kolory płótna. Możesz wybrać do 3. Claude użyje ich tam, gdzie pasują lub gdzie powiesz.</p>
+      <h2>Twoje płótno</h2>
+      <p class="lead">Jeśli nagrywasz bez twarzy albo chcesz slajdy z czystym tłem, wybierz kolory płótna. Możesz wybrać do 3. Claude użyje ich tam, gdzie pasują lub gdzie powiesz.</p>
       <div class="plotno-layout">
         <div class="plotno-preview-col">
           <div class="plotno-frames-row">
@@ -643,13 +643,13 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
     <section class="block" id="sec-zoom">
       <div class="eyebrow">Krok 6 · Zoom</div>
       <h2>Czy kamera ma się poruszać?</h2>
-      <p class="lead">Zoom to ruch wewnątrz klipu — przybliżanie lub oddalanie — niezależnie od cięć. Możesz go pominąć albo dodać subtelnie lub dynamicznie.</p>
+      <p class="lead">Zoom to ruch wewnątrz klipu (przybliżanie lub oddalanie), niezależnie od cięć. Możesz go pominąć albo dodać subtelnie lub dynamicznie.</p>
       <div class="tempo-cards" id="g-zoom"></div>
     </section>
 
     <section class="block" id="sec-fx">
       <div class="eyebrow">Krok 2 · Efekty</div>
-      <h2>Twoje efekty.</h2>
+      <h2>Twoje efekty</h2>
       <p class="lead">Zaznacz tyle, ile chcesz. Efekty na rolce Claude doda tam, gdzie pasują do treści. Efekty samodzielne (jak Przed i po) powstaną z osobnego nagrania.</p>
       <div class="fxbar">
         <button class="switch" id="parts" role="switch" aria-checked="false">
@@ -664,15 +664,15 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 
     <section class="block" id="sec-snd">
       <div class="eyebrow">Krok 7 · Dźwięki</div>
-      <h2>Twoje dźwięki.</h2>
-      <p class="lead">Zaznacz dźwięki, których lubisz używać. Claude doda je tam, gdzie pasują do ruchu i efektów. Bez zaznaczenia — Claude zdecyduje sam.</p>
+      <h2>Twoje dźwięki</h2>
+      <p class="lead">Zaznacz dźwięki, których lubisz używać. Claude doda je tam, gdzie pasują do ruchu i efektów. Bez zaznaczenia Claude zdecyduje sam.</p>
       <div class="grid snd-grid" id="g-snd"></div>
     </section>
 
     <section class="block" id="sec-styl">
       <div class="eyebrow">Krok 3 · Styl wizualny</div>
-      <h2>Wygląd obrazu.</h2>
-      <p class="lead">Wybierz jeden styl kolorystyczny dla całego filmu. Ciepłe tony, wysoki kontrast albo brak filtra — jedno kliknięcie ustala nastrój całej rolki.</p>
+      <h2>Wygląd obrazu</h2>
+      <p class="lead">Wybierz jeden styl kolorystyczny dla całego filmu. Ciepłe tony, wysoki kontrast albo brak filtra. Jedno kliknięcie ustala nastrój całej rolki.</p>
       <div id="g-styl" style="display:grid;gap:12px;margin-top:18px"></div>
     </section>
   </div>
@@ -739,7 +739,7 @@ function renderFontsMini(containerId) {
   if (!hasAny) {
     const em = document.createElement('div');
     em.className = 'fonts-mini-empty';
-    em.textContent = 'Brak wybranych czcionek — przejdź do Kroku 2.';
+    em.textContent = 'Brak wybranych czcionek. Przejdź do Kroku 2.';
     c.appendChild(em);
     return;
   }
@@ -786,9 +786,9 @@ const KOLORY_PRESET = [
   '#06D6A0','#00F5D4','#1A1A1A','#4A3F3C','#8B7355','#C9A493',
 ];
 const PLOTNO_OPTIONS = [
-  { id:'maselko', nazwa:'Masełko', kolor:'#FDE68A', opis:'Ciepłe żółte tło — na nim biały tekst i karty z białą obwódką. Twoje rolki będą od razu rozpoznawalne.' },
+  { id:'maselko', nazwa:'Masełko', kolor:'#FDE68A', opis:'Ciepłe żółte tło, biały tekst i karty z białą obwódką. Twoje rolki będą od razu rozpoznawalne.' },
   { id:'blekit', nazwa:'Błękit', kolor:'#C5E3F7', opis:'Pastelowe niebo w tle, naklejki, które przyciągają oko. Lekko i z humorem.' },
-  { id:'lila', nazwa:'Lila', kolor:'#E8D5F5', opis:'Miękki lawendowy — spokojny, nowoczesny. Działa na treści lifestyle, wellness i edukacji.' },
+  { id:'lila', nazwa:'Lila', kolor:'#E8D5F5', opis:'Miękki lawendowy, spokojny i nowoczesny. Działa na treści lifestyle, wellness i edukacji.' },
 ];
 function updatePlotnoPreview() {
   const frame = $('#pp-frame-1');
@@ -806,7 +806,7 @@ function buildPlotno() {
   updatePlotnoPreview();
   const hint = document.createElement('p');
   hint.className = 'plotno-hint';
-  hint.textContent = `Zaznaczone: ${plotno.length} z 3 — możesz wybrać każde, odhaczyć lub zastąpić własnym`;
+  hint.textContent = `Zaznaczone: ${plotno.length} z 3. Możesz wybrać każde, odhaczyć lub zastąpić własnym`;
   g.appendChild(hint);
   PLOTNO_OPTIONS.forEach(opt => {
     const active = plotno.some(p => p.id === opt.id);
@@ -862,7 +862,7 @@ function buildTempo() {
 }
 const ZOOM_OPTIONS = [
   { id:'bez',       nazwa:'Bez zooma',   czas:'brak',   opis:'Kamera stoi w miejscu. Spokojne nagrania, wywiady, dokumentalne podejście.' },
-  { id:'subtelny',  nazwa:'Subtelny',    czas:'~15 s',  opis:'Delikatne przybliżanie lub oddalanie co około 15 sekund. Dodaje głębi bez rozpraszania — dobre do tutoriali i lifestyle.', rec:true },
+  { id:'subtelny',  nazwa:'Subtelny',    czas:'~15 s',  opis:'Delikatne przybliżanie lub oddalanie co około 15 sekund. Dodaje głębi bez rozpraszania, dobre do tutoriali i lifestyle.', rec:true },
   { id:'dynamiczny',nazwa:'Dynamiczny',  czas:'~5 s',   opis:'Wyraźne zmiany skali co około 5 sekund. Energetyczne rolki, sport, motywacja.' },
 ];
 function buildZoom() {
