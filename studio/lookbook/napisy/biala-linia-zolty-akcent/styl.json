@@ -1,0 +1,23 @@
+{
+  "id": "biala-linia-zolty-akcent",
+  "nazwa": "Biała linia, żółty akcent",
+  "opis": "Najpierw mała biała linia, potem kluczowe słowa wyjeżdżają większe i żółte. Całość znika z rozmyciem.",
+  "najlepsze_do": "Dramatyczne puenty, punkty kulminacyjne, mocne zakończenia myśli",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;bottom:22%;left:0;right:0;text-align:center;z-index:1\"><div style=\"color:rgba(255,255,255,.8);font-size:7px;font-weight:500\">bo najważniejsze jest</div><div style=\"color:#FDE047;font-size:14px;font-weight:900;margin-top:3px;letter-spacing:-.02em\">PIERWSZE 3 SEK.</div></div>",
+  "przepis": {
+    "czcionka": "Nunito",
+    "grubosc_linia": 400,
+    "grubosc_akcent": 900,
+    "rozmiar_vw_linia": 4.0,
+    "rozmiar_vw_akcent": 7.0,
+    "kolor_linia": "rgba(255,255,255,0.8)",
+    "kolor_akcent": "#FDE047",
+    "polozenie": "dolne-centrum",
+    "animacja_wejscie": "fade",
+    "animacja_wyjscie": "blur-out",
+    "czas_trwania_s": 0.2,
+    "opis_efektu": "Small lowercase white line, then punch words blur in underneath, bigger and in yellow. Whole caption blurs out as it leaves. Two-part caption: setup line first, then the payoff in yellow."
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "slowo-w-kapsulce",
+  "nazwa": "Słowo w kapsułce",
+  "opis": "Krótka fraza, a jedno kluczowe słowo jest w białej zaokrąglonej kapsułce. Wyraźnie i czysto.",
+  "najlepsze_do": "Recenzje, listy, treści z wyraźnymi punktami",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;bottom:18%;left:0;right:0;text-align:center;z-index:1\"><span style=\"color:#fff;font-size:9px;font-weight:600\">zrób to </span><span style=\"background:#fff;color:#222;font-size:8px;font-weight:800;border-radius:20px;padding:1px 7px\">teraz</span></div>",
+  "przepis": {
+    "czcionka": "Nunito",
+    "grubosc": 700,
+    "rozmiar_vw": 5.0,
+    "kolor": "#FFFFFF",
+    "kolor_kapsulki_tlo": "#FFFFFF",
+    "kolor_kapsulki_tekst": "#222222",
+    "polozenie": "dolne-centrum",
+    "slowa_naraz": 4,
+    "animacja": "fade-up",
+    "czas_trwania_s": 0.15,
+    "opis_efektu": "Short phrases, words pop as spoken, one keyword in a white pill/capsule shape. Wraps to two lines inside the TikTok safe zone, moves off products, logos and screens."
+  }
+}

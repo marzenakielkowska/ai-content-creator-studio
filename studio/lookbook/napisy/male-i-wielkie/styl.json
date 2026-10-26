@@ -1,0 +1,22 @@
+{
+  "id": "male-i-wielkie",
+  "nazwa": "Małe i wielkie",
+  "opis": "Większość słów małych i cichych, ale jedno kluczowe słowo wyskakuje duże w kolorze akcentu.",
+  "najlepsze_do": "Mocne tezy, kontrastu, punkty kulminacyjne",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;bottom:16%;left:0;right:0;text-align:center;z-index:1\"><div style=\"color:rgba(255,255,255,.75);font-size:7px;font-weight:500;letter-spacing:.02em\">to jest naprawdę</div><div style=\"color:#FDE047;font-size:18px;font-weight:900;letter-spacing:-.02em;margin-top:1px\">WAŻNE</div></div>",
+  "przepis": {
+    "czcionka": "Nunito",
+    "grubosc_male": 500,
+    "grubosc_duze": 900,
+    "rozmiar_vw_male": 4.5,
+    "rozmiar_vw_duze": 9.0,
+    "kolor_male": "rgba(255,255,255,0.75)",
+    "kolor_duze": "#FDE047",
+    "polozenie": "dolne-centrum",
+    "animacja": "fade-up",
+    "czas_trwania_s": 0.15,
+    "opis_efektu": "Small lowercase white words, then one big bold keyword in the accent colour (yellow). Most lines stay small; only the key word per phrase is big. Placed at bottom center, never over the face."
+  }
+}

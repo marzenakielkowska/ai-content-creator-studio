@@ -1,0 +1,22 @@
+{
+  "id": "frazy-z-zoltym-slowem",
+  "nazwa": "Frazy z żółtym słowem",
+  "opis": "Zdania pojawiają się w miarę mówienia. Jedno słowo w każdej frazie świeci się na żółto.",
+  "najlepsze_do": "Opowieści, poradniki, treści edukacyjne",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;bottom:18%;left:0;right:0;text-align:center;z-index:1\"><span style=\"color:#fff;font-size:9px;font-weight:600\">to jest</span><span style=\"color:#FDE047;font-size:9px;font-weight:900;text-shadow:0 0 8px rgba(253,224,71,.6)\"> twój moment</span></div>",
+  "przepis": {
+    "czcionka": "Nunito",
+    "grubosc": 600,
+    "rozmiar_vw": 5.0,
+    "kolor": "#FFFFFF",
+    "kolor_kluczowego": "#FDE047",
+    "cien_kluczowego": "0 0 10px rgba(253,224,71,.7)",
+    "polozenie": "dolne-centrum",
+    "slowa_naraz": 4,
+    "animacja": "fade-up",
+    "czas_trwania_s": 0.15,
+    "opis_efektu": "Hand-written phrases in sentence case, words reveal as spoken, one glowing yellow keyword per phrase. Keyword is bold and has a soft yellow glow."
+  }
+}

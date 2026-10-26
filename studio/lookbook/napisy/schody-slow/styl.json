@@ -1,0 +1,23 @@
+{
+  "id": "schody-slow",
+  "nazwa": "Schody słów",
+  "opis": "Słowa lądują jedno po drugim i ustawiają się schodkowo po przekątnej. Kluczowe słowo duże i z podkreśleniem.",
+  "najlepsze_do": "Kreatywne treści, moda, lifestyle, oryginalne opowieści",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;top:18%;left:12%;z-index:1;line-height:1.5\"><div style=\"color:#fff;font-size:8px;font-weight:800;margin-left:0\">to</div><div style=\"color:#fff;font-size:8px;font-weight:800;margin-left:8px\">jest</div><div style=\"color:#B8E4F9;font-size:14px;font-style:italic;font-weight:700;margin-left:16px;border-bottom:1.5px solid #B8E4F9;padding-bottom:1px\">ważne</div><div style=\"color:#fff;font-size:8px;font-weight:800;margin-left:8px\">tak</div><div style=\"color:#fff;font-size:8px;font-weight:800;margin-left:0\">naprawdę</div></div>",
+  "przepis": {
+    "czcionka_male": "Nunito",
+    "czcionka_kluczowe": "serif italic",
+    "grubosc_male": 800,
+    "grubosc_kluczowe": 700,
+    "rozmiar_vw_male": 4.5,
+    "rozmiar_vw_kluczowe": 7.0,
+    "kolor_male": "#FFFFFF",
+    "kolor_kluczowe": "#B8E4F9",
+    "uklad": "schodkowy-przekatny",
+    "linie": "3-5",
+    "animacja": "land-one-by-one",
+    "opis_efektu": "Words land one by one and step diagonally down the open space like stairs, 3 to 5 lines, then clear for the next phrase. Tight white bold sans for the small words, a big ice-tinted serif italic for the keyword with an underline that draws in. Placed wherever the frame is empty, never on the face."
+  }
+}

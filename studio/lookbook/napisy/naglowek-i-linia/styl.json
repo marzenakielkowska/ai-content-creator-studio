@@ -1,9 +1,9 @@
 {
   "id": "naglowek-i-linia",
-  "nazwa": "Nagłówek + linia",
-  "opis": "Mocny nagłówek i delikatny podpis.",
-  "najlepsze_do": "Listy, poradniki krok po kroku",
-  "status": "ukryty",
+  "nazwa": "Editorial w dwóch liniach",
+  "opis": "Mała linia odstępów nad dużym słowem z szeryfem. Drogo i redakcyjnie.",
+  "najlepsze_do": "Profesjonalne treści, finanse, edukacja, lifestyle premium",
+  "status": "gotowy",
   "nowosc": false,
   "podglad_html": "<div class=\"cap c5\"><b>3 kroki</b><small>do pierwszej rolki</small></div>",
   "przepis": {
