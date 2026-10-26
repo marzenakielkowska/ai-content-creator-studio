@@ -22,10 +22,15 @@ Gdy plik istnieje, doczytaj szczegóły z lookbooka:
 - **`hook`** — jeśli pole istnieje, odczytaj `studio/lookbook/hooki/{hook}/hook.json`. Pole `przepis.opis_efektu` to opis efektu dla pierwszych 1–3 sekund (po angielsku, dla Ciebie). Wdróż go dokładnie w HyperFrames na klatce 0.
 - **`napisy`** — jeśli pole istnieje i nie jest `"bez-napisow"`, odczytaj `studio/lookbook/napisy/{napisy}/styl.json`. Pole `przepis` zawiera parametry (czcionka, grubość, rozmiar, kolor, animacja, pozycja), a `przepis.opis_efektu` (jeśli jest) opisuje zachowanie. Zastosuj te parametry do każdej klatki napisów.
 - **`efekty`** — klucze to foldery w `studio/lookbook/efekty/`. Każdy efekt ma `przepis` w `efekt.json` lub `PRZEPIS.md` w swoim folderze.
+- **`styl`** — jeśli pole istnieje, odczytaj `studio/lookbook/styl/{styl}/styl.json`. Pole `przepis.typ` określa jak zastosować:
+  - `"brak"` → nie rób żadnej korekcji koloru
+  - `"media-treatment"` → zastosuj przez `npx hyperframes media-treatment --preset {przepis.grading.preset}` z parametrami z `przepis.grading.details` (np. `--vignette 0.25`)
+
+**Pierwszeństwo pól:** `moj-styl.json` ma pierwszeństwo nad `moj-brand.json` dla tych samych pól (`czcionki`, `kolory`, `uklad`, `tempo`, `zoom`, `dzwieki`). Marka to baza — styl konkretnego filmu może ją nadpisać.
 
 ### Marka kursantki
 
-Sprawdź, czy istnieje plik `~/.ai-content-creator-studio/moj-brand.json`. Jeśli tak — odczytaj go i zastosuj wszystkie zawarte pola przy montażu. Jeśli pliku nie ma, nie wspominaj o tym.
+Sprawdź, czy istnieje plik `~/.ai-content-creator-studio/moj-brand.json`. Jeśli tak — odczytaj go i zastosuj jako bazę dla całego montażu. Wartości z `moj-styl.json` dla tych samych pól mają pierwszeństwo. Jeśli pliku nie ma, nie wspominaj o tym.
 
 **`czcionki`** — klucze `glowna`, `akcent`, `odreczna`. Wartość to ID czcionki; odwzorowanie ID → CSS:
 
