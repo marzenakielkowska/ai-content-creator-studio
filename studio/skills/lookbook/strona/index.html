@@ -415,6 +415,17 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 
 <div id="app" hidden>
 
+  <div class="band"><div class="wrap">
+    <div class="brand">AI Content Creator Studio</div>
+    <span class="pill">Lookbook</span>
+    <h1>Wybierz swój styl</h1>
+    <p class="lead">Rozgość się, rozejrzyj. Skomponuj animowany styl lub wybierz efekty. Zaznacz to, co do Ciebie pasuje, i kliknij „Zapisz mój styl". Claude zmontuje Twój film w wybranym stylu.</p>
+    <div class="modes" role="tablist" aria-label="Sposób wyboru">
+      <button class="mode" id="m-ready" role="tab" aria-selected="false" aria-controls="sec-ready"><b>Jeden gotowy styl</b><span>Jeden wybór ustala napisy, efekty, tempo i wygląd obrazu.</span></button>
+      <button class="mode" id="m-own" role="tab" aria-selected="true" aria-controls="sec-caps"><b>Skomponuj własny</b><span>Twoje napisy i Twoje efekty. Ty decydujesz, gdzie się pojawiają.</span></button>
+    </div>
+  </div></div>
+
   <div class="intro-band"><div class="wrap intro-wrap">
     <div class="eyebrow">Zanim zaczniesz</div>
     <h2>Jak to działa</h2>
@@ -431,7 +442,6 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
           <li><span class="isn">4</span> Tempo cięcia</li>
           <li><span class="isn">5</span> Zoom</li>
         </ul>
-        <div class="intro-card-note">Zapisuje do <code>moj-brand.json</code></div>
         <div class="intro-palette">
           <span class="intro-palette-dot" style="background:#FDE68A" title="Masełko"></span>
           <span class="intro-palette-dot" style="background:#C5E3F7" title="Błękit"></span>
@@ -450,22 +460,10 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
           <li><span class="isn">D</span> Styl obrazu</li>
           <li><span class="isn">E</span> Dźwięki</li>
         </ul>
-        <div class="intro-card-note">Zapisuje do <code>moj-styl.json</code></div>
       </div>
     </div>
     <div class="intro-footer">
       <strong>Przy montażu:</strong> Claude czyta oba pliki. Brand zawsze wygrywa dla czcionek i kolorów. Efekty dodają animacje i ruch, nie zmieniają identyfikacji wizualnej.
-    </div>
-  </div></div>
-
-  <div class="band"><div class="wrap">
-    <div class="brand">AI Content Creator Studio</div>
-    <span class="pill">Lookbook</span>
-    <h1>Wybierz swój styl</h1>
-    <p class="lead">Najedź na kartę, żeby zobaczyć animowany wzór. Zaznacz to, co do Ciebie pasuje, i kliknij „Zapisz mój styl". Claude zmontuje każdy Twój film w tym stylu.</p>
-    <div class="modes" role="tablist" aria-label="Sposób wyboru">
-      <button class="mode" id="m-ready" role="tab" aria-selected="false" aria-controls="sec-ready"><b>Jeden gotowy styl</b><span>Jeden wybór ustala napisy, efekty, tempo i wygląd obrazu.</span></button>
-      <button class="mode" id="m-own" role="tab" aria-selected="true" aria-controls="sec-caps"><b>Skomponuj własny</b><span>Twoje napisy i Twoje efekty. Ty decydujesz, gdzie się pojawiają.</span></button>
     </div>
   </div></div>
 
