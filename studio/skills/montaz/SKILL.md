@@ -15,9 +15,15 @@ Wszystkie dostępne style efektów są w `styles.md` w tym folderze. Przeczytaj 
 
 ### Styl kursantki
 
-Sprawdź, czy istnieje plik `~/.ai-content-creator-studio/moj-styl.json`. Jeśli tak — odczytaj go i powiedz kursantce jednym zdaniem co zapamiętałaś (hook, napisy i efekty). Jeśli nie — zapytaj, jak chce montować: film wzorcowy, opis słowami, albo lookbook (`/studio:lookbook`).
+Sprawdź, czy istnieje plik `~/.ai-content-creator-studio/moj-styl.json`. Jeśli tak — odczytaj go i powiedz kursantce jednym zdaniem co zapamiętałaś. Jeśli nie — zapytaj, jak chce montować: film wzorcowy, opis słowami, albo lookbook (`/studio:lookbook`).
 
-Gdy plik istnieje, doczytaj szczegóły z lookbooka:
+**Gdy `tryb: "gotowy"`** — odczytaj `studio/lookbook/gotowe/{styl}/gotowy.json`. Pola:
+- `napisy` → traktuj jak pole `napisy` z trybu własnego (czytaj napisy styl.json)
+- `efekty` → tablica ID, traktuj jak klucze z pola `efekty` (każdy "wszedzie")
+- `tempo` → opis słowny tempa (zastosuj odpowiedni rytm cięć)
+- `obraz` → opis słowny wyglądu obrazu (zastosuj jako wskazówkę do grading, jeśli brak pola `styl`)
+
+**Gdy `tryb: "wlasny"`** — odczytaj z lookbooka:
 
 - **`hook`** — jeśli pole istnieje, odczytaj `studio/lookbook/hooki/{hook}/hook.json`. Pole `przepis.opis_efektu` to opis efektu dla pierwszych 1–3 sekund (po angielsku, dla Ciebie). Wdróż go dokładnie w HyperFrames na klatce 0.
 - **`napisy`** — jeśli pole istnieje i nie jest `"bez-napisow"`, odczytaj `studio/lookbook/napisy/{napisy}/styl.json`. Pole `przepis` zawiera parametry (czcionka, grubość, rozmiar, kolor, animacja, pozycja), a `przepis.opis_efektu` (jeśli jest) opisuje zachowanie. Zastosuj te parametry do każdej klatki napisów.
