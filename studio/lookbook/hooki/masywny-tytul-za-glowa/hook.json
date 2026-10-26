@@ -1,0 +1,12 @@
+{
+  "id": "masywny-tytul-za-glowa",
+  "nazwa": "Masywny tytuł za głową",
+  "opis": "Cienka biała linia kursywą plus duży żółty tytuł z ciemnym obrysem, umieszczony za Tobą od pierwszej klatki. Ty wycięta z tła, stoisz z przodu.",
+  "najlepsze_do": "Mocne intro, gdy temat jest konkretny i chcesz go podkreślić od razu",
+  "status": "gotowy",
+  "podglad_html": "<div style=\"position:absolute;top:13%;left:0;right:0;text-align:center;z-index:1\"><span style=\"display:block;color:rgba(255,255,255,.85);font-size:8px;font-style:italic;letter-spacing:.04em;margin-bottom:3px\">mała linia kursywą</span><span style=\"display:block;color:#FDE68A;font-size:22px;font-weight:900;letter-spacing:-.03em;-webkit-text-stroke:1.5px rgba(30,10,0,.65)\">DUŻY TYTUŁ</span></div>",
+  "przepis": {
+    "czas_trwania": "pierwsze 1–3 sekundy",
+    "opis_efektu": "Small white italic line (subtitle) above a large yellow title with dark espresso outline, placed behind the presenter from frame 1. Presenter is cut out from the background and stands in front. Title and subtitle are fully visible from the first frame."
+  }
+}

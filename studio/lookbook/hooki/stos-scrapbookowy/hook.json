@@ -1,0 +1,12 @@
+{
+  "id": "stos-scrapbookowy",
+  "nazwa": "Stos scrapbookowy",
+  "opis": "Cienka linia kursywą nad pogrubionym zaokrąglonym słowem. Miękki, editorialowy styl, małe litery.",
+  "najlepsze_do": "Editorial, moda, lifestyle, tematy kreatywne",
+  "status": "gotowy",
+  "podglad_html": "<div style=\"position:absolute;top:14%;left:0;right:0;text-align:center;z-index:1\"><div style=\"color:rgba(255,255,255,.8);font-size:8px;font-style:italic;letter-spacing:.03em\">delikatna linia kursywą</div><div style=\"color:#fff;font-size:28px;font-weight:900;letter-spacing:-.04em;margin-top:2px\">słowo</div></div>",
+  "przepis": {
+    "czas_trwania": "pierwsze 1–3 sekundy",
+    "opis_efektu": "Thin italic serif line above a bold rounded word. Soft, editorial, lowercase style. Visible from frame 1."
+  }
+}

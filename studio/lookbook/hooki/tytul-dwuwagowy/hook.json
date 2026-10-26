@@ -1,0 +1,12 @@
+{
+  "id": "tytul-dwuwagowy",
+  "nazwa": "Tytuł dwuwagowy",
+  "opis": "Gruba pogrubiona linia wielkich liter nad cienką skondensowaną linią, wyśrodkowana u góry od pierwszej klatki. Znika po ok. 3 sekundach.",
+  "najlepsze_do": "Profesjonalne tematy, produktywność, AI, biznes",
+  "status": "gotowy",
+  "podglad_html": "<div style=\"position:absolute;top:12%;left:0;right:0;text-align:center;z-index:1\"><div style=\"color:#fff;font-size:16px;font-weight:900;letter-spacing:-.02em;-webkit-text-stroke:.5px rgba(0,0,0,.4)\">A PRODUCTIVE</div><div style=\"color:rgba(255,255,255,.8);font-size:12px;font-weight:600;letter-spacing:.12em;margin-top:1px\">DAY WITH AI</div></div>",
+  "przepis": {
+    "czas_trwania": "pierwsze 3 sekundy",
+    "opis_efektu": "Heavy bold caps line above a thin condensed serif caps line (e.g. \"A PRODUCTIVE / DAY WITH AI\"), centred at the top of frame from frame 1, lifts away after about 3 seconds."
+  }
+}

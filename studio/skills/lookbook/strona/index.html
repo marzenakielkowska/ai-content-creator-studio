@@ -476,8 +476,15 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
       <div class="grid" id="g-ready"></div>
     </section>
 
+    <section class="block" id="sec-hooki">
+      <div class="eyebrow">Krok A · Hook</div>
+      <h2>Pierwsze sekundy</h2>
+      <p class="lead">Wybierz jeden styl na pierwsze 1–3 sekundy. Hook widoczny jest od pierwszej klatki.</p>
+      <div class="grid" id="g-hooki"></div>
+    </section>
+
     <section class="block" id="sec-caps">
-      <div class="eyebrow">Krok 1 · Napisy</div>
+      <div class="eyebrow">Krok B · Napisy</div>
       <h2>Twoje napisy</h2>
       <p class="lead">Wybierz jeden styl napisów do tego, co mówisz. Pod każdym wzorem znajdziesz podpowiedź, do jakich treści pasuje najlepiej.</p>
       <div class="grid" id="g-caps"></div>
@@ -714,7 +721,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
     </section>
 
     <section class="block" id="sec-fx">
-      <div class="eyebrow">Krok 2 · Efekty</div>
+      <div class="eyebrow">Krok C · Efekty</div>
       <h2>Twoje efekty</h2>
       <p class="lead">Zaznacz tyle, ile chcesz. Efekty na rolce Claude doda tam, gdzie pasują do treści. Efekty samodzielne (jak Przed i po) powstaną z osobnego nagrania.</p>
       <div class="fxbar">
@@ -736,7 +743,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
     </section>
 
     <section class="block" id="sec-styl">
-      <div class="eyebrow">Krok 3 · Styl wizualny</div>
+      <div class="eyebrow">Krok D · Styl wizualny</div>
       <h2>Wygląd obrazu</h2>
       <p class="lead">Wybierz jeden styl kolorystyczny dla całego filmu. Ciepłe tony, wysoki kontrast albo brak filtra. Jedno kliknięcie ustala nastrój całej rolki.</p>
       <div id="g-styl" style="display:grid;gap:12px;margin-top:18px"></div>
@@ -765,7 +772,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 </div></div>
 
 <script>
-let mode = 'own', ready = null, cap = null, fx = {}, partsOn = false;
+let mode = 'own', ready = null, cap = null, hook = null, fx = {}, partsOn = false;
 let snd = new Set(), plotno = [], styl = null, tempo = null, zoom = null;
 let lbTab = 'marka';
 let allFxIds = [];
@@ -1239,6 +1246,8 @@ function card(item, kind, typ, maps) {
   const act = () => {
     if (kind === 'cap') {
       cap = cap === item.id ? null : item.id;
+    } else if (kind === 'hook') {
+      hook = hook === item.id ? null : item.id;
     } else if (kind === 'fx') {
       if (fx[item.id] !== undefined) {
         delete fx[item.id];
@@ -1306,6 +1315,7 @@ function render() {
   $('#lb-tabs').hidden = mode !== 'own';
   $('#lt-marka')?.setAttribute('aria-selected', lbTab === 'marka');
   $('#lt-efekty')?.setAttribute('aria-selected', lbTab === 'efekty');
+  if ($('#sec-hooki')) $('#sec-hooki').hidden = !isEfekty;
   $('#sec-caps').hidden = !isEfekty;
   $('#sec-czcionki').hidden = !isMarka;
   $('#sec-kolory').hidden = !isMarka;
@@ -1376,6 +1386,8 @@ function render() {
 
   document.querySelectorAll('[id^="ready-"]').forEach(el =>
     el.setAttribute('aria-pressed', ready === el.id.slice(6)));
+  document.querySelectorAll('[id^="hook-"]').forEach(el =>
+    el.setAttribute('aria-pressed', hook === el.id.slice(5)));
   document.querySelectorAll('[id^="cap-"]').forEach(el =>
     el.setAttribute('aria-pressed', cap === el.id.slice(4)));
 
@@ -1444,14 +1456,18 @@ function render() {
     if (!hasMarkaData) addChip('Nic jeszcze nie wybrano', null, true);
     ok = hasMarkaData;
   } else if (mode === 'own' && lbTab === 'efekty') {
+    if (hook) {
+      const el = $(`#hook-${hook}`);
+      addChip((el?.querySelector('.title')?.textContent || hook) + ' · hook', 'sec-hooki', false, () => { hook = null; });
+    }
     if (cap) {
       const el = $(`#cap-${cap}`);
       addChip((el?.querySelector('.title')?.textContent || cap) + ' · napisy', 'sec-caps', false, () => { cap = null; });
     }
     if (nFx) addChip(nFx + fxPlural(nFx) + (partsOn ? ' według części' : ''), 'sec-fx', false, () => { fx = {}; });
     if (styl) { const sel = document.getElementById('styl-' + styl); addChip((sel?.querySelector('.styl-name')?.textContent || styl) + ' · styl', 'sec-styl', false, () => { styl = null; }); }
-    if (!cap && !nFx && !styl) addChip('Nic jeszcze nie wybrano', null, true);
-    ok = cap !== null || nFx > 0 || styl !== null;
+    if (!hook && !cap && !nFx && !styl) addChip('Nic jeszcze nie wybrano', null, true);
+    ok = hook !== null || cap !== null || nFx > 0 || styl !== null;
   } else {
     addChip('Nic jeszcze nie wybrano', null, true);
   }
@@ -1463,13 +1479,14 @@ function render() {
   const saveMBtn = $('#save-marka');
   if (saveMBtn) saveMBtn.disabled = !hasMarkaData;
   $('#save').disabled = !ok;
-  const hasAny = ready !== null || cap !== null || Object.keys(fx).length > 0 || snd.size > 0 || styl !== null || hasCustomUklad() || hasCustomKolory() || Object.values(fonts).some(Boolean) || tempo !== null || zoom !== null;
+  const hasAny = ready !== null || hook !== null || cap !== null || Object.keys(fx).length > 0 || snd.size > 0 || styl !== null || hasCustomUklad() || hasCustomKolory() || Object.values(fonts).some(Boolean) || tempo !== null || zoom !== null;
   $('#clear').disabled = !hasAny;
 }
 
 function clearAll() {
   fx = {};
   cap = null;
+  hook = null;
   snd = new Set();
   styl = null;
   ready = null;
@@ -1497,6 +1514,7 @@ async function zapisz() {
       }
     }
     out = { tryb: 'wlasny', napisy: cap, efekty };
+    if (hook) out.hook = hook;
     if (snd.size > 0) out.dzwieki = [...snd];
     if (styl) out.styl = styl;
     const anyFont = fonts.glowna || fonts.akcent || fonts.odreczna;
@@ -1570,12 +1588,13 @@ async function zapiszMarke() {
 
 async function init() {
   try {
-    const [napisy, efektyGrupy, gotowe, dzwieki, styleLista] = await Promise.all([
+    const [napisy, efektyGrupy, gotowe, dzwieki, styleLista, hooki] = await Promise.all([
       fetch('/api/napisy').then(r => r.json()),
       fetch('/api/efekty').then(r => r.json()),
       fetch('/api/gotowe').then(r => r.json()),
       fetch('/api/dzwieki').then(r => r.json()).catch(() => []),
       fetch('/api/styl').then(r => r.json()).catch(() => []),
+      fetch('/api/hooki').then(r => r.json()).catch(() => []),
     ]);
 
     const napisyMap = Object.fromEntries(napisy.map(n => [n.id, n]));
@@ -1583,6 +1602,9 @@ async function init() {
     const efektyMap = Object.fromEntries(efektyFlat.map(e => [e.id, e]));
     allFxIds = efektyFlat.map(e => e.id);
     const maps = { napisy: napisyMap, efekty: efektyMap };
+
+    const hookGrid = $('#g-hooki');
+    if (hookGrid) hooki.forEach(h => hookGrid.appendChild(card(h, 'hook', 'hooki', maps)));
 
     napisy.forEach(n => $('#g-caps').appendChild(card(n, 'cap', 'napisy', maps)));
 

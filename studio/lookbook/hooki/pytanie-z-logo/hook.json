@@ -1,0 +1,12 @@
+{
+  "id": "pytanie-z-logo",
+  "nazwa": "Pytanie z wyskakującym logo",
+  "opis": "Pytanie widoczne na ekranie od pierwszej klatki, tuż pod górną krawędzią. Logo marki pojawia się razem przy słowie-kluczu. Tekst znika przy pierwszej zmianie sceny.",
+  "najlepsze_do": "Porównania, recenzje narzędzi, tematy \"co lepsze?\"",
+  "status": "gotowy",
+  "podglad_html": "<div style=\"position:absolute;top:10%;left:8%;right:8%;z-index:1;background:rgba(255,255,255,.9);border-radius:20px;padding:5px 10px;text-align:center\"><span style=\"font-size:8px;font-weight:700;color:#333\">Które narzędzie jest lepsze?</span></div><div style=\"position:absolute;top:26%;left:0;right:0;display:flex;justify-content:center;gap:8px;z-index:1\"><span style=\"width:18px;height:18px;background:#4285F4;border-radius:4px\"></span><span style=\"width:18px;height:18px;background:#FF6B35;border-radius:4px\"></span><span style=\"width:18px;height:18px;background:#38A169;border-radius:4px\"></span></div>",
+  "przepis": {
+    "czas_trwania": "pierwsze 1–3 sekundy",
+    "opis_efektu": "Spoken question appears on screen from frame 1, positioned just below the top. Brand logos pop in together on the first brand word. Text and logos leave on the first scene cut."
+  }
+}
