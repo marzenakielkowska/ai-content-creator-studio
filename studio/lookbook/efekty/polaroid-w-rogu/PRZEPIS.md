@@ -4,6 +4,8 @@
 
 > ⚠️ **Sprawdzenie twarzy:** żaden element tego efektu nie może nachodzić na strefę twarzy (Y:250–1400px × X:200–880px przy 1080×1920). Patrz: sekcja **"Twarz — reguła nadrzędna"** w `studio/skills/montaz/SKILL.md`.
 
+> 📸 **Materiały zewnętrzne:** ten efekt wymaga zdjęcia od kursantki (np. screenshot, grafika do polaroidu). Zawsze proś o plik przed budową kompozycji. Jeśli kursantka nie ma pliku — zapytaj, czy stworzyć stylizowany placeholder. Patrz: sekcja **"Materiały zewnętrzne"** w `studio/skills/montaz/SKILL.md`.
+
 **Co robi:** Główna karta (nagranie ekranu, klip „przed") zajmuje większość kadru. Kursantka mówi z małego polaroidu — białej karty z jej twarzą, lekko obrócona, w dolnym rogu. Idealny do pokazywania procesu w Claude lub innym narzędziu.
 
 **Kiedy używać:** Jako samodzielny klip (standalone) lub podczas konkretnej sekcji rolki gdy chcesz pokazać ekran i jednocześnie komentować.

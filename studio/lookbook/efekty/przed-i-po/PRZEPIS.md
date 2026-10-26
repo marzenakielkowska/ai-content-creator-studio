@@ -4,6 +4,8 @@
 
 > ⚠️ **Sprawdzenie twarzy:** żaden element tego efektu nie może nachodzić na strefę twarzy (Y:250–1400px × X:200–880px przy 1080×1920). Patrz: sekcja **"Twarz — reguła nadrzędna"** w `studio/skills/montaz/SKILL.md`.
 
+> 📸 **Materiały zewnętrzne:** ten efekt może wymagać obrazów od kursantki (zrzuty ekranu „przed" i „po", zdjęcia, grafiki). Zawsze proś o plik przed budową kompozycji. Jeśli kursantka nie ma pliku lub nie może go teraz dostarczyć — zapytaj, czy stworzyć stylizowaną wersję z jej danymi. Patrz: sekcja **"Materiały zewnętrzne"** w `studio/skills/montaz/SKILL.md`.
+
 **Co robi:** pionowa biała linia wjeżdża od lewej krawędzi (t=3s) do środka kadru, zatrzymuje się przez chwilę przy kole uchwytu `< >`, potem wyjeżdża w prawo — odsłaniając jasną (po) i przyciemnioną (przed) wersję tego samego nagrania. Dwa badge, napisy nad głową, dźwięk whoosh przy wejściu linii, dźwięk pop o sekundę wcześniej.
 
 **Zastosowanie:** transformacje, tutoriale stylizacji, porównania efektów makijażu/edycji/fryzury/stroju.

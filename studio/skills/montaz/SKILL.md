@@ -287,6 +287,15 @@ Gdy kursantka ma `moj-brand.json` z polem `czcionki`, użyj tych czcionek jako b
 ### Dowód
 Tylko prawdziwy. Nigdy nie pokazuj odtworzonego ekranu jako prawdziwego. Podawaj źródło.
 
+### Materiały zewnętrzne (screenshoty, zdjęcia, grafiki)
+
+Gdy efekt wymaga pliku od kursantki (screenshot ze statystykami, zdjęcie, nagranie ekranu, logotyp):
+
+1. **Zawsze proś o plik** zanim zaczniesz budować kompozycję. Napisz dokładnie co potrzebujesz i w jakim formacie (np. „Wrzuć screenshot z Insights — przeciągnij go tutaj lub użyj spinacza 📎").
+2. **Nie twórz stylizowanej wersji bez pytania.** Jeśli kursantka nie ma pliku lub nie może go teraz dostarczyć, zapytaj: „Nie mam screenshotu — czy mam stworzyć stylizowaną kartę z Twoimi danymi, zamiast oryginalnego obrazu?"
+3. **Czekaj na odpowiedź.** Nie kontynuuj montażu z placeholderem — wyjaśnij, co jest zablokowane i co kursantka powinna zrobić.
+4. **Wyjątek:** jeśli kursantka aktywnie poprosiła o "stworzenie czegoś" (np. „stwórz mi kartę statystyk"), to twórz bez pytania.
+
 ### Dźwięk
 Mix do ok. **−14 LUFS**. Efekty dźwiękowe: **−18 do −24 dB** — zawsze ciszej niż głos. Bez muzyki bez praw.
 
