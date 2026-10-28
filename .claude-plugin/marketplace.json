@@ -10,6 +10,14 @@
       "name": "studio",
       "source": "./studio",
       "description": "Montaż rolek w Twoim stylu jedną komendą, karuzele i publikowanie. Wersja testowa: przygotowanie komputera do montażu."
+    },
+    {
+      "name": "hyperframes",
+      "source": {
+        "source": "github",
+        "repo": "heygen-com/hyperframes"
+      },
+      "description": "Podpowiedzi dla Claude do silnika montażu HyperFrames (od HeyGen, licencja Apache-2.0). Instaluje się razem ze Studio."
     }
   ]
 }

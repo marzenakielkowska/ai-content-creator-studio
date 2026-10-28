@@ -6,5 +6,8 @@
   "author": {
     "name": "Marzena Kiełkowska",
     "url": "https://github.com/marzenakielkowska"
-  }
+  },
+  "dependencies": [
+    "hyperframes"
+  ]
 }

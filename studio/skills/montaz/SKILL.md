@@ -176,6 +176,10 @@ w inny sposób (bez Homebrew, npm globalnie, winget).
 | `sprawdz-ciecia <projekt> <render.mp4> --telefon` | klatka przed/po każdym cięciu na jednym arkuszu, głośność, kopia 720p na telefon |
 | `glosnosc <plik>` | głośność (LUFS) i szczyt (dB) |
 
+**Efekty wideo zawsze w HyperFrames.** Przed pierwszą kompozycją przeczytaj skill `hyperframes` (wtyczka
+HyperFrames instaluje się razem ze Studio) — format kompozycji i nazwy atrybutów są w jego `references/`. FFmpeg tylko do
+przygotowania materiału (to robią skrypty Studio). Nigdy Python/OpenCV ani ręczne renderowanie klatka po klatce.
+
 **HyperFrames** (lint, snapshot, render): `"<node>" "<hyperframes>" <polecenie>` ze ścieżkami z `narzedzia.json`,
 uruchamiane z folderu kompozycji, ze zmiennymi `HYPERFRAMES_FFMPEG_PATH` i `HYPERFRAMES_FFPROBE_PATH` ustawionymi na
 ffmpeg i ffprobe z tego pliku. W przepisach efektów (`PRZEPIS.md`) zapis `npx hyperframes …` oznacza właśnie to
@@ -241,7 +245,8 @@ render.** Czekaj na akceptację.
 
 ### 7. Budowa i render
 Kompozycja 1080×1920, 30 kl/s, na `assets/aroll.mp4` (i `assets/sylwetka.webm`, jeśli jest). Przed budową przeczytaj
-`rules/pulapki.md`. Kolejność: lint (0 błędów) → snapshot w 10–20 momentach + `strefa` → poprawki → render.
+`rules/pulapki.md`. **Najpierw sam `index.html`** (kompozycja główna) → lint → popraw → dopiero wtedy
+`compositions/*.html`. Potem: lint (0 błędów) → snapshot w 10–20 momentach + `strefa` → poprawki → render.
 Nowa nazwa pliku na każdą wersję: `renders/<nazwa>-v001.mp4`, `-v002`…
 
 ### 8. Sprawdzenie

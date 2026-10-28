@@ -36,7 +36,8 @@ może zgłosić, że sklep z wtyczkami jest już dodany z innego adresu.
    https://github.com/marzenakielkowska/ai-content-creator-studio
    ```
 
-6. Na liście znajdź **AI Content Creator Studio** i zainstaluj.
+6. Na liście znajdź **AI Content Creator Studio** i zainstaluj. Razem ze Studio zainstaluje się sama wtyczka
+   **HyperFrames** (podpowiedzi dla Claude, jak budować animacje). To normalne, Studio jej potrzebuje.
 
 ### Sposób B: w terminalu
 
@@ -51,7 +52,8 @@ claude plugin marketplace add marzenakielkowska/ai-content-creator-studio
 claude plugin install studio@ai-content-studio
 ```
 
-Po każdej linijce powinien pojawić się zielony znaczek ✔ i słowo „Successfully”.
+Po każdej linijce powinien pojawić się zielony znaczek ✔ i słowo „Successfully”. Druga linijka dopisze
+„+ 1 dependency: hyperframes”: to wtyczka z podpowiedziami do silnika montażu, instaluje się razem ze Studio.
 
 ## Pierwsze uruchomienie
 
@@ -115,6 +117,9 @@ Gdyby automatyczne aktualizacje były kiedyś wyłączone, możesz je włączyć
 
 - **„/studio:start isn't a command here”**: wtyczka nie jest zainstalowana albo sesja wystartowała przed instalacją.
   Sprawdź, że jesteś na swoim komputerze (nie w chmurze), i zacznij nową sesję.
+- **Lista wtyczek pokazuje, że Studio „nie wczytało się”, bo brakuje „hyperframes”**: w tej samej liście, przy
+  sklepie AI Content Creator Studio, zainstaluj też **hyperframes** (albo w terminalu:
+  `claude plugin install hyperframes@ai-content-studio`) i zacznij nową sesję.
 - **„Cannot add marketplace … doesn't match”**: sklep jest już dodany innym sposobem. Pomiń dodawanie i od razu
   zainstaluj wtyczkę: `claude plugin install studio@ai-content-studio`.
 - **Pobieranie przerwane**: wpisz `/studio:start` jeszcze raz. To, co już jest, zostanie pominięte.

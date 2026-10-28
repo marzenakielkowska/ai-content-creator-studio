@@ -17,6 +17,14 @@ render.
   `transkrypcja` od nowa.
 - **Transkrypcja dopisuje słowo przy cięciu** albo przesuwa czasy o 0,1–0,3 s. Potwierdzaj pauzy przez `pauzy`.
 
+## Budowa kompozycji
+
+- **Najpierw `index.html`, od razu lint, dopiero potem kompozycje.** Zły atrybut w kompozycji głównej (np.
+  `data-scene` zamiast `data-composition-src`) wychodzi dopiero po godzinie pracy i dwóch nieudanych renderach.
+- Nazwy atrybutów: osadzona kompozycja to `data-composition-src="compositions/x.html"`; jej element-gospodarz
+  potrzebuje **obu**: `id="scene-x"` i `data-composition-id="scene-x"`.
+- Wideo z głosem: `data-has-audio="true"`, nie `muted`.
+
 ## Render
 
 - **Czarny ekran albo zamrożone wideo:** każdy `<video>` musi mieć `id`. Każdy nakładający się w czasie element
