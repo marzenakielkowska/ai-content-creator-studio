@@ -38,26 +38,31 @@ Foldery na komputerze kursantki:
 
 ## Skill montażu (`studio/skills/montaz/`)
 
-Kroki w `SKILL.md`: 1 transkrypcja → 2 cięcie → 2b pozycja mówiącej w kadrze → 3 napisy → 4 grafiki →
-5 draft → 6 sprawdzenie → 7 notatki → 8a warianty próbne (opcjonalnie) → 8 finał.
+Stan od 2026-10-28. Kroki w `SKILL.md`: 1 wczytanie (kilka nagrań naraz) → 2 transkrypcja do sprawdzenia →
+3 plan cięć (`edl.json`, OK kursantki) → 4 plan montażu (efekty, OK) → 5 przygotowanie kadru (sylwetka, głowa,
+wstawki równolegle) → 6 storyboard → 7 budowa i render → 8 sprawdzenie → 9 oddanie. Na końcu SKILL.md: „Wygląd
+domyślny” (wnioski z praktyki, gdy styl kursantki nie mówi inaczej).
 
-Komendy skryptu (`scripts/montaz.mjs`, uruchamiane przez `montaz.sh` / `montaz.ps1`):
-`transkrypcja`, `klatki-pozycja`, `klatki-sprawdzenie`, `sprawdz-dzwiek`, `tnij`, `render`,
-`overlay-image` (Python + Pillow), `analizuj-wzorzec` / `zbadaj-wzorzec`, `zapisz-wzorzec`, `lista-wzorcow`.
+Skrypt `scripts/montaz.mjs` (Node + FFmpeg + HyperFrames, bez Pythona; `montaz.sh` / `montaz.ps1`):
+`wczytaj`, `pauzy`, `zloz` (równe 30 kl/s, `segmenty.json` z klatką każdego cięcia), `transkrypcja`, `wytnij-tlo`
+(ze sprawdzeniem zgodności klatek), `glowa` (`glowa.json`), `strefa` (nakładka strefy Reels na podglądy),
+`sprawdz-ciecia` (arkusz klatek przed/po cięciu, głośność, kopia 720p), `glosnosc`.
+Przetestowane 2026-10-28 na dwóch nagraniach Marzeny łącznie z renderem HyperFrames.
 
-| Plik | Co zawiera |
+| Plik `rules/` | Co zawiera |
 |---|---|
-| `rules/cut.md` | Zasady cięcia (w tym cisza wewnątrz słowa, formuła głośności) |
-| `rules/captions.md` | Zasady napisów + system oznaczania słów |
-| `rules/graphics.md` | 14 zasad grafik: plan→zatwierdzenie, kolory, czas, strefa bezpieczeństwa |
-| `rules/motion.md` | Zasady animowania warstw graficznych (GSAP, nie CSS @keyframes) |
-| `rules/checks.md` | 6 defektów + tabela 4 warunków + procedura poprawek |
-| `rules/gotchas.md` | Znane błędy HyperFrames i FFmpeg — dla Claude, kursantka go nie widzi |
-| `rules/wzorzec.md` | Pomiar filmu wzorcowego i biblioteka zapisanych wzorców |
-| `napisy-style.md` | Lista 23 stylów napisów z czcionkami |
-| `gifs.md` | Wstawianie GIF-ów do rolek |
-| `replicate.md` | Kursantka pokazuje rolkę → Claude odbudowuje styl (`styl-wzorzec.json`) |
-| `NOTES_LOG.md` | Dziennik uwag i przepisanych reguł |
+| `ciecie.md` | wybór ujęć z kilku nagrań, punkty cięcia, potwierdzanie pauz, przybliżenia, `edl.json` |
+| `uklad.md` | pomiar głowy, napisy wprowadzające, karty pod brodą, słowo za głową (wzór), czasy cięć |
+| `napisy.md` | co pokazać, oznaczanie słów, gdzie i kiedy |
+| `grafiki.md` | plan, prawda na ekranie, czas wyświetlania, oryginalne zrzuty |
+| `ruch.md` | GSAP: czasy, easing, wzorce wejść/wyjść, efekt na cięciach |
+| `wstawki.md` | animowane wstawki: kiedy równolegle (2+ złożone), zlecenie dla pomocnika |
+| `sprawdzanie.md` | 6 defektów, 4 warunki, kontrola cięć na renderze, głośność, kopia na telefon |
+| `pulapki.md` | znane pułapki HyperFrames, FFmpeg i Windows |
+
+`_stare/` — poprzednia wersja (archiwum). Zasady z niej są już przeniesione do `rules/`; `replicate.md`,
+`gifs.md`, `napisy-style.md` i `wzorzec.md` nie są przeniesione. Trzy gotowe „wyglądy” z prywatnego skilla
+„video-edit” świadomie NIE są przenoszone (Studio ma własny Lookbook).
 
 Gdy brak `moj-styl.json`, montaż pyta: film wzorcowy, opis słowami albo lookbook (patrz niżej).
 

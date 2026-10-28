@@ -156,35 +156,56 @@ Jeśli yt-dlp zawiedzie — powiedz „Nie udało mi się pobrać automatycznie,
 
 ## Narzędzia
 
-- `ffmpeg` i `ffprobe` — cięcie, audio, sprawdzanie pliku
-- **HyperFrames** — HTML do wideo (napisy, grafiki, efekty ruchome). W Claude Code: `/plugin marketplace add heygen-com/hyperframes`, potem `/plugin install hyperframes@hyperframes`
-- Transkrypcja ze znacznikami słów: `npx hyperframes transcribe audio.mp3 --json`
-- Wycięcie osoby z tła (potrzebne do efektów "wokół Ciebie"): `npx hyperframes remove-background`
+Wszystko instaluje `/studio:start`. Ścieżki są w `~/.ai-content-studio/narzedzia.json` (node, ffmpeg, ffprobe,
+hyperframes, yt-dlp). Gdy pliku nie ma albo czegoś w nim brakuje — poproś o `/studio:start`. Nie instaluj niczego
+w inny sposób (bez Homebrew, npm globalnie, winget).
 
-## Pierwsze uruchomienie (raz, ok. 5 minut)
+**Skrypty montażu** (`SK` = folder tego pliku; pełna ścieżka w cudzysłowie, jedno polecenie na raz, bez `cd` i `&&`):
+- Mac: `sh "SK/scripts/montaz.sh" <polecenie> ...`
+- Windows: `powershell -NoProfile -ExecutionPolicy Bypass -File "SK/scripts/montaz.ps1" <polecenie> ...`
 
-Większość kursantek nie jest techniczna. Tłumacz spokojnie, po jednym kroku, pytaj przed instalacją.
+| Polecenie | Co robi |
+|---|---|
+| `wczytaj <projekt> <pliki lub folder> [--najnowsze N]` | rejestruje nagrania (`zrodla.json`), arkusze klatek `work/arkusz_kN.jpg`, transkrypcja każdego nagrania → `transkrypt.txt` |
+| `pauzy <nagranie> [od] [do]` | pomiar ciszy — potwierdzenie pauz przed cięciem |
+| `zloz <projekt>` | tnie rolkę z oryginałów wg `edl.json` → `assets/aroll.mp4` (1080×1920, równe 30 kl/s) + `segmenty.json` |
+| `transkrypcja <projekt>` | czasy słów na złożonej rolce → `slowa.json` (z nich idą napisy i animacje) |
+| `wytnij-tlo <projekt>` | sylwetka bez tła → `assets/sylwetka.webm` + sprawdzenie zgodności klatek (uruchamiaj w tle) |
+| `glowa <projekt>` | gdzie jest głowa i broda w każdym segmencie → `glowa.json` |
+| `strefa <podglądy.png>` | czerwone pola poza strefą bezpieczną Reels na podglądach |
+| `sprawdz-ciecia <projekt> <render.mp4> --telefon` | klatka przed/po każdym cięciu na jednym arkuszu, głośność, kopia 720p na telefon |
+| `glosnosc <plik>` | głośność (LUFS) i szczyt (dB) |
 
-1. Sprawdź co jest: `node -v` i `ffmpeg -version`. Jeśli obydwa działają — przejdź do HyperFrames.
-2. **Brak Node.js:** nie używaj Homebrew. Poproś kursantkę o pobranie instalatora **LTS** z https://nodejs.org (duży zielony przycisk), kliknięcie przez kreator, informację gdy gotowe. Sprawdź ponownie `node -v`.
-3. **Brak ffmpeg:** nie używaj Homebrew. Zainstaluj w folderze projektu przez npm:
-   `npm install ffmpeg-static ffprobe-static`
-   Ścieżki: `node -p "require('ffmpeg-static')"` i `node -p "require('ffprobe-static').path"` — używaj ich wszędzie zamiast `ffmpeg` / `ffprobe`.
-4. **HyperFrames:** zainstaluj plugin dwoma poleceniami powyżej.
-5. Jeśli krok 2 lub 3 się nie powiedzie: wyjaśnij w jednym zdaniu co poszło nie tak, zaproponuj alternatywę z pytaniem o zgodę.
+**HyperFrames** (lint, snapshot, render): `"<node>" "<hyperframes>" <polecenie>` ze ścieżkami z `narzedzia.json`,
+uruchamiane z folderu kompozycji, ze zmiennymi `HYPERFRAMES_FFMPEG_PATH` i `HYPERFRAMES_FFPROBE_PATH` ustawionymi na
+ffmpeg i ffprobe z tego pliku. W przepisach efektów (`PRZEPIS.md`) zapis `npx hyperframes …` oznacza właśnie to
+polecenie.
+
+**Zasady szczegółowe** (czytaj przed danym krokiem): `rules/ciecie.md`, `rules/uklad.md`, `rules/napisy.md`,
+`rules/grafiki.md`, `rules/ruch.md`, `rules/wstawki.md`, `rules/sprawdzanie.md`, a przed budową kompozycji
+i przy każdym błędzie `rules/pulapki.md`.
+
+Kursantce nie pokazuj nazw poleceń, ścieżek ani linii `STATUS` — mów zwykłymi słowami, co robisz.
 
 ---
 
 ## Montaż — krok po kroku
 
-### 1. Kopia, nigdy oryginał
-Zachowaj oryginalne nagranie. Pracuj w nowym folderze projektu.
+Projekt: nowy folder `<folder projektów z ustawień Studio>/<krótka-nazwa>_<data>/`. Oryginałów nigdy nie zmieniasz
+ani nie przenosisz — skrypty tylko je czytają.
 
-### 2. Transkrypcja
-Wygeneruj transkrypcję ze znacznikami słów. Popraw źle rozpoznane nazwy własne (Whisper często myli: „Claude" → „cloud", nazwy marek itp.). Pokaż kursantce podejrzane miejsca z czasem. Nie poprawiaj faktów samodzielnie. Czekaj na OK.
+### 1. Wczytanie
+`wczytaj` z plikami, które kursantka wrzuciła (może być kilka nagrań: wszystkie naraz). Obejrzyj arkusze klatek
+(ustawienie kamery, czy są różne ujęcia, czy widać sięganie po telefon) i przeczytaj `transkrypt.txt`.
 
-### 3. Cięcie
-Usuń każdą ciszę, fałszywy start i powtórzone ujęcie. Zachowaj ostatnie czyste ujęcie. Widz nigdy nie powinien widzieć kursantki sięgającej po kamerę. Pokaż plan cięć z uzasadnieniem — tniej dopiero po OK.
+### 2. Transkrypcja do sprawdzenia
+Popraw źle rozpoznane nazwy (zasady w `rules/napisy.md`). Pokaż kursantce tekst i podejrzane miejsca z czasem.
+Nie poprawiaj faktów samodzielnie. Czekaj na OK.
+
+### 3. Plan cięć
+Wg `rules/ciecie.md`: najlepsze ujęcie każdego zdania ze wszystkich nagrań, pauzy potwierdzone `pauzy`,
+przybliżenia przy dwóch segmentach z tego samego ujęcia. Zapisz `edl.json`, pokaż kursantce krótką tabelę
+z uzasadnieniem. Tniesz (`zloz`) dopiero po OK. Potem `transkrypcja` na złożonej rolce.
 
 ### 4. Plan montażu
 
@@ -202,34 +223,34 @@ Usuń każdą ciszę, fałszywy start i powtórzone ujęcie. Zachowaj ostatnie c
 
 Kursantka nie zawsze wie, że te momenty warto podkreślić — Ty to widzisz i proponujesz.
 
----
-
 Napisz jednozdaniowy cel montażu (co ten film ma zrobić z widzem) i podziel wideo na sekcje: hak, rozwinięcie, dowód, pointę, wezwanie do działania.
 
 Trzymaj się budżetu: **5–6 efektów na całe wideo**. Ten sam zabieg za każdym razem (jeśli dowód to podzielony ekran raz — to podzielony ekran zawsze). Zostaw momenty tylko z mówiącą twarzą, bez grafik.
 
-Zaproponuj efekty z `styles.md`. Pokaż listę (max 6 linii): efekt, czas, powód. Czekaj na OK.
+Zaproponuj efekty z `styles.md` i Lookbooka. Pokaż listę (max 6 linii): efekt, czas, powód. Czekaj na OK.
 
-### 5. Storyboard
-Pokaż jedno zatrzymane ujęcie na sekcję. **Zawsze powiedz plan zanim zaczniesz render.** Czekaj na akceptację.
+### 5. Przygotowanie kadru
+Gdy plan ma słowa za głową, karty wokół osoby albo inne efekty z wycięciem z tła: `wytnij-tlo` (w tle — to najdłuższy
+krok), potem `glowa`. Pozycje wszystkich elementów licz z `glowa.json` wg `rules/uklad.md`.
+Animowane wstawki: wg `rules/wstawki.md` — przy dwóch lub więcej złożonych buduj je równolegle w tle, w tym czasie
+składaj główną kompozycję.
 
-### 6. Build i render
-Zbuduj 1080×1920, 30fps. Nowa nazwa pliku na każdą wersję (`montaz-v001.mp4`, `v002`...).
+### 6. Storyboard
+Pokaż jedno zatrzymane ujęcie na sekcję (snapshot) z nakładką `strefa`. **Zawsze powiedz plan, zanim zaczniesz
+render.** Czekaj na akceptację.
 
-### 7. Sprawdzenie
-Przed oddaniem: `npx hyperframes check --json`, kontaktówka klatek, obejrzyj całość od początku.
+### 7. Budowa i render
+Kompozycja 1080×1920, 30 kl/s, na `assets/aroll.mp4` (i `assets/sylwetka.webm`, jeśli jest). Przed budową przeczytaj
+`rules/pulapki.md`. Kolejność: lint (0 błędów) → snapshot w 10–20 momentach + `strefa` → poprawki → render.
+Nowa nazwa pliku na każdą wersję: `renders/<nazwa>-v001.mp4`, `-v002`…
 
-Szukaj:
-- animacja odgrywa się dwa razy
-- tekst pojawia się za późno
-- grafika zakrywa twarz
-- usta nie zgadzają się z głosem
-- cokolwiek w strefie bezpiecznej
+### 8. Sprawdzenie
+Wg `rules/sprawdzanie.md`: `sprawdz-ciecia <projekt> <render> --telefon`, obejrzyj arkusz cięć, głośność, całość
+od początku do końca. Napraw → nowy render → sprawdź ponownie. Dopiero gdy wszystko OK — oddaj.
 
-Napraw — nowy render — sprawdź ponownie. Dopiero gdy wszystko OK — oddaj.
-
-### 8. Oddanie
-Powiedz kursantce: gdzie jest plik, ile trwa, jakich efektów użyłaś, co budziło wątpliwości. Zaproponuj 2–3 krótkie alternatywy tylko dla fragmentu, przy którym się wahałaś.
+### 9. Oddanie
+Powiedz kursantce: gdzie jest plik (pełna jakość i lekka kopia na telefon), ile trwa, jakich efektów użyłaś, co
+budziło wątpliwości. Zaproponuj 2–3 krótkie alternatywy tylko dla fragmentu, przy którym się wahałaś.
 
 ---
 
@@ -308,6 +329,17 @@ Zamazuj lub zamień prywatne imiona, maile, numery i twarze osób, które nie wy
 
 ### Przejścia
 Żadnych efektowych przejść (flash, trzęsienie, przeciek światła) jeśli wybrany styl ich nie zakłada.
+
+### Wygląd domyślny (gdy styl kursantki nie mówi inaczej)
+Wnioski z wielu montaży — dają lepszy efekt końcowy. Wybór z Lookbooka i marki kursantki zawsze wygrywa; te zasady
+stosujesz tam, gdzie styl niczego nie ustala. Kursantce o nich nie mówisz, po prostu tak montujesz.
+- **Skóra naturalna.** Korekta koloru nie może pchać twarzy w czerwień ani w szarość. Przy ciemnym, „kinowym”
+  wyglądzie ściemniaj tło, a osobę zostaw jasną (przy wycięciu z tła: sylwetka jaśniejsza niż pokój).
+- **Bez ziarna filmowego.** Na twarzy wygląda jak szum.
+- **Bez wymiany tła na wygenerowany pokój.** Wygląda sztucznie. Klimat robisz kolorem, światłem i napisami.
+- **Napisy wprowadzające wyśrodkowane** przed osobą, w pasie klatki piersiowej — czytają się lepiej niż linie
+  przyklejone do lewej krawędzi (szczegóły w `rules/uklad.md`).
+- **Słowa za głową tylko wtedy, gdy są czytelne** (głowa zasłania najwyżej ~30% liter).
 
 ---
 

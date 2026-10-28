@@ -20,18 +20,12 @@
 ## Workflow
 
 ### Krok 1. Wycięcie tła
-```bash
-npx hyperframes remove-background wideo.mp4 --output hf/assets/cutout.webm
-```
+Użyj sylwetki z montażu: skrypt `wytnij-tlo` (patrz `skills/montaz/SKILL.md`, krok 5) robi `assets/sylwetka.webm`
+z całej złożonej rolki i sprawdza, że ma tyle samo klatek co obraz. Pozycję głowy i sylwetki bierz z `glowa.json`
+(`glowa`) — pierścień orbity planuj wokół niej i w strefie bezpiecznej.
 
-Jeśli pojawi się błąd — zaproponuj kursantce lokalne narzędzie i poczekaj na jej zgodę:
-> „Potrzebuję zainstalować dodatkowe narzędzie do wycięcia tła (`rembg`, bezpłatne, działa lokalnie). Czy mogę?"
-
-Po „tak":
-```bash
-pip install rembg[cli]
-rembg i wideo.mp4 hf/assets/cutout.webm
-```
+Jeśli wycinanie się nie uda, nie instaluj innych narzędzi: zajrzyj do `skills/montaz/rules/pulapki.md`, a gdy to nie
+pomoże — powiedz kursantce, że ten efekt pominiemy, i zaproponuj inny.
 
 ### Krok 2. Miniatury rolek
 Zapisz miniatury jako:

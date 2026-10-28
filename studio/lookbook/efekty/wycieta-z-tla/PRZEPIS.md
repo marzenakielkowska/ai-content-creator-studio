@@ -21,18 +21,12 @@
 
 ### Krok 1. Wycięcie tła
 
-```bash
-npx hyperframes remove-background wideo.mp4 --output hf/assets/cutout.webm
-```
+Użyj sylwetki z montażu: skrypt `wytnij-tlo` (patrz `skills/montaz/SKILL.md`, krok 5) robi `assets/sylwetka.webm`
+z całej złożonej rolki i sprawdza, że ma tyle samo klatek co obraz. Nie wycinaj tła osobno z innego pliku — sylwetka
+rozjedzie się z obrazem. Pozycję głowy bierz z `glowa.json` (`glowa`).
 
-Jeśli błąd — zaproponuj:
-> „Potrzebuję zainstalować narzędzie do wycięcia tła (`rembg`, bezpłatne, działa lokalnie). Czy mogę?"
-
-Po zgodzie:
-```bash
-pip install rembg[cli]
-rembg i wideo.mp4 hf/assets/cutout.webm
-```
+Jeśli wycinanie się nie uda, nie instaluj innych narzędzi: zajrzyj do `skills/montaz/rules/pulapki.md`, a gdy to nie
+pomoże — powiedz kursantce, że ten efekt pominiemy, i zaproponuj efekt bez wycięcia z tła.
 
 ### Krok 2. Rozmyte tło
 
@@ -47,7 +41,7 @@ W `hf/index.html` zbuduj trzy warstwy:
 ```
 Layer 0 (z-index: 0) — rozmyte tło (bg-blur.mp4), pełen kadr
 Layer 1 (z-index: 1) — karty za osobą: karty wchodzą z animacją na słowo
-Layer 2 (z-index: 2) — sylwetka kursantki (cutout.webm), wycentrowana
+Layer 2 (z-index: 2) — sylwetka kursantki (assets/sylwetka.webm), w tym samym miejscu co obraz
 Layer 3 (z-index: 3) — karty przed osobą: (opcjonalnie) mniejsze karty w przednim planie
 ```
 
