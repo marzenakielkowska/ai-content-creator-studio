@@ -95,35 +95,17 @@ Liczba zmienia animację na karcie efektu. Sprawdź wizualnie w Lookbooku.
 
 ---
 
-## Dodaj gotowy styl (zestaw)
+## Usuń albo zastąp efekt
 
-Gotowy styl łączy napisy + efekty w jeden pakiet.
+Kursantki mają zapisane w swoim stylu identyfikatory efektów. Gdy efekt znika z `efekty/` (przeniesiony do
+`archiwum/` albo usunięty), a ma nowszego zastępcę, dopisz parę do `studio/lookbook/zastapione.json`:
 
-1. Utwórz folder w `studio/lookbook/gotowe/`:
-   ```
-   studio/lookbook/gotowe/moj-pakiet/
-   ```
+```json
+{ "efekty": { "stary-efekt": "nowy-efekt" } }
+```
 
-2. Utwórz plik `gotowy.json`:
-   ```json
-   {
-     "id": "moj-pakiet",
-     "nazwa": "Mój pakiet",
-     "najlepsze_do": "Do jakich treści pasuje",
-     "napisy": "biale-pod-broda",
-     "efekty": ["pop-in", "wjazd-z-boku"],
-     "tempo": "Opis tempa cięć",
-     "obraz": "Opis nastroju obrazu",
-     "status": "szkic",
-     "nowosc": false,
-     "podglad_html": "<div class=\"cap c1\">mój pakiet</div><div class=\"fx f4\"></div>",
-     "podglad_frame": "bright"
-   }
-   ```
-
-3. `"napisy"` = id stylu napisów, `"efekty"` = lista id efektów.
-
-4. `"podglad_frame"`: `"bright"` (jasne tło) lub `""` (neutralne).
+Lookbook przy otwarciu zaznaczy wtedy zastępcę, a montaż użyje go zamiast starego efektu. Bez zastępcy montaż
+pominie efekt i poprosi kursantkę o ponowny zapis w Lookbooku.
 
 ---
 

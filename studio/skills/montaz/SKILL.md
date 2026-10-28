@@ -17,11 +17,9 @@ Wszystkie dostępne style efektów są w `styles.md` w tym folderze. Przeczytaj 
 
 Sprawdź, czy istnieje plik `~/.ai-content-creator-studio/moj-styl.json`. Jeśli tak — odczytaj go i powiedz kursantce jednym zdaniem co zapamiętałaś. Jeśli nie — zapytaj, jak chce montować: film wzorcowy, opis słowami, albo lookbook (`/studio:lookbook`).
 
-**Gdy `tryb: "gotowy"`** — odczytaj `studio/lookbook/gotowe/{styl}/gotowy.json`. Pola:
-- `napisy` → traktuj jak pole `napisy` z trybu własnego (czytaj napisy styl.json)
-- `efekty` → tablica ID, traktuj jak klucze z pola `efekty` (każdy "wszedzie" — brak podziału na części)
-- `tempo` → opis słowny tempa (zastosuj odpowiedni rytm cięć)
-- `obraz` → opis słowny wyglądu obrazu (zastosuj jako wskazówkę do grading, jeśli brak pola `styl`)
+**Gdy `tryb: "gotowy"`** — to dawny zapis gotowego stylu, którego Lookbook już nie ma. Nie szukaj go. Powiedz
+kursantce jednym zdaniem, że Lookbook się zmienił i warto raz jeszcze zapisać w nim swój wybór (`/studio:lookbook`);
+do tego czasu montuj z marki (`moj-brand.json`) i wygląd domyślny.
 
 **Gdy `tryb: "wlasny"`** — odczytaj z lookbooka:
 
@@ -40,6 +38,10 @@ Sprawdź, czy istnieje plik `~/.ai-content-creator-studio/moj-styl.json`. Jeśli
   - `"standalone"` → osobny klip generowany przez Claude, niezależny od rolki
   
   Efekty układu (`kategoria: "uklad"`) zmieniają kompozycję całego kadru. Czytaj PRZEPIS.md przed wykonaniem.
+
+  **Efektu nie ma w `studio/lookbook/efekty/`?** Sprawdź `studio/lookbook/zastapione.json` (pole `efekty`: stary
+  identyfikator → aktualny zastępca) i użyj zastępcy. Gdy zastępcy nie ma, pomiń ten efekt i powiedz kursantce
+  jednym zdaniem, że jeden z jej efektów zniknął z Lookbooka i warto raz jeszcze zapisać tam swój wybór.
 - **`styl`** — jeśli pole istnieje, odczytaj `studio/lookbook/styl/{styl}/styl.json`. Pole `przepis.typ` określa jak zastosować:
   - `"brak"` → nie rób żadnej korekcji koloru
   - `"media-treatment"` → zastosuj przez `npx hyperframes media-treatment --preset {przepis.grading.preset}` z parametrami z `przepis.grading.details` (np. `--vignette 0.25`)

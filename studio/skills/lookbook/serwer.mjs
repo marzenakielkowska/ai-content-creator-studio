@@ -158,9 +158,11 @@ function startServer(port) {
       res.end(JSON.stringify(grouped));
       return;
     }
-    if (p === '/api/gotowe') {
+    if (p === '/api/zastapione') {
+      let mapa = {};
+      try { mapa = JSON.parse(fs.readFileSync(path.join(LOOKBOOK, 'zastapione.json'), 'utf8')).efekty || {}; } catch {}
       res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-      res.end(JSON.stringify(readItems(path.join(LOOKBOOK, 'gotowe'), 'gotowy.json')));
+      res.end(JSON.stringify(mapa));
       return;
     }
     if (p === '/api/styl') {
@@ -199,14 +201,14 @@ function startServer(port) {
     }
 
     // Video streaming
-    const videoM = p.match(/^\/podglad\/(napisy|efekty|gotowe)\/([^/]+)$/);
+    const videoM = p.match(/^\/podglad\/(napisy|efekty)\/([^/]+)$/);
     if (videoM) {
       serveVideo(path.join(LOOKBOOK, videoM[1], videoM[2], 'podglad.mp4'), req, res);
       return;
     }
 
     // Poster (thumbnail) serving
-    const posterM = p.match(/^\/poster\/(napisy|efekty|gotowe)\/([^/]+)$/);
+    const posterM = p.match(/^\/poster\/(napisy|efekty)\/([^/]+)$/);
     if (posterM) {
       const base = path.join(LOOKBOOK, posterM[1], posterM[2]);
       const jpg = path.join(base, 'podglad.jpg');

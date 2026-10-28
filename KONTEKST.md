@@ -74,7 +74,9 @@ Gdy brak `moj-styl.json`, montaż pyta: film wzorcowy, opis słowami albo lookbo
 
 ## Lookbook (`studio/lookbook/`)
 
-- `gotowe/` — 3 gotowe zestawy: ciepły wieczór, delikatna siła, energia
+- Gotowe zestawy (ciepły wieczór, delikatna siła, energia) usunięte 2026-10-28: wskazywały nieistniejące efekty,
+  kursantki i tak komponują własny styl.
+- `zastapione.json` — efekty usunięte z Lookbooka i ich zastępcy (Lookbook i montaż podmieniają stary identyfikator)
 - `napisy/` — 6 stylów napisów (stare; 23 nowe czekają na prawdziwe podglądy)
 - `efekty/` — 13 efektów, opis wykonania w `efekty/INDEX.md`
 - Efekt „Przed i po” (październik 2026) ma pełne wykonanie: HyperFrames (`hf/`), `PRZEPIS.md`,
@@ -91,7 +93,7 @@ Lookbook ma 7 kroków (sekcji):
 4. Krok 4 — **Układ** — suwaki pozycji napisów (24–55% od dołu) i nagłówka (12–50% od góry; dolne granice = strefy Instagrama); podgląd telefonu odświeża się na żywo
 5. Krok 5 — Czcionki (czcionka napisów, nagłówka, CTA)
 6. Krok 6 — Dźwięki
-7. Krok 7 — Styl (gotowy zestaw)
+7. Krok 7 — Styl wizualny (wygląd obrazu)
 
 Zapisywanie: możliwe z samym efektem (bez napisów). Przycisk „Wyczyść wybór” kasuje poszczególne sekcje. Po zapisaniu kursantka dostaje podpowiedź `/studio:montaz`.
 

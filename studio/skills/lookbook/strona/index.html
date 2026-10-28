@@ -46,7 +46,6 @@ h3 small{font-size:14px;color:var(--muted);font-weight:600;letter-spacing:0}
 
 section.block{padding-block:56px 8px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px;margin-top:18px}
-.looks .grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
 .card{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:10px;border-radius:24px;padding:12px 12px 16px;border:1.5px solid var(--line);position:relative;min-width:0}
 .card:nth-child(3n+1){background:var(--tint-pink)}
 .card:nth-child(3n+2){background:var(--tint-peach)}
@@ -63,10 +62,6 @@ section.block{padding-block:56px 8px}
 .desc{color:var(--muted);font-size:14px;line-height:1.45;padding:0 4px;margin-top:-4px}
 .best{padding:0 4px;font-size:13px;line-height:1.4;color:var(--ink)}
 .best b{display:block;color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
-.layers{display:grid;gap:4px;padding:0 4px;margin:0;font-size:13px}
-.layers div{display:grid;grid-template-columns:92px 1fr;gap:8px}
-.layers dt{color:var(--muted);font-weight:700}
-.layers dd{margin:0;font-weight:700}
 
 /* Frame podglądu */
 .frame{aspect-ratio:9/16;max-width:100%;border-radius:16px;overflow:hidden;position:relative;background:linear-gradient(170deg,var(--frame-b),var(--frame-a) 55%,var(--frame-c))}
@@ -472,13 +467,6 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
       <button class="lb-tab" id="lt-efekty" data-tab="efekty" aria-selected="false">Co dodać do tego filmu</button>
     </div>
 
-    <section class="block looks" id="sec-ready" hidden>
-      <div class="eyebrow">Gotowe style</div>
-      <h2>Cały look jednym kliknięciem</h2>
-      <p class="lead">Każdy gotowy styl to komplet: napisy, efekty, tempo montażu i wygląd obrazu.</p>
-      <div class="grid" id="g-ready"></div>
-    </section>
-
     <section class="block" id="sec-hooki">
       <div class="eyebrow">Krok A · Hook</div>
       <h2>Pierwsze sekundy</h2>
@@ -803,7 +791,7 @@ input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--li
 </div></div>
 
 <script>
-let mode = 'own', ready = null, cap = null, hook = null, fx = {}, partsOn = false;
+let mode = 'own', cap = null, hook = null, fx = {}, partsOn = false;
 let snd = new Set(), plotno = [], styl = null, tempo = null, zoom = null;
 let lbTab = 'marka';
 let allFxIds = [];
@@ -1197,16 +1185,6 @@ function card(item, kind, typ, maps) {
   let html = buildFrame(item, typ);
   html += `<div class="title">${item.nazwa}</div>`;
   if (item.opis) html += `<div class="desc">${item.opis}</div>`;
-  if (kind === 'ready' && maps) {
-    const nNazwa = maps.napisy[item.napisy]?.nazwa || item.napisy;
-    const eNazwy = (item.efekty || []).map(id => maps.efekty[id]?.nazwa || id).join(', ');
-    html += `<dl class="layers">
-      <div><dt>Napisy</dt><dd>${nNazwa}</dd></div>
-      <div><dt>Efekty</dt><dd>${eNazwy}</dd></div>
-      <div><dt>Tempo</dt><dd>${item.tempo}</dd></div>
-      <div><dt>Obraz</dt><dd>${item.obraz}</dd></div>
-    </dl>`;
-  }
   if (item.najlepsze_do) html += `<div class="best"><b>Najlepsze do</b>${item.najlepsze_do}</div>`;
   el.innerHTML = html;
 
@@ -1287,8 +1265,6 @@ function card(item, kind, typ, maps) {
       } else {
         fx[item.id] = [];
       }
-    } else {
-      ready = ready === item.id ? null : item.id;
     }
     render();
   };
@@ -1340,7 +1316,6 @@ function sndCard(item) {
 }
 
 function render() {
-  if ($('#sec-ready')) $('#sec-ready').hidden = mode !== 'ready';
   const isMarka = mode === 'own' && lbTab === 'marka';
   const isEfekty = mode === 'own' && lbTab === 'efekty';
   $('#lb-tabs').hidden = mode !== 'own';
@@ -1415,8 +1390,6 @@ function render() {
   const allOn = allFxIds.length > 0 && allFxIds.every(id => fx[id] !== undefined);
   $('#all').textContent = allOn ? 'Odznacz wszystkie' : 'Zaznacz wszystkie';
 
-  document.querySelectorAll('[id^="ready-"]').forEach(el =>
-    el.setAttribute('aria-pressed', ready === el.id.slice(6)));
   document.querySelectorAll('[id^="hook-"]').forEach(el =>
     el.setAttribute('aria-pressed', hook === el.id.slice(5)));
   document.querySelectorAll('[id^="cap-"]').forEach(el =>
@@ -1468,11 +1441,7 @@ function render() {
   };
 
   const hasMarkaData = Object.values(fonts).some(Boolean) || hasCustomKolory() || hasCustomUklad() || plotno.length > 0 || tempo !== null || zoom !== null || snd.size > 0;
-  if (mode === 'ready' && ready) {
-    const el = $(`#ready-${ready}`);
-    addChip((el?.querySelector('.title')?.textContent || ready) + ' · gotowy styl', 'sec-ready', false, () => { ready = null; });
-    ok = true;
-  } else if (mode === 'own' && lbTab === 'marka') {
+  if (mode === 'own' && lbTab === 'marka') {
     const nFonts = Object.values(fonts).filter(Boolean).length;
     if (nFonts) addChip(nFonts + (nFonts === 1 ? ' czcionka' : nFonts < 5 ? ' czcionki' : ' czcionek'), 'sec-czcionki', false, () => { fonts = { glowna: null, akcent: null, odreczna: null }; });
     if (hasCustomKolory()) {
@@ -1510,7 +1479,7 @@ function render() {
   const saveMBtn = $('#save-marka');
   if (saveMBtn) saveMBtn.disabled = !hasMarkaData;
   $('#save').disabled = !ok;
-  const hasAny = ready !== null || hook !== null || cap !== null || Object.keys(fx).length > 0 || snd.size > 0 || styl !== null || hasCustomUklad() || hasCustomKolory() || Object.values(fonts).some(Boolean) || tempo !== null || zoom !== null;
+  const hasAny = hook !== null || cap !== null || Object.keys(fx).length > 0 || snd.size > 0 || styl !== null || hasCustomUklad() || hasCustomKolory() || Object.values(fonts).some(Boolean) || tempo !== null || zoom !== null;
   $('#clear').disabled = !hasAny;
 }
 
@@ -1520,7 +1489,6 @@ function clearAll() {
   hook = null;
   snd = new Set();
   styl = null;
-  ready = null;
   fonts = { glowna: null, akcent: null, odreczna: null };
   kolory = { ...KOLORY_DEFAULT };
   paletaAktywna = null;
@@ -1532,34 +1500,29 @@ function clearAll() {
 }
 
 async function zapisz() {
-  let out;
-  if (mode === 'ready') {
-    out = { tryb: 'gotowy', styl: ready };
-  } else {
-    const efekty = {};
-    for (const [k, v] of Object.entries(fx)) {
-      if (v !== null && typeof v === 'object' && !Array.isArray(v)) {
-        efekty[k] = v;
-      } else {
-        efekty[k] = partsOn && Array.isArray(v) && v.length ? v : 'wszedzie';
-      }
+  const efekty = {};
+  for (const [k, v] of Object.entries(fx)) {
+    if (v !== null && typeof v === 'object' && !Array.isArray(v)) {
+      efekty[k] = v;
+    } else {
+      efekty[k] = partsOn && Array.isArray(v) && v.length ? v : 'wszedzie';
     }
-    out = { tryb: 'wlasny', napisy: cap, efekty };
-    if (hook) out.hook = hook;
-    if (snd.size > 0) out.dzwieki = [...snd];
-    if (styl) out.styl = styl;
-    const anyFont = fonts.glowna || fonts.akcent || fonts.odreczna;
-    if (anyFont) {
-      out.czcionki = {};
-      if (fonts.glowna) out.czcionki.glowna = fonts.glowna;
-      if (fonts.akcent) out.czcionki.akcent = fonts.akcent;
-      if (fonts.odreczna) out.czcionki.odreczna = fonts.odreczna;
-    }
-    if (hasCustomKolory()) out.kolory = { ...kolory };
-    if (hasCustomUklad()) out.uklad = { ...uklad };
-    if (tempo) out.tempo = tempo;
-    if (zoom) out.zoom = zoom;
   }
+  const out = { tryb: 'wlasny', napisy: cap, efekty };
+  if (hook) out.hook = hook;
+  if (snd.size > 0) out.dzwieki = [...snd];
+  if (styl) out.styl = styl;
+  const anyFont = fonts.glowna || fonts.akcent || fonts.odreczna;
+  if (anyFont) {
+    out.czcionki = {};
+    if (fonts.glowna) out.czcionki.glowna = fonts.glowna;
+    if (fonts.akcent) out.czcionki.akcent = fonts.akcent;
+    if (fonts.odreczna) out.czcionki.odreczna = fonts.odreczna;
+  }
+  if (hasCustomKolory()) out.kolory = { ...kolory };
+  if (hasCustomUklad()) out.uklad = { ...uklad };
+  if (tempo) out.tempo = tempo;
+  if (zoom) out.zoom = zoom;
   out.zapisano = new Date().toISOString().slice(0, 10);
 
   const btn = $('#save');
@@ -1619,15 +1582,15 @@ async function zapiszMarke() {
 
 async function init() {
   try {
-    const [napisy, efektyGrupy, gotowe, dzwieki, styleLista, hooki, savedBrand, savedStyl] = await Promise.all([
+    const [napisy, efektyGrupy, dzwieki, styleLista, hooki, savedBrand, savedStyl, zastapione] = await Promise.all([
       fetch('/api/napisy').then(r => r.json()),
       fetch('/api/efekty').then(r => r.json()),
-      fetch('/api/gotowe').then(r => r.json()),
       fetch('/api/dzwieki').then(r => r.json()).catch(() => []),
       fetch('/api/styl').then(r => r.json()).catch(() => []),
       fetch('/api/hooki').then(r => r.json()).catch(() => []),
       fetch('/api/moj-brand').then(r => r.json()).catch(() => null),
       fetch('/api/moj-styl').then(r => r.json()).catch(() => null),
+      fetch('/api/zastapione').then(r => r.json()).catch(() => ({})),
     ]);
 
     const napisyMap = Object.fromEntries(napisy.map(n => [n.id, n]));
@@ -1694,8 +1657,6 @@ async function init() {
       quickNav.appendChild(btn);
     });
 
-    gotowe.forEach(s => $('#g-ready').appendChild(card(s, 'ready', 'gotowe', maps)));
-
     dzwieki.forEach(d => $('#g-snd').appendChild(sndCard(d)));
 
     styleLista.forEach(s => {
@@ -1737,37 +1698,30 @@ async function init() {
       if (savedBrand.dzwieki) savedBrand.dzwieki.forEach(d => snd.add(d));
     }
 
-    // Pre-load efekty i styl
-    if (savedStyl) {
-      if (savedStyl.tryb === 'gotowy') {
-        mode = 'ready';
-        ready = savedStyl.styl || null;
-      } else {
-        mode = 'own';
-        if (savedStyl.napisy && napisyMap[savedStyl.napisy]) cap = savedStyl.napisy;
-        if (savedStyl.hook) hook = savedStyl.hook;
-        if (savedStyl.efekty) {
-          fx = {};
-          for (const [id, val] of Object.entries(savedStyl.efekty)) {
-            if (efektyMap[id]) fx[id] = val;
-          }
-          partsOn = Object.values(fx).some(v => Array.isArray(v) && v.length > 0);
+    // Pre-load efekty i styl. Dawny zapis „gotowy styl” (usunięty z Lookbooka) traktujemy jak brak zapisu efektów.
+    if (savedStyl && savedStyl.tryb !== 'gotowy') {
+      if (savedStyl.napisy && napisyMap[savedStyl.napisy]) cap = savedStyl.napisy;
+      if (savedStyl.hook) hook = savedStyl.hook;
+      if (savedStyl.efekty) {
+        fx = {};
+        for (const [stare, val] of Object.entries(savedStyl.efekty)) {
+          const id = zastapione[stare] || stare;  // efekt z archiwum → jego aktualny zastępca
+          if (efektyMap[id]) fx[id] = val;
         }
-        if (savedStyl.styl) styl = savedStyl.styl;
-        if (savedStyl.czcionki) fonts = { glowna: null, akcent: null, odreczna: null, ...savedStyl.czcionki };
-        if (savedStyl.kolory) kolory = { ...kolory, ...savedStyl.kolory };
-        if (savedStyl.uklad) uklad = { ...uklad, ...savedStyl.uklad };
-        if (savedStyl.tempo) tempo = savedStyl.tempo;
-        if (savedStyl.zoom) zoom = savedStyl.zoom;
-        if (savedStyl.dzwieki) savedStyl.dzwieki.forEach(d => snd.add(d));
+        partsOn = Object.values(fx).some(v => Array.isArray(v) && v.length > 0);
       }
+      if (savedStyl.styl) styl = savedStyl.styl;
+      if (savedStyl.czcionki) fonts = { glowna: null, akcent: null, odreczna: null, ...savedStyl.czcionki };
+      if (savedStyl.kolory) kolory = { ...kolory, ...savedStyl.kolory };
+      if (savedStyl.uklad) uklad = { ...uklad, ...savedStyl.uklad };
+      if (savedStyl.tempo) tempo = savedStyl.tempo;
+      if (savedStyl.zoom) zoom = savedStyl.zoom;
+      if (savedStyl.dzwieki) savedStyl.dzwieki.forEach(d => snd.add(d));
     }
 
     // Domyślne zaznaczenia tylko gdy brak zapisanego stanu
     if (!savedStyl && !savedBrand) {
       if (napisyMap['biale-pod-broda']) cap = 'biale-pod-broda';
-      if (efektyMap['pop-in']) fx['pop-in'] = [];
-      if (efektyMap['wjazd-z-boku']) fx['wjazd-z-boku'] = [];
     }
     if (!savedBrand?.plotno && plotno.length === 0) {
       plotno = PLOTNO_OPTIONS.map(o => ({ id: o.id, kolor: o.kolor, nazwa: o.nazwa }));

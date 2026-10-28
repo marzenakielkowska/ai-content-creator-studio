@@ -48,7 +48,6 @@ Jeśli po 20 minutach nie pojawi się `ZAPISANO:`, zapytaj kursantkę, czy coś 
 
 Odczytaj JSON z linii `ZAPISANO:` i powiedz kursantce, co wybrała:
 
-- `"tryb": "gotowy"`: „Zapisałam Twój styl: **[nazwa]**. Od teraz każdy film będzie montowany w tym stylu."
 - `"tryb": "wlasny"` z napisami i efektami: „Zapisałam Twój wybór: napisy **[nazwa napisów]** i [liczba] efektów. Od teraz każdy film będzie montowany w tym stylu."
 - `"tryb": "wlasny"` tylko efekty (bez napisów): „Zapisałam Twój wybór: efekt **[nazwa efektu]**, bez napisów. Od teraz każdy film będzie montowany w tym stylu."
 - `"tryb": "wlasny"` tylko napisy: „Zapisałam: napisy **[nazwa napisów]**, bez efektów."
