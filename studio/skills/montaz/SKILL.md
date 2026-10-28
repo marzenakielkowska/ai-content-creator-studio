@@ -131,7 +131,11 @@ Kursantka może podać URL w trzech sytuacjach. We wszystkich trzech pobierz wid
 ```
 
 Ścieżkę do yt-dlp odczytaj z `~/.ai-content-studio/narzedzia.json` (pole `yt-dlp`).
-Jeśli brak — poproś o uruchomienie `/studio:start`.
+Jeśli brak — nie odsyłaj kursantki do `/studio:start`. Zapytaj od razu, jednym zdaniem:
+„Do pobrania filmu z linku potrzebny jest mały program (około 30 MB, trafi do folderu Studio). Pobrać go?”
+Po „tak” uruchom `instaluj-yt-dlp` ze skilla start (polecenie i ścieżka: `start/SKILL.md`, sekcja „Skąd uruchamiać
+skrypty”). Pobiera wyłącznie ten program. Przy `STATUS yt-dlp OK` odczytaj `narzedzia.json` ponownie i kontynuuj.
+Po „nie” albo przy `STATUS yt-dlp BRAK` — pobierz przez konektor Apify (zdanie poniżej).
 Jeśli yt-dlp zawiedzie — powiedz „Nie udało mi się pobrać automatycznie, korzystam z Apify." i pobierz przez konektor Apify.
 
 **Sytuacja 1 — materiał do montażu:**

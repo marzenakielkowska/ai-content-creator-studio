@@ -50,6 +50,8 @@ Kursantka pyta: *„Zrób mi efekt przed i po"* lub wybiera go z Lookbooka.
 - Jedno nagranie 9:16, kamera nieruchoma, ta sama scena przed i po zmianie
 - Minimalna długość: 7 sekund
 
+**Wymaga Pythona 3** (opcjonalnego w Studio). Gdy go nie ma — zobacz „Najpierw Python” w `przed-i-po/PRZEPIS.md`.
+
 **Kroki (Claude wykonuje):**
 ```
 1. python3 "SK/../../lookbook/efekty/przed-i-po/measure.py" <plik-wideo>

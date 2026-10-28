@@ -63,12 +63,17 @@ Po każdej linijce powinien pojawić się zielony znaczek ✔ i słowo „Succes
    ```
 
 3. Claude sprawdzi Twój komputer i pokaże, czego brakuje do montażu oraz ile to waży (za pierwszym razem około
-   1,2 GB). Pobiera dopiero po Twojej zgodzie.
+   1,2 GB). Na liście jest wszystko, co Studio chce pobrać, także małe dodatki. Pobiera dopiero po Twojej zgodzie.
 4. Odpowiedz na dwa pytania o foldery: gdzie lądują Twoje nagrania i gdzie zapisywać gotowe rolki.
 5. Na koniec Claude sprawdzi, czy wszystko działa.
 
 Wszystkie narzędzia trafiają do jednego folderu Studio w Twoim katalogu domowym (`.ai-content-studio`). Nic nie jest
 instalowane w systemie i nie jest potrzebne hasło administratora.
+
+**Python jest opcjonalny.** Studio go nie instaluje i montaż działa bez niego. Potrzebny jest tylko do efektu
+„Przed i po”. Jeśli chcesz z niego korzystać: na Macu wystarczy zgodzić się na „narzędzia dla programistów”, gdy
+komputer o nie zapyta; na Windowsie pobierz Pythona ze strony [python.org](https://www.python.org/downloads/)
+i przy instalacji zaznacz „Add python.exe to PATH”. Claude powie Ci przy `/studio:start`, czy go masz.
 
 Chcesz tylko sprawdzić, czy wtyczka jest zainstalowana? Wpisz `/studio:witaj`.
 
@@ -86,7 +91,8 @@ Chcesz tylko sprawdzić, czy wtyczka jest zainstalowana? Wpisz `/studio:witaj`.
   klatki do sprawdzenia jakości. Dzieje się to w Twojej rozmowie z Claude, na Twoim koncie, tak jak przy każdej
   innej pracy z Claude.
 - **Narzędzia innych firm.** Studio korzysta z gotowych narzędzi, które pobiera przy pierwszym uruchomieniu:
-  Node.js, FFmpeg, HyperFrames (od firmy HeyGen), przeglądarki do renderu i modelu mowy. Każde z nich działa według
+  Node.js, FFmpeg, HyperFrames (od firmy HeyGen), przeglądarki do renderu, modelu mowy i programu do pobierania
+  filmów z linków (yt-dlp). Każde z nich działa według
   zasad i polityki prywatności swojego twórcy. Opis powyżej dotyczy wtyczki i autorki kursu, nie tych narzędzi
   ani samego Claude.
 
@@ -112,6 +118,8 @@ Gdyby automatyczne aktualizacje były kiedyś wyłączone, możesz je włączyć
 - **„Cannot add marketplace … doesn't match”**: sklep jest już dodany innym sposobem. Pomiń dodawanie i od razu
   zainstaluj wtyczkę: `claude plugin install studio@ai-content-studio`.
 - **Pobieranie przerwane**: wpisz `/studio:start` jeszcze raz. To, co już jest, zostanie pominięte.
+- **Po aktualizacji Studio czegoś brakuje**: nowa wersja może potrzebować nowego dodatku. Wpisz `/studio:start`;
+  Claude pokaże, czego brakuje, i pobierze to dopiero po Twojej zgodzie.
 
 ## Pomoc
 
@@ -121,5 +129,6 @@ Napisz na adres wsparcia podany w kursie. Opisz, co robiłaś lub robiłeś i co
 
 © 2026 Marzena Kiełkowska. Dla kursantów AI Content Creator Studio, na warunkach opisanych w pliku
 [LICENSE.md](LICENSE.md). Projekt niezależny, niepowiązany z Anthropic. Narzędzia pobierane przy pierwszym
-uruchomieniu (Node.js, FFmpeg, HyperFrames, przeglądarka do renderu, model mowy) pochodzą od ich twórców i działają na
+uruchomieniu (Node.js, FFmpeg, HyperFrames, przeglądarka do renderu, model mowy, yt-dlp) pochodzą od ich twórców
+i działają na
 własnych licencjach.

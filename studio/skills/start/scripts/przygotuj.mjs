@@ -169,7 +169,10 @@ function ktory(nazwa) {
   return r.out.split(/\r?\n/).map((l) => l.trim()).find(Boolean) || null;
 }
 
-// ---------- Python / Pillow ----------
+// ---------- Python (opcjonalny) ----------
+//
+// Studio nie instaluje Pythona ani bibliotek Pythona. Sprawdza tylko, czy jest, bo potrzebuje go efekt
+// "Przed i po". Gdy go nie ma, montaz dziala, a kursant dostaje informacje, do czego Python by sie przydal.
 
 function znajdzPython() {
   const kandydaci = WIN
@@ -180,50 +183,6 @@ function znajdzPython() {
     if (r.ok && r.out.trim().startsWith('3')) return p;
   }
   return null;
-}
-
-function sprawdzPillow(python) {
-  if (!python) return false;
-  const r = uruchom(python, ['-c', 'import PIL; print(PIL.__version__)'], { timeout: 8000 });
-  return r.ok;
-}
-
-function instalujPillow(python) {
-  const cel = path.join(DOM, 'python-packages');
-  fs.mkdirSync(cel, { recursive: true });
-  const r = uruchom(python, ['-m', 'pip', 'install', '--target', cel, '--quiet', 'Pillow'], {
-    timeout: 120000,
-    dziennik: true,
-  });
-  if (!r.ok) throw new BladKroku('instalacja Pillow nie powiodla sie');
-}
-
-function sprawdzNumpy(python) {
-  if (!python) return false;
-  const r = uruchom(python, ['-c', 'import numpy; print(numpy.__version__)'], { timeout: 8000 });
-  return r.ok;
-}
-
-function instalujNumpy(python) {
-  const r = uruchom(python, ['-m', 'pip', 'install', '--user', '--quiet', 'numpy'], {
-    timeout: 120000,
-    dziennik: true,
-  });
-  if (!r.ok) throw new BladKroku('instalacja numpy nie powiodla sie');
-}
-
-function sprawdzRembg(python) {
-  if (!python) return false;
-  const r = uruchom(python, ['-c', 'import rembg; import onnxruntime'], { timeout: 10000 });
-  return r.ok;
-}
-
-function instalujRembg(python) {
-  const r = uruchom(python, ['-m', 'pip', 'install', '--user', '--quiet', 'rembg', 'onnxruntime'], {
-    timeout: 300000,
-    dziennik: true,
-  });
-  if (!r.ok) throw new BladKroku('instalacja rembg nie powiodla sie');
 }
 
 // ---------- yt-dlp ----------
@@ -345,9 +304,6 @@ function stan() {
     transkrypcjaPowod: '',
     ustawienia: czytajUstawienia(),
     python: python,
-    pillow: python ? sprawdzPillow(python) : false,
-    numpy: python ? sprawdzNumpy(python) : false,
-    rembg: python ? sprawdzRembg(python) : false,
     ytdlp: znajdzYtdlp(),
   };
   if (s.hf) {
@@ -405,18 +361,18 @@ function wypiszStan(s) {
   }
   if (s.ustawienia) wypisz(`STATUS ustawienia OK nagrania=${s.ustawienia.nagrania} projekty=${s.ustawienia.projekty}`);
   else wypisz('STATUS ustawienia BRAK');
-  if (s.python && s.pillow) wypisz('STATUS pillow OK');
-  else if (s.python && !s.pillow) wypisz('STATUS pillow BRAK python-jest-ale-pillow-nie');
-  else wypisz('STATUS pillow BRAK python-nie-znaleziony');
-  if (s.python && s.numpy) wypisz('STATUS numpy OK');
-  else if (s.python && !s.numpy) wypisz('STATUS numpy BRAK');
-  if (s.python && s.rembg) wypisz('STATUS rembg OK');
-  else if (s.python && !s.rembg) wypisz('STATUS rembg BRAK');
+  wypisz(s.python ? 'STATUS python OK' : 'STATUS python BRAK');
   if (s.ytdlp) wypisz(`STATUS yt-dlp OK ${s.ytdlp.wersja} ${s.ytdlp.zrodlo}`);
-  else wypisz('STATUS yt-dlp BRAK');
+  else {
+    wypisz('STATUS yt-dlp BRAK');
+    doPobrania += mb['yt-dlp'];
+  }
   wypisz(`STATUS autoaktualizacja ${autoAktualizacja(false)}`);
   wypisz(`STATUS do_pobrania_mb ${doPobrania}`);
-  const gotowe = narzedziaGotowe(s) && Boolean(s.ustawienia);
+  // yt-dlp liczy sie do "gotowe", ale nie do narzedziaGotowe: bez niego narzedzia.json nadal sie zapisuje,
+  // wiec montaz z pliku dziala, a /studio:start dociaga yt-dlp u osob z instalacja sprzed jego dodania.
+  // Python jest opcjonalny i nie wplywa na "gotowe".
+  const gotowe = narzedziaGotowe(s) && Boolean(s.ustawienia) && Boolean(s.ytdlp);
   wypisz(`WYNIK ${gotowe ? 'GOTOWE' : 'NIEGOTOWE'}`);
   return gotowe;
 }
@@ -645,26 +601,10 @@ function instaluj() {
     }
   }
 
-  // Pillow (biblioteka graficzna Pythona do nakładania screenshotów)
-  s = stan();
-  if (s.python && !s.pillow) {
-    krok('pillow', 'okolo 4 MB (biblioteka graficzna)', () => instalujPillow(s.python));
-  } else if (!s.python) {
-    wypisz('INFO pillow Python 3 nie znaleziony — komenda overlay-image bedzie niedostepna');
-  }
-
-  // numpy (biblioteka matematyczna do efektow wideo)
-  s = stan();
-  if (s.python && !s.numpy) {
-    krok('numpy', 'okolo 20 MB (biblioteka matematyczna do efektow)', () => instalujNumpy(s.python));
-  }
-
-  // rembg NIE jest instalowane automatycznie — pobierane tylko gdy konkretny efekt tego wymaga
-
   // yt-dlp (pobieranie rolek z linku)
   s = stan();
   if (!s.ytdlp) {
-    krok('yt-dlp', 'okolo 30 MB (pobieranie rolek z internetu)', () => instalujYtdlp());
+    krok('yt-dlp', `okolo ${mb['yt-dlp']} MB (pobieranie rolek z internetu)`, () => instalujYtdlp());
   }
 
   wypisz(`KROK autoaktualizacja ${autoAktualizacja(true)}`);
@@ -843,6 +783,16 @@ switch (tryb) {
   case 'instaluj':
     ok = instaluj();
     break;
+  case 'instaluj-yt-dlp': {
+    // Tylko yt-dlp, gdy montaz dostaje link, a programu brak. Nic poza nim nie pobiera.
+    fs.mkdirSync(DOM, { recursive: true });
+    if (!znajdzYtdlp()) krok('yt-dlp', `okolo ${WERSJE.rozmiary_mb['yt-dlp']} MB (pobieranie rolek z internetu)`, () => instalujYtdlp());
+    const s = stan();
+    zapiszNarzedzia(s);
+    wypisz(s.ytdlp ? `STATUS yt-dlp OK ${s.ytdlp.wersja} ${s.ytdlp.zrodlo}` : 'STATUS yt-dlp BRAK');
+    ok = Boolean(s.ytdlp);
+    break;
+  }
   case 'ustaw':
     ok = ustaw(reszta);
     break;
@@ -853,7 +803,7 @@ switch (tryb) {
     ok = aktualizuj(reszta);
     break;
   default:
-    wypisz(`STATUS blad nieznane polecenie ${tryb} (uzyj: sprawdz, instaluj, ustaw, test, aktualizuj)`);
+    wypisz(`STATUS blad nieznane polecenie ${tryb} (uzyj: sprawdz, instaluj, instaluj-yt-dlp, ustaw, test, aktualizuj)`);
     ok = false;
 }
 process.exitCode = ok ? 0 : 1;

@@ -17,6 +17,7 @@
     "ffmpeg": 200,
     "hyperframes": 100,
     "przegladarka": 150,
-    "transkrypcja": 700
+    "transkrypcja": 700,
+    "yt-dlp": 30
   }
 }

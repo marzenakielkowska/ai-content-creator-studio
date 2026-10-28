@@ -95,7 +95,16 @@ Animacje:
 
 ## Workflow — bez iteracji
 
-Ten efekt to **samodzielny klip 7s** — nie nakładka. Workflow:
+Ten efekt to **samodzielny klip 7s** — nie nakładka.
+
+**Najpierw Python.** Skrypty tego efektu potrzebują Pythona 3 (bez dodatkowych bibliotek). Studio go nie instaluje.
+Sprawdź `python3 --version` (Windows: `python --version`). Jeśli go nie ma, nie instaluj go za kursantkę. Powiedz jej:
+
+> Efekt „Przed i po” potrzebuje Pythona, którego nie masz na komputerze. Na Macu wystarczy zgodzić się na „narzędzia
+> dla programistów”, gdy komputer o nie zapyta; na Windowsie pobierz go ze strony python.org i przy instalacji zaznacz
+> „Add python.exe to PATH”. Daj znać, gdy będzie gotowe — albo wybierzmy na ten moment inny efekt.
+
+Workflow:
 
 ```
 1. python3 measure.py <wideo>      ← walidacja, podgląd klatki, STATUS lines

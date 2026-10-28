@@ -130,6 +130,11 @@ Gotowy styl łączy napisy + efekty w jeden pakiet.
 ## Workflow
 
 1. Dodajesz folder + JSON ze `"status": "szkic"` — niewidoczny dla kursantek.
+   **Czy efekt potrzebuje programu albo biblioteki, której Studio jeszcze nie instaluje** (np. Pillow, numpy,
+   Python)? Jeśli tak: dopisz ją do `/studio:start` (`skills/start/scripts/przygotuj.mjs` + `wersje.json` +
+   tabela w `skills/start/SKILL.md`, tak żeby była na liście przed zgodą) albo — jeśli jest opcjonalna — dodaj
+   na początku `PRZEPIS.md` sprawdzenie i komunikat dla kursantki, jak w `efekty/przed-i-po/PRZEPIS.md`
+   („Najpierw Python”). Nic nie instaluje się po cichu.
 2. Testujesz lokalnie: `node studio/skills/lookbook/serwer.mjs`
 3. Gdy gotowy: zmieniasz na `"status": "gotowy"`.
 4. Wypychasz na GitHub: `git add . && git commit -m "nowy styl: ..." && git push`

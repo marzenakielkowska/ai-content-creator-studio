@@ -19,17 +19,19 @@ Wtyczka instaluje się przez: `claude plugin marketplace add marzenakielkowska/a
 
 | Skill | Komenda | Co robi |
 |---|---|---|
-| start | `/studio:start` | Instaluje narzędzia: Node, FFmpeg, HyperFrames, model mowy, przeglądarka do renderu, Pillow, numpy, **yt-dlp**; włącza automatyczne aktualizacje |
+| start | `/studio:start` | Instaluje narzędzia: Node, FFmpeg, HyperFrames, model mowy, przeglądarka do renderu, **yt-dlp**; sprawdza (nie instaluje) Pythona; włącza automatyczne aktualizacje |
 | witaj | `/studio:witaj` | Sprawdza czy wtyczka działa |
 | lookbook | `/studio:lookbook` | Kursantka wybiera styl napisów, efektów, kolorów, czcionek i układ napisów/nagłówka; zapisuje do `moj-styl.json` |
 | dzwieki | `/studio:dzwieki` | Kursantka wybiera dźwięki, zapisuje do `moj-styl.json` |
 | montaz | `/studio:montaz` | Montaż rolki: 8 kroków z zatrzymaniem na OK po każdym (szczegóły niżej) |
 
-Stos techniczny: Node.js + Shell (Mac) / PowerShell (Windows) + Python 3 do części efektów (Pillow, numpy;
-rembg tylko na żądanie, gdy efekt tego wymaga). Bez sudo.
+Stos techniczny: Node.js + Shell (Mac) / PowerShell (Windows). Python 3 opcjonalny, tylko dla efektu „Przed i po”
+(sama biblioteka standardowa); Studio go nie instaluje, a Pillow/numpy od 2026-10-28 nie są instalowane (nic ich nie
+używało poza `_stare`). Wycinanie z tła: `hyperframes remove-background` (bez Pythona). Zasada: nowy efekt, który
+czegoś potrzebuje, pyta o zgodę w chwili użycia. Bez sudo.
 
 Foldery na komputerze kursantki:
-- `~/.ai-content-studio/` — narzędzia, Pillow (`python-packages`), biblioteka wzorców (`wzorce/`)
+- `~/.ai-content-studio/` — narzędzia, yt-dlp, biblioteka wzorców (`wzorce/`)
 - `~/.ai-content-creator-studio/` — zapisany styl (`moj-styl.json`), używany przez lookbook, dzwieki i montaz
 
 ---
@@ -96,16 +98,27 @@ Zapisywanie: możliwe z samym efektem (bez napisów). Przycisk „Wyczyść wyb�
 2. **`co-nowego.json` przy 0.4.0** opisuje tylko Lookbook, a montaż też wszedł w tej wersji.
 3. **README obiecuje „jeden folder Studio”**, a są dwa (patrz wyżej). Do wyboru: ujednolicić folder
    (zmiana w serwer.mjs lookbooka i dźwięków + SKILL.md) albo poprawić opis w README.
-4. **README mówi, że nic nie jest instalowane w systemie**, a numpy i rembg instalują się przez
-   `pip install --user` (poza folderem Studio). Pillow trafia do folderu Studio. Do ujednolicenia.
-5. **Python nie jest instalowany przez Studio** — skrypty korzystają z `python3`, jeśli jest na komputerze.
-   Na Windowsie często go nie ma. README nie wymienia Pythona w wymaganiach.
+4. ~~numpy i rembg poza folderem Studio~~ — załatwione 2026-10-28: Studio nie instaluje już bibliotek Pythona.
+   Zostaje zapasowa droga `pip install rembg` w PRZEPIS.md efektów wycieta-z-tla i orbita (pyta o zgodę, ale
+   polecenie `rembg i` działa tylko na zdjęciach, nie na wideo) — do poprawy albo usunięcia.
+5. ~~Python nie w wymaganiach~~ — załatwione 2026-10-28: README i /studio:start mówią, że jest opcjonalny i do czego.
+   Do rozważenia: przepisać skrypty „Przed i po” z Pythona na Node, wtedy Python znika z wymagań całkiem.
 6. **README: usunąć słowo „testowa"** — gdy studio wyjdzie z fazy testów (lookbook gotowy, ścieżka
    onboardingowa działa), usunąć „Wersja testowa." z bloku info w README.md oraz z sekcji „Stan lookbooka".
 
 ---
 
 ## Kluczowe decyzje projektowe
+
+### Programy i biblioteki potrzebne efektom (ustalone 2026-10-28)
+
+- Studio instaluje tylko to, czego coś faktycznie używa. Pillow i numpy usunięte z instalacji, bo nic aktywnego
+  ich nie używało. Kod ich instalacji jest w historii git (przed commitem „bez bibliotek Pythona”).
+- **Gdy nowy efekt czegoś potrzebuje** — zorganizować to przy dodawaniu efektu: dopisać do `/studio:start`
+  (lista przed zgodą) albo dodać sprawdzenie na początku jego PRZEPIS.md. Zasada jest w `lookbook/JAK-DODAC-STYL.md`.
+- Python opcjonalny (tylko „Przed i po”); kursantka instaluje go sama po informacji.
+- **Wsparcie:** do zrobienia raport dla kursantki (np. `/studio:witaj`), który pokazuje wersję Studio i co jest
+  zainstalowane, żeby na zgłoszenie „nie działa” dało się sprawdzić, czy brakuje programu.
 
 ### Profile klientów (do zrobienia)
 Kursantki montują też dla swoich klientów. Planowana zmiana struktury:

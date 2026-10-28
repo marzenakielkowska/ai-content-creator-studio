@@ -22,7 +22,7 @@ katalogu domowym”. Pełną ścieżkę podaj tylko wtedy, gdy kursant o nią za
    oraz do folderu podręcznego HyperFrames (`.cache/hyperframes`). Nie instaluj niczego systemowo, nie używaj
    `sudo`, Homebrew, winget ani instalatorów `.pkg` / `.msi`, nie zmieniaj ustawień systemu ani profilu powłoki.
    Jedyny wyjątek: skrypt włącza automatyczne aktualizacje Studio w ustawieniach Claude Code (zostawia kopię
-   poprzedniego pliku obok, z końcówką `.ai-studio-kopia`).
+   poprzedniego pliku obok, z końcówką `.ai-studio-kopia`). Pythona ani bibliotek Pythona Studio nie instaluje.
 4. **Pliki kursanta tylko do odczytu.** Nie przenosisz, nie zmieniasz i nie usuwasz jego nagrań.
 5. **Tylko skrypty z tego skilla.** Nie pisz własnych poleceń instalacyjnych w zastępstwie. Gdy skrypt zgłasza błąd,
    postępuj według sekcji „Gdy coś pójdzie nie tak”.
@@ -41,7 +41,8 @@ wywołanie, bez `cd` i bez `&&`.
 Rozpoznaj system, zanim zaczniesz: na Windowsie ścieżki zaczynają się od litery dysku (`C:/...`), a `uname` w Git Bash
 zwraca `MINGW` lub `MSYS`.
 
-Polecenia: `sprawdz`, `instaluj`, `ustaw --nagrania "<folder>" --projekty "<folder>"`, `test`, `aktualizuj`.
+Polecenia: `sprawdz`, `instaluj`, `instaluj-yt-dlp`, `ustaw --nagrania "<folder>" --projekty "<folder>"`, `test`,
+`aktualizuj`. (`instaluj-yt-dlp` pobiera wyłącznie program do filmów z linków; używa go montaż, gdy dostaje link.)
 
 ## Aktualizacje (automatyczne, kursant nic nie robi)
 
@@ -81,6 +82,8 @@ Uruchom `sprawdz`. Trwa kilka sekund i niczego nie pobiera ani nie zmienia. Prze
 | `STATUS przegladarka OK\|BRAK\|NIEZNANE` | ukryta przeglądarka, w której HyperFrames renderuje |
 | `STATUS transkrypcja OK\|BRAK\|NIEZNANE\|NIEOBSLUGIWANA` | model mowy do napisów (rozumie polski) |
 | `STATUS ustawienia OK\|BRAK` | foldery na nagrania i projekty |
+| `STATUS python OK\|BRAK` | Python 3, opcjonalny: potrzebny tylko do efektu „Przed i po”; Studio go nie instaluje (patrz krok 2) |
+| `STATUS yt-dlp OK\|BRAK` | program do pobierania filmów z linków (rolka do montażu albo wzór stylu), około 30 MB |
 | `STATUS autoaktualizacja OK\|WYLACZONA` | czy Studio aktualizuje się samo (`instaluj` to włącza) |
 | `STATUS do_pobrania_mb <liczba>` | ile mniej więcej trzeba pobrać |
 | `WYNIK GOTOWE\|NIEGOTOWE` | podsumowanie |
@@ -89,8 +92,10 @@ Uruchom `sprawdz`. Trwa kilka sekund i niczego nie pobiera ani nie zmienia. Prze
 
 ### Krok 2. Plan dla kursanta
 
-Pokaż krótką listę: co już jest, czego brakuje, łączny rozmiar pobierania. Wyjaśnij jednym zdaniem każdą brakującą
-rzecz. Powiedz, gdzie to trafi i że niczego nie zmieniasz w systemie. Przykład:
+Pokaż krótką listę: co już jest, czego brakuje, łączny rozmiar pobierania. Na liście jest **każda** rzecz, którą
+`instaluj` może pobrać (wszystkie linie `STATUS` poza `python`, `ustawienia` i `autoaktualizacja`), także małe
+dodatki: kursant zgadza się tylko na to, co zobaczył. Wyjaśnij jednym zdaniem każdą brakującą rzecz. Powiedz,
+gdzie to trafi i że niczego nie zmieniasz w systemie. Przykład:
 
 > Sprawdziłam Twój komputer. Do montażu potrzebne są:
 > - Node: jest
@@ -98,11 +103,23 @@ rzecz. Powiedz, gdzie to trafi i że niczego nie zmieniasz w systemie. Przykład
 > - HyperFrames (składa i renderuje rolki): brak
 > - przeglądarka do renderu: brak
 > - model mowy do napisów: brak
+> - program do pobierania filmów z linków (yt-dlp): brak
 >
 > Do pobrania jest razem około 1,2 GB, jednorazowo. Wszystko trafi do jednego folderu Studio w Twoim katalogu domowym;
 > nic nie instaluję w systemie i nie potrzebuję hasła. Zależnie od internetu potrwa to od kilku do kilkunastu minut.
 > Włączę też automatyczne aktualizacje Studio, żeby poprawki przychodziły same.
 > Pobieram?
+
+Gdy `STATUS python BRAK`: pod listą dopisz jedno zdanie (nie pytaj o zgodę, niczego nie pobierasz):
+
+> Pythona nie masz i to w porządku: montaż działa bez niego. Potrzebny jest tylko do efektu „Przed i po”. Jeśli
+> zechcesz go używać, zainstaluj Pythona sama: na Macu wystarczy zgodzić się na „narzędzia dla programistów”, gdy
+> komputer o nie zapyta; na Windowsie pobierz go ze strony python.org i przy instalacji zaznacz „Add python.exe to PATH”.
+
+Nie instaluj Pythona za kursanta i nie uruchamiaj jego instalatora.
+
+Gdy brakuje tylko rzeczy, które doszły w nowszej wersji Studio (np. sam yt-dlp), powiedz:
+„Nowa wersja Studio potrzebuje jeszcze: …” i podaj listę z rozmiarem. Pytanie o zgodę zadaj tak samo.
 
 Gdy `WYNIK GOTOWE`, ale `STATUS autoaktualizacja WYLACZONA`, nie pytaj o nic: uruchom `aktualizuj --teraz` (włącza
 automatyczne aktualizacje) i powiedz o tym jednym zdaniem.
