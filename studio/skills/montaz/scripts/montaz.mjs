@@ -456,14 +456,14 @@ function glowa(argumenty) {
 
 // ---------- strefa bezpieczna ----------
 
-// Pola zajete przez interfejs Reels (na kadrze 1080x1920): gora 220, dol od 1470, boki 35,
-// prawa kolumna 100 px od wysokosci 1155 w dol (ikony polubien i komentarzy).
+// Pola zajete przez interfejs Instagrama (zmierzone na zrzutach ekranu, kadr 1080x1920): gora 0-220,
+// dol od 1470, boki po 60 px (przycinane na wysokich telefonach), kolumna ikon X 900-1080 od Y 1050 w dol.
 const STREFY = [
   [0, 0, W, 220],
   [0, 1470, W, H - 1470],
-  [0, 220, 35, 1250],
-  [W - 35, 220, 35, 935],
-  [W - 100, 1155, 100, 315],
+  [0, 220, 60, 1250],
+  [W - 60, 220, 60, 830],
+  [900, 1050, W - 900, 420],
 ];
 
 function strefa(argumenty) {

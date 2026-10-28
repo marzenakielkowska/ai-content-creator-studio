@@ -48,6 +48,9 @@ Skrypt `scripts/montaz.mjs` (Node + FFmpeg + HyperFrames, bez Pythona; `montaz.s
 (ze sprawdzeniem zgodności klatek), `glowa` (`glowa.json`), `strefa` (nakładka strefy Reels na podglądy),
 `sprawdz-ciecia` (arkusz klatek przed/po cięciu, głośność, kopia 720p), `glosnosc`.
 Przetestowane 2026-10-28 na dwóch nagraniach Marzeny łącznie z renderem HyperFrames.
+Strefy Instagrama (2026-10-28, zmierzone na zrzutach Marzeny, wersja ostrzejsza): góra Y 0–220, dół od Y 1470,
+boki 60 px, kolumna ikon X 900–1080 od Y 1050. Montaż ma też krok 0 (nowa rolka / kontynuacja wg plików w projekcie)
+i tryb cięcia ręczny/automatyczny (`ustawienia-montazu.json`).
 
 | Plik `rules/` | Co zawiera |
 |---|---|
@@ -57,6 +60,7 @@ Przetestowane 2026-10-28 na dwóch nagraniach Marzeny łącznie z renderem Hyper
 | `grafiki.md` | plan, prawda na ekranie, czas wyświetlania, oryginalne zrzuty |
 | `ruch.md` | GSAP: czasy, easing, wzorce wejść/wyjść, efekt na cięciach |
 | `wstawki.md` | animowane wstawki: kiedy równolegle (2+ złożone), zlecenie dla pomocnika |
+| `tryb-tlumaczenia.md` | gdy kursantka tłumaczy proces: podział ekranu, przejście, 15 klocków, napisy w pigułce |
 | `sprawdzanie.md` | 6 defektów, 4 warunki, kontrola cięć na renderze, głośność, kopia na telefon |
 | `pulapki.md` | znane pułapki HyperFrames, FFmpeg i Windows |
 
@@ -84,7 +88,7 @@ Lookbook ma 7 kroków (sekcji):
 1. Krok 1 — Napisy (wybór stylu napisów)
 2. Krok 2 — Efekty (wybór efektów wideo, filtr kategorii)
 3. Krok 3 — Kolory (kolor główny, akcent, nagłówek, CTA)
-4. Krok 4 — **Układ** — suwaki pozycji napisów (8–55% od dołu) i nagłówka (8–50% od góry); podgląd telefonu odświeża się na żywo
+4. Krok 4 — **Układ** — suwaki pozycji napisów (24–55% od dołu) i nagłówka (12–50% od góry; dolne granice = strefy Instagrama); podgląd telefonu odświeża się na żywo
 5. Krok 5 — Czcionki (czcionka napisów, nagłówka, CTA)
 6. Krok 6 — Dźwięki
 7. Krok 7 — Styl (gotowy zestaw)

@@ -17,7 +17,11 @@ obowiązują zawsze; ten plik mówi, jak je spełnić co do piksela.
 - **Napisy wprowadzające (krótkie linie mówione):** wyśrodkowane, w pasie klatki piersiowej, mniej więcej
   Y 950–1300, przed osobą. Wyglądają lepiej niż linie przyklejone do lewej krawędzi. Mogą leżeć na tułowiu,
   nigdy na twarzy. Styl napisów z Lookbooka, który ma własne ułożenie (np. schodki), wygrywa.
+- **Pozycje z Lookbooka** (`uklad.napisy` — % od dołu, `uklad.naglowek` — % od góry): przelicz na piksele
+  (napisy: Y = 1920 − procent × 19,2). Gdy wypada w strefie Instagrama (napisy niżej niż Y 1470, nagłówek wyżej niż
+  Y 220), przesuń do granicy i powiedz kursantce jednym zdaniem dlaczego.
 - **Karty pod brodą:** górna krawędź karty co najmniej `broda_okolo + 40`. Dolna krawędź najwyżej Y 1470.
+  Prawa krawędź najwyżej X 900, jeśli karta schodzi poniżej Y 1050 (kolumna ikon Instagrama).
   Gdy karta się nie mieści, zmniejsz ją albo przenieś nad głowę (Y 220 do `glowa_gora − 40`).
 - **Okno „za osobą”** (aplikacja, strona): na ścianie za mówiącą, warstwa pod sylwetką, głowa może zachodzić na
   dolne ~80 px okna.

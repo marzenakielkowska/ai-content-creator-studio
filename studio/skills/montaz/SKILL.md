@@ -186,7 +186,7 @@ ffmpeg i ffprobe z tego pliku. W przepisach efektów (`PRZEPIS.md`) zapis `npx h
 polecenie.
 
 **Zasady szczegółowe** (czytaj przed danym krokiem): `rules/ciecie.md`, `rules/uklad.md`, `rules/napisy.md`,
-`rules/grafiki.md`, `rules/ruch.md`, `rules/wstawki.md`, `rules/sprawdzanie.md`, a przed budową kompozycji
+`rules/grafiki.md`, `rules/ruch.md`, `rules/wstawki.md`, `rules/tryb-tlumaczenia.md`, `rules/sprawdzanie.md`, a przed budową kompozycji
 i przy każdym błędzie `rules/pulapki.md`.
 
 Kursantce nie pokazuj nazw poleceń, ścieżek ani linii `STATUS` — mów zwykłymi słowami, co robisz.
@@ -196,7 +196,40 @@ Kursantce nie pokazuj nazw poleceń, ścieżek ani linii `STATUS` — mów zwyk�
 ## Montaż — krok po kroku
 
 Projekt: nowy folder `<folder projektów z ustawień Studio>/<krótka-nazwa>_<data>/`. Oryginałów nigdy nie zmieniasz
-ani nie przenosisz — skrypty tylko je czytają.
+ani nie przenosisz — skrypty tylko je czytają. Kompozycja HyperFrames powstaje w `<projekt>/hf/`, rendery
+w `<projekt>/renders/`. Folder projektów odczytasz z `~/.ai-content-studio/ustawienia.json` (pole `projekty`).
+
+### 0. Nowa rolka czy kontynuacja? (na samym początku)
+
+Gdy kursantka nie wrzuciła od razu nagrania, zapytaj jednym zdaniem: „Zaczynamy nową rolkę czy kończymy którąś
+z poprzednich?” Przy kontynuacji pokaż jej listę 5 ostatnich projektów z folderu projektów (nazwa i data) i poproś,
+żeby wskazała numer — nigdy nie proś o ścieżkę.
+
+W wybranym projekcie sprawdź, co już jest, i zacznij od pierwszego kroku, którego jeszcze nie ma. Powiedz kursantce
+jednym zdaniem, w którym miejscu jesteście. Nie powtarzaj kroków, które mają gotowe pliki.
+
+| W projekcie jest… | Znaczy | Zacznij od |
+|---|---|---|
+| tylko `zrodla.json` i `transkrypt.txt` | nagrania wczytane | krok 2 |
+| `edl.json`, brak `assets/aroll.mp4` | plan cięć zapisany, nie pocięte | krok 3 (pokaż plan, czekaj na OK) |
+| `assets/aroll.mp4`, `segmenty.json`, `slowa.json` | rolka złożona | krok 4 |
+| `plan-montazu.md` | plan efektów zatwierdzony | krok 5 |
+| `assets/sylwetka.webm`, `glowa.json` | kadr przygotowany | krok 6 |
+| `hf/index.html` | kompozycja w budowie | krok 7 (lint i podgląd tego, co jest) |
+| `renders/*-v001.mp4` i dalsze | jest render | krok 8 (sprawdź najnowszą wersję) |
+
+Ustawienia z poprzedniej sesji (np. tryb cięcia) są w `<projekt>/ustawienia-montazu.json`.
+
+### Tryb cięcia (jedno pytanie przed krokiem 3)
+
+Zapytaj raz na projekt: „Chcesz przejrzeć i zatwierdzić plan cięć, czy mam sama wyciąć pauzy, pomyłki
+i powtórzenia?”
+- **Ręczny:** pokazujesz plan cięć (krok 3) i czekasz na OK.
+- **Automatyczny:** tniesz bez pytania, wg tych samych zasad (`rules/ciecie.md`). Po złożeniu pokaż krótkie
+  podsumowanie (ile trwało, ile trwa, co wypadło), żeby kursantka mogła coś przywrócić.
+
+Zapisz wybór w `<projekt>/ustawienia-montazu.json` (`{"tryb_ciecia": "reczny" | "automatyczny"}`). Gdy kursantka nie
+wie — wybierz ręczny przy pierwszej rolce, automatyczny przy kolejnych.
 
 ### 1. Wczytanie
 `wczytaj` z plikami, które kursantka wrzuciła (może być kilka nagrań: wszystkie naraz). Obejrzyj arkusze klatek
@@ -208,8 +241,9 @@ Nie poprawiaj faktów samodzielnie. Czekaj na OK.
 
 ### 3. Plan cięć
 Wg `rules/ciecie.md`: najlepsze ujęcie każdego zdania ze wszystkich nagrań, pauzy potwierdzone `pauzy`,
-przybliżenia przy dwóch segmentach z tego samego ujęcia. Zapisz `edl.json`, pokaż kursantce krótką tabelę
-z uzasadnieniem. Tniesz (`zloz`) dopiero po OK. Potem `transkrypcja` na złożonej rolce.
+przybliżenia przy dwóch segmentach z tego samego ujęcia. Zapisz `edl.json`. W trybie ręcznym pokaż kursantce krótką
+tabelę z uzasadnieniem i tnij (`zloz`) dopiero po OK; w automatycznym tnij od razu i pokaż podsumowanie.
+Potem `transkrypcja` na złożonej rolce.
 
 ### 4. Plan montażu
 
@@ -220,7 +254,7 @@ z uzasadnieniem. Tniesz (`zloz`) dopiero po OK. Potem `transkrypcja` na złożon
 | Liczba / statystyka / wynik | wycieta-z-tla z cyfrą lub wykresem |
 | Sekwencja kroków ("najpierw… potem… na końcu…") | karty-kroków lub lista z ptaszkami |
 | Porównanie ("zamiast X → Y", "stare/nowe") | hook z przekreśloną ikoną lub przed-i-po |
-| Workflow / proces krok po kroku | animacja procesu lub plansza z krokami |
+| Workflow / proces krok po kroku, pokazywanie narzędzia | tryb tłumaczenia (`rules/tryb-tlumaczenia.md`) |
 | Moment kulminacyjny / CTA / "obserwuj" | karta-wyniku lub live-profile-cta |
 | "Pokazuję coś na ekranie" / nagranie ekranu | screen recording lub polaroid-w-rogu |
 | Kilka elementów naraz / wyliczanka | orbita lub lista równoległa |
@@ -232,6 +266,8 @@ Napisz jednozdaniowy cel montażu (co ten film ma zrobić z widzem) i podziel wi
 Trzymaj się budżetu: **5–6 efektów na całe wideo**. Ten sam zabieg za każdym razem (jeśli dowód to podzielony ekran raz — to podzielony ekran zawsze). Zostaw momenty tylko z mówiącą twarzą, bez grafik.
 
 Zaproponuj efekty z `styles.md` i Lookbooka. Pokaż listę (max 6 linii): efekt, czas, powód. Czekaj na OK.
+Zatwierdzony plan zapisz w `<projekt>/plan-montazu.md` (cel, sekcje, efekty z czasami) — z niego korzysta
+kontynuacja w kolejnej sesji.
 
 ### 5. Przygotowanie kadru
 Gdy plan ma słowa za głową, karty wokół osoby albo inne efekty z wycięciem z tła: `wytnij-tlo` (w tle — to najdłuższy
@@ -278,30 +314,37 @@ Twarz jest w tej strefie **zawsze** gdy osoba mówi do kamery. Wyjątki: widoczn
 
 #### Gdzie wolno umieszczać grafikę przy gadającej głowie
 
+Dokładne pozycje głowy i brody w danym filmie: `glowa.json` (polecenie `glowa`, zasady w `rules/uklad.md`).
+Bez pomiaru przyjmij strefę twarzy z tabeli wyżej.
+
 | Strefa | Y | X | Co tam pasuje |
 |---|---|---|---|
-| Nad głową | `top: 0–220px` | dowolne | ikony hooka, nagłówki, banery |
-| Pod brodą | `top: 1000–1360px` | 50–1030px | listy, karty, statystyki |
-| Za głową (cutout) | dowolne | dowolne | tylko przez efekt wycieta-z-tla |
-| Boki ekranu | `top: 0–450px` | `left < 60px` lub `right < 60px` | wąskie ikony, wskaźniki |
+| Nad głową | od 220 do `glowa_gora − 40` | 60–1020 | ikony hooka, nagłówki, banery |
+| Pod brodą | od `broda + 40` do 1470 | 60–1020, a od Y 1050 w dół tylko do 900 | listy, karty, statystyki, napisy |
+| Obok głowy | 220–1050 | między głową (+40 px) a marginesem 60 px | małe ikony, krótkie podpisy — tylko gdy jest tam dość tła |
+| Za głową (cutout) | dowolne w strefie bezpiecznej | dowolne | tylko przez efekt wycieta-z-tla |
 
 #### Obowiązkowy check przed wdrożeniem każdego efektu graficznego
 
 Dla każdego elementu `.clip` z grafiką nałożoną na wideo z gadającą głową:
 
-1. Sprawdź `top` — czy mieści się w zakresie Y 250–1400px?
+1. Sprawdź `top` — czy mieści się w zakresie Y 250–1400px (albo między `glowa_gora − 40` a `broda + 40` z `glowa.json`)?
 2. Sprawdź `left`/`right`/`width` — czy środek elementu wpada w zakres X 200–880px?
-3. Jeśli TAK na obydwa → przesuń powyżej 220px, poniżej 1000px, lub zastosuj cutout.
-4. Sprawdź czy `font-size` × tekst nie wychodzi poza dolną granicę strefy bezpiecznej.
+3. Jeśli TAK na obydwa → przesuń nad głowę (ale nie wyżej niż Y 220), pod brodę (ale nie niżej niż Y 1470) lub zastosuj cutout.
+4. Sprawdź, czy dolna krawędź tekstu i karty nie wychodzi poza Y 1470 i nie wchodzi w kolumnę ikon (X ≥ 900 od Y 1050).
+5. Także w trakcie animacji: trasa wlotu i wylotu nie może przechodzić przez twarz ani przez strefy z sekcji niżej.
 
 **Nigdy nie zgaduj. Przelicz. Jeden piksel na twarzy = poprawka od kursantki.**
 
 ### Strefy bezpieczne
-Każde słowo i karta wewnątrz strefy TikTok/Reels:
-- góra: 220px wolne
-- dół: 450px wolne
-- boki: 35px wolne
-- prawa strona od ok. 2/3 wysokości w dół: 100px wolne (tam są ikony platformy)
+Zmierzone na prawdziwych zrzutach ekranu Instagrama; te same wartości działają dla TikToka i YouTube Shorts.
+Nic ważnego (napis, karta, ikona, liczba) nie może wchodzić w:
+- **górę: Y 0–220** (pasek telefonu, strzałka, ikona aparatu),
+- **dół: od Y 1470** (opis, nazwa konta, tłumaczenie, dźwięk, pasek postępu),
+- **boki: 60 px** z każdej strony (na wysokich telefonach są przycinane),
+- **kolumnę ikon po prawej: X 900–1080, od Y 1050 w dół** (serce, komentarz, udostępnij, zapisz).
+
+Sprawdzaj to poleceniem `strefa` na podglądach — rysuje dokładnie te pola na czerwono.
 
 ### Animacja
 Maks. **2–3 elementy naraz** w ruchu. Więcej = chaos wizualny.
@@ -368,4 +411,4 @@ Kategorie:
 
 ## Tryb tłumaczenia
 
-Gdy film ma pokazać **proces** (jak coś działa krok po kroku): użyj podzielonego ekranu lub planszy z krokami. Szczegóły w `styles.md` (sekcja Układ kadru).
+Gdy film ma pokazać **proces** (jak coś działa krok po kroku, narzędzie, plik, rozmowa z AI): przeczytaj `rules/tryb-tlumaczenia.md` — układy (podział, pełny ekran, narrator z polaroidem), przejście, klocki i napisy w tym trybie. Klocki z animacją buduj jak wstawki (`rules/wstawki.md`).
