@@ -1,0 +1,21 @@
+{
+  "id": "staly-naglowek",
+  "kategoria": "tekst",
+  "typ": "nakładkowy",
+  "nazwa": "Stały nagłówek",
+  "opis": "Hasło z początku rolki wraca nad głową za każdym razem, gdy u góry nie ma innego efektu. Widz w każdej chwili wie, o czym jest film.",
+  "najlepsze_do": "Rolki z wieloma efektami lub punktami — lista, seria porad, pokaz możliwości",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#3a3631;display:flex;justify-content:center;padding-top:14%\"><div style=\"font:900 9px Montserrat,sans-serif;color:#fff;text-align:center;line-height:1.1\"><span style=\"color:#FFD166\">+22</span> wideo efekty<br>z Claude</div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

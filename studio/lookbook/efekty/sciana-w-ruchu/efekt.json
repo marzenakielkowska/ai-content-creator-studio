@@ -1,0 +1,22 @@
+{
+  "id": "sciana-w-ruchu",
+  "kategoria": "glowne",
+  "typ": "nakładkowy",
+  "nazwa": "Ściana z postami w ruchu",
+  "opis": "Za Tobą cała ściana Twoich postów, a każdy rząd jedzie w inną stronę. Ty stoisz na pierwszym planie, wycięta z tła.",
+  "najlepsze_do": "Pokazanie dorobku, „tyle już nagrałam”, przegląd profilu, przejście między tematami",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#222;overflow:hidden\"><div style=\"position:absolute;top:6%;left:-10%;display:flex;gap:3px\"><i style=\"width:26px;height:46px;background:#c98;border-radius:3px\"></i><i style=\"width:26px;height:46px;background:#9ab;border-radius:3px\"></i><i style=\"width:26px;height:46px;background:#dc8;border-radius:3px\"></i><i style=\"width:26px;height:46px;background:#b9c;border-radius:3px\"></i></div><div style=\"position:absolute;top:40%;left:-30%;display:flex;gap:3px\"><i style=\"width:26px;height:46px;background:#9ab;border-radius:3px\"></i><i style=\"width:26px;height:46px;background:#dc8;border-radius:3px\"></i><i style=\"width:26px;height:46px;background:#c98;border-radius:3px\"></i><i style=\"width:26px;height:46px;background:#b9c;border-radius:3px\"></i></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nieruchome tło, dobry kontrast kursantki z tłem; zrzut siatki profilu albo okładki kilku rolek",
+    "narzedzia": [
+      "ffmpeg",
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}
