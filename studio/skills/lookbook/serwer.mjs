@@ -201,14 +201,14 @@ function startServer(port) {
     }
 
     // Video streaming
-    const videoM = p.match(/^\/podglad\/(napisy|efekty)\/([^/]+)$/);
+    const videoM = p.match(/^\/podglad\/(napisy|efekty|hooki)\/([^/]+)$/);
     if (videoM) {
       serveVideo(path.join(LOOKBOOK, videoM[1], videoM[2], 'podglad.mp4'), req, res);
       return;
     }
 
     // Poster (thumbnail) serving
-    const posterM = p.match(/^\/poster\/(napisy|efekty)\/([^/]+)$/);
+    const posterM = p.match(/^\/poster\/(napisy|efekty|hooki)\/([^/]+)$/);
     if (posterM) {
       const base = path.join(LOOKBOOK, posterM[1], posterM[2]);
       const jpg = path.join(base, 'podglad.jpg');
