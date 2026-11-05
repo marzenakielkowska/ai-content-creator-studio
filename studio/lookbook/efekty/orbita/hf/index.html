@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pl" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 100%; height: 100%; }
+
+      .card {
+        position: absolute;
+        top: 0; left: 0;
+        width: 200px;
+        height: 356px;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+      }
+      .card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+      #cutout {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        object-fit: contain;
+        object-position: center bottom;
+        z-index: 10;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"
+         data-composition-id="orbita"
+         data-duration="6"
+         data-layout-allow-overlap>
+
+      <!-- Karty krążące — podmień src na miniatury rolek kursantki -->
+      <div id="card-0" class="card clip" data-start="0" data-duration="6" data-track-kind="graphics">
+        <img src="assets/card1.png" alt="" />
+      </div>
+      <div id="card-1" class="card clip" data-start="0" data-duration="6" data-track-kind="graphics">
+        <img src="assets/card2.png" alt="" />
+      </div>
+      <div id="card-2" class="card clip" data-start="0" data-duration="6" data-track-kind="graphics">
+        <img src="assets/card3.png" alt="" />
+      </div>
+
+      <!-- Osoba wycięta z tła — podmień src na plik kursantki -->
+      <video id="cutout" class="clip"
+             data-start="0" data-duration="6"
+             src="assets/cutout.webm"
+             muted playsinline
+             data-track-kind="graphics"></video>
+
+    </div>
+
+    <script type="module">
+      // ── Parametry do zmiany przy iteracji ─────────────────────────
+      const CX = 540;   // środek orbity X (nie zmieniaj)
+      const CY = 960;   // środek orbity Y — zmniejsz (np. 800) żeby orbita była wyżej
+      const RX = 440;   // promień poziomy — zmniejsz (np. 300) dla mniejszej orbity
+      const RY = 200;   // promień pionowy — zmniejsz (np. 140) dla płaskiej orbity
+      const W  = 200;   // szerokość karty — np. 160 (małe) lub 240 (duże)
+      const H  = 356;   // wysokość karty — proporcja 9:16, dopasuj do W
+      // ─────────────────────────────────────────────────────────────
+
+      const cards = ['card-0', 'card-1', 'card-2'].map(id => document.getElementById(id));
+      const N = cards.length;
+      const prog = { val: 0 };
+
+      function updateCards() {
+        const base = prog.val * Math.PI * 2;
+        cards.forEach((card, i) => {
+          const angle = base + (i / N) * Math.PI * 2;
+          const x = CX + RX * Math.cos(angle) - W / 2;
+          const y = CY + RY * Math.sin(angle) - H / 2;
+          gsap.set(card, { x, y });
+          card.style.zIndex = Math.sin(angle) > 0 ? 15 : 5;
+        });
+      }
+
+      updateCards();
+
+      const tl = gsap.timeline({ paused: true });
+      tl.to(prog, { val: 1, duration: 6, ease: 'none', onUpdate: updateCards });
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['orbita'] = tl;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "id": "lista-komend",
+  "kategoria": "plansze",
+  "typ": "nakładkowy",
+  "nazwa": "Lista komend",
+  "opis": "Karta z komendami jak w programie — wskakują po kolei, a podświetlenie przechodzi z jednej na drugą. Pokazuje, jak prosto coś uruchomić.",
+  "najlepsze_do": "Pokazywanie narzędzi, aplikacji, kroków w programie, „wystarczy wpisać…”",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#F6F5F1;display:flex;align-items:flex-end;justify-content:center;padding-bottom:12%\"><div style=\"background:#fff;border:1px solid #DEDBD3;border-radius:8px;padding:5px;width:78%;font:900 6px Montserrat,sans-serif\"><div style=\"padding:3px\"><b style=\"color:#D97757\">/</b> start</div><div style=\"padding:3px;background:#F3EEE6;border-radius:4px\"><b style=\"color:#D97757\">/</b> lookbook</div><div style=\"padding:3px\"><b style=\"color:#D97757\">/</b> edytuj wideo</div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

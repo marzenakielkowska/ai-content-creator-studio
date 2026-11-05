@@ -1,0 +1,11 @@
+{
+  "id": "bez-filtra",
+  "nazwa": "Bez filtra",
+  "opis": "Obraz bez korekcji koloru — tak jak nagrałaś.",
+  "najlepsze_do": "Kiedy zależy Ci na autentyczności i naturalności",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_frame": "",
+  "podglad_html": "<div class=\"empty-txt\">bez filtra</div>",
+  "przepis": { "typ": "brak" }
+}

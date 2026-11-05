@@ -1,0 +1,21 @@
+{
+  "id": "orbita",
+  "kategoria": "glowne",
+  "typ": "standalone",
+  "nazwa": "Orbita",
+  "opis": "Małe zaokrąglone karty-ekrany z innymi rolkami krążą wokół Ciebie po eliptycznej orbicie — część przechodzi z przodu, część z tyłu. Kursantka wycięta z tła. Efekt głębi i ruchu jednocześnie.",
+  "najlepsze_do": "Podsumowania serii, zapowiedzi kolejnych odcinków, showcase contentu",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": "<div class=\"fx f-gl-orbit\"><div class=\"f-gl-card\"></div><div class=\"f-gl-card\"></div><div class=\"f-gl-card\"></div></div>",
+  "wymagania": {
+    "wideo": "9:16, kursantka wycięta z tła (skrypt montażu wytnij-tlo), 3–5 miniaturek innych rolek jako PNG",
+    "dzwieki": ["whoosh.mp3"],
+    "narzedzia": ["ffmpeg", "hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "projekt": "hf/",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

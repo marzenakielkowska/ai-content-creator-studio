@@ -1,0 +1,14 @@
+{
+  "id": "cieplo-kinowy",
+  "nazwa": "Ciepło kinowy",
+  "opis": "Ciepłe odcienie, delikatne winietowanie. Wygląda jak dobrze oświetlone studio.",
+  "najlepsze_do": "Lifestyle, coaching, beauty, spokojne opowieści",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_frame": "warm",
+  "podglad_html": null,
+  "przepis": {
+    "typ": "media-treatment",
+    "grading": { "preset": "warm-daylight", "details": { "vignette": 0.25 } }
+  }
+}

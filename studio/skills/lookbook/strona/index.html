@@ -1,0 +1,1817 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@900&family=Barlow+Condensed:wght@700&family=Montserrat:wght@800&family=Figtree:wght@700&family=Nunito:wght@800&family=Space+Grotesk:wght@600&family=Archivo:wght@800&family=Bebas+Neue&family=Anton&family=Abril+Fatface&family=DM+Serif+Display&family=Playfair+Display:ital@1&family=Newsreader:ital,wght@1,400&family=Instrument+Serif&family=Cormorant:ital@1&family=Caveat:wght@600&family=Marck+Script&family=Pixelify+Sans:wght@600&family=JetBrains+Mono:wght@500&display=swap">
+<title>Lookbook · AI Content Creator Studio</title>
+<style>
+:root{
+  --bg:#FAF9FF; --band:#F1EFFF; --surface:#FFFFFF; --ink:#211D35; --muted:#66617E;
+  --accent:#6C63FF; --accent-ink:#FFFFFF; --rose:#B8B2FF; --line:#E3E0F5;
+  --tint-pink:#FEF8D8; --tint-peach:#EBF6FF; --tint-blue:#F3EBFF;
+  --frame-a:#8A6B60; --frame-b:#C9A493; --frame-c:#5E4842;
+  --font:"Nunito",ui-rounded,"Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#13111D; --band:#1B1830; --surface:#1F1C33; --ink:#F3F1FF; --muted:#ADA8C9;
+  --accent:#A89CFF; --accent-ink:#13111D; --rose:#7E75E0; --line:#302C4A;
+  --tint-pink:#2A2900; --tint-peach:#0F2030; --tint-blue:#21183A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13111D; --band:#1B1830; --surface:#1F1C33; --ink:#F3F1FF; --muted:#ADA8C9;
+  --accent:#A89CFF; --accent-ink:#13111D; --rose:#7E75E0; --line:#302C4A;
+  --tint-pink:#2A2900; --tint-peach:#0F2030; --tint-blue:#21183A; color-scheme:dark}
+
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.6;margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band{background:var(--band)}
+.band .wrap{padding-block:48px 56px}
+.brand{font-weight:700;font-size:15px;margin-bottom:36px}
+.pill{display:inline-block;border:1.5px solid var(--rose);color:var(--accent);border-radius:999px;padding:6px 18px;font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+h1{font-size:clamp(44px,8vw,84px);line-height:1;letter-spacing:-.045em;font-weight:900;margin:20px 0 14px;text-wrap:balance}
+h2{font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.04em;font-weight:900;margin:6px 0 10px;text-wrap:balance}
+h3{font-size:22px;letter-spacing:-.02em;font-weight:800;margin:40px 0 0;display:flex;align-items:baseline;gap:10px}
+h3 small{font-size:14px;color:var(--muted);font-weight:600;letter-spacing:0}
+.lead{max-width:62ch;color:var(--muted);font-size:18px;margin:0}
+.eyebrow{color:var(--accent);font-weight:800;font-size:13px;letter-spacing:.13em;text-transform:uppercase}
+
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:36px}
+.mode{all:unset;cursor:pointer;background:var(--surface);border:1.5px solid var(--line);border-radius:24px;padding:22px 24px;display:grid;gap:4px}
+.mode b{font-size:22px;letter-spacing:-.02em}
+.mode span{color:var(--muted);font-size:15px}
+.mode[aria-selected="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.mode:focus-visible,.card:focus-visible,.chip:focus-visible,.btn:focus-visible,.link:focus-visible,.switch:focus-visible,.snd-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+section.block{padding-block:56px 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px;margin-top:18px}
+.card{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:10px;border-radius:24px;padding:12px 12px 16px;border:1.5px solid var(--line);position:relative;min-width:0}
+.card:nth-child(3n+1){background:var(--tint-pink)}
+.card:nth-child(3n+2){background:var(--tint-peach)}
+.card:nth-child(3n){background:var(--tint-blue)}
+.card[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.tick{position:absolute;top:20px;left:22px;width:26px;height:26px;border-radius:50%;border:2px solid #fff;background:rgba(255,255,255,.25);z-index:3;display:grid;place-items:center;color:#fff;font-weight:900;font-size:14px}
+.card[aria-pressed="true"] .tick{background:var(--accent);border-color:var(--accent)}
+.card[aria-pressed="true"] .tick::after{content:"✓"}
+.badge{position:absolute;top:20px;right:22px;z-index:3;background:var(--surface);color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:3px 10px}
+.snd{all:unset;cursor:pointer;position:absolute;left:10px;bottom:10px;z-index:3;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.88);display:grid;place-items:center}
+.snd svg{width:16px;height:16px;stroke:#33292A;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.snd .on{display:none}.snd[aria-pressed="true"] .on{display:block}.snd[aria-pressed="true"] .off{display:none}
+.title{font-weight:800;font-size:17px;line-height:1.25;padding:0 4px}
+.desc{color:var(--muted);font-size:14px;line-height:1.45;padding:0 4px;margin-top:-4px}
+.best{padding:0 4px;font-size:13px;line-height:1.4;color:var(--ink)}
+.best b{display:block;color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+
+/* Frame podglądu */
+.frame{aspect-ratio:9/16;max-width:100%;border-radius:16px;overflow:hidden;position:relative;background:linear-gradient(170deg,var(--frame-b),var(--frame-a) 55%,var(--frame-c))}
+.frame.warm{background:linear-gradient(170deg,#E3B98F,#9C6A4E 55%,#4E3528)}
+.frame.bright{background:linear-gradient(170deg,#F3DCD3,#C99C8B 55%,#7C5A50)}
+.frame.empty{background:var(--surface);border:1.5px dashed var(--rose)}
+.frame.empty::before,.frame.empty::after{display:none}
+.frame::before{content:"";position:absolute;left:50%;top:22%;width:38%;aspect-ratio:1;border-radius:50%;transform:translateX(-50%);background:rgba(255,240,232,.28)}
+.frame::after{content:"";position:absolute;left:50%;top:44%;width:74%;height:60%;border-radius:45% 45% 0 0;transform:translateX(-50%);background:rgba(255,240,232,.2)}
+.frame .vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.frame .vid-v{opacity:0;transition:opacity .2s ease}
+.zoom::before,.zoom::after{animation:zoomin 3s ease-in infinite}
+@keyframes zoomin{0%{scale:1}80%{scale:1.18}100%{scale:1}}
+.empty-txt{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--accent);font-weight:900;font-size:20px;letter-spacing:-.02em;padding:12px}
+.ph{position:absolute;inset:auto 0 14px;text-align:center;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.75);font-weight:700;z-index:1}
+.cap{position:absolute;left:0;right:0;text-align:center;z-index:1;color:#fff;font-weight:900;text-transform:lowercase}
+.c1{top:60%;font-size:22px;letter-spacing:-.02em;text-shadow:0 2px 8px rgba(0,0,0,.25)}
+.c2{top:14%;font-size:64px;letter-spacing:-.06em;opacity:.55;z-index:0}
+.c3{top:60%;font-size:20px;font-weight:600;text-shadow:0 0 14px rgba(255,255,255,.9),0 0 4px rgba(255,255,255,.6)}
+.c4{top:60%;font-size:20px}
+.c4 i{font-style:normal;display:inline-block;animation:pop 1.8s infinite}
+.c4 i:nth-child(2){animation-delay:.3s}.c4 i:nth-child(3){animation-delay:.6s}
+.c5{top:58%;line-height:1.05}.c5 b{display:block;font-size:24px;letter-spacing:-.04em;color:#FCE3D6}.c5 small{display:block;font-size:12px;font-weight:400}
+@keyframes pop{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(1)}}
+
+/* Istniejące animacje efektów */
+.fx{position:absolute;z-index:1}
+.f1{top:16%;left:-30%;width:70%;height:12%;border-radius:12px;background:rgba(255,255,255,.85);animation:slide 2.4s ease-in-out infinite}
+@keyframes slide{0%,20%{left:-70%}45%,80%{left:15%}100%{left:110%}}
+.f2{top:12%;left:50%;width:22%;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.9);translate:-50% 0;animation:pop 1.6s infinite}
+.f3{top:10%;left:18%;width:64%;aspect-ratio:9/16;max-height:40%;border-radius:12px;border:3px solid #fff;animation:grow 2.6s ease-in-out infinite}
+@keyframes grow{0%,100%{transform:scale(.8)}50%{transform:scale(1)}}
+.f4{top:12%;left:50%;translate:-50% 0;width:30%;aspect-ratio:1;border-radius:22%;background:rgba(255,255,255,.3);border:1.5px solid rgba(255,255,255,.8);backdrop-filter:blur(6px)}
+.f5{top:14%;left:50%;translate:-50% 0;display:flex;gap:4px;align-items:flex-end;height:14%}
+.f5 span{width:6px;border-radius:3px;background:#fff;animation:eq 1s infinite}
+.f5 span:nth-child(2){animation-delay:.2s}.f5 span:nth-child(3){animation-delay:.4s}.f5 span:nth-child(4){animation-delay:.1s}
+@keyframes eq{0%,100%{height:30%}50%{height:100%}}
+.f6{top:10%;left:12%;right:12%;display:grid;gap:5px}
+.f6 span{height:9px;border-radius:5px;background:rgba(255,255,255,.85);animation:tick 3s infinite}
+.f6 span:nth-child(2){animation-delay:.6s}.f6 span:nth-child(3){animation-delay:1.2s}
+@keyframes tick{0%,15%{opacity:.25;width:20%}35%,100%{opacity:1;width:100%}}
+.f7{top:12%;left:0;right:0;text-align:center;color:#fff;font-weight:900;font-size:34px;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.f8{top:9%;left:50%;translate:-50% 0;width:34%;aspect-ratio:9/18;border-radius:14px;border:3px solid #fff;background:rgba(255,255,255,.2);animation:fly 2.8s ease-in-out infinite}
+@keyframes fly{0%,100%{transform:translateY(-10%) rotate(-6deg)}50%{transform:translateY(6%) rotate(4deg)}}
+.f9{top:10%;left:50%;translate:-50% 0;color:#fff;font-weight:900;font-size:22px;animation:pop 1.4s infinite}
+
+/* Animacja efektu Przed i po */
+.f-pp-d{position:absolute;inset:0;background:rgba(0,0,0,.42);filter:saturate(.35);z-index:1;animation:ppd 3s ease-in-out infinite}
+.f-pp-line{position:absolute;top:0;bottom:0;width:2px;background:rgba(255,255,255,.95);box-shadow:0 0 10px rgba(255,255,255,.7),0 0 2px #fff;z-index:2;animation:ppl 3s ease-in-out infinite}
+@keyframes ppd{0%,8%{clip-path:inset(0 0 0 0)}45%,65%{clip-path:inset(0 0 0 50%)}88%,100%{clip-path:inset(0 0 0 101%)}}
+@keyframes ppl{0%,8%{left:0}45%,65%{left:calc(50% - 1px)}88%,100%{left:100%}}
+
+
+/* Pasek opcji efektów */
+.fxbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin-top:26px;background:var(--surface);border:1.5px solid var(--line);border-radius:20px;padding:14px 18px}
+.switch{all:unset;cursor:pointer;display:flex;align-items:center;gap:12px;min-width:0}
+.switch .tr{flex:none;width:44px;height:26px;border-radius:999px;background:var(--line);position:relative;transition:background .2s}
+.switch .tr::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.switch[aria-checked="true"] .tr{background:var(--accent)}
+.switch[aria-checked="true"] .tr::after{left:21px}
+.switch b{display:block;font-size:15px}
+.switch small{display:block;font-size:13px;color:var(--muted);line-height:1.35}
+.link{all:unset;cursor:pointer;color:var(--accent);font-weight:800;font-size:13px;letter-spacing:.1em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px}
+.where{display:flex;flex-wrap:wrap;gap:6px;padding:0 4px}
+.where small{width:100%;font-size:12px;color:var(--muted);font-weight:700}
+.chip{all:unset;cursor:pointer;font-size:13px;font-weight:700;padding:4px 12px;border-radius:999px;border:1.5px solid var(--rose);color:var(--accent);background:var(--surface)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+/* Sekcja dźwięków */
+.snd-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+.snd-card{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:8px;border-radius:20px;padding:12px 14px 14px;border:1.5px solid var(--line);background:var(--surface);position:relative}
+.snd-card[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.snd-card-top{display:flex;align-items:center;gap:8px}
+.snd-play{all:unset;cursor:pointer;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;flex:none;transition:opacity .15s}
+.snd-play:hover{opacity:.82}
+.snd-play svg{width:13px;height:13px;fill:currentColor}
+.snd-name{font-weight:800;font-size:15px;letter-spacing:-.01em;line-height:1.2}
+.snd-desc{color:var(--muted);font-size:13px;line-height:1.4}
+.snd-tick{position:absolute;top:10px;right:12px;font-size:13px;font-weight:900;color:var(--accent);opacity:0}
+.snd-card[aria-pressed="true"] .snd-tick{opacity:1}
+
+/* Quick-nav kategorii efektów */
+.fx-quicknav{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0}
+.qnav-pill{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:12px;padding:8px 16px;font-size:13px;font-weight:700;background:var(--surface);color:var(--ink);transition:background .15s,color .15s,border-color .15s,box-shadow .15s}
+.qnav-pill:hover:not([aria-pressed="true"]){border-color:#6C63FF;color:#6C63FF}
+.qnav-pill[aria-pressed="true"]{background:#6C63FF;border-color:#6C63FF;color:#fff;box-shadow:0 2px 10px rgba(108,99,255,.3)}
+.qnav-pill .qnav-count{font-size:11px;font-weight:700;opacity:.6;min-width:16px;text-align:right}
+.fx-group{margin-top:0}
+
+/* Pasek postępu wideo */
+.prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(0,0,0,.15);opacity:0;z-index:2;transition:opacity .2s}
+.prog i{display:block;height:100%;width:0;background:var(--accent)}
+
+/* Chipy w dolnym pasku */
+#sum{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-width:0}
+.sum-chip{all:unset;cursor:pointer;font-size:13px;font-weight:700;padding:4px 10px 4px 12px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);white-space:nowrap;transition:border-color .15s,color .15s;display:inline-flex;align-items:center;gap:6px}
+.sum-chip:hover{border-color:var(--accent);color:var(--accent)}
+.sum-chip.dim{color:var(--muted);cursor:default}
+.sum-chip .chip-x{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;font-size:11px;line-height:1;opacity:.55;flex-shrink:0;transition:opacity .15s,background .15s}
+.sum-chip .chip-x:hover{opacity:1;background:color-mix(in srgb,var(--accent) 15%,transparent)}
+
+/* Pasek dolny */
+.bar{position:sticky;bottom:0;z-index:5;background:var(--surface);border-top:1.5px solid var(--line);margin-top:64px;padding-bottom:env(safe-area-inset-bottom,0px)}
+.bar .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding-block:14px}
+.sum{min-width:0;font-size:15px}
+.sum .eyebrow{display:block;font-size:11px}
+.btn{all:unset;cursor:pointer;background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:17px;padding:14px 30px;border-radius:999px;text-align:center}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn-ghost{background:transparent;color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
+.bar-actions{display:flex;gap:12px;align-items:center;flex-shrink:0}
+#loading{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:99}
+.spinner{width:36px;height:36px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}}
+
+/* Animacje efektów głównych */
+.f-gl-orbit { position:absolute;inset:0;display:flex;align-items:center;justify-content:center }
+.f-gl-card { position:absolute;width:16%;aspect-ratio:9/16;border-radius:8px;border:2px solid rgba(255,255,255,.85);background:rgba(255,255,255,.2);animation:gl-orbit 3s linear infinite }
+.f-gl-card:nth-child(2){animation-delay:-1s}.f-gl-card:nth-child(3){animation-delay:-2s}
+@keyframes gl-orbit{0%{transform:rotate(0deg) translateX(70px) rotate(0deg)}100%{transform:rotate(360deg) translateX(70px) rotate(-360deg)}}
+
+.f-gl-grid { position:absolute;top:10%;left:8%;right:8%;display:grid;grid-template-columns:1fr 1fr;gap:4px }
+.f-gl-grid span { aspect-ratio:1;border-radius:6px;background:rgba(255,255,255,.3);animation:gl-fade 2.4s ease-in-out infinite }
+.f-gl-grid span:nth-child(2){animation-delay:.2s}.f-gl-grid span:nth-child(3){animation-delay:.4s}
+.f-gl-grid span:nth-child(4){animation-delay:.6s}.f-gl-grid span:nth-child(5){animation-delay:.8s}.f-gl-grid span:nth-child(6){animation-delay:1s}
+@keyframes gl-fade{0%,100%{opacity:.2}50%{opacity:.9}}
+
+.f-gl-wall { position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:0 8px;overflow:hidden }
+.f-gl-wall span { height:12px;border-radius:4px;background:rgba(255,255,255,.7);animation:gl-wall 2s ease-in-out infinite }
+.f-gl-wall span:nth-child(2){width:80%;animation-delay:.15s}.f-gl-wall span:nth-child(3){width:60%;animation-delay:.3s}
+@keyframes gl-wall{0%,100%{opacity:.35}50%{opacity:1}}
+
+.f-gl-phone { position:absolute;top:8%;left:50%;translate:-50% 0;width:32%;aspect-ratio:9/19.5;border-radius:18px;border:3px solid rgba(255,255,255,.9);background:rgba(255,255,255,.15);animation:gl-phone 3s ease-in-out infinite }
+@keyframes gl-phone{0%,100%{transform:translateX(120%)}20%,80%{transform:translateX(0)}}
+
+.f-gl-reveal { position:absolute;inset:0;background:rgba(255,255,255,.85);animation:gl-reveal 2.8s ease-in-out infinite }
+@keyframes gl-reveal{0%,10%{clip-path:inset(0 100% 0 0)}45%,65%{clip-path:inset(0 0% 0 0)}90%,100%{clip-path:inset(0 0 0 100%)}}
+
+.f-gl-chart { position:absolute;bottom:10%;left:10%;right:10%;height:40%;display:flex;align-items:flex-end;gap:5px }
+.f-gl-chart span { flex:1;border-radius:4px 4px 0 0;background:rgba(255,255,255,.7);animation:gl-bar 2s ease-out infinite }
+.f-gl-chart span:nth-child(1){animation-delay:0s;--h:40%}.f-gl-chart span:nth-child(2){animation-delay:.15s;--h:65%}
+.f-gl-chart span:nth-child(3){animation-delay:.3s;--h:50%}.f-gl-chart span:nth-child(4){animation-delay:.45s;--h:90%;background:rgba(255,255,255,.95)}
+@keyframes gl-bar{0%,10%{height:0}70%,100%{height:var(--h,60%)}}
+
+.f-gl-chips { position:absolute;top:12%;left:8%;right:8%;display:flex;flex-direction:column;gap:5px }
+.f-gl-chips span { height:20px;border-radius:10px;background:rgba(255,255,255,.75);animation:gl-chip 2.4s ease-out infinite }
+.f-gl-chips span:nth-child(2){animation-delay:.3s}.f-gl-chips span:nth-child(3){animation-delay:.6s}
+@keyframes gl-chip{0%,15%{opacity:0;transform:scale(.8)}45%,100%{opacity:1;transform:scale(1)}}
+
+/* Odręczne strzałki */
+.f-strzalki-card{top:30%;left:14%;right:14%;background:rgba(255,255,255,.9);border-radius:8px;padding:7px 9px;box-shadow:0 2px 10px rgba(0,0,0,.15);animation:pop .8s ease-out both}
+.f-strzalki-card span{display:block;font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#333}
+.f-strzalki-card::after{content:"";display:block;height:4px;border-radius:2px;background:linear-gradient(90deg,#6C63FF,#A89CFF);margin-top:5px;width:72%}
+.f-strzalki-annot{top:10%;right:3%;width:54%;animation:strzalka-in 2.4s ease-in-out infinite}
+@keyframes strzalka-in{0%,15%{opacity:0;transform:translateX(6px)}30%,85%{opacity:1;transform:translateX(0)}100%{opacity:0}}
+/* Zoom w dok */
+.f-dok-bg{inset:0;background:linear-gradient(170deg,#0F2460,#1A3A8A 55%,#0D1B4A);z-index:0}
+.f-dok-desk{top:12%;left:8%;right:8%;bottom:34%;background:rgba(255,255,255,.1);border-radius:8px;border:1px solid rgba(255,255,255,.18);z-index:1}
+.f-dok-zoom{top:12%;left:8%;right:8%;bottom:34%;border:2px solid rgba(108,99,255,.85);border-radius:8px;box-shadow:0 0 12px rgba(108,99,255,.4);animation:dok-zoom 2.8s ease-in-out infinite;pointer-events:none}
+@keyframes dok-zoom{0%,15%{transform:scale(1);opacity:0}28%,60%{transform:scale(1);opacity:1}80%,100%{transform:scale(2.6) translate(5%,28%);opacity:0}}
+.f-dok-bar{bottom:7%;left:50%;transform:translateX(-50%);display:flex;gap:4px;align-items:flex-end;background:rgba(255,255,255,.14);border-radius:10px;padding:5px 7px}
+.f-dok-bar span{width:18px;height:18px;border-radius:5px;flex:none}
+.f-dok-bounce{animation:dok-bounce 2.8s ease-in-out infinite}
+@keyframes dok-bounce{0%,35%{transform:translateY(0)}45%{transform:translateY(-12px)}55%{transform:translateY(0)}65%{transform:translateY(-6px)}75%,100%{transform:translateY(0)}}
+/* Styl wizualny — karty */
+.styl-card{background:var(--surface);border:1.5px solid var(--line);border-radius:20px;padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer}
+.styl-card[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.styl-frame{width:52px;height:92px;border-radius:10px;flex:none;background:linear-gradient(170deg,var(--frame-b),var(--frame-a) 55%,var(--frame-c))}
+.styl-frame.warm{background:linear-gradient(170deg,#E3B98F,#9C6A4E 55%,#4E3528)}
+.styl-frame.bright{background:linear-gradient(170deg,#2A2A2A,#1A1A1A 55%,#111)}
+.styl-frame.empty{background:var(--surface);border:1.5px dashed var(--rose)}
+.styl-info{min-width:0}
+.styl-name{font-weight:800;font-size:16px;line-height:1.2}
+.styl-desc{color:var(--muted);font-size:13px;margin-top:3px;line-height:1.4}
+.styl-best{font-size:12px;margin-top:4px;color:var(--accent);font-weight:700}
+
+/* ── Font picker ── */
+.font-roles-bar{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 24px}
+.font-role-tab{all:unset;cursor:pointer;display:flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px 18px;font-weight:800;font-size:15px;line-height:1}
+.font-role-tab small{font-size:11px;font-weight:500;color:var(--muted);margin-left:2px}
+.font-role-tab[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.frtab-dot{width:10px;height:10px;border-radius:50%;background:var(--line);flex:none;transition:background .25s}
+.frtab-dot.assigned{background:var(--accent)}
+.font-layout{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:start}
+@media(max-width:640px){.font-layout{grid-template-columns:1fr}.font-preview-col{display:flex;gap:16px}.font-frame-wrap{width:120px;flex:none}}
+.font-preview-col{position:sticky;top:80px}
+.font-frame-wrap .frame{max-width:100%;margin:0}
+.fp-glowna{position:absolute;bottom:30%;left:0;right:0;text-align:center;z-index:1;color:#fff;font-weight:700;font-size:clamp(6px,2.2vw,11px);padding:0 6px;line-height:1.25;text-shadow:0 1px 4px rgba(0,0,0,.4);transition:font-family .25s,font-weight .25s}
+.fp-akcent{position:absolute;bottom:22%;left:0;right:0;text-align:center;z-index:1;color:#FCE3D6;font-size:clamp(14px,5.5vw,27px);font-weight:900;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.3);transition:font-family .25s,font-weight .25s}
+.fp-odreczna{position:absolute;bottom:14%;right:10%;z-index:1;color:rgba(255,255,255,.9);font-size:clamp(7px,2vw,10px);font-weight:400;transition:font-family .25s}
+.font-chosen-list{margin-top:10px;display:flex;flex-direction:column;gap:5px}
+.fchosen-item{font-size:11px;line-height:1.3;display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.fchosen-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none}
+.fchosen-name{font-weight:800;color:var(--ink)}
+.fchosen-role{color:var(--muted)}
+.fcard-sample{padding:6px 4px 4px;line-height:1;color:var(--ink);height:70px;display:flex;align-items:center;overflow:hidden;white-space:nowrap}
+.fcard-role-badge{position:absolute;top:12px;right:12px;background:var(--accent);color:var(--accent-ink);font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:2px 8px;z-index:3}
+.fcard .fcard-cat{font-size:10px;color:var(--muted);font-weight:700;padding:0 4px;margin-top:1px;letter-spacing:.06em;text-transform:uppercase}
+/* ── Kolory ── */
+.kolor-layout{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:start}
+@media(max-width:640px){.kolor-layout{grid-template-columns:1fr}}
+.kolor-preview-col{position:sticky;top:80px}
+.kolor-frame-wrap .frame{max-width:100%;margin:0}
+.kp-naglowek{position:absolute;top:18%;left:0;right:0;text-align:center;z-index:1;font-size:clamp(10px,2.8vw,14px);font-weight:900;letter-spacing:.04em;text-shadow:0 1px 4px rgba(0,0,0,.3)}
+.kp-napisy{position:absolute;bottom:30%;left:0;right:0;text-align:center;z-index:1;font-weight:700;font-size:clamp(6px,2.2vw,11px);padding:0 6px;line-height:1.25;text-shadow:0 1px 4px rgba(0,0,0,.4)}
+.kp-akcent{position:absolute;bottom:22%;left:0;right:0;text-align:center;z-index:1;font-size:clamp(14px,5.5vw,27px);font-weight:900;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.3)}
+.kp-cta{position:absolute;bottom:13%;right:10%;z-index:1;font-size:clamp(7px,2vw,10px);font-style:italic;text-shadow:0 1px 3px rgba(0,0,0,.3)}
+.kolor-group-label{font-size:11px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;display:block}
+.kolor-rows-label{margin-top:28px}
+.kolor-palety{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:4px}
+.kpalet{all:unset;cursor:pointer;border-radius:14px;overflow:hidden;border:1.5px solid var(--line);transition:border-color .15s,box-shadow .15s;display:block}
+.kpalet[aria-selected="true"]{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.kpalet-dots{display:flex;gap:7px;padding:14px 12px 10px;background:var(--band)}
+.kpalet-dot{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(0,0,0,.13);flex-shrink:0}
+.kpalet-nazw{font-size:11px;font-weight:700;padding:0 12px 10px;color:var(--ink);background:var(--band)}
+.kolor-rows{border:1.5px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface)}
+.kolor-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;gap:12px;border-bottom:1px solid var(--line)}
+.kolor-row:last-child{border-bottom:none}
+.kolor-row-info{flex:1;min-width:0}
+.kolor-row-name{font-size:15px;font-weight:700;display:block}
+.kolor-row-desc{font-size:12px;color:var(--muted)}
+.kolor-swatch{all:unset;cursor:pointer;width:32px;height:32px;border-radius:8px;border:1.5px solid rgba(0,0,0,.15);flex-shrink:0;transition:transform .1s,box-shadow .15s;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.kolor-swatch:hover{transform:scale(1.1);box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.kolor-popup{position:fixed;z-index:200;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px;box-shadow:0 8px 32px rgba(0,0,0,.22);width:196px}
+.kpop-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin-bottom:10px}
+.kpop-dot{all:unset;cursor:pointer;width:24px;height:24px;border-radius:6px;border:1.5px solid rgba(0,0,0,.1);transition:transform .1s,box-shadow .1s}
+.kpop-dot:hover{transform:scale(1.15);box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.kpop-dot.kpop-ak{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--accent)}
+.kpop-hex-row{display:flex;align-items:center;gap:6px;border-top:1px solid var(--line);padding-top:10px}
+.kpop-hex-row > span{color:var(--muted);font-weight:700;font-size:13px}
+.kpop-hex{all:unset;flex:1;font-family:monospace;font-size:13px;letter-spacing:.06em;color:var(--ink);text-transform:uppercase;border-bottom:1.5px solid var(--line);padding:2px 4px}
+.kpop-hex:focus{border-bottom-color:var(--accent)}
+.kpop-native{width:26px;height:26px;padding:0;border:1.5px solid var(--line);border-radius:6px;cursor:pointer;background:none;flex-shrink:0}
+
+/* ── Układ ── */
+.uklad-layout{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:start}
+@media(max-width:640px){.uklad-layout{grid-template-columns:1fr}}
+.uklad-preview-col{position:sticky;top:80px}
+.uklad-frame-wrap .frame{max-width:100%;margin:0}
+.up-napisy{position:absolute;left:0;right:0;text-align:center;z-index:2;color:#fff;font-weight:700;font-size:clamp(7px,2.2vw,11px);padding:0 6px;line-height:1.2;text-shadow:0 1px 4px rgba(0,0,0,.5);transition:bottom .12s}
+.up-naglowek{position:absolute;left:0;right:0;text-align:center;z-index:2;font-size:clamp(10px,2.8vw,14px);font-weight:900;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.4);transition:top .12s}
+.suwak-group{display:flex;flex-direction:column;gap:0}
+.suwak-row{padding:20px 0}
+.suwak-row+.suwak-row{border-top:1.5px solid var(--line)}
+.suwak-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.suwak-name{font-size:15px;font-weight:700}
+.suwak-val{font-size:13px;color:var(--accent);font-variant-numeric:tabular-nums;font-weight:800}
+.suwak-desc{font-size:12px;color:var(--muted);margin:0 0 12px}
+.suwak-track{display:flex;align-items:center;gap:10px}
+.suwak-edge{font-size:10px;color:var(--muted);white-space:nowrap;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+input[type=range].suwak{-webkit-appearance:none;appearance:none;flex:1;height:6px;border-radius:999px;background:var(--line);outline:none;cursor:pointer}
+input[type=range].suwak::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.25);transition:transform .1s}
+input[type=range].suwak:hover::-webkit-slider-thumb{transform:scale(1.15)}
+input[type=range].suwak::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:none;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.dekor-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.dekor-chip{all:unset;cursor:pointer;font-size:13px;font-weight:700;padding:5px 14px;border-radius:999px;border:1.5px solid var(--line);color:var(--accent);background:var(--surface);transition:background .15s,color .15s,border-color .15s}
+.dekor-chip[data-active="1"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.dekor-kolor-wrap{display:none;align-items:center;gap:10px;margin-top:8px}
+.dekor-kolor-wrap label{font-size:12px;color:var(--muted);font-weight:600}
+input[type=color].dekor-kolor{width:36px;height:28px;border:1.5px solid var(--line);border-radius:8px;cursor:pointer;padding:2px;background:var(--surface)}
+.fonts-mini{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.fmini-row{display:flex;align-items:baseline;gap:8px;padding:5px 8px;border-radius:8px;background:var(--surface);border:1px solid var(--line)}
+.fmini-sample{font-size:15px;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px}
+.fmini-meta{display:flex;flex-direction:column;gap:1px;flex:1;min-width:0}
+.fmini-name{font-size:11px;font-weight:700;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fmini-role{font-size:10px;color:var(--muted);font-weight:600}
+.fonts-mini-empty{font-size:11px;color:var(--muted);padding:4px 0;font-style:italic}
+.reset-link{background:none;border:none;padding:0;font-size:11px;color:var(--accent);font-weight:700;cursor:pointer;text-decoration:underline;opacity:.7}
+.reset-link:hover{opacity:1}
+/* ── Zakładki Moja marka / Co dodać ── */
+.lb-tabs{display:flex;gap:10px;margin:32px 0 0;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.lb-tabs::-webkit-scrollbar{display:none}
+.lb-tab{all:unset;cursor:pointer;font-size:14px;font-weight:800;padding:10px 22px;border-radius:999px;border:2px solid var(--line);color:var(--muted);transition:color .15s,background .15s,border-color .15s,box-shadow .15s;flex:none}
+.lb-tab[aria-selected="true"]{background:#6C63FF;border-color:#6C63FF;color:#FFFFFF;box-shadow:0 2px 12px rgba(108,99,255,.35)}
+.lb-tab:hover:not([aria-selected="true"]){border-color:var(--muted);color:var(--ink)}
+.marka-hint{font-size:11px;color:var(--muted);margin-top:4px;text-align:center;line-height:1.35}
+.plotno-swatch{width:48px;height:48px;border-radius:10px;flex:none;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.08)}
+.plotno-hint{font-size:11px;color:var(--muted);margin:0 0 10px;font-weight:700;line-height:1.4}
+.plotno-check{color:var(--accent);font-size:13px;font-weight:900}
+.plotno-custom-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.plotno-custom-label{font-size:13px;font-weight:700;color:var(--muted);white-space:nowrap}
+.plotno-usun{color:var(--muted);font-size:11px}
+.dekor-kolor-section{margin-top:4px}
+.dekor-kolor-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.dekor-kolor-row-label{font-size:12px;font-weight:700;color:var(--muted);min-width:60px}
+/* ── Płótno ── */
+.plotno-layout{display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:start}
+@media(max-width:640px){.plotno-layout{grid-template-columns:1fr}}
+.plotno-preview-col{position:sticky;top:80px}
+.plotno-frames-row{display:flex;gap:10px}
+.plotno-frames-row .frame{flex:1;min-width:0;transition:background .35s ease}
+/* Ramka 1 — strzałki style */
+.pp-card{position:absolute;top:28%;left:10%;right:10%;background:rgba(255,255,255,.92);border-radius:10px;padding:8px 10px;box-shadow:0 2px 12px rgba(0,0,0,.13);z-index:2}
+.pp-card-eye{display:block;font-size:clamp(4px,1.4vw,6px);font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-bottom:3px}
+.pp-card-title{display:block;font-size:clamp(8px,3.2vw,14px);font-weight:900;color:#111;line-height:1.2;margin-bottom:3px}
+.pp-card-body{display:block;font-size:clamp(4px,1.4vw,6px);color:#555;line-height:1.4}
+.pp-annot{position:absolute;top:8%;right:3%;width:54%;z-index:3;animation:strzalka-in 2.4s ease-in-out infinite}
+/* Ramka 2 — dok style */
+.pp-step{position:absolute;top:10%;left:0;right:0;text-align:center;z-index:2;font-size:clamp(4px,1.4vw,6px);font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:rgba(12,43,110,.55)}
+.pp-step-title{position:absolute;top:17%;left:0;right:0;text-align:center;z-index:2;font-size:clamp(10px,4vw,18px);font-weight:900;color:#0C2B6E;line-height:1.2}
+.pp-step-sub{position:absolute;top:58%;left:0;right:0;text-align:center;z-index:2;font-size:clamp(4px,1.2vw,5.5px);font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:rgba(12,43,110,.4)}
+.pp-dock{position:absolute;bottom:6%;left:50%;transform:translateX(-50%);display:flex;gap:4px;background:rgba(255,255,255,.45);border-radius:10px;padding:5px 7px;z-index:2}
+.pp-dock span{width:18px;height:18px;border-radius:5px;flex:none}
+.pp-dock-bounce{animation:dok-bounce 2.8s ease-in-out infinite}
+.tempo-cards{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.tempo-card{all:unset;display:flex;align-items:center;gap:16px;padding:16px;border-radius:16px;border:2px solid var(--line);background:var(--surface);cursor:pointer;width:100%;box-sizing:border-box;transition:border-color .15s,background .15s}
+.tempo-card[data-active="1"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.tempo-card:hover:not([data-active="1"]){border-color:var(--rose)}
+.tempo-timing{font-size:22px;font-weight:900;color:var(--accent);min-width:68px;text-align:center;line-height:1.1;letter-spacing:-.02em}
+.tempo-info{flex:1;min-width:0}
+.tempo-name{font-size:14px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tempo-rec{font-size:10px;font-weight:900;background:var(--accent);color:var(--accent-ink);padding:2px 8px;border-radius:99px;letter-spacing:.06em;text-transform:uppercase}
+.tempo-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}
+
+/* Sekcja "Jak to działa" */
+.intro-band{background:var(--band);border-bottom:1.5px solid var(--line)}
+.intro-wrap{padding-block:40px 44px}
+.intro-wrap .eyebrow{margin-bottom:8px}
+.intro-wrap h2{font-size:clamp(28px,4vw,44px);margin-bottom:8px}
+.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+@media(max-width:600px){.intro-grid{grid-template-columns:1fr}}
+.intro-card{background:var(--surface);border:1.5px solid var(--line);border-radius:20px;padding:20px 22px 18px;border-top-width:3px}
+.intro-card-marka{border-top-color:#6C63FF}
+.intro-card-efekty{border-top-color:var(--accent)}
+.intro-card-lbl{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.intro-card-marka .intro-card-lbl{color:#6C63FF}
+.intro-card-efekty .intro-card-lbl{color:var(--accent)}
+.intro-card-title{font-size:19px;font-weight:900;letter-spacing:-.02em;margin-bottom:3px}
+.intro-card-sub{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.4}
+.intro-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.intro-steps li{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:500}
+.isn{width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:800;display:grid;place-items:center;flex-shrink:0}
+.intro-card-marka .isn{background:#6C63FF;color:#fff}
+.intro-card-efekty .isn{background:color-mix(in srgb,var(--accent) 18%,var(--surface));color:var(--accent)}
+.intro-card-note{margin-top:14px;font-size:12px;color:var(--muted);padding:8px 10px;background:var(--bg);border-radius:8px;line-height:1.4}
+.intro-card-note code{font-family:ui-monospace,monospace;font-size:11px;color:var(--accent)}
+.intro-palette{display:flex;gap:7px;margin-top:10px;align-items:center}
+.intro-palette-dot{width:16px;height:16px;border-radius:50%;border:1px solid rgba(0,0,0,.07)}
+.intro-palette-label{font-size:11px;color:var(--muted);margin-left:2px}
+.intro-footer{margin-top:16px;font-size:13.5px;color:var(--muted);padding:12px 16px;background:var(--surface);border:1px solid var(--line);border-radius:12px;line-height:1.5}
+.intro-footer strong{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<div id="loading"><div class="spinner"></div></div>
+
+<div id="app" hidden>
+
+  <div class="band"><div class="wrap">
+    <div class="brand">AI Content Creator Studio</div>
+    <span class="pill">Lookbook</span>
+    <h1>Wybierz swój styl</h1>
+    <p class="lead">Rozgość się, rozejrzyj. Skomponuj animowany styl lub wybierz efekty. Zaznacz to, co do Ciebie pasuje, i kliknij „Zapisz mój styl". Claude zmontuje Twój film w wybranym stylu.</p>
+  </div></div>
+
+  <div class="intro-band"><div class="wrap intro-wrap">
+    <div class="eyebrow">Zanim zaczniesz</div>
+    <h2>Jak to działa</h2>
+    <p class="lead">Lookbook składa się z dwóch zakładek. Wypełnij obie, a Claude będzie montować każdy Twój film dokładnie tak, jak lubisz.</p>
+    <div class="intro-grid">
+      <div class="intro-card intro-card-marka">
+        <div class="intro-card-lbl">Moja marka</div>
+        <div class="intro-card-title">Ustawiasz raz</div>
+        <div class="intro-card-sub">Zostaje we wszystkich filmach, dopóki nie zmienisz.</div>
+        <ul class="intro-steps">
+          <li><span class="isn">1</span> Czcionki</li>
+          <li><span class="isn">2</span> Kolory</li>
+          <li><span class="isn">3</span> Układ</li>
+          <li><span class="isn">4</span> Płótno</li>
+          <li><span class="isn">5</span> Tempo cięcia</li>
+          <li><span class="isn">6</span> Zoom</li>
+          <li><span class="isn">7</span> Dźwięki</li>
+        </ul>
+        <div class="intro-palette">
+          <span class="intro-palette-dot" style="background:#FDE68A" title="Masełko"></span>
+          <span class="intro-palette-dot" style="background:#C5E3F7" title="Błękit"></span>
+          <span class="intro-palette-dot" style="background:#E8D5F5" title="Lila"></span>
+          <span class="intro-palette-label">palety kolorów</span>
+        </div>
+      </div>
+      <div class="intro-card intro-card-efekty">
+        <div class="intro-card-lbl">Co dodać do tego filmu</div>
+        <div class="intro-card-title">Dobierasz przed każdym filmem</div>
+        <div class="intro-card-sub">Możesz zmieniać przy każdym montażu.</div>
+        <ul class="intro-steps">
+          <li><span class="isn">A</span> Hooki</li>
+          <li><span class="isn">B</span> Napisy</li>
+          <li><span class="isn">C</span> Efekty wizualne</li>
+          <li><span class="isn">D</span> Styl obrazu</li>
+          <li><span class="isn">E</span> Dźwięki</li>
+        </ul>
+      </div>
+    </div>
+    <div class="intro-footer">
+      <strong>Przy montażu:</strong> Claude czyta oba pliki. Brand zawsze wygrywa dla czcionek i kolorów. Efekty dodają animacje i ruch, nie zmieniają identyfikacji wizualnej.
+    </div>
+  </div></div>
+
+  <div class="wrap">
+    <div class="lb-tabs" id="lb-tabs" hidden>
+      <button class="lb-tab" id="lt-marka" data-tab="marka" aria-selected="true">Moja marka</button>
+      <button class="lb-tab" id="lt-efekty" data-tab="efekty" aria-selected="false">Co dodać do tego filmu</button>
+    </div>
+
+    <section class="block" id="sec-hooki">
+      <div class="eyebrow">Krok A · Hook</div>
+      <h2>Pierwsze sekundy</h2>
+      <p class="lead">Wybierz jeden styl na pierwsze 1–3 sekundy. Hook widoczny jest od pierwszej klatki.</p>
+      <div class="grid" id="g-hooki"></div>
+    </section>
+
+    <section class="block" id="sec-caps">
+      <div class="eyebrow">Krok B · Napisy</div>
+      <h2>Twoje napisy</h2>
+      <p class="lead">Wybierz jeden styl napisów do tego, co mówisz. Pod każdym wzorem znajdziesz podpowiedź, do jakich treści pasuje najlepiej.</p>
+      <div class="grid" id="g-caps"></div>
+    </section>
+
+    <section class="block" id="sec-czcionki">
+      <div class="eyebrow">Krok 1 · Czcionki</div>
+      <h2>Twoje czcionki</h2>
+      <p class="lead">Skomponuj zestaw do 3 krojów. Główna prowadzi napisy mówione. Akcent wyróżnia kluczowe słowo. Odręczna daje filmowi charakter.</p>
+      <div class="font-roles-bar" id="font-roles-bar">
+        <button class="font-role-tab" id="ftab-glowna" data-role="glowna" aria-pressed="true"><span class="frtab-dot"></span>Główna<small>napisy mówione</small></button>
+        <button class="font-role-tab" id="ftab-akcent" data-role="akcent" aria-pressed="false"><span class="frtab-dot"></span>Akcent<small>jedno słowo kluczowe</small></button>
+        <button class="font-role-tab" id="ftab-odreczna" data-role="odreczna" aria-pressed="false"><span class="frtab-dot"></span>Odręczna<small>charakter, adnotacje</small></button>
+      </div>
+      <div class="font-layout">
+        <div class="font-preview-col">
+          <div class="font-frame-wrap">
+            <div class="frame warm">
+              <div class="fp-glowna" id="fp-glowna-el">jak nagrać pierwszą rolkę</div>
+              <div class="fp-akcent" id="fp-akcent-el">3 triki</div>
+              <div class="fp-odreczna" id="fp-odreczna-el">↑ to działa</div>
+            </div>
+          </div>
+          <div class="font-chosen-list" id="font-chosen-list"></div>
+        </div>
+        <div><div class="grid" id="g-czcionki"></div></div>
+      </div>
+    </section>
+
+    <section class="block" id="sec-kolory">
+      <div class="eyebrow">Krok 2 · Kolory</div>
+      <h2>Twoje kolory</h2>
+      <p class="lead">Wybierz paletę lub ustaw każdy kolor osobno. Podgląd odświeża się na żywo.</p>
+      <div class="kolor-layout">
+        <div class="kolor-preview-col">
+          <div class="kolor-frame-wrap">
+            <div class="frame warm">
+              <div class="kp-naglowek" id="kp-naglowek-el">Mój styl</div>
+              <div class="kp-napisy" id="kp-napisy-el">jak nagrać pierwszą rolkę</div>
+              <div class="kp-akcent" id="kp-akcent-el">3 triki</div>
+              <div class="kp-cta" id="kp-cta-el">↓ zapisz to</div>
+            </div>
+          </div>
+          <div class="fonts-mini" id="kolor-fonts-mini"></div>
+          <div class="dekor-kolor-section">
+            <span class="kolor-group-label kolor-rows-label" style="margin-top:14px">Styl tekstu</span>
+            <div class="dekor-kolor-row">
+              <span class="dekor-kolor-row-label">Napisy</span>
+              <div class="dekor-chips" id="dekor-napisy-chips">
+                <button class="dekor-chip" data-rola="napisy" data-val="bez">Bez</button>
+                <button class="dekor-chip" data-rola="napisy" data-val="cien">Cień</button>
+                <button class="dekor-chip" data-rola="napisy" data-val="obramowka">Obramówka</button>
+              </div>
+              <div class="dekor-kolor-wrap" id="dekor-napisy-kolor-wrap">
+                <label for="dekor-napisy-kolor">Kolor</label>
+                <input type="color" class="dekor-kolor" id="dekor-napisy-kolor" value="#000000">
+              </div>
+            </div>
+            <div class="dekor-kolor-row">
+              <span class="dekor-kolor-row-label">Nagłówek</span>
+              <div class="dekor-chips" id="dekor-naglowek-chips">
+                <button class="dekor-chip" data-rola="naglowek" data-val="bez">Bez</button>
+                <button class="dekor-chip" data-rola="naglowek" data-val="cien">Cień</button>
+                <button class="dekor-chip" data-rola="naglowek" data-val="obramowka">Obramówka</button>
+              </div>
+              <div class="dekor-kolor-wrap" id="dekor-naglowek-kolor-wrap">
+                <label for="dekor-naglowek-kolor">Kolor</label>
+                <input type="color" class="dekor-kolor" id="dekor-naglowek-kolor" value="#000000">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <span class="kolor-group-label">Palety</span>
+          <div class="kolor-palety" id="g-palety"></div>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:28px;margin-bottom:10px">
+            <span class="kolor-group-label" style="margin:0">Twoje kolory</span>
+            <button id="btn-reset-kolory" class="reset-link" onclick="kolory={...KOLORY_DEFAULT};paletaAktywna=null;renderKolory();render()">Wyczyść</button>
+          </div>
+          <div class="kolor-rows">
+            <div class="kolor-row">
+              <div class="kolor-row-info"><span class="kolor-row-name">Napisy</span><span class="kolor-row-desc">tekst mówiony</span></div>
+              <button class="kolor-swatch" id="ks-napisy" data-rola="napisy"></button>
+            </div>
+            <div class="kolor-row">
+              <div class="kolor-row-info"><span class="kolor-row-name">Akcent</span><span class="kolor-row-desc">wyróżnione słowo</span></div>
+              <button class="kolor-swatch" id="ks-akcent" data-rola="akcent"></button>
+            </div>
+            <div class="kolor-row">
+              <div class="kolor-row-info"><span class="kolor-row-name">Nagłówek</span><span class="kolor-row-desc">tytuł na początku</span></div>
+              <button class="kolor-swatch" id="ks-naglowek" data-rola="naglowek"></button>
+            </div>
+            <div class="kolor-row">
+              <div class="kolor-row-info"><span class="kolor-row-name">CTA</span><span class="kolor-row-desc">wezwanie na końcu</span></div>
+              <button class="kolor-swatch" id="ks-cta" data-rola="cta"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="kolor-popup" id="kolor-popup" hidden>
+      <div class="kpop-grid" id="kpop-grid"></div>
+      <div class="kpop-hex-row"><span>#</span><input class="kpop-hex" id="kpop-hex" maxlength="6" spellcheck="false" autocomplete="off"><input type="color" class="kpop-native" id="kpop-native"></div>
+    </div>
+
+    <section class="block" id="sec-uklad">
+      <div class="eyebrow">Krok 3 · Układ</div>
+      <h2>Twój układ</h2>
+      <p class="lead">Ustaw pozycję, rozmiar i styl tekstu napisów i nagłówka. Podgląd odświeża się na żywo.</p>
+      <div class="uklad-layout">
+        <div class="uklad-preview-col">
+          <div class="uklad-frame-wrap">
+            <div class="frame warm">
+              <div class="up-naglowek" id="up-naglowek-el" style="top:18%">Mój styl</div>
+              <div class="up-napisy" id="up-napisy-el" style="bottom:25%">jak nagrać pierwszą rolkę</div>
+            </div>
+          </div>
+          <div class="fonts-mini" id="uklad-fonts-mini"></div>
+        </div>
+        <div>
+          <div class="suwak-group">
+            <div class="suwak-row">
+              <div class="suwak-header">
+                <span class="suwak-name">Napisy: pozycja</span>
+                <span class="suwak-val" id="suwak-napisy-val">25%</span>
+              </div>
+              <p class="suwak-desc">odległość napisów od dołu ekranu</p>
+              <div class="suwak-track">
+                <span class="suwak-edge">dół</span>
+                <input type="range" class="suwak" id="suwak-napisy" min="24" max="55" value="25" step="1">
+                <span class="suwak-edge">góra</span>
+              </div>
+            </div>
+            <div class="suwak-row">
+              <div class="suwak-header">
+                <span class="suwak-name">Nagłówek: pozycja</span>
+                <span class="suwak-val" id="suwak-naglowek-val">18%</span>
+              </div>
+              <p class="suwak-desc">odległość tytułu od góry ekranu</p>
+              <div class="suwak-track">
+                <span class="suwak-edge">góra</span>
+                <input type="range" class="suwak" id="suwak-naglowek" min="12" max="50" value="18" step="1">
+                <span class="suwak-edge">dół</span>
+              </div>
+            </div>
+            <div class="suwak-row">
+              <div class="suwak-header">
+                <span class="suwak-name">Napisy: rozmiar</span>
+                <span class="suwak-val" id="suwak-napisy-rozm-val">100%</span>
+              </div>
+              <p class="suwak-desc">skala czcionki napisów względem domyślnej</p>
+              <div class="suwak-track">
+                <span class="suwak-edge">małe</span>
+                <input type="range" class="suwak" id="suwak-napisy-rozm" min="50" max="200" value="100" step="5">
+                <span class="suwak-edge">duże</span>
+              </div>
+            </div>
+            <div class="suwak-row">
+              <div class="suwak-header">
+                <span class="suwak-name">Nagłówek: rozmiar</span>
+                <span class="suwak-val" id="suwak-naglowek-rozm-val">100%</span>
+              </div>
+              <p class="suwak-desc">skala czcionki nagłówka względem domyślnej</p>
+              <div class="suwak-track">
+                <span class="suwak-edge">małe</span>
+                <input type="range" class="suwak" id="suwak-naglowek-rozm" min="50" max="200" value="100" step="5">
+                <span class="suwak-edge">duże</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="sec-plotno">
+      <div class="eyebrow">Krok 4 · Płótno</div>
+      <h2>Twoje płótno</h2>
+      <p class="lead">Jeśli nagrywasz bez twarzy albo chcesz slajdy z czystym tłem, wybierz kolory płótna. Możesz wybrać do 3. Claude użyje ich tam, gdzie pasują lub gdzie powiesz.</p>
+      <div class="plotno-layout">
+        <div class="plotno-preview-col">
+          <div class="plotno-frames-row">
+            <div class="frame" id="pp-frame-1" style="background:#FDE68A">
+              <div class="pp-card">
+                <span class="pp-card-eye">WYNIK</span>
+                <span class="pp-card-title">Wzrost<br>sprzedaży</span>
+                <span class="pp-card-body">Po wdrożeniu strategii wyniki poszły w górę.</span>
+              </div>
+              <div class="pp-annot">
+                <svg viewBox="0 0 90 72" xmlns="http://www.w3.org/2000/svg">
+                  <text x="2" y="17" font-family="Caveat,cursive" font-size="17" fill="#6C63FF" font-weight="600">przed →</text>
+                  <path d="M58 20 Q72 34 62 54" stroke="#6C63FF" stroke-width="2" fill="none" stroke-linecap="round" opacity=".85"/>
+                </svg>
+              </div>
+            </div>
+            <div class="frame" id="pp-frame-2" style="background:#C5E3F7">
+              <div class="pp-step">KROK 1</div>
+              <div class="pp-step-title">Kliknij<br>Finder</div>
+              <div class="pp-step-sub">MACOS</div>
+              <div class="pp-dock">
+                <span style="background:linear-gradient(135deg,#5AF,#06F)"></span>
+                <span class="pp-dock-bounce" style="background:linear-gradient(135deg,#FA0,#F60)"></span>
+                <span style="background:linear-gradient(135deg,#6F6,#0A0)"></span>
+                <span style="background:linear-gradient(135deg,#F9A,#F36)"></span>
+                <span style="background:linear-gradient(135deg,#C8B,#97A)"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="tempo-cards" id="g-plotno"></div>
+          <div class="plotno-custom-row">
+            <span class="plotno-custom-label">Własny kolor</span>
+            <input type="color" id="plotno-picker" value="#FFFFFF" oninput="const h=$('#plotno-hex');if(h)h.value=this.value">
+            <input type="text" id="plotno-hex" class="kpop-hex" maxlength="7" placeholder="#FFD166" spellcheck="false" oninput="const v=this.value.replace(/^#*/,'#');if(/^#[0-9A-Fa-f]{6}$/.test(v)){const p=$('#plotno-picker');if(p)p.value=v}">
+            <button class="btn btn-ghost" style="padding:8px 16px;font-size:13px" onclick="addCustomPlotno()">Dodaj</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="sec-tempo">
+      <div class="eyebrow">Krok 5 · Tempo</div>
+      <h2>Jak dynamiczne mają być Twoje rolki?</h2>
+      <p class="lead">To ustawienie mówi, jak szybko ma się zmieniać obraz po wycięciu pauz i ciszy. Możesz je zmienić przy każdym montażu.</p>
+      <div class="tempo-cards" id="g-tempo"></div>
+    </section>
+
+    <section class="block" id="sec-zoom">
+      <div class="eyebrow">Krok 6 · Zoom</div>
+      <h2>Czy kamera ma się poruszać?</h2>
+      <p class="lead">Zoom to ruch wewnątrz klipu (przybliżanie lub oddalanie), niezależnie od cięć. Możesz go pominąć albo dodać subtelnie lub dynamicznie.</p>
+      <div class="tempo-cards" id="g-zoom"></div>
+    </section>
+
+    <section class="block" id="sec-fx">
+      <div class="eyebrow">Krok C · Efekty</div>
+      <h2>Twoje efekty</h2>
+      <p class="lead">Zaznacz tyle, ile chcesz. Efekty na rolce Claude doda tam, gdzie pasują do treści. Efekty samodzielne (jak Przed i po) powstaną z osobnego nagrania.</p>
+      <div id="fx-quicknav" class="fx-quicknav"></div>
+      <div class="fxbar">
+        <button class="switch" id="parts" role="switch" aria-checked="false">
+          <span class="tr"></span>
+          <span><b>Różne efekty w różnych częściach filmu</b><small>Przy każdym efekcie wybierz początek, środek lub koniec. Bez zaznaczenia efekt może pojawić się wszędzie.</small></span>
+        </button>
+        <button class="link" id="all">Zaznacz wszystkie</button>
+      </div>
+      <div id="fx-cats"></div>
+    </section>
+
+    <section class="block" id="sec-snd">
+      <div class="eyebrow">Krok 7 · Dźwięki</div>
+      <h2>Twoje dźwięki</h2>
+      <p class="lead">Zaznacz dźwięki, których lubisz używać. Claude doda je tam, gdzie pasują do ruchu i efektów. Bez zaznaczenia Claude zdecyduje sam.</p>
+      <div class="grid snd-grid" id="g-snd"></div>
+    </section>
+
+    <section class="block" id="sec-styl">
+      <div class="eyebrow">Krok D · Styl wizualny</div>
+      <h2>Wygląd obrazu</h2>
+      <p class="lead">Wybierz jeden styl kolorystyczny dla całego filmu. Ciepłe tony, wysoki kontrast albo brak filtra. Jedno kliknięcie ustala nastrój całej rolki.</p>
+      <div id="g-styl" style="display:grid;gap:12px;margin-top:18px"></div>
+    </section>
+  </div>
+</div>
+
+<div id="zapisano" hidden>
+  <div class="band"><div class="wrap" style="padding-block:64px 80px;max-width:560px">
+    <div class="eyebrow" style="text-align:center">Gotowe</div>
+    <h2 style="margin:12px 0 20px;text-align:center">Twój styl zapisany&nbsp;✓</h2>
+    <p class="lead" style="text-align:center;margin:0 0 40px">Claude pamięta Twój wybór. Za każdym razem gdy wrzucisz wideo, zmontuje je dokładnie w tym stylu.</p>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;gap:16px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0">1</div>
+        <div>
+          <div style="font-weight:800;font-size:16px;margin-bottom:4px">Wróć do Claude Code</div>
+          <div style="color:var(--muted);font-size:14px;line-height:1.5">Zamknij to okno. W aplikacji Claude Code otwórz zakładkę z kodem i zacznij nową sesję.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0">2</div>
+        <div>
+          <div style="font-weight:800;font-size:16px;margin-bottom:4px">Dodaj swoje wideo do czatu</div>
+          <div style="color:var(--muted);font-size:14px;line-height:1.5">Przeciągnij plik wideo bezpośrednio do okna rozmowy lub użyj spinacza, żeby go dołączyć.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0">3</div>
+        <div>
+          <div style="font-weight:800;font-size:16px;margin-bottom:4px">Wpisz <code style="background:var(--line);padding:2px 8px;border-radius:6px;font-size:14px">/studio:montaz</code></div>
+          <div style="color:var(--muted);font-size:14px;line-height:1.5">Claude weźmie Twoje wideo i efekty, które właśnie wybrałaś, i zmontuje gotową rolkę.</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin:32px 0 0;padding:20px 24px;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;font-size:13px;color:var(--muted);line-height:1.6">
+      <div style="font-weight:800;font-size:14px;color:var(--ink);margin-bottom:10px">Przy kolejnym filmie</div>
+      <p style="margin:0 0 8px">Wpisz <strong style="color:var(--ink)">/studio:lookbook</strong> — zobaczysz swój poprzedni wybór efektów gotowy do edycji. Twoja marka (kolory, czcionki) też zostaje.</p>
+      <p style="margin:0">Chcesz inne efekty niż poprzednio? Kliknij <strong style="color:var(--ink)">Odznacz wszystkie</strong> i wybierz od zera. Marka nadal zostaje.</p>
+    </div>
+  </div></div>
+</div>
+
+<div class="bar" id="bar"><div class="wrap">
+  <div class="sum"><span class="eyebrow">Twój wybór</span><span id="sum">Nic jeszcze nie wybrano</span></div>
+  <div class="bar-actions">
+    <button class="btn btn-ghost" id="clear" disabled onclick="clearAll()">Wyczyść wybór</button>
+    <div id="marka-action" hidden style="display:flex;flex-direction:column;align-items:center">
+      <button class="btn" id="save-marka" disabled>Zapisz moją markę</button>
+      <div class="marka-hint">Wróć tu kiedy chcesz i zmień dowolne ustawienie</div>
+    </div>
+    <button class="btn" id="save" disabled>Zapisz wybór efektów</button>
+  </div>
+</div></div>
+
+<script>
+let mode = 'own', cap = null, hook = null, fx = {}, partsOn = false;
+let snd = new Set(), plotno = [], styl = null, tempo = null, zoom = null;
+let lbTab = 'marka';
+let allFxIds = [];
+let fonts = { glowna: null, akcent: null, odreczna: null };
+let fontRole = 'glowna';
+const KOLORY_DEFAULT = { napisy: '#FFFFFF', akcent: '#FCE3D6', naglowek: '#FFFFFF', cta: '#FCE3D6' };
+let kolory = { ...KOLORY_DEFAULT };
+let paletaAktywna = null;
+let pickerRola = null;
+const UKLAD_DEFAULT = { napisy: 25, naglowek: 18, napisy_rozmiar: 100, naglowek_rozmiar: 100, napisy_dekor: 'cien', napisy_dekor_kolor: '#000000', naglowek_dekor: 'cien', naglowek_dekor_kolor: '#000000' };
+let uklad = { ...UKLAD_DEFAULT };
+function hasCustomUklad() {
+  const DEKOR_KEYS = new Set(['napisy_dekor','napisy_dekor_kolor','naglowek_dekor','naglowek_dekor_kolor']);
+  return Object.keys(UKLAD_DEFAULT).some(k => !DEKOR_KEYS.has(k) && uklad[k] !== UKLAD_DEFAULT[k]);
+}
+function applyDekorEl(el, dekor, kolor) {
+  if (!el) return;
+  el.style.textShadow = dekor === 'cien' ? '0 2px 8px rgba(0,0,0,.7)' : 'none';
+  el.style.webkitTextStroke = dekor === 'obramowka' ? `1.5px ${kolor}` : '';
+  el.style.paintOrder = dekor === 'obramowka' ? 'stroke fill' : '';
+}
+function updateDekorChips(rola) {
+  document.querySelectorAll(`.dekor-chip[data-rola="${rola}"]`).forEach(btn => {
+    btn.dataset.active = btn.dataset.val === uklad[rola + '_dekor'] ? '1' : '0';
+  });
+  const wrap = $(`#dekor-${rola}-kolor-wrap`);
+  if (wrap) wrap.style.display = uklad[rola + '_dekor'] === 'obramowka' ? 'flex' : 'none';
+  const ki = $(`#dekor-${rola}-kolor`);
+  if (ki) ki.value = uklad[rola + '_dekor_kolor'];
+}
+function renderFontsMini(containerId) {
+  const c = $('#' + containerId);
+  if (!c) return;
+  c.innerHTML = '';
+  const roles = [['glowna','Główna'],['akcent','Akcent'],['odreczna','Odręczna']];
+  const hasAny = roles.some(([r]) => fonts[r]);
+  if (!hasAny) {
+    const em = document.createElement('div');
+    em.className = 'fonts-mini-empty';
+    em.textContent = 'Brak wybranych czcionek. Przejdź do Kroku 2.';
+    c.appendChild(em);
+    return;
+  }
+  roles.forEach(([r, label]) => {
+    const fId = fonts[r];
+    if (!fId) return;
+    const f = CZCIONKI.find(x => x.id === fId);
+    if (!f) return;
+    const row = document.createElement('div');
+    row.className = 'fmini-row';
+    const sample = r === 'glowna' ? 'jak nagrać rolkę' : r === 'akcent' ? '3 triki' : '↑ to działa';
+    row.innerHTML = `<span class="fmini-sample" style="font-family:'${f.rodzina}';font-weight:${f.waga};font-style:${f.styl||'normal'}">${sample}</span><div class="fmini-meta"><span class="fmini-name">${f.nazwa}</span><span class="fmini-role">${label}</span></div>`;
+    c.appendChild(row);
+  });
+}
+function renderUklad() {
+  const napEl = $('#up-napisy-el'), nagEl = $('#up-naglowek-el');
+  if (napEl) { napEl.style.bottom = uklad.napisy + '%'; napEl.style.fontSize = `calc(clamp(7px,2.2vw,11px) * ${uklad.napisy_rozmiar / 100})`; }
+  if (nagEl) { nagEl.style.top = uklad.naglowek + '%'; nagEl.style.fontSize = `calc(clamp(10px,2.8vw,14px) * ${uklad.naglowek_rozmiar / 100})`; }
+  applyDekorEl(napEl, uklad.napisy_dekor, uklad.napisy_dekor_kolor);
+  applyDekorEl(nagEl, uklad.naglowek_dekor, uklad.naglowek_dekor_kolor);
+  const sn = $('#suwak-napisy'), snv = $('#suwak-napisy-val');
+  if (sn) sn.value = uklad.napisy;
+  if (snv) snv.textContent = uklad.napisy + '%';
+  const sg = $('#suwak-naglowek'), sgv = $('#suwak-naglowek-val');
+  if (sg) sg.value = uklad.naglowek;
+  if (sgv) sgv.textContent = uklad.naglowek + '%';
+  const snr = $('#suwak-napisy-rozm'), snrv = $('#suwak-napisy-rozm-val');
+  if (snr) snr.value = uklad.napisy_rozmiar;
+  if (snrv) snrv.textContent = uklad.napisy_rozmiar + '%';
+  const sgr = $('#suwak-naglowek-rozm'), sgrv = $('#suwak-naglowek-rozm-val');
+  if (sgr) sgr.value = uklad.naglowek_rozmiar;
+  if (sgrv) sgrv.textContent = uklad.naglowek_rozmiar + '%';
+  // Apply chosen fonts to layout preview frame
+  const fG = fonts.glowna ? CZCIONKI.find(x => x.id === fonts.glowna) : null;
+  const fA = fonts.akcent ? CZCIONKI.find(x => x.id === fonts.akcent) : null;
+  if (napEl && fG) { napEl.style.fontFamily = `'${fG.rodzina}'`; napEl.style.fontWeight = fG.waga; napEl.style.fontStyle = fG.styl || 'normal'; }
+  if (nagEl && fA) { nagEl.style.fontFamily = `'${fA.rodzina}'`; nagEl.style.fontWeight = fA.waga; nagEl.style.fontStyle = fA.styl || 'normal'; }
+  renderFontsMini('uklad-fonts-mini');
+}
+const KOLORY_PRESET = [
+  '#FFFFFF','#F5F0E8','#FCE3D6','#FFB8C6','#FF6B6B','#E63946',
+  '#FFD166','#FF9F1C','#A8D8EA','#5B9BD5','#6C63FF','#9B59B6',
+  '#06D6A0','#00F5D4','#1A1A1A','#4A3F3C','#8B7355','#C9A493',
+];
+const PLOTNO_OPTIONS = [
+  { id:'maselko', nazwa:'Masełko', kolor:'#FDE68A', opis:'Ciepłe żółte tło, biały tekst i karty z białą obwódką. Twoje rolki będą od razu rozpoznawalne.' },
+  { id:'blekit', nazwa:'Błękit', kolor:'#C5E3F7', opis:'Pastelowe niebo w tle, naklejki, które przyciągają oko. Lekko i z humorem.' },
+  { id:'lila', nazwa:'Lila', kolor:'#E8D5F5', opis:'Miękki lawendowy, spokojny i nowoczesny. Działa na treści lifestyle, wellness i edukacji.' },
+];
+function updatePlotnoPreview() {
+  const frame = $('#pp-frame-1');
+  if (!frame) return;
+  const kolor = plotno.length > 0 ? plotno[0].kolor : '#FDE68A';
+  frame.style.background = kolor;
+  const r = parseInt(kolor.slice(1,3),16), gg = parseInt(kolor.slice(3,5),16), b = parseInt(kolor.slice(5,7),16);
+  const lum = (0.299*r + 0.587*gg + 0.114*b) / 255;
+  const textKolor = lum > 0.5 ? 'rgba(20,10,0,.8)' : 'rgba(255,255,255,.92)';
+}
+function buildPlotno() {
+  const g = $('#g-plotno');
+  if (!g) return;
+  g.innerHTML = '';
+  updatePlotnoPreview();
+  const hint = document.createElement('p');
+  hint.className = 'plotno-hint';
+  hint.textContent = `Zaznaczone: ${plotno.length} z 3. Możesz wybrać każde, odhaczyć lub zastąpić własnym`;
+  g.appendChild(hint);
+  PLOTNO_OPTIONS.forEach(opt => {
+    const active = plotno.some(p => p.id === opt.id);
+    const btn = document.createElement('button');
+    btn.className = 'tempo-card';
+    btn.dataset.active = active ? '1' : '0';
+    btn.innerHTML = `<div class="plotno-swatch" style="background:${opt.kolor}"></div><div class="tempo-info"><div class="tempo-name">${opt.nazwa}${active ? ' <span class="plotno-check">✓</span>' : ''}</div><div class="tempo-desc">${opt.opis}</div></div>`;
+    btn.addEventListener('click', () => {
+      if (active) { plotno = plotno.filter(p => p.id !== opt.id); }
+      else if (plotno.length < 3) { plotno.push({ id: opt.id, kolor: opt.kolor, nazwa: opt.nazwa }); }
+      buildPlotno(); render();
+    });
+    g.appendChild(btn);
+  });
+  plotno.filter(p => !PLOTNO_OPTIONS.find(o => o.id === p.id)).forEach(p => {
+    const btn = document.createElement('button');
+    btn.className = 'tempo-card';
+    btn.dataset.active = '1';
+    btn.innerHTML = `<div class="plotno-swatch" style="background:${p.kolor}"></div><div class="tempo-info"><div class="tempo-name">${p.nazwa}</div><div class="tempo-desc plotno-usun">Kliknij, żeby usunąć</div></div>`;
+    btn.addEventListener('click', () => { plotno = plotno.filter(x => x.kolor !== p.kolor); buildPlotno(); render(); });
+    g.appendChild(btn);
+  });
+}
+function addCustomPlotno() {
+  if (plotno.length >= 3) return;
+  const hexIn = $('#plotno-hex');
+  const raw = (hexIn?.value || '').trim().replace(/^#*/, '#');
+  const kolor = /^#[0-9A-Fa-f]{6}$/.test(raw) ? raw : $('#plotno-picker')?.value;
+  if (!kolor) return;
+  if (plotno.some(p => p.kolor.toUpperCase() === kolor.toUpperCase())) return;
+  plotno.push({ id: 'custom-' + Date.now(), kolor, nazwa: 'Własny' });
+  if (hexIn) hexIn.value = '';
+  buildPlotno(); updatePlotnoPreview(); render();
+}
+const TEMPO_OPTIONS = [
+  { id:'spokojne',   nazwa:'Spokojne',   czas:'5–8 s',   opis:'Tutoriale, wyjaśnienia krok po kroku, spokojny lifestyle. Widz ma czas na zapamiętanie każdego fragmentu.' },
+  { id:'naturalne',  nazwa:'Naturalne',  czas:'3–5 s',   opis:'Standardowa rolka, everyday content. Dobry punkt startowy dla większości tematów.', rec:true },
+  { id:'dynamiczne', nazwa:'Dynamiczne', czas:'1,5–3 s', opis:'Motywacja, sport, szybkie wskazówki, haki na uwagę. Energetyczny montaż, który wciąga od pierwszej sekundy.' },
+];
+function buildTempo() {
+  const g = $('#g-tempo');
+  if (!g) return;
+  g.innerHTML = '';
+  TEMPO_OPTIONS.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'tempo-card';
+    btn.id = 'tempo-' + opt.id;
+    btn.dataset.active = tempo === opt.id ? '1' : '0';
+    btn.innerHTML = `<div class="tempo-timing">${opt.czas}</div><div class="tempo-info"><div class="tempo-name">${opt.nazwa}${opt.rec ? '<span class="tempo-rec">Polecane</span>' : ''}</div><div class="tempo-desc">${opt.opis}</div></div>`;
+    btn.addEventListener('click', () => { tempo = opt.id; buildTempo(); render(); });
+    g.appendChild(btn);
+  });
+}
+const ZOOM_OPTIONS = [
+  { id:'bez',       nazwa:'Bez zooma',   czas:'brak',   opis:'Kamera stoi w miejscu. Spokojne nagrania, wywiady, dokumentalne podejście.' },
+  { id:'subtelny',  nazwa:'Subtelny',    czas:'~15 s',  opis:'Delikatne przybliżanie lub oddalanie co około 15 sekund. Dodaje głębi bez rozpraszania, dobre do tutoriali i lifestyle.', rec:true },
+  { id:'dynamiczny',nazwa:'Dynamiczny',  czas:'~5 s',   opis:'Wyraźne zmiany skali co około 5 sekund. Energetyczne rolki, sport, motywacja.' },
+];
+function buildZoom() {
+  const g = $('#g-zoom');
+  if (!g) return;
+  g.innerHTML = '';
+  ZOOM_OPTIONS.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'tempo-card';
+    btn.id = 'zoom-' + opt.id;
+    btn.dataset.active = zoom === opt.id ? '1' : '0';
+    btn.innerHTML = `<div class="tempo-timing">${opt.czas}</div><div class="tempo-info"><div class="tempo-name">${opt.nazwa}${opt.rec ? '<span class="tempo-rec">Polecane</span>' : ''}</div><div class="tempo-desc">${opt.opis}</div></div>`;
+    btn.addEventListener('click', () => { zoom = opt.id; buildZoom(); render(); });
+    g.appendChild(btn);
+  });
+}
+const PALETY_KOLOROW = [
+  { id:'naturalny', nazwa:'Naturalny', tlo:'#4A3F3C', napisy:'#FFFFFF', akcent:'#F0E6D3', naglowek:'#FFFFFF', cta:'#F0E6D3' },
+  { id:'rozany',    nazwa:'Różany',    tlo:'#7B3B5E', napisy:'#FFFFFF', akcent:'#FFCCE0', naglowek:'#FFFFFF', cta:'#FFCCE0' },
+  { id:'klasyczny', nazwa:'Klasyczny', tlo:'#1A1A1A', napisy:'#FFFFFF', akcent:'#E8E8E8', naglowek:'#FFFFFF', cta:'#E8E8E8' },
+  { id:'cieply',    nazwa:'Ciepły',    tlo:'#6B4226', napisy:'#FFFFFF', akcent:'#FFD166', naglowek:'#FFF8E1', cta:'#FFD166' },
+  { id:'zimny',     nazwa:'Zimny',     tlo:'#2C4A7C', napisy:'#FFFFFF', akcent:'#A8D8EA', naglowek:'#EEF6FA', cta:'#A8D8EA' },
+  { id:'nocny',     nazwa:'Nocny',     tlo:'#0D0D1A', napisy:'#FFFFFF', akcent:'#00F5D4', naglowek:'#FFFFFF', cta:'#00F5D4' },
+];
+function hasCustomKolory() {
+  return paletaAktywna !== null || Object.keys(kolory).some(k => kolory[k] !== KOLORY_DEFAULT[k]);
+}
+function rgbToHex(rgb) {
+  const m = (rgb || '').match(/\d+/g);
+  if (!m || m.length < 3) return '#000000';
+  return '#' + m.slice(0, 3).map(x => (+x).toString(16).padStart(2, '0')).join('').toUpperCase();
+}
+function buildPalety() {
+  const g = $('#g-palety');
+  if (!g) return;
+  g.innerHTML = '';
+  PALETY_KOLOROW.forEach(p => {
+    const btn = document.createElement('button');
+    btn.className = 'kpalet';
+    btn.id = 'kpalet-' + p.id;
+    btn.setAttribute('aria-selected', 'false');
+    btn.innerHTML = `<div class="kpalet-dots"><span class="kpalet-dot" style="background:${p.napisy}" title="Napisy"></span><span class="kpalet-dot" style="background:${p.akcent}" title="Akcent"></span><span class="kpalet-dot" style="background:${p.naglowek}" title="Nagłówek"></span><span class="kpalet-dot" style="background:${p.cta}" title="CTA"></span></div><div class="kpalet-nazw">${p.nazwa}</div>`;
+    btn.addEventListener('click', () => {
+      paletaAktywna = p.id;
+      kolory.napisy = p.napisy; kolory.akcent = p.akcent;
+      kolory.naglowek = p.naglowek; kolory.cta = p.cta;
+      closePicker(); renderKolory(); render();
+    });
+    g.appendChild(btn);
+  });
+}
+function openPicker(rola) {
+  pickerRola = rola;
+  const popup = $('#kolor-popup'), swatch = $(`#ks-${rola}`);
+  if (!popup || !swatch) return;
+  const grid = $('#kpop-grid');
+  grid.innerHTML = '';
+  const curr = (kolory[rola] || '#FFFFFF').toUpperCase();
+  KOLORY_PRESET.forEach(c => {
+    const d = document.createElement('button');
+    d.className = 'kpop-dot' + (c.toUpperCase() === curr ? ' kpop-ak' : '');
+    d.style.background = c;
+    d.title = c;
+    d.addEventListener('click', e => { e.stopPropagation(); paletaAktywna = null; setKolor(rola, c); });
+    grid.appendChild(d);
+  });
+  $('#kpop-hex').value = curr.replace('#', '');
+  $('#kpop-native').value = curr;
+  popup.hidden = false;
+  requestAnimationFrame(() => {
+    const r = swatch.getBoundingClientRect(), pw = 196, ph = popup.offsetHeight;
+    let top = r.bottom + 6, left = r.right - pw;
+    if (top + ph > window.innerHeight - 10) top = r.top - ph - 6;
+    if (left < 10) left = 10;
+    if (left + pw > window.innerWidth - 10) left = window.innerWidth - pw - 10;
+    popup.style.top = top + 'px'; popup.style.left = left + 'px';
+  });
+}
+function closePicker() {
+  const p = $('#kolor-popup');
+  if (p) p.hidden = true;
+  pickerRola = null;
+}
+function setKolor(rola, hex) {
+  if (!hex.startsWith('#')) hex = '#' + hex;
+  if (!/^#[0-9A-Fa-f]{6}$/.test(hex)) return;
+  kolory[rola] = hex.toUpperCase();
+  renderKolory(); render();
+}
+function renderKolory() {
+  ['napisy','akcent','naglowek','cta'].forEach(r => {
+    const sw = $(`#ks-${r}`);
+    if (sw) sw.style.background = kolory[r] || '';
+  });
+  PALETY_KOLOROW.forEach(p => {
+    const btn = $(`#kpalet-${p.id}`);
+    if (btn) btn.setAttribute('aria-selected', paletaAktywna === p.id);
+  });
+  if (pickerRola) {
+    const curr = (kolory[pickerRola] || '').toUpperCase();
+    document.querySelectorAll('.kpop-dot').forEach(d => {
+      d.classList.toggle('kpop-ak', rgbToHex(d.style.backgroundColor) === curr);
+    });
+  }
+  const kn = $('#kp-napisy-el'), ka = $('#kp-akcent-el'), kg = $('#kp-naglowek-el'), kc = $('#kp-cta-el');
+  if (kn) kn.style.color = kolory.napisy;
+  if (ka) ka.style.color = kolory.akcent;
+  if (kg) kg.style.color = kolory.naglowek;
+  if (kc) kc.style.color = kolory.cta;
+  // Apply chosen fonts to color preview frame
+  const cfG = fonts.glowna ? CZCIONKI.find(x => x.id === fonts.glowna) : null;
+  const cfA = fonts.akcent ? CZCIONKI.find(x => x.id === fonts.akcent) : null;
+  const cfO = fonts.odreczna ? CZCIONKI.find(x => x.id === fonts.odreczna) : null;
+  if (kn && cfG) { kn.style.fontFamily = `'${cfG.rodzina}'`; kn.style.fontWeight = cfG.waga; kn.style.fontStyle = cfG.styl || 'normal'; }
+  if (ka && cfA) { ka.style.fontFamily = `'${cfA.rodzina}'`; ka.style.fontWeight = cfA.waga; ka.style.fontStyle = cfA.styl || 'normal'; }
+  if (kg && cfA) { kg.style.fontFamily = `'${cfA.rodzina}'`; kg.style.fontWeight = cfA.waga; kg.style.fontStyle = cfA.styl || 'normal'; }
+  if (kc && cfO) { kc.style.fontFamily = `'${cfO.rodzina}'`; kc.style.fontWeight = cfO.waga; kc.style.fontStyle = cfO.styl || 'normal'; }
+  applyDekorEl(kn, uklad.napisy_dekor, uklad.napisy_dekor_kolor);
+  applyDekorEl(ka, uklad.napisy_dekor, uklad.napisy_dekor_kolor);
+  applyDekorEl(kg, uklad.naglowek_dekor, uklad.naglowek_dekor_kolor);
+  applyDekorEl(kc, uklad.naglowek_dekor, uklad.naglowek_dekor_kolor);
+  updateDekorChips('napisy');
+  updateDekorChips('naglowek');
+  const btnReset = $('#btn-reset-kolory');
+  if (btnReset) btnReset.hidden = !hasCustomKolory();
+  renderFontsMini('kolor-fonts-mini');
+}
+
+const CZCIONKI = [
+  { id:'inter-tight',  nazwa:'Inter Tight',       rodzina:'Inter Tight',       waga:900, styl:'normal',  kat:'sans',     role:['glowna','akcent'],          opis:'Mocne i czytelne' },
+  { id:'barlow',       nazwa:'Barlow Condensed',   rodzina:'Barlow Condensed',  waga:700, styl:'normal',  kat:'sans',     role:['glowna','akcent'],          opis:'Sportowa energia' },
+  { id:'montserrat',   nazwa:'Montserrat',          rodzina:'Montserrat',        waga:800, styl:'normal',  kat:'sans',     role:['glowna','akcent'],          opis:'Klasyczna pewność' },
+  { id:'figtree',      nazwa:'Figtree',             rodzina:'Figtree',           waga:700, styl:'normal',  kat:'sans',     role:['glowna'],                   opis:'Miękka, cozy' },
+  { id:'nunito',       nazwa:'Nunito',              rodzina:'Nunito',            waga:800, styl:'normal',  kat:'sans',     role:['glowna'],                   opis:'Zaokrąglona, ciepła' },
+  { id:'space-grotesk',nazwa:'Space Grotesk',       rodzina:'Space Grotesk',     waga:600, styl:'normal',  kat:'sans',     role:['glowna','akcent'],          opis:'Tech, biznes' },
+  { id:'archivo',      nazwa:'Archivo',             rodzina:'Archivo',           waga:800, styl:'normal',  kat:'sans',     role:['glowna','akcent'],          opis:'Rytm, pewność' },
+  { id:'bebas',        nazwa:'Bebas Neue',          rodzina:'Bebas Neue',        waga:400, styl:'normal',  kat:'display',  role:['glowna','akcent'],          opis:'Caps, kontur, siła' },
+  { id:'anton',        nazwa:'Anton',               rodzina:'Anton',             waga:400, styl:'normal',  kat:'display',  role:['glowna','akcent'],          opis:'Bardzo mocna' },
+  { id:'abril',        nazwa:'Abril Fatface',       rodzina:'Abril Fatface',     waga:400, styl:'normal',  kat:'display',  role:['akcent'],                   opis:'Retro plakat' },
+  { id:'dm-serif',     nazwa:'DM Serif Display',    rodzina:'DM Serif Display',  waga:400, styl:'normal',  kat:'serif',    role:['glowna','akcent'],          opis:'Elegancki szeryf' },
+  { id:'playfair',     nazwa:'Playfair Display',    rodzina:'Playfair Display',  waga:400, styl:'italic',  kat:'serif',    role:['glowna','akcent'],          opis:'Editorial, italic' },
+  { id:'newsreader',   nazwa:'Newsreader',          rodzina:'Newsreader',        waga:400, styl:'italic',  kat:'serif',    role:['glowna'],                   opis:'Kinowy, prasowy' },
+  { id:'instrument',   nazwa:'Instrument Serif',    rodzina:'Instrument Serif',  waga:400, styl:'normal',  kat:'serif',    role:['akcent'],                   opis:'Delikatny szeryf' },
+  { id:'cormorant',    nazwa:'Cormorant',           rodzina:'Cormorant',         waga:400, styl:'italic',  kat:'serif',    role:['akcent','odreczna'],        opis:'Fashion, raffinowany' },
+  { id:'caveat',       nazwa:'Caveat',              rodzina:'Caveat',            waga:600, styl:'normal',  kat:'odręczna', role:['odreczna','akcent'],        opis:'Notatnik, szkic' },
+  { id:'marck',        nazwa:'Marck Script',        rodzina:'Marck Script',      waga:400, styl:'normal',  kat:'odręczna', role:['odreczna'],                 opis:'Kursywa, podpis' },
+  { id:'pixelify',     nazwa:'Pixelify Sans',       rodzina:'Pixelify Sans',     waga:600, styl:'normal',  kat:'pixel',    role:['akcent'],                   opis:'Pixel art, tech' },
+  { id:'jetbrains',    nazwa:'JetBrains Mono',      rodzina:'JetBrains Mono',    waga:500, styl:'normal',  kat:'mono',     role:['akcent'],                   opis:'Terminal, dane' },
+];
+
+const RLABEL = { glowna:'Główna', akcent:'Akcent', odreczna:'Odręczna' };
+
+function buildFontGrid() {
+  const grid = $('#g-czcionki');
+  grid.innerHTML = '';
+  CZCIONKI.forEach(f => {
+    if (!f.role.includes(fontRole)) return;
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.id = `fnt-${f.id}`;
+    el.tabIndex = 0;
+    el.setAttribute('role', 'button');
+    el.setAttribute('aria-pressed', 'false');
+    const sampleTxt = (f.kat === 'display' && f.styl !== 'italic') ? 'AA' : 'Aa';
+    el.innerHTML = `<span class="tick"></span>
+      <div class="fcard-sample" style="font-family:'${f.rodzina}';font-weight:${f.waga};font-style:${f.styl||'normal'};font-size:52px">${sampleTxt}</div>
+      <div class="title">${f.nazwa}</div>
+      <div class="fcard-cat">${f.kat}</div>
+      ${f.opis ? `<div class="desc">${f.opis}</div>` : ''}`;
+    el.addEventListener('click', () => {
+      if (fonts[fontRole] === f.id) {
+        fonts[fontRole] = null;
+      } else {
+        Object.keys(fonts).forEach(r => { if (fonts[r] === f.id) fonts[r] = null; });
+        fonts[fontRole] = f.id;
+      }
+      render();
+    });
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); } });
+    grid.appendChild(el);
+  });
+}
+const PARTS = [['poczatek','Początek'],['srodek','Środek'],['koniec','Koniec']];
+const SND = '<svg class="off" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6M16 9l6 6"/></svg><svg class="on" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>';
+const $ = s => document.querySelector(s);
+
+function fxPlural(n) {
+  if (n === 1) return ' efekt';
+  if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) return ' efekty';
+  return ' efektów';
+}
+function sndPlural(n) {
+  if (n === 1) return ' dźwięk';
+  if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) return ' dźwięki';
+  return ' dźwięków';
+}
+
+function buildFrame(item, typ) {
+  const isEmpty = item.podglad_html === null || item.id === 'bez-napisow';
+  const hasZoom = item.podglad_zoom === true;
+  const cls = 'frame' + (isEmpty ? ' empty' : '') + (hasZoom ? ' zoom' : '') + (item.podglad_frame ? ' ' + item.podglad_frame : '');
+  let inner;
+  if (item.ma_podglad) {
+    const poster = item.ma_poster ? ` poster="/poster/${typ}/${item.id}"` : '';
+    const postImg = item.ma_poster ? `<img class="vid" src="/poster/${typ}/${item.id}" alt="">` : '';
+    inner = `${postImg}<video class="vid vid-v" src="/podglad/${typ}/${item.id}"${poster} muted playsinline loop></video>` +
+            `<div class="prog"><i></i></div>` +
+            `<button class="snd" aria-pressed="false" aria-label="Włącz dźwięk">${SND}</button>`;
+  } else if (isEmpty) {
+    inner = `<div class="empty-txt">${item.id === 'bez-napisow' ? 'bez napisów' : ''}</div>`;
+  } else {
+    inner = `${item.podglad_html}<span class="ph">tu Twój film</span>` +
+            `<button class="snd" aria-pressed="false" aria-label="Włącz dźwięk">${SND}</button>`;
+  }
+  return `<div class="${cls}"><span class="tick"></span>${item.nowosc ? '<span class="badge">Nowość</span>' : ''}${inner}</div>`;
+}
+
+function card(item, kind, typ, maps) {
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.tabIndex = 0;
+  el.setAttribute('role', 'button');
+  el.id = `${kind}-${item.id}`;
+  el.setAttribute('aria-pressed', 'false');
+  if (kind === 'fx' && item.typ === 'standalone') el.dataset.standalone = '';
+
+  let html = buildFrame(item, typ);
+  html += `<div class="title">${item.nazwa}</div>`;
+  if (item.opis) html += `<div class="desc">${item.opis}</div>`;
+  if (item.najlepsze_do) html += `<div class="best"><b>Najlepsze do</b>${item.najlepsze_do}</div>`;
+  el.innerHTML = html;
+
+  const vid = el.querySelector('.vid-v');
+  const frame = el.querySelector('.frame');
+  if (vid) {
+    const prog = frame && frame.querySelector('.prog');
+    const fill = prog && prog.querySelector('i');
+    const play = () => {
+      vid.style.opacity = '1';
+      if (prog) prog.style.opacity = '1';
+      vid.play().catch(() => {});
+    };
+    const stop = () => {
+      vid.pause();
+      vid.currentTime = 0;
+      vid.style.opacity = '0';
+      if (prog) { prog.style.opacity = '0'; if (fill) fill.style.width = '0'; }
+    };
+    vid.addEventListener('timeupdate', () => {
+      if (vid.duration && fill) fill.style.width = (vid.currentTime / vid.duration * 100).toFixed(1) + '%';
+    });
+    el.addEventListener('mouseenter', play);
+    el.addEventListener('mouseleave', stop);
+    el.addEventListener('touchstart', () => { vid.paused ? play() : stop(); }, { passive: true });
+  }
+  const sndBtn = el.querySelector('.snd');
+  if (sndBtn) {
+    sndBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const on = sndBtn.getAttribute('aria-pressed') !== 'true';
+      if (on) {
+        document.querySelectorAll('.snd[aria-pressed="true"]').forEach(btn => {
+          if (btn === sndBtn) return;
+          btn.setAttribute('aria-pressed', 'false');
+          btn.setAttribute('aria-label', 'Włącz dźwięk');
+          const v = btn.closest('.card')?.querySelector('.vid-v');
+          if (v) v.muted = true;
+        });
+      }
+      sndBtn.setAttribute('aria-pressed', String(on));
+      sndBtn.setAttribute('aria-label', on ? 'Wycisz' : 'Włącz dźwięk');
+      if (vid) vid.muted = !on;
+    });
+  }
+
+  // Panel "gdzie w filmie" — tylko dla efektów nakładkowych
+  if (kind === 'fx' && item.typ !== 'standalone') {
+    const w = document.createElement('div');
+    w.className = 'where';
+    w.hidden = true;
+    w.innerHTML = '<small>Gdzie w filmie? Bez zaznaczenia: wszędzie.</small>' +
+      PARTS.map(([v, l]) => `<button class="chip" data-p="${v}" aria-pressed="false">${l}</button>`).join('');
+    w.addEventListener('click', e => {
+      const ch = e.target.closest('.chip');
+      if (!ch) return;
+      e.stopPropagation();
+      if (!Array.isArray(fx[item.id])) return;
+      const set = new Set(fx[item.id] || []);
+      set.has(ch.dataset.p) ? set.delete(ch.dataset.p) : set.add(ch.dataset.p);
+      fx[item.id] = [...set];
+      render();
+    });
+    el.appendChild(w);
+  }
+
+
+  const act = () => {
+    if (kind === 'cap') {
+      cap = cap === item.id ? null : item.id;
+    } else if (kind === 'hook') {
+      hook = hook === item.id ? null : item.id;
+    } else if (kind === 'fx') {
+      if (fx[item.id] !== undefined) {
+        delete fx[item.id];
+      } else if (item.typ === 'standalone') {
+        fx[item.id] = {};
+      } else {
+        fx[item.id] = [];
+      }
+    }
+    render();
+  };
+  el.addEventListener('click', e => { if (e.target.closest('.where,.snd')) return; act(); });
+  el.addEventListener('keydown', e => {
+    if (e.target !== el) return;
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); act(); }
+  });
+  return el;
+}
+
+function sndCard(item) {
+  const el = document.createElement('button');
+  el.className = 'snd-card';
+  el.id = `snd-${item.id}`;
+  el.setAttribute('role', 'button');
+  el.setAttribute('aria-pressed', 'false');
+  el.innerHTML = `
+    <div class="snd-card-top">
+      <button class="snd-play" aria-label="Odtwórz ${item.nazwa}" type="button">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <span class="snd-name">${item.nazwa}</span>
+    </div>
+    <span class="snd-desc">${item.opis}</span>
+    <span class="snd-tick">✓</span>
+  `;
+
+  let audio = null;
+  const playBtn = el.querySelector('.snd-play');
+  playBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    if (!audio) audio = new Audio(`/dzwiek/${item.id}`);
+    if (audio.paused) {
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    } else {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  });
+
+  el.addEventListener('click', e => {
+    if (e.target.closest('.snd-play')) return;
+    snd.has(item.id) ? snd.delete(item.id) : snd.add(item.id);
+    render();
+  });
+  return el;
+}
+
+function render() {
+  const isMarka = mode === 'own' && lbTab === 'marka';
+  const isEfekty = mode === 'own' && lbTab === 'efekty';
+  $('#lb-tabs').hidden = mode !== 'own';
+  $('#lt-marka')?.setAttribute('aria-selected', lbTab === 'marka');
+  $('#lt-efekty')?.setAttribute('aria-selected', lbTab === 'efekty');
+  if ($('#sec-hooki')) $('#sec-hooki').hidden = !isEfekty;
+  $('#sec-caps').hidden = !isEfekty;
+  $('#sec-czcionki').hidden = !isMarka;
+  $('#sec-kolory').hidden = !isMarka;
+  $('#sec-uklad').hidden = !isMarka;
+  $('#sec-plotno').hidden = !isMarka;
+  $('#sec-tempo').hidden = !isMarka;
+  $('#sec-zoom').hidden = !isMarka;
+  $('#sec-fx').hidden = !isEfekty;
+  $('#sec-snd').hidden = !isMarka;
+  $('#sec-styl').hidden = !isEfekty;
+  renderKolory();
+  renderUklad();
+  buildPlotno();
+  buildTempo();
+  buildZoom();
+
+  // Font role tabs
+  ['glowna','akcent','odreczna'].forEach(r => {
+    const tab = $(`#ftab-${r}`);
+    if (!tab) return;
+    tab.setAttribute('aria-pressed', fontRole === r);
+    const dot = tab.querySelector('.frtab-dot');
+    if (dot) dot.classList.toggle('assigned', fonts[r] !== null);
+  });
+  // Font cards
+  document.querySelectorAll('[id^="fnt-"]').forEach(el => {
+    const fId = el.id.slice(4);
+    const f = CZCIONKI.find(x => x.id === fId);
+    if (!f) return;
+    const assignedRole = Object.entries(fonts).find(([,id]) => id === f.id)?.[0];
+    el.setAttribute('aria-pressed', fonts[fontRole] === f.id);
+    let badge = el.querySelector('.fcard-role-badge');
+    if (assignedRole) {
+      if (!badge) { badge = document.createElement('span'); badge.className='fcard-role-badge'; el.appendChild(badge); }
+      badge.textContent = RLABEL[assignedRole];
+    } else if (badge) { badge.remove(); }
+    const tick = el.querySelector('.tick');
+    if (tick) tick.textContent = fonts[fontRole] === f.id ? '✓' : '';
+  });
+  // Live phone preview
+  const fpG=$('#fp-glowna-el'), fpA=$('#fp-akcent-el'), fpO=$('#fp-odreczna-el');
+  if (fpG) [['glowna',fpG],['akcent',fpA],['odreczna',fpO]].forEach(([r,el]) => {
+    const f = CZCIONKI.find(x => x.id === fonts[r]);
+    if (f) { el.style.fontFamily=`'${f.rodzina}'`; el.style.fontWeight=f.waga; el.style.fontStyle=f.styl||'normal'; }
+    else { el.style.fontFamily=''; el.style.fontWeight=''; el.style.fontStyle=''; }
+  });
+  // Chosen font list
+  const chosenList = $('#font-chosen-list');
+  if (chosenList) {
+    chosenList.innerHTML = '';
+    Object.entries(fonts).forEach(([r,fId]) => {
+      if (!fId) return;
+      const f = CZCIONKI.find(x => x.id === fId);
+      if (!f) return;
+      const item = document.createElement('div');
+      item.className = 'fchosen-item';
+      item.innerHTML = `<span class="fchosen-dot"></span><span class="fchosen-name">${f.nazwa}</span><span class="fchosen-role"> · ${RLABEL[r]}</span>`;
+      chosenList.appendChild(item);
+    });
+  }
+
+  document.querySelectorAll('[id^="styl-"]').forEach(el =>
+    el.setAttribute('aria-pressed', styl === el.id.slice(5)));
+  $('#parts').setAttribute('aria-checked', partsOn);
+
+  const allOn = allFxIds.length > 0 && allFxIds.every(id => fx[id] !== undefined);
+  $('#all').textContent = allOn ? 'Odznacz wszystkie' : 'Zaznacz wszystkie';
+
+  document.querySelectorAll('[id^="hook-"]').forEach(el =>
+    el.setAttribute('aria-pressed', hook === el.id.slice(5)));
+  document.querySelectorAll('[id^="cap-"]').forEach(el =>
+    el.setAttribute('aria-pressed', cap === el.id.slice(4)));
+
+  allFxIds.forEach(id => {
+    const el = $(`#fx-${id}`);
+    if (!el) return;
+    const on = fx[id] !== undefined;
+    el.setAttribute('aria-pressed', on);
+
+    const where = el.querySelector('.where');
+    if (where) {
+      where.hidden = !(on && partsOn);
+      where.querySelectorAll('.chip').forEach(ch =>
+        ch.setAttribute('aria-pressed', on && Array.isArray(fx[id]) && fx[id].includes(ch.dataset.p)));
+    }
+
+  });
+
+  document.querySelectorAll('[id^="snd-"]').forEach(el =>
+    el.setAttribute('aria-pressed', snd.has(el.id.slice(4))));
+
+  const nFx = Object.keys(fx).length;
+  const nSnd = snd.size;
+  let ok = false;
+  const sumEl = $('#sum');
+  sumEl.innerHTML = '';
+
+  const addChip = (text, to, dim, onRemove) => {
+    const b = document.createElement('button');
+    b.className = 'sum-chip' + (dim ? ' dim' : '');
+    const label = document.createTextNode(text);
+    b.appendChild(label);
+    if (to && !dim) b.addEventListener('click', (e) => {
+      if (e.target.closest('.chip-x')) return;
+      const sec = document.getElementById(to);
+      if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    if (onRemove && !dim) {
+      const x = document.createElement('span');
+      x.className = 'chip-x';
+      x.textContent = '✕';
+      x.title = 'Usuń';
+      x.addEventListener('click', (e) => { e.stopPropagation(); onRemove(); render(); });
+      b.appendChild(x);
+    }
+    sumEl.appendChild(b);
+  };
+
+  const hasMarkaData = Object.values(fonts).some(Boolean) || hasCustomKolory() || hasCustomUklad() || plotno.length > 0 || tempo !== null || zoom !== null || snd.size > 0;
+  if (mode === 'own' && lbTab === 'marka') {
+    const nFonts = Object.values(fonts).filter(Boolean).length;
+    if (nFonts) addChip(nFonts + (nFonts === 1 ? ' czcionka' : nFonts < 5 ? ' czcionki' : ' czcionek'), 'sec-czcionki', false, () => { fonts = { glowna: null, akcent: null, odreczna: null }; });
+    if (hasCustomKolory()) {
+      const pnazwa = paletaAktywna ? (PALETY_KOLOROW.find(p => p.id === paletaAktywna)?.nazwa || 'Paleta') + ' · kolory' : 'Własne kolory';
+      addChip(pnazwa, 'sec-kolory', false, () => { kolory = { ...KOLORY_DEFAULT }; paletaAktywna = null; });
+    }
+    if (hasCustomUklad()) addChip('Własny układ', 'sec-uklad', false, () => { uklad = { ...UKLAD_DEFAULT }; });
+    if (plotno.length > 0) addChip(plotno.length + (plotno.length === 1 ? ' płótno' : ' płótna'), 'sec-plotno', false, () => { plotno = []; });
+    if (tempo) { const opt = TEMPO_OPTIONS.find(o => o.id === tempo); addChip('Tempo: ' + (opt?.nazwa || tempo), 'sec-tempo', false, () => { tempo = null; }); }
+    if (zoom) { const opt = ZOOM_OPTIONS.find(o => o.id === zoom); addChip('Zoom: ' + (opt?.nazwa || zoom), 'sec-zoom', false, () => { zoom = null; }); }
+    if (nSnd) addChip(nSnd + sndPlural(nSnd), 'sec-snd', false, () => { snd = new Set(); });
+    if (!hasMarkaData) addChip('Nic jeszcze nie wybrano', null, true);
+    ok = hasMarkaData;
+  } else if (mode === 'own' && lbTab === 'efekty') {
+    if (hook) {
+      const el = $(`#hook-${hook}`);
+      addChip((el?.querySelector('.title')?.textContent || hook) + ' · hook', 'sec-hooki', false, () => { hook = null; });
+    }
+    if (cap) {
+      const el = $(`#cap-${cap}`);
+      addChip((el?.querySelector('.title')?.textContent || cap) + ' · napisy', 'sec-caps', false, () => { cap = null; });
+    }
+    if (nFx) addChip(nFx + fxPlural(nFx) + (partsOn ? ' według części' : ''), 'sec-fx', false, () => { fx = {}; });
+    if (styl) { const sel = document.getElementById('styl-' + styl); addChip((sel?.querySelector('.styl-name')?.textContent || styl) + ' · styl', 'sec-styl', false, () => { styl = null; }); }
+    if (!hook && !cap && !nFx && !styl) addChip('Nic jeszcze nie wybrano', null, true);
+    ok = hook !== null || cap !== null || nFx > 0 || styl !== null;
+  } else {
+    addChip('Nic jeszcze nie wybrano', null, true);
+  }
+
+  const markaAction = $('#marka-action');
+  const saveEfekty = $('#save');
+  if (markaAction) markaAction.hidden = !(mode === 'own' && lbTab === 'marka');
+  if (saveEfekty) saveEfekty.hidden = mode === 'own' && lbTab === 'marka';
+  const saveMBtn = $('#save-marka');
+  if (saveMBtn) saveMBtn.disabled = !hasMarkaData;
+  $('#save').disabled = !ok;
+  const hasAny = hook !== null || cap !== null || Object.keys(fx).length > 0 || snd.size > 0 || styl !== null || hasCustomUklad() || hasCustomKolory() || Object.values(fonts).some(Boolean) || tempo !== null || zoom !== null;
+  $('#clear').disabled = !hasAny;
+}
+
+function clearAll() {
+  fx = {};
+  cap = null;
+  hook = null;
+  snd = new Set();
+  styl = null;
+  fonts = { glowna: null, akcent: null, odreczna: null };
+  kolory = { ...KOLORY_DEFAULT };
+  paletaAktywna = null;
+  uklad = { ...UKLAD_DEFAULT };
+  plotno = [];
+  tempo = null;
+  zoom = null;
+  render();
+}
+
+async function zapisz() {
+  const efekty = {};
+  for (const [k, v] of Object.entries(fx)) {
+    if (v !== null && typeof v === 'object' && !Array.isArray(v)) {
+      efekty[k] = v;
+    } else {
+      efekty[k] = partsOn && Array.isArray(v) && v.length ? v : 'wszedzie';
+    }
+  }
+  const out = { tryb: 'wlasny', napisy: cap, efekty };
+  if (hook) out.hook = hook;
+  if (snd.size > 0) out.dzwieki = [...snd];
+  if (styl) out.styl = styl;
+  const anyFont = fonts.glowna || fonts.akcent || fonts.odreczna;
+  if (anyFont) {
+    out.czcionki = {};
+    if (fonts.glowna) out.czcionki.glowna = fonts.glowna;
+    if (fonts.akcent) out.czcionki.akcent = fonts.akcent;
+    if (fonts.odreczna) out.czcionki.odreczna = fonts.odreczna;
+  }
+  if (hasCustomKolory()) out.kolory = { ...kolory };
+  if (hasCustomUklad()) out.uklad = { ...uklad };
+  if (tempo) out.tempo = tempo;
+  if (zoom) out.zoom = zoom;
+  out.zapisano = new Date().toISOString().slice(0, 10);
+
+  const btn = $('#save');
+  btn.disabled = true;
+  btn.textContent = 'Zapisuję…';
+  try {
+    const r = await fetch('/api/zapisz', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(out),
+    });
+    if (!r.ok) throw new Error('server');
+    $('#app').hidden = true;
+    $('#bar').hidden = true;
+    $('#zapisano').hidden = false;
+  } catch {
+    btn.disabled = false;
+    btn.textContent = 'Zapisz wybór efektów';
+    alert('Nie udało się zapisać. Sprawdź, czy okno terminala jest nadal otwarte, i spróbuj jeszcze raz.');
+  }
+}
+
+async function zapiszMarke() {
+  const out = { zapisano: new Date().toISOString().slice(0, 10) };
+  const anyFont = fonts.glowna || fonts.akcent || fonts.odreczna;
+  if (anyFont) {
+    out.czcionki = {};
+    if (fonts.glowna) out.czcionki.glowna = fonts.glowna;
+    if (fonts.akcent) out.czcionki.akcent = fonts.akcent;
+    if (fonts.odreczna) out.czcionki.odreczna = fonts.odreczna;
+  }
+  if (hasCustomKolory()) out.kolory = { ...kolory };
+  if (hasCustomUklad()) out.uklad = { ...uklad };
+  if (plotno.length > 0) out.plotno = { kolory: plotno.map(p => ({ kolor: p.kolor })), strefa_bezpieczna: true };
+  if (tempo) out.tempo = tempo;
+  if (zoom) out.zoom = zoom;
+  if (snd.size > 0) out.dzwieki = [...snd];
+
+  const btn = $('#save-marka');
+  btn.disabled = true;
+  btn.textContent = 'Zapisuję…';
+  try {
+    const r = await fetch('/api/zapisz-brand', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(out),
+    });
+    if (!r.ok) throw new Error('server');
+    btn.textContent = 'Marka zapisana ✓';
+    setTimeout(() => { btn.textContent = 'Zapisz moją markę'; render(); }, 2500);
+  } catch {
+    btn.disabled = false;
+    btn.textContent = 'Zapisz moją markę';
+    alert('Nie udało się zapisać. Sprawdź, czy okno terminala jest nadal otwarte, i spróbuj jeszcze raz.');
+  }
+}
+
+async function init() {
+  try {
+    const [napisy, efektyGrupy, dzwieki, styleLista, hooki, savedBrand, savedStyl, zastapione] = await Promise.all([
+      fetch('/api/napisy').then(r => r.json()),
+      fetch('/api/efekty').then(r => r.json()),
+      fetch('/api/dzwieki').then(r => r.json()).catch(() => []),
+      fetch('/api/styl').then(r => r.json()).catch(() => []),
+      fetch('/api/hooki').then(r => r.json()).catch(() => []),
+      fetch('/api/moj-brand').then(r => r.json()).catch(() => null),
+      fetch('/api/moj-styl').then(r => r.json()).catch(() => null),
+      fetch('/api/zastapione').then(r => r.json()).catch(() => ({})),
+    ]);
+
+    const napisyMap = Object.fromEntries(napisy.map(n => [n.id, n]));
+    const efektyFlat = efektyGrupy.flatMap(g => g.efekty);
+    const efektyMap = Object.fromEntries(efektyFlat.map(e => [e.id, e]));
+    allFxIds = efektyFlat.map(e => e.id);
+    const maps = { napisy: napisyMap, efekty: efektyMap };
+
+    const hookGrid = $('#g-hooki');
+    if (hookGrid) hooki.forEach(h => hookGrid.appendChild(card(h, 'hook', 'hooki', maps)));
+
+    napisy.forEach(n => $('#g-caps').appendChild(card(n, 'cap', 'napisy', maps)));
+
+    efektyGrupy.forEach(kat => {
+      const wrap = document.createElement('div');
+      wrap.className = 'fx-group';
+      wrap.dataset.kat = kat.id || kat.nazwa;
+      const h = document.createElement('h3');
+      h.innerHTML = `${kat.nazwa} <small>${kat.hint}</small>`;
+      const g = document.createElement('div');
+      g.className = 'grid';
+      kat.efekty.forEach(e => g.appendChild(card(e, 'fx', 'efekty', maps)));
+      wrap.append(h, g);
+      $('#fx-cats').append(wrap);
+    });
+
+    // Nawigacja kategorii (quick-nav)
+    const grupy = $('#fx-cats').querySelectorAll('.fx-group');
+    const quickNav = $('#fx-quicknav');
+    let activeQnav = null;
+
+    function setFilter(katId) {
+      quickNav.querySelectorAll('.qnav-pill').forEach(p => p.setAttribute('aria-pressed', 'false'));
+      if (!katId) {
+        activeQnav = null;
+        grupy.forEach(g => g.hidden = false);
+        const allBtn = quickNav.querySelector('[data-qnav="wszystko"]');
+        if (allBtn) allBtn.setAttribute('aria-pressed', 'true');
+      } else {
+        activeQnav = katId;
+        grupy.forEach(g => { g.hidden = g.dataset.kat !== katId; });
+        const btn = quickNav.querySelector(`[data-qnav="${katId}"]`);
+        if (btn) btn.setAttribute('aria-pressed', 'true');
+      }
+    }
+
+    // "Wszystko" jako pierwszy kafelek
+    const wszystkoBtn = document.createElement('button');
+    wszystkoBtn.className = 'qnav-pill';
+    wszystkoBtn.setAttribute('aria-pressed', 'true');
+    wszystkoBtn.setAttribute('data-qnav', 'wszystko');
+    wszystkoBtn.textContent = 'Wszystko';
+    wszystkoBtn.onclick = () => setFilter(null);
+    quickNav.appendChild(wszystkoBtn);
+
+    efektyGrupy.forEach(kat => {
+      const btn = document.createElement('button');
+      btn.className = 'qnav-pill';
+      btn.setAttribute('aria-pressed', 'false');
+      btn.setAttribute('data-qnav', kat.id || kat.nazwa);
+      btn.innerHTML = `${kat.nazwa}<span class="qnav-count">${kat.efekty.length}</span>`;
+      btn.title = kat.hint || '';
+      btn.onclick = () => setFilter(kat.id || kat.nazwa);
+      quickNav.appendChild(btn);
+    });
+
+    dzwieki.forEach(d => $('#g-snd').appendChild(sndCard(d)));
+
+    styleLista.forEach(s => {
+      const el = document.createElement('button');
+      el.className = 'styl-card';
+      el.id = `styl-${s.id}`;
+      el.setAttribute('role', 'button');
+      el.setAttribute('aria-pressed', 'false');
+      const frameClass = s.podglad_frame ? ` ${s.podglad_frame}` : '';
+      el.innerHTML = `<div class="styl-frame${frameClass}"></div><div class="styl-info"><div class="styl-name">${s.nazwa}</div>${s.opis ? `<div class="styl-desc">${s.opis}</div>` : ''}${s.najlepsze_do ? `<div class="styl-best">${s.najlepsze_do}</div>` : ''}</div>`;
+      el.addEventListener('click', () => { styl = styl === s.id ? null : s.id; render(); });
+      $('#g-styl').appendChild(el);
+    });
+
+    document.querySelectorAll('[data-count]').forEach(el => {
+      let n = 0;
+      setInterval(() => { n = (n + 7) % 100; el.textContent = n; }, 120);
+    });
+
+    $('#loading').hidden = true;
+    $('#app').hidden = false;
+
+    buildFontGrid();
+    buildPalety();
+
+    // Czcionka usunięta z Lookbooka (np. bez polskich liter) → jej zastępca z zastapione.json
+    const zastCzcionki = zastapione.czcionki || {};
+    const podmienCzcionki = zapis => Object.fromEntries(Object.entries(zapis).map(([rola, id]) => [rola, zastCzcionki[id] || id]));
+
+    // Pre-load marka
+    if (savedBrand) {
+      if (savedBrand.czcionki) fonts = { glowna: null, akcent: null, odreczna: null, ...podmienCzcionki(savedBrand.czcionki) };
+      if (savedBrand.kolory) kolory = { ...KOLORY_DEFAULT, ...savedBrand.kolory };
+      if (savedBrand.uklad) uklad = { ...UKLAD_DEFAULT, ...savedBrand.uklad };
+      if (savedBrand.plotno?.kolory?.length) {
+        plotno = savedBrand.plotno.kolory.map(p => {
+          const match = PLOTNO_OPTIONS.find(o => o.kolor === p.kolor);
+          return match ? { ...match } : { kolor: p.kolor };
+        });
+      }
+      if (savedBrand.tempo) tempo = savedBrand.tempo;
+      if (savedBrand.zoom) zoom = savedBrand.zoom;
+      if (savedBrand.dzwieki) savedBrand.dzwieki.forEach(d => snd.add(d));
+    }
+
+    // Pre-load efekty i styl. Dawny zapis „gotowy styl” (usunięty z Lookbooka) traktujemy jak brak zapisu efektów.
+    if (savedStyl && savedStyl.tryb !== 'gotowy') {
+      if (savedStyl.napisy && napisyMap[savedStyl.napisy]) cap = savedStyl.napisy;
+      if (savedStyl.hook) hook = savedStyl.hook;
+      if (savedStyl.efekty) {
+        fx = {};
+        for (const [stare, val] of Object.entries(savedStyl.efekty)) {
+          const id = (zastapione.efekty || {})[stare] || stare;  // efekt z archiwum → jego aktualny zastępca
+          if (efektyMap[id]) fx[id] = val;
+        }
+        partsOn = Object.values(fx).some(v => Array.isArray(v) && v.length > 0);
+      }
+      if (savedStyl.styl) styl = savedStyl.styl;
+      if (savedStyl.czcionki) fonts = { glowna: null, akcent: null, odreczna: null, ...podmienCzcionki(savedStyl.czcionki) };
+      if (savedStyl.kolory) kolory = { ...kolory, ...savedStyl.kolory };
+      if (savedStyl.uklad) uklad = { ...uklad, ...savedStyl.uklad };
+      if (savedStyl.tempo) tempo = savedStyl.tempo;
+      if (savedStyl.zoom) zoom = savedStyl.zoom;
+      if (savedStyl.dzwieki) savedStyl.dzwieki.forEach(d => snd.add(d));
+    }
+
+    // Domyślne zaznaczenia tylko gdy brak zapisanego stanu
+    if (!savedStyl && !savedBrand) {
+      if (napisyMap['biale-pod-broda']) cap = 'biale-pod-broda';
+    }
+    if (!savedBrand?.plotno && plotno.length === 0) {
+      plotno = PLOTNO_OPTIONS.map(o => ({ id: o.id, kolor: o.kolor, nazwa: o.nazwa }));
+    }
+
+    render();
+  } catch {
+    $('#loading').innerHTML = '<p style="text-align:center;color:var(--muted);padding:40px 16px;max-width:400px;margin:0 auto">Nie można połączyć się z serwerem. Odśwież stronę lub zamknij i otwórz Lookbook ponownie.</p>';
+  }
+}
+
+$('#parts').onclick = () => { partsOn = !partsOn; render(); };
+$('#all').onclick = () => {
+  const allOn = allFxIds.every(id => fx[id] !== undefined);
+  if (allOn) {
+    fx = {};
+  } else {
+    allFxIds.forEach(id => {
+      if (fx[id] === undefined) {
+        const efektEl = $(`#fx-${id}`);
+        if (efektEl && 'standalone' in efektEl.dataset) {
+          // standalone — nie dodajemy przez "zaznacz wszystkie"
+          return;
+        }
+        fx[id] = [];
+      }
+    });
+  }
+  render();
+};
+$('#save').onclick = zapisz;
+$('#save-marka').onclick = zapiszMarke;
+document.querySelectorAll('.lb-tab').forEach(btn => {
+  btn.addEventListener('click', () => { lbTab = btn.dataset.tab; render(); });
+});
+
+document.querySelectorAll('.kolor-swatch').forEach(sw => {
+  sw.addEventListener('click', e => {
+    e.stopPropagation();
+    const rola = sw.dataset.rola;
+    if (pickerRola === rola) { closePicker(); return; }
+    openPicker(rola);
+  });
+});
+$('#kpop-hex')?.addEventListener('input', e => {
+  const v = e.target.value.replace(/[^0-9a-fA-F]/g, '');
+  e.target.value = v;
+  if (v.length === 6 && pickerRola) setKolor(pickerRola, '#' + v);
+});
+$('#kpop-native')?.addEventListener('input', e => {
+  if (pickerRola) { paletaAktywna = null; setKolor(pickerRola, e.target.value); }
+});
+document.addEventListener('click', e => {
+  if (pickerRola && !e.target.closest('#kolor-popup') && !e.target.closest('.kolor-swatch')) closePicker();
+});
+
+$('#suwak-napisy')?.addEventListener('input', e => { uklad.napisy = +e.target.value; renderUklad(); });
+$('#suwak-napisy')?.addEventListener('change', () => render());
+$('#suwak-naglowek')?.addEventListener('input', e => { uklad.naglowek = +e.target.value; renderUklad(); });
+$('#suwak-naglowek')?.addEventListener('change', () => render());
+$('#suwak-napisy-rozm')?.addEventListener('input', e => { uklad.napisy_rozmiar = +e.target.value; renderUklad(); });
+$('#suwak-napisy-rozm')?.addEventListener('change', () => render());
+$('#suwak-naglowek-rozm')?.addEventListener('input', e => { uklad.naglowek_rozmiar = +e.target.value; renderUklad(); });
+$('#suwak-naglowek-rozm')?.addEventListener('change', () => render());
+document.querySelectorAll('.dekor-chip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const rola = btn.dataset.rola, val = btn.dataset.val;
+    uklad[rola + '_dekor'] = val;
+    updateDekorChips(rola);
+    renderUklad();
+    render();
+  });
+});
+$('#dekor-napisy-kolor')?.addEventListener('input', e => { uklad.napisy_dekor_kolor = e.target.value; renderUklad(); });
+$('#dekor-napisy-kolor')?.addEventListener('change', () => render());
+$('#dekor-naglowek-kolor')?.addEventListener('input', e => { uklad.naglowek_dekor_kolor = e.target.value; renderUklad(); });
+$('#dekor-naglowek-kolor')?.addEventListener('change', () => render());
+
+document.querySelectorAll('.font-role-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    fontRole = btn.dataset.role;
+    buildFontGrid();
+    render();
+  });
+});
+
+init();
+</script>
+</body>
+</html>

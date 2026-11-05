@@ -1,0 +1,22 @@
+{
+  "id": "telefon-za-glowa",
+  "kategoria": "dowod",
+  "typ": "nakładkowy",
+  "nazwa": "Telefon z rolką za głową",
+  "opis": "Telefon z rolką, na którą reagujesz, wjeżdża obok Ciebie przechylony w 3D i chowa się częściowo za Twoimi włosami. Pod spodem podpis konta autora.",
+  "najlepsze_do": "Hak z reakcją na cudzy film, „zobacz, co znalazłam”, efekt, który zaraz odtworzysz",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#3a3633;overflow:hidden\"><i style=\"position:absolute;right:10%;top:22%;width:30%;height:52%;border-radius:10px;background:#111;box-shadow:0 0 0 2px rgba(255,255,255,.9);transform:perspective(200px) rotateY(-16deg) rotate(6deg)\"></i><i style=\"position:absolute;left:22%;top:26%;width:40%;height:60%;border-radius:45% 45% 20% 20%;background:#c55\"></i></div>",
+  "wymagania": {
+    "wideo": "9:16, nieruchome tło, dobry kontrast kursantki z tłem; nagranie ekranu z rolką, na którą reagujesz, i nazwa konta jej autora",
+    "narzedzia": [
+      "ffmpeg",
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

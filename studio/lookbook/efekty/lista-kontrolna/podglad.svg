@@ -1,0 +1,25 @@
+<svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" width="360" height="640">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5dce6"/><stop offset="55%" stop-color="#c8909e"/><stop offset="100%" stop-color="#8a5060"/></linearGradient></defs><rect width="360" height="640" fill="url(#bg)"/>
+
+  <!-- lista z checkboxami -->
+  <rect x="50" y="70" width="260" height="300" rx="16" fill="rgba(255,255,255,.12)" stroke="white" stroke-width="1.5"/>
+  <!-- wiersz 1 – odhaczony -->
+  <rect x="72" y="98" width="24" height="24" rx="6" fill="#c9a4ae" stroke="white" stroke-width="1.5"/>
+  <path d="M78 110 l6 6 l12-12" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="108" y="104" width="140" height="12" rx="6" fill="rgba(255,255,255,.5)"/>
+  <!-- wiersz 2 – odhaczony -->
+  <rect x="72" y="138" width="24" height="24" rx="6" fill="#c9a4ae" stroke="white" stroke-width="1.5"/>
+  <path d="M78 150 l6 6 l12-12" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="108" y="144" width="110" height="12" rx="6" fill="rgba(255,255,255,.5)"/>
+  <!-- wiersz 3 – pusty -->
+  <rect x="72" y="178" width="24" height="24" rx="6" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>
+  <rect x="108" y="184" width="150" height="12" rx="6" fill="rgba(255,255,255,.3)"/>
+  <!-- wiersz 4 – pusty -->
+  <rect x="72" y="218" width="24" height="24" rx="6" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>
+  <rect x="108" y="224" width="120" height="12" rx="6" fill="rgba(255,255,255,.3)"/>
+  <!-- wiersz 5 – pusty -->
+  <rect x="72" y="258" width="24" height="24" rx="6" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.5)" stroke-width="1.5"/>
+  <rect x="108" y="264" width="135" height="12" rx="6" fill="rgba(255,255,255,.3)"/>
+
+<path d="M0 640 Q0 500 180 500 Q360 500 360 640 Z" fill="#c9a4ae" stroke="white" stroke-width="2.2"/><circle cx="180" cy="430" r="64" fill="#c9a4ae" stroke="white" stroke-width="2.2"/>
+</svg>

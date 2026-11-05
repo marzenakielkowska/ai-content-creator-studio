@@ -1,0 +1,21 @@
+{
+  "id": "przed-i-po",
+  "kategoria": "porownanie",
+  "typ": "standalone",
+  "nazwa": "Przed i po",
+  "opis": "Pionowa linia odsłania jasną stronę po i przyciemnioną przed. Idealne na transformacje i tutoriale stylizacji.",
+  "najlepsze_do": "Stylizacja, makijaż, edycja zdjęć, metamorfozy",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": "<div class=\"fx f-pp-d\"></div><div class=\"fx f-pp-line\"></div>",
+  "wymagania": {
+    "wideo": "9:16, kamera nieruchoma, ta sama scena przed i po",
+    "dzwieki": ["whoosh.mp3", "pop.mp3"],
+    "narzedzia": ["ffmpeg", "hyperframes"]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "projekt": "hf/",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

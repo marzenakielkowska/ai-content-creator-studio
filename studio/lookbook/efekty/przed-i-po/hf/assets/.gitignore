@@ -1,0 +1,4 @@
+# Wideo kursantki — zbyt duże i indywidualne, nie trafiają do repo
+*.mp4
+# Dźwięki reużywalne (whoosh.mp3, pop.mp3) idą do repo
+!*.mp3

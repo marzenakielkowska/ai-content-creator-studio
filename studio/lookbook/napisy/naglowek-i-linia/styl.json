@@ -1,0 +1,21 @@
+{
+  "id": "naglowek-i-linia",
+  "nazwa": "Editorial w dwóch liniach",
+  "opis": "Mała linia z odstępami między literami nad dużym słowem. Drogo i redakcyjnie.",
+  "najlepsze_do": "Profesjonalne treści, finanse, edukacja, lifestyle premium",
+  "status": "gotowy",
+  "nowosc": false,
+  "podglad_html": "<div class=\"cap c5\"><b>3 kroki</b><small>do pierwszej rolki</small></div>",
+  "przepis": {
+    "czcionka": "Nunito",
+    "grubosc": 900,
+    "rozmiar_vw": 6.5,
+    "kolor": "#FCE3D6",
+    "cien": null,
+    "polozenie": "dolne-centrum",
+    "slowa_naraz": 5,
+    "animacja": "slide-up",
+    "czas_trwania_s": 0.2,
+    "opis_efektu": "Two lines: a small letter-spaced uppercase line on top (white, Nunito 600, about 3vw, letter-spacing .2em) and one big lowercase key word under it in #FCE3D6 that slides up from a mask. Small words appear as spoken; never more than 5 words on screen."
+  }
+}

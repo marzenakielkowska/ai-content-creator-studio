@@ -1,0 +1,157 @@
+# Efekt: Przed i po
+
+
+
+> ⚠️ **Sprawdzenie twarzy:** żaden element tego efektu nie może nachodzić na strefę twarzy (Y:250–1400px × X:200–880px przy 1080×1920). Patrz: sekcja **"Twarz — reguła nadrzędna"** w `studio/skills/montaz/SKILL.md`.
+
+> 📸 **Materiały zewnętrzne:** ten efekt może wymagać obrazów od kursantki (zrzuty ekranu „przed" i „po", zdjęcia, grafiki). Zawsze proś o plik przed budową kompozycji. Jeśli kursantka nie ma pliku lub nie może go teraz dostarczyć — zapytaj, czy stworzyć stylizowaną wersję z jej danymi. Patrz: sekcja **"Materiały zewnętrzne"** w `studio/skills/montaz/SKILL.md`.
+
+**Co robi:** pionowa biała linia wjeżdża od lewej krawędzi (t=3s) do środka kadru, zatrzymuje się przez chwilę przy kole uchwytu `< >`, potem wyjeżdża w prawo — odsłaniając jasną (po) i przyciemnioną (przed) wersję tego samego nagrania. Dwa badge, napisy nad głową, dźwięk whoosh przy wejściu linii, dźwięk pop o sekundę wcześniej.
+
+**Zastosowanie:** transformacje, tutoriale stylizacji, porównania efektów makijażu/edycji/fryzury/stroju.
+
+**Długość:** 7 sekund. Pierwsze 3s to sama wersja "przed" (buduje napięcie). Od t=3s do t=6.7s efekt linii.
+
+---
+
+## Czego potrzeba
+
+### Wideo od kursantki
+- Jedno nagranie 9:16, kamera **nieruchoma** (statyw lub oparte o coś)
+- Ta sama scena, ta sama osoba — różniące się "przed" i "po" to kwestia edycji/stylizacji
+- Minimalna długość: 7 sekund
+- Najlepiej: szeroki lub średni kadr, osoba nie zasłania całej szerokości
+
+### Przygotowanie plików assets
+Efekt używa dwóch wersji wideo:
+- `assets/norm.mp4` — wersja "po", bezpośrednio z nagrania kursantki (przycięta do 7s, 1080×1920, 30fps)
+- `assets/bef.mp4` — wersja "przed" — generowana na jeden z dwóch sposobów (patrz niżej)
+
+#### Tryb 1: jedno nagranie + filtr (domyślny)
+`WIDEO_PRZED = ""` — `build.py` przyciemnia `norm.mp4` filtrem FFmpeg i zapisuje jako `bef.mp4`.
+
+Sprawdza się gdy "przed" i "po" to ta sama scena — różnica tylko w edycji, oświetleniu czy designie.
+
+#### Tryb 2: dwa nagrania (beauty, metamorfoza)
+`WIDEO_PRZED = "ścieżka/do/przed.mp4"` — `build.py` normalizuje to drugie nagranie do `bef.mp4` bez filtra.
+
+Sprawdza się gdy kursantka ma dwa osobne nagrania — np. twarz bez makijażu i z makijażem. Wtedy filtr jest niepotrzebny: kontrast jest autentyczny.
+
+Pliki dźwiękowe (`assets/whoosh.mp3`, `assets/pop.mp3`) są już w repo — nie trzeba ich generować.
+
+---
+
+## Projekt HyperFrames
+
+Plik: `hf/index.html`
+
+### Struktura kompozycji (7s, 1080×1920)
+
+| Element | Start | Koniec | Opis |
+|---|---|---|---|
+| `vid-przed` | 0 | 7 | `bef.mp4`, pełny kadr, przyciemniony, z-index 1 |
+| `vid-po` (w wrapperze) | 0 | 7 | `norm.mp4`, pełny kadr, z-index 2, clip-path animowany |
+| `audio-orig` | 0 | 7 | dźwięk z `norm.mp4` |
+| `audio-pop` | 1 | 1.48 | pop.mp3, volume 1.8 |
+| `audio-whoosh` | 3 | 3.78 | whoosh.mp3, volume 1.2 |
+| `divider` | 3 | 6.7 | biała linia 3px pełna wysokość |
+| `handle` | 3 | 6.7 | białe koło 116px z tekstem `< >` |
+| `badge-przed` | 0 | 6.7 | ciemny badge "przed", górna strefa |
+| `badge-po` | 3 | 7 | żółty badge "po", górna strefa |
+| `cap-po` | 3 | 6.7 | napis na lewej połowie (wersja "po") |
+| `cap-przed` | 3 | 6.7 | napis na prawej połowie (wersja "przed") |
+
+### Animacja GSAP (czasy kluczowe)
+
+```
+SPT = 3.0   // Split Point: linia wjeżdża
+SPE = 4.2   // Split Point End: linia w środku (x=540)
+HE  = 5.5   // Hold End: linia zaczyna wyjazd
+EE  = 6.7   // Exit End: linia opuszcza kadr
+```
+
+Animacje:
+- `#vid-po-wrap` clip-path: `inset(0 100% 0 0)` → `inset(0 50% 0 0)` → `inset(0 0% 0 0)`, ease power2.inOut, duration 1.2s
+- `#divider` x: 0 → 537 → 1077, te same czasy
+- `#handle` x: 0 → 537 → 1077, te same czasy (CSS `left: -58px` sprawia że center = GSAP x)
+- `#badge-przed` x: 0 → 267 (przesuwa się do prawej połowy)
+- `#badge-po` x: -215 → 0 (wjeżdża z lewej)
+- napisy: opacity 0 → 1 przy t=3.2, duration 0.4s
+
+---
+
+## Personalizacja dla kursantki
+
+| Co zmienić | Gdzie | Wskazówka |
+|---|---|---|
+| Napisy (`cap-po`, `cap-przed`) | `index.html` | Maksymalnie 3–4 słowa, wielkie litery robią efekt |
+| Tekst badge'y | `index.html` | Domyślnie "przed" / "po", można zastąpić np. "raw" / "edited" |
+| Kolor badge "po" | CSS `#badge-po background` | Domyślnie żółty (`rgba(245,240,50,0.84)`), dopasować do stylu kursantki |
+| Czcionka napisów | `@font-face` w `<head>` | Domyślnie próbuje Avenir Next Heavy (macOS), fallback Nunito 800 (Montserrat 700/900 gubi polskie litery) |
+| Pozycja uchwytu | CSS `#handle top` | `calc(60% - 58px)` = 60% wysokości kadru. Zmienić jeśli twarz jest inaczej umiejscowiona |
+| Czas wejścia linii (`SPT`) | GSAP w `<script>` | Minimum 2.5s (kursantka musi mieć czas na "przed") |
+
+---
+
+## Workflow — bez iteracji
+
+Ten efekt to **samodzielny klip 7s** — nie nakładka.
+
+**Najpierw Python.** Skrypty tego efektu potrzebują Pythona 3 (bez dodatkowych bibliotek). Studio go nie instaluje.
+Sprawdź `python3 --version` (Windows: `python --version`). Jeśli go nie ma, nie instaluj go za kursantkę. Powiedz jej:
+
+> Efekt „Przed i po” potrzebuje Pythona, którego nie masz na komputerze. Na Macu wystarczy zgodzić się na „narzędzia
+> dla programistów”, gdy komputer o nie zapyta; na Windowsie pobierz go ze strony python.org i przy instalacji zaznacz
+> „Add python.exe to PATH”. Daj znać, gdy będzie gotowe — albo wybierzmy na ten moment inny efekt.
+
+Workflow:
+
+```
+1. python3 measure.py <wideo>      ← walidacja, podgląd klatki, STATUS lines
+2. Uzupełnij blok CLIP w build.py  ← tylko 2–3 pola (WIDEO, napisy)
+3. python3 build.py                ← FFmpeg + generuje hf/index.html + lint
+4. (w folderze hf/) npx hyperframes snapshot --at 1,3.5,4.5,5.5,6.5
+5. (w folderze hf/) npx hyperframes render --output wynik.mp4 --quality looks
+```
+
+Claude wypełnia tylko blok CLIP — NIE edytuje ręcznie `index.html`. `build.py` robi resztę.
+
+### Blok CLIP w build.py (co Claude zmienia per kursantka)
+
+| Pole | Co wpisać |
+|---|---|
+| `WIDEO` | ścieżka do nagrania kursantki (wersja "po") |
+| `WIDEO_PRZED` | opcjonalnie: drugie nagranie jako "przed" — puste = filtr ciemności, podane = prawdziwe "przed" |
+| `NAPIS_PO` | tekst na lewej (jasnej) stronie, max 4 słowa |
+| `NAPIS_PRZED` | tekst na prawej (ciemnej) stronie, max 4 słowa |
+| `LABEL_PO` | badge na lewej (domyślnie "po") |
+| `LABEL_PRZED` | badge na prawej (domyślnie "przed") |
+| `KOLOR_PO` | kolor badge "po" (domyślnie żółty) |
+| `REST_X` | gdzie czeka linia: "auto"=540 lub px gdy twarz jest z boku |
+| `SPT` | kiedy linia wchodzi (domyślnie 3.0s) |
+| `TRIM_FROM` | od której sekundy klipu zaczynamy (0 = od początku) |
+
+`build.py` automatycznie oblicza SPE, HE, EE, DURATION, clip-path %, pozycje badge'y.
+
+---
+
+## Co sprawdzić po renderze
+
+- [ ] Linia zaczyna od lewej krawędzi (x=0 przy t=3)
+- [ ] Uchwyt `< >` porusza się dokładnie z linią
+- [ ] Prawa strona jest widocznie ciemniejsza niż lewa
+- [ ] Badge "przed" schodzi na prawą połowę gdy linia przychodzi
+- [ ] Badge "po" wjeżdża z lewej
+- [ ] Napisy są czytelne na obu połowach (mocny cień)
+- [ ] Dźwięk pop słychać ok. 1s przed linią
+- [ ] Dźwięk whoosh synchronizuje się z wejściem linii
+
+---
+
+## Znane pułapki
+
+- `#vid-po-wrap` to **zwykły div**, nie `.clip` — GSAP animuje clip-path wrappera, a nie samego `<video>`
+- Jeśli `bef.mp4` i `norm.mp4` mają różne rozdzielczości, linia nie będzie na granicy — oba muszą być identyczne rozmiarem
+- `data-duration` na audio musi odpowiadać realnej długości pliku (whoosh = 0.78s, pop = 0.48s) — inaczej `check` wyrzuca ostrzeżenie
+- Nie używać CSS `filter` na wideo — już użyte są pre-processed pliki z ffmpeg
+- GSAP `fromTo` a nie `from` — efekt musi być seekowalny do dowolnej klatki

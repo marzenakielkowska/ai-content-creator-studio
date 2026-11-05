@@ -1,0 +1,22 @@
+{
+  "id": "porownanie-efektow",
+  "kategoria": "porownanie",
+  "typ": "nakładkowy",
+  "nazwa": "Porównanie efektów",
+  "opis": "Karta z dwoma porównaniami przed i po na Twoim zdjęciu — jedno dzielone poziomo, drugie pionowo — z odręcznymi podpisami i strzałkami. Karta podskakuje na środek ekranu.",
+  "najlepsze_do": "Beauty (brwi, makijaż, zabiegi na skórę), projektowanie (wnętrza, grafika, strona), każda usługa z widocznym efektem",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#F6F5F1;display:flex;align-items:center;justify-content:center\"><div style=\"background:#fff;border-radius:8px;padding:5px;display:flex;gap:4px;width:84%\"><div style=\"flex:1;display:flex;flex-direction:column;gap:2px\"><i style=\"height:16px;background:#d8b9a0;border-radius:3px\"></i><i style=\"height:16px;background:#c9a184;border-radius:3px\"></i></div><div style=\"flex:1;height:34px;border-radius:3px;background:linear-gradient(90deg,#c9a184 50%,#e3c6b0 50%)\"></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki; zdjęcie lub klatka, na której widać to, co się zmienia",
+    "narzedzia": [
+      "ffmpeg",
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

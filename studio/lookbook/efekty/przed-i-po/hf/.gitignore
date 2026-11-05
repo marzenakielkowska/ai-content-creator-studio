@@ -1,0 +1,5 @@
+# Cache HyperFrames — regenerowane automatycznie
+.hyperframes/
+.thumbnails/
+renders/
+node_modules/

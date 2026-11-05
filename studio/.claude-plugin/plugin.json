@@ -1,0 +1,13 @@
+{
+  "name": "studio",
+  "displayName": "AI Content Creator Studio",
+  "version": "0.5.94",
+  "description": "Montaż rolek w Twoim stylu jedną komendą. Wersja testowa: przygotowanie komputera, wybór stylu i montaż (/studio:montaz).",
+  "author": {
+    "name": "Marzena Kiełkowska",
+    "url": "https://github.com/marzenakielkowska"
+  },
+  "dependencies": [
+    "hyperframes"
+  ]
+}
