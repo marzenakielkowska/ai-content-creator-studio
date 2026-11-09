@@ -8,8 +8,9 @@ zostaje PRZEPISANA (nie dopisujesz nowej obok).
 - **Podglądy w trakcie budowy:** `snapshot` w 10–20 momentach (wejścia grafik, cięcia, wezwanie do działania), potem
   `strefa <podglądy>` — czerwone pola to miejsca zajęte przez interfejs Reels. Nic ważnego nie może w nie wchodzić.
   Nie oceniaj strefy na oko.
-- **Tempo, przed renderem:** przejrzyj plan sekunda po sekundzie. Fragment dłuższy niż około 3 s bez cięcia, nowej
-  grafiki i zmiany napisów to do poprawy.
+- **Tempo, przed renderem:** przejrzyj plan sekunda po sekundzie z tabelą „Tempo obrazu” (`SKILL.md`, krok 4) dla tempa
+  z marki. Fragment bez cięcia, nowej grafiki i zmiany napisów dłuższy niż „sama twarz najwyżej” albo odcinek bez grafiki
+  dłuższy niż podaje tabela to do poprawy.
 - **Wycięcie, przed renderem:** `kontrola-wyciecia <projekt>`, oba arkusze, każde okno. Na gładkim płótnie widać
   wszystko: plamy tła, resztki mebli, otoczkę przy włosach, ucięte włosy, ucięty palec. Mały arkusz pokazuje plamy
   i migotanie, duży brzeg włosów i ramion. Potem obejrzyj klatkę, na której osoba unosi dłoń albo pochyla się: wtedy

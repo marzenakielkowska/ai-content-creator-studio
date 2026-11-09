@@ -1480,7 +1480,8 @@ function filtrKrawedzi(yBrody) {
     '[tm2]format=gbrp,gblur=sigma=6[tlb]',
     "[tla][tlb]blend=all_expr='if(gt(B,1),min(255,A*255/B),128)',split[tl1][tl2]",
     `[tl1]scale=${PW}:${PH}:flags=bicubic[tlo]`,
-    '[kol]format=gbrp,split[ff][fk]',
+    // Dokładne przeliczenie kolorów: domyślne przyciemnia osobę o około 1% i twarz mruga, gdy wycięcie wchodzi na nagranie.
+    '[kol]scale=flags=accurate_rnd+full_chroma_int+full_chroma_inp,format=gbrp,split[ff][fk]',
     `[ff]scale=${PW}:${PH}:flags=area[fh];[fh][tlo]blend=all_mode=difference,format=rgb24,${SUMA_KANALOW},format=gray,gblur=sigma=2,split[d1][d2]`,
     `[d1]lut=c0='clip((val-16)*6,0,255)',dilation,dilation,erosion,erosion,scale=${W}:${H}:flags=bicubic,format=gray,gblur=sigma=6,lut=c0='clip((val-110)*4,0,255)'[drobna]`,
     `[fs2][tl2]blend=all_mode=difference,format=rgb24,${SUMA_KANALOW},format=gray,gblur=sigma=.8,lut=c0='clip((val-16)*7,0,255)',scale=${W}:${H}:flags=bilinear,format=gray,gblur=sigma=3,drawbox=x=0:y=0:w=${W}:h=${yBrody}:color=white:t=fill,${NA_BIALO}[zgrubna]`,
@@ -1494,7 +1495,7 @@ function filtrKrawedzi(yBrody) {
     "[rl2]format=gbrp[rc];[fs3][rc]blend=all_expr='A*B/255',gblur=sigma=9[oa];[rl3]format=gbrp,gblur=sigma=9[ob]",
     `[oa][ob]blend=all_expr='if(gt(B,1),min(255,A*255/B),128)',scale=${W}:${H}:flags=bicubic[oso]`,
     `[d2]scale=${W}:${H}:flags=bicubic,format=gray,lut=c0='255-clip((val-25)*2.6,0,255)'[w0];[rn]lut=c0='255-val'[rni];[w0][rni]blend=all_mode=darken,format=gbrp[w]`,
-    '[fk][oso][w]maskedmerge,format=yuv420p[kol2]',
+    '[fk][oso][w]maskedmerge,scale=flags=accurate_rnd+full_chroma_int,format=yuv420p[kol2]',
   ].join(';');
 }
 

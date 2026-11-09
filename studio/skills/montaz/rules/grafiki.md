@@ -7,7 +7,8 @@ zasad zostaje PRZEPISANA (nie dopisujesz nowej obok).
 ## Przed budowaniem
 
 - **Najpierw plan, potem budowa.** Lista grafik w czacie (efekt, czas, powód) — kursantka zatwierdza, zanim
-  cokolwiek zbudujesz. Tempo: ten sam kadr nie stoi dłużej niż około 3 s (`SKILL.md`, krok 4), a sama twarz to krótkie oddechy.
+  cokolwiek zbudujesz. Tempo: co ile zmienia się obraz i co ile najpóźniej wchodzi grafika, mówi tempo z marki (`SKILL.md`,
+  krok 4, „Tempo obrazu”).
 
 ## Co pokazywać
 

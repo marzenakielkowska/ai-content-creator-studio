@@ -108,10 +108,12 @@ dawny wybór z Lookbooka: Elsie Swash Caps nie ma liter ć, ś, ź, ż, więc mo
 - `kolory` → tablica `[{kolor: "#hex"}]` — użyj jako tło kart graficznych (plansze, tytuły), w tej kolejności
 - `strefa_bezpieczna: true` → bezwzględnie trzymaj się stref bezpiecznych TikTok/Reels
 
-**`tempo`** — rytm cięć:
+**`tempo`** — co ile zmienia się obraz (cięcie, przybliżenie, nowa grafika albo tło), szczegóły w kroku 4, „Tempo obrazu”:
 - `spokojne` → co 5–8 sekund (tutoriale, wyjaśnienia)
 - `naturalne` → co 3–5 sekund (standardowa rolka)
 - `dynamiczne` → co 1,5–3 sekund (motywacja, energetyczne)
+- `blyskawiczne` → co 1–1,5 sekundy (grafika do niemal każdego zdania)
+- brak pola → `naturalne`
 
 **`zoom`** — efekt Ken Burns:
 - `bez` → kamera nieruchoma, żadnego zooma
@@ -299,7 +301,20 @@ Kursantka nie zawsze wie, że te momenty warto podkreślić — Ty to widzisz i 
 
 Napisz jednozdaniowy cel montażu (co ten film ma zrobić z widzem) i podziel wideo na sekcje: hak, rozwinięcie, dowód, pointę, wezwanie do działania.
 
-**Tempo obrazu:** ten sam kadr nie stoi dłużej niż około 3 s. Co 3 s coś się zmienia: cięcie z przybliżeniem, grafika na słowie, inny rodzaj napisu albo tło. Efektów jest tyle, ile rolka ma myśli, a nie 5–6 na cały film. Pole `tempo` z marki mówi, jak często są cięcia; ta zasada dotyczy każdej zmiany w kadrze, nie tylko cięcia. Ten sam zabieg za każdym razem (jeśli dowód to podzielony ekran raz — to podzielony ekran zawsze). Sama mówiąca twarz to krótki oddech, do 3 s. Same cięcia i zmiana napisów to za mało: w żadnym odcinku dłuższym niż około 10 s nie może brakować grafiki (karty, płótna, okna, liczby), także w drugiej połowie rolki.
+**Tempo obrazu:** co ile zmienia się obraz, mówi pole `tempo` z marki kursantki (bez wyboru: `naturalne`). Zmiana to
+cięcie z przybliżeniem, grafika na słowie, inny rodzaj napisu albo tło, nie tylko cięcie. Efektów jest tyle, ile rolka ma
+myśli, a nie 5–6 na cały film. Ten sam zabieg za każdym razem (jeśli dowód to podzielony ekran raz — to podzielony ekran
+zawsze). Same cięcia i zmiana napisów to za mało: grafika (karta, płótno, okno, liczba, ekran) wchodzi najpóźniej co tyle,
+ile mówi tabela, także w drugiej połowie rolki.
+
+| `tempo` | Obraz zmienia się co | Sama twarz najwyżej | Grafika najpóźniej co |
+|---|---|---|---|
+| `spokojne` | 5–8 s | 8 s | 15 s |
+| `naturalne` | 3–5 s | 5 s | 10 s |
+| `dynamiczne` | 1,5–3 s | 3 s | 6 s |
+| `blyskawiczne` | 1–1,5 s | 2 s | 4 s, czyli prawie do każdego zdania |
+
+Przy `blyskawiczne` kadr między cięciami powoli się przybliża, żeby nigdy nie stał (chyba że `zoom: bez`).
 
 **Pierwsze 6 sekund:** hak pokazuje temat obrazem, nie tylko napisem. Hak to duże formy i głębia: słowo albo ikony częściowo za głową, nie małe ikonki ani mały napis nad głową. Gdy rolka jest o programie, procesie albo AI, zaraz po haku włącz tłumaczenie na płótnie (`rules/tryb-tlumaczenia.md`, układ „Płótno za osobą”).
 
@@ -489,7 +504,7 @@ stosujesz tam, gdzie styl niczego nie ustala. Kursantce o nich nie mówisz, po p
   żeby broda wypadała najniżej około Y 1290 (`rules/ciecie.md`, `rules/uklad.md`).
 - **Kilka rodzajów napisów w jednej rolce** (`rules/napisy.md`): słowo po słowie jako podstawa, co 8–12 s mała linia
   z dużym hasłem albo schody słów w wolnym miejscu.
-- **Żaden kadr nie stoi dłużej niż około 3 s** (krok 4, „Tempo obrazu”).
+- **Obraz zmienia się w rytmie tempa z marki**, a bez wyboru co 3–5 s (krok 4, „Tempo obrazu”).
 - **Słowa za głową tylko wtedy, gdy są czytelne** (głowa zasłania najwyżej ~30% liter).
 
 ---
