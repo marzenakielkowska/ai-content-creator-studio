@@ -1,0 +1,21 @@
+{
+  "id": "kroki-w-akcji",
+  "kategoria": "wizualizacja",
+  "typ": "nakładkowy",
+  "nazwa": "Kroki w akcji",
+  "opis": "Każdy krok ma numer i dzieje się na ekranie: kursor klika ikonę, przycisk „Zainstaluj” zmienia się w „Gotowe”, pytania dostają odpowiedzi.",
+  "najlepsze_do": "Instrukcje „jak zacząć”, instalacja, konfiguracja, pierwsze kroki w programie",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#9CC8FF;display:flex;align-items:center;justify-content:center\"><div style=\"display:flex;flex-direction:column;gap:4px;width:80%\"><div style=\"display:flex;align-items:center;gap:4px\"><b style=\"width:10px;height:10px;border-radius:50%;background:#FFD23F;border:1.5px solid #15315E;font:800 6px Nunito;display:flex;align-items:center;justify-content:center\">2</b><div style=\"flex:1;background:#fff;border-radius:4px;padding:3px;font:800 5px Nunito;display:flex;justify-content:space-between\">Wtyczka<span style=\"background:#34C759;color:#fff;border-radius:6px;padding:0 3px\">Gotowe</span></div></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

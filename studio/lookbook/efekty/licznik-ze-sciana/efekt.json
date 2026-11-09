@@ -1,0 +1,21 @@
+{
+  "id": "licznik-ze-sciana",
+  "kategoria": "dowod",
+  "typ": "nakładkowy",
+  "nazwa": "Licznik ze ścianą",
+  "opis": "Liczba rośnie do tej, którą mówisz, a za Tobą od środka wyrasta ściana kafelków z Twoich materiałów.",
+  "najlepsze_do": "Liczba rolek, efektów, klientek, „tyle już zrobiłam”, dorobek",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#6C4BEF;display:flex;align-items:center;justify-content:center\"><div style=\"text-align:center\"><div style=\"font:800 20px Nunito;color:#FFD23F\">+54</div><div style=\"display:grid;grid-template-columns:repeat(6,8px);gap:2px;margin-top:4px\"><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i><i style=\"height:13px;background:#fff;border-radius:2px;opacity:.85\"></i></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

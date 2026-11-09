@@ -1,0 +1,21 @@
+{
+  "id": "szybki-pokaz-w-telefonie",
+  "kategoria": "animowany-broll",
+  "typ": "nakładkowy",
+  "nazwa": "Szybki pokaz w telefonie",
+  "opis": "Za głową wjeżdża telefon, a jego ekran co ćwierć sekundy pokazuje inną rzecz: efekt, zdjęcie, produkt.",
+  "najlepsze_do": "„Takie efekty”, przegląd wielu rzeczy w sekundę, portfolio, „zobacz, ile tego jest”",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#3a3530;display:flex;align-items:center;justify-content:center\"><div style=\"width:30px;height:54px;background:#111;border:2px solid #fff;border-radius:7px;transform:rotate(5deg);display:flex;align-items:center;justify-content:center\"><i style=\"width:22px;height:42px;background:linear-gradient(#FFD23F,#6C4BEF);border-radius:4px\"></i></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

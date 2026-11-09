@@ -1,0 +1,21 @@
+{
+  "id": "przewijany-ekran",
+  "kategoria": "dowod",
+  "typ": "nakładkowy",
+  "nazwa": "Przewijany ekran za głową",
+  "opis": "Za Tobą prawdziwy zrzut strony albo aplikacji. Przewija się dokładnie na słowach do tej części, o której mówisz, a kursor może coś zaznaczyć.",
+  "najlepsze_do": "Pokazywanie strony, programu, ustawień albo oferty, „wybierasz kolory, czcionki…”",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#6C4BEF;display:flex;align-items:center;justify-content:center\"><div style=\"width:80%;height:70%;background:#fff;border-radius:6px;overflow:hidden;padding:5px;box-sizing:border-box;font:800 6px Nunito\"><div style=\"font-size:8px\">Twoje czcionki</div><div style=\"display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:4px\"><i style=\"height:14px;background:#FFF7CC;border-radius:3px\"></i><i style=\"height:14px;background:#E6F2FF;border-radius:3px\"></i><i style=\"height:14px;background:#F1EAFF;border-radius:3px\"></i></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

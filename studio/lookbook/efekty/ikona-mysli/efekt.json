@@ -1,0 +1,21 @@
+{
+  "id": "ikona-mysli",
+  "kategoria": "animowany-broll",
+  "typ": "nakładkowy",
+  "nazwa": "Ikona, która myśli",
+  "opis": "Obok głowy ikona programu, wokół niej kręci się kółko ładowania, a pod spodem odręczne „chwilę…”.",
+  "najlepsze_do": "„To chwilę potrwa”, AI myśli, generowanie, czekanie na wynik",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#3a3530;display:flex;align-items:center;justify-content:center\"><div style=\"position:relative;width:34px;height:34px\"><i style=\"position:absolute;inset:4px;background:#fff;border-radius:7px\"></i><i style=\"position:absolute;inset:0;border:3px solid transparent;border-top-color:#FFD23F;border-radius:50%\"></i></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

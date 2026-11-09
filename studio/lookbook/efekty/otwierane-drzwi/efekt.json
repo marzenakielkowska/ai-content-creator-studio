@@ -1,0 +1,21 @@
+{
+  "id": "otwierane-drzwi",
+  "kategoria": "glowne",
+  "typ": "nakładkowy",
+  "nazwa": "Otwierane drzwi",
+  "opis": "Za Tobą zamknięte drzwi w kolorze Twojej marki. Na słowo „otwieram” rozsuwają się na boki, a za nimi czeka nazwa i ściana Twoich materiałów.",
+  "najlepsze_do": "Premiera, otwarcie zapisów, „otwieram drzwi do…”, ogłoszenie nowej oferty",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#5A3BE0;display:flex;align-items:center;justify-content:center\"><div style=\"display:flex;gap:2px;width:70%;height:80%\"><div style=\"flex:1;background:#6C4BEF;border-radius:4px;position:relative\"><i style=\"position:absolute;right:4px;top:48%;width:3px;height:14%;background:#FFD23F;border-radius:2px\"></i></div><div style=\"flex:1;background:#6C4BEF;border-radius:4px;position:relative\"><i style=\"position:absolute;left:4px;top:48%;width:3px;height:14%;background:#FFD23F;border-radius:2px\"></i></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

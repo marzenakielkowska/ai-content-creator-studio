@@ -1,0 +1,21 @@
+{
+  "id": "rachunek",
+  "kategoria": "plansze",
+  "typ": "nakładkowy",
+  "nazwa": "Rachunek",
+  "opis": "Pod brodą wysuwa się rachunek: pozycje z kropkami i znakiem zapytania, a na końcu czerwone podsumowanie. Pokazuje, ile coś naprawdę kosztuje, bez zmyślonych kwot.",
+  "najlepsze_do": "„Ile to kosztuje”, „co tracisz”, delegowanie, czas i pieniądze, które uciekają",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#3a3530;display:flex;align-items:center;justify-content:center\"><div style=\"width:74%;background:#fff;border-radius:6px;padding:5px 7px;font:800 6px Nunito,sans-serif;color:#1C1C1E;line-height:1.7\"><div>Montaż ........ ?</div><div>Twój czas ..... ?</div><div>Okazje ........ ?</div><div style=\"color:#E5484D\">Razem ... majątek</div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

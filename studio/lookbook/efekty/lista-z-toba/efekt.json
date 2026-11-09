@@ -1,0 +1,21 @@
+{
+  "id": "lista-z-toba",
+  "kategoria": "plansze",
+  "typ": "nakładkowy",
+  "nazwa": "Lista, na której jesteś",
+  "opis": "Pod brodą lista z ptaszkami: kolejne osoby z listy, a na końcu wyróżnione „Ty”.",
+  "najlepsze_do": "Lista oczekujących, zapisy, „tylko osoby z listy dostaną…”, premiera",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#3a3530;display:flex;align-items:center;justify-content:center\"><div style=\"background:#fff;border-radius:5px;padding:4px 6px;font:800 6px Nunito;line-height:1.8\"><div>✓ osoba z listy</div><div>✓ osoba z listy</div><div style=\"color:#6C4BEF\">✓ Ty</div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

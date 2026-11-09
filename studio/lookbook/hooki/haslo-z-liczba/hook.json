@@ -1,0 +1,13 @@
+{
+  "id": "haslo-z-liczba",
+  "nazwa": "Hasło z liczbą",
+  "opis": "Od pierwszej klatki u samej góry ikona i hasło rolki, a pod nimi wielka liczba. Za Tobą dwie kolumny kafelków jadą w przeciwne strony.",
+  "najlepsze_do": "Rolki o programie, kursie albo zestawie: „+54 efekty”, „7 kroków”, „3 narzędzia”",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#6C4BEF\"></div><div style=\"position:absolute;top:10%;left:0;right:0;text-align:center;z-index:1\"><div style=\"color:#fff;font:800 9px Nunito,sans-serif\">● Hasło rolki</div><div style=\"color:#FFD23F;font:800 18px Nunito,sans-serif;text-shadow:0 2px 0 #B88B00\">+54 efekty</div></div>",
+  "przepis": {
+    "czas_trwania": "pierwsze 3 sekundy",
+    "opis_efektu": "From frame 0 at the very top (from Y 226): the program or brand icon (84 px, rounded) next to the reel's tagline in bold white (main font, about 72 px), and below it a huge bold number with one word (about 136 px, accent colour, stacked 3D shadow: 0 5px 0, 0 10px 0 in darker shades of the accent). The title lands with a quick 1.1 to 1 scale. The person is cut out in front of a solid canvas in the brand colour (canvas band above Y 486 keeps the title clean); behind her, at both sides, two vertical columns of rounded tiles (frames from her own reels, white 5 px border) slide slowly in opposite directions for the whole hook (left column up 260 px, right column down 260 px). Use only the real number and words from the recording. At about 3.4 s the number lifts away; if the student uses the constant header effect, the tagline line becomes that header."
+  }
+}

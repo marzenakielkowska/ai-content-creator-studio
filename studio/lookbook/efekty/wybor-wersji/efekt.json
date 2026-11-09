@@ -1,0 +1,21 @@
+{
+  "id": "wybor-wersji",
+  "kategoria": "plansze",
+  "typ": "nakładkowy",
+  "nazwa": "Wybór wersji",
+  "opis": "Nad głową wskakują po kolei trzy wersje. Jedna dostaje zielony ptaszek i lekko rośnie, a pozostałe przygasają.",
+  "najlepsze_do": "Poprawki, warianty, „wybierasz tę, która Ci odpowiada”, porównanie opcji",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#3a3530;display:flex;align-items:center;justify-content:center\"><div style=\"display:flex;gap:3px\"><div style=\"background:#fff;border-radius:3px;padding:2px 3px;font:800 5px Nunito;opacity:0.5\">wersja 1</div><div style=\"background:#fff;border-radius:3px;padding:2px 3px;font:800 5px Nunito;opacity:0.5\">wersja 2</div><div style=\"background:#fff;border-radius:3px;padding:2px 3px;font:800 5px Nunito;opacity:1\">wersja 3</div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

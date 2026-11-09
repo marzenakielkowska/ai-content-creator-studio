@@ -296,6 +296,21 @@ Potem `transkrypcja` na złożonej rolce i **porównaj `transkrypt-rolki.txt` z 
 | Program lub AI robi coś za nią (hak, pierwsze zdanie) | okno-z-poleceniem |
 | „Ręcznie”, „godzinami”, „nie wychodzi” | timeline-z-palcem |
 | Trzy korzyści albo kroki przy końcu rolki | panel-montazu zamiast dużej listy |
+| „Otwieram”, start zapisów, premiera | otwierane-drzwi |
+| „Ile to kosztuje”, „co tracisz”, delegowanie | rachunek |
+| Pierwsze kroki w programie: „wejdź, zainstaluj, odpowiedz” | kroki-w-akcji |
+| Strona, aplikacja albo ustawienia, o których mówi (jest zrzut) | przewijany-ekran |
+| Kilka rolek, produktów albo efektów naraz | wachlarz-telefonow |
+| Liczba, która pokazuje dorobek („+54 efekty”, „300 rolek”) | licznik-ze-sciana |
+| „Nie takie jak wszyscy”, „Twoje”, wyróżnienie | wszyscy-kontra-ty |
+| Wersje, poprawki, wybór jednej z kilku | wybor-wersji |
+| „Ile czasu”, czas, który ucieka | stoper |
+| Lista oczekujących, „tylko osoby z listy” | lista-z-toba |
+| „Dostęp”, odblokowanie, bonus dla zapisanych | klodka-dostep |
+| Wycinanie pauz i pomyłek, automatyczny montaż | ciecie-na-osi |
+| „To chwilę potrwa”, AI myśli | ikona-mysli |
+| Styl marki, spójność rolek | karta-stylu |
+| Wiele rzeczy w sekundę, przegląd portfolio | szybki-pokaz-w-telefonie |
 
 Kursantka nie zawsze wie, że te momenty warto podkreślić — Ty to widzisz i proponujesz.
 

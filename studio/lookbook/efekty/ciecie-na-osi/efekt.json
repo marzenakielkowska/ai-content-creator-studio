@@ -1,0 +1,21 @@
+{
+  "id": "ciecie-na-osi",
+  "kategoria": "animowany-broll",
+  "typ": "nakładkowy",
+  "nazwa": "Cięcie na osi czasu",
+  "opis": "Nad głową ciemna oś czasu. Głowica jedzie, czerwone fragmenty znikają jeden po drugim, a obok wskakują ptaszki: pauzy, powtórki, pomyłki.",
+  "najlepsze_do": "Wycinanie pauz i pomyłek, automatyczny montaż, „program robi to za Ciebie”",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#9CC8FF;display:flex;align-items:center;justify-content:center\"><div style=\"width:80%;background:#1E1E24;border-radius:5px;padding:4px\"><div style=\"font:800 5px Nunito;color:#7CE29B;text-align:right\">✓ pauzy ✓ powtórki</div><div style=\"display:flex;gap:2px;margin-top:2px\"><i style=\"flex:3;height:5px;background:#FDE68A;border-radius:2px\"></i><i style=\"flex:1;height:5px;background:#E5484D;border-radius:2px\"></i><i style=\"flex:3;height:5px;background:#FDE68A;border-radius:2px\"></i></div><div style=\"height:5px;background:#6C8CFF;border-radius:2px;margin-top:2px\"></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

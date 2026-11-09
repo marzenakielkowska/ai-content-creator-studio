@@ -1,0 +1,21 @@
+{
+  "id": "karta-stylu",
+  "kategoria": "plansze",
+  "typ": "nakładkowy",
+  "nazwa": "Karta stylu",
+  "opis": "Nad głową karta „Twój styl”: kolory marki i próbki czcionek. Po bokach wskakują dwie rolki, a linie przypinają je do karty.",
+  "najlepsze_do": "Spójny styl marki, „wszystkie rolki w jednym stylu”, identyfikacja wizualna",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#3a3530;display:flex;align-items:center;justify-content:center\"><div style=\"background:#fff;border-radius:5px;padding:4px 6px;font:800 6px Nunito\"><div>Twój styl</div><div style=\"display:flex;gap:2px;margin-top:2px;align-items:center\"><i style=\"width:7px;height:7px;border-radius:50%;background:#6C4BEF\"></i><i style=\"width:7px;height:7px;border-radius:50%;background:#F5C9D8\"></i><i style=\"width:7px;height:7px;border-radius:50%;background:#FFD23F\"></i><b style=\"margin-left:2px\">Aa</b></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

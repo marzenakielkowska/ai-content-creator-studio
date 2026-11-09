@@ -1,0 +1,21 @@
+{
+  "id": "klodka-dostep",
+  "kategoria": "elementy-wizualne",
+  "typ": "nakładkowy",
+  "nazwa": "Kłódka „dostęp”",
+  "opis": "Nad głową biała pigułka z kłódką i jednym słowem. Na to słowo kłódka się otwiera.",
+  "najlepsze_do": "„Dostęp”, „odblokuj”, materiały tylko dla zapisanych, bonus",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#3a3530;display:flex;align-items:center;justify-content:center\"><div style=\"background:#fff;border-radius:10px;padding:3px 8px;font:800 8px Nunito;color:#6C4BEF\">🔓 dostęp</div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}
