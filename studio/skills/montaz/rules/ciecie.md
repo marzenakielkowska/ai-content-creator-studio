@@ -54,6 +54,8 @@ zostaje PRZEPISANA (nie dopisujesz nowej obok).
   mieszczą się pod nią, nad strefą Instagrama. Sprawdź po `zloz` drugim `siatka`. Przybliżenie „na oko” z `cy` 0,4
   zwykle stawia brodę na Y 1400 i napisy lądują na niej.
 - Gdy kursantka wybrała w Lookbooku `zoom: bez`, nie dawaj przybliżeń, łącz takie segmenty albo zostaw skok.
+- Przy `zoom: ciagly` każde ujęcie ma inny plan niż poprzednie, także gdy obok siebie stoją ujęcia z różnych miejsc
+  nagrania (szczegóły: `SKILL.md`, pole `zoom`).
 
 ## Plan cięć (edl.json)
 

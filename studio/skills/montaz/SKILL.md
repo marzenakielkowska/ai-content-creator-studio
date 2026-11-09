@@ -119,6 +119,9 @@ dawny wybór z Lookbooka: Elsie Swash Caps nie ma liter ć, ś, ź, ż, więc mo
 - `bez` → kamera nieruchoma, żadnego zooma
 - `subtelny` → delikatne przybliżanie lub oddalanie co ~15 sekund
 - `dynamiczny` → wyraźne zmiany skali co ~5 sekund
+- `ciagly` → kamera nigdy nie stoi: co 1–2 s inny plan. Przy każdym cięciu zmiana planu (szeroki 1,0 i bliski 1,2–1,3,
+  przy nagraniu 4K do 1,5), na mocnym słowie wbicie o 10–25% w 0,1 s, a między cięciami powolny najazd o około 2% na
+  ujęcie. Przy każdej zmianie skali kadr przesuwa się tak, żeby broda została nad pasem napisów (`rules/uklad.md`)
 
 **`dzwieki`** — tablica ID efektów dźwiękowych. Lookup w `studio/dzwieki/katalog.json` (pole `opis` mówi kiedy użyć). Pliki skopiuj z `studio/dzwieki/pliki/` do `<folder kompozycji>/assets/` i wstaw jako `<audio class="clip" … data-duration data-volume>`; długość zawsze z katalogu (`dlugosc_s`), bo część plików jest dłuższa. Stosuj w odpowiednim momencie (wejście elementu, kluczowe słowo, przejście sceny) — nie na każdej klatce. Poziom: `data-volume` od 0,05 do 0,12, zawsze ciszej niż głos.
 
