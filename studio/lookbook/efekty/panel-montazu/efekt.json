@@ -1,0 +1,21 @@
+{
+  "id": "panel-montazu",
+  "kategoria": "animowany-broll",
+  "typ": "nakładkowy",
+  "nazwa": "Panel montażu",
+  "opis": "Na płótnie za Tobą niski panel: na trzy kluczowe słowa wskakują klipy z Twojego nagrania, głowica jedzie, procenty rosną. Widać, że rolka właśnie się składa.",
+  "najlepsze_do": "Wyliczanka trzech korzyści przy końcu rolki, zamiast dużej listy",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#6C4BEF\"><div style=\"position:absolute;left:6%;right:6%;top:18%;background:#1E1E24;border-radius:6px;padding:4px;display:flex;gap:3px\"><div style=\"flex:1;height:12px;background:#FDE68A;border-radius:2px\"></div><div style=\"flex:1;height:12px;background:#6C8CFF;border-radius:2px\"></div><div style=\"flex:1;height:12px;background:#34C77B;border-radius:2px\"></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

@@ -14,6 +14,6 @@
   },
   "przepis": {
     "typ": "hyperframes",
-    "opis_efektu": "Behind the talking head, a very large number animates from 0 up to the target value over 2–3 seconds, then holds. Font: bold, condensed, fills 70% of frame width. Color: white at 15% opacity, or brand accent color at 20% opacity — large but clearly background. Person stands in foreground fully visible. As the count-up completes, the number briefly flashes to full white opacity for one frame, then settles at 25% opacity. No border, no card — pure typographic background element."
+    "opis_efektu": "Behind the talking head, a very large number animates from 0 up to the target value over 1.5–3 seconds, then holds. Font: bold, at least 260 px tall, the head covers at most 30% of the digits. Color: brand accent or white at full opacity, no transparency. Person stands in foreground fully visible. No border, no card — pure typographic element."
   }
 }

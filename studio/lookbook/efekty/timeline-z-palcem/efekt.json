@@ -1,0 +1,21 @@
+{
+  "id": "timeline-z-palcem",
+  "kategoria": "animowany-broll",
+  "typ": "nakładkowy",
+  "nazwa": "Timeline z palcem",
+  "opis": "Nad głową ciemna oś czasu z trzema ścieżkami. Twoja dłoń wchodzi z boku kadru i przesuwa klipy palcem.",
+  "najlepsze_do": "„Montowałam to ręcznie”, „to trwa godzinami”, „nie wychodzi”",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#3A3838\"><div style=\"position:absolute;left:8%;right:8%;top:18%;background:#1E1E24;border-radius:6px;padding:4px\"><div style=\"height:5px;background:#FDE68A;border-radius:2px;width:70%\"></div><div style=\"height:5px;background:#6C8CFF;border-radius:2px;width:85%;margin-top:3px\"></div><div style=\"height:5px;background:#34C77B;border-radius:2px;margin-top:3px\"></div></div><div style=\"position:absolute;right:0;top:27%;width:38%;height:9px;border-radius:5px 0 0 5px;background:#E8B79E\"></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

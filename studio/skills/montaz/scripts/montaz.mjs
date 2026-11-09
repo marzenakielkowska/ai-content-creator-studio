@@ -12,14 +12,26 @@
 //   wytnij-tlo <projekt> [--zgoda] | wytnij-tlo --sprawdz
 //        sylwetka bez tla -> assets/sylwetka.webm i sprawdzenie, ze ma tyle samo klatek co aroll.mp4
 //        za pierwszym razem HyperFrames pobiera model (~390 MB): bez --zgoda tylko o tym informuje
+//   czysc-tlo <projekt> <nazwa> <od> <do> [--bez-obwiedni] [--bez-pokoju]
+//        czyste wyciecie jednego okna rolki pod plotno -> assets/syl/<nazwa>.webm (bez plam tla; podaje data-start)
+//   kontrola-wyciecia <projekt>
+//        arkusz wszystkich okien z assets/syl na jednolitym tle -> work/kontrola-wyciecia.jpg
+//   wytnij-dlon <projekt> <czas> <x,y,w,h> "<x1,y1 x2,y2 ...>"
+//        dlon z klatki nagrania po obrysie, w pelni kryjaca -> assets/reka.png (do efektu Timeline z palcem)
 //   glowa <projekt>
 //        gdzie jest glowa i sylwetka w kazdym segmencie -> glowa.json (do napisow za glowa i kart pod broda)
+//   siatka <projekt>
+//        klatki z linia co 100 px -> work/siatka.jpg: stad odczytujesz czubek glowy i brode (przed zloz: z nagran)
+//   strona-klatek <projekt> <folder kompozycji> <opis.json>
+//        prawdziwe klatki z kompozycji i strona do oceny przed renderem -> work/klatki/klatki.html
 //   strefa <obraz.png>...
 //        rysuje na podgladach czerwone pola poza strefa bezpieczna Reels -> <obraz>-strefa.png
 //   sprawdz-ciecia <projekt> <render.mp4> [--telefon]
 //        klatka przed i po kazdym cieciu na jednym arkuszu + glosnosc + kopia na telefon (720p)
 //   glosnosc <plik>
 //        szczyt (dB) i glosnosc (LUFS)
+//   wyrownaj-glos <render.mp4>
+//        dwa przebiegi loudnorm do -14 LUFS, obraz bez zmian, ten sam plik
 //   podlacz <projekt> <folder kompozycji>
 //        wstawia assets/aroll.mp4 i assets/sylwetka.webm do <folder kompozycji>/assets bez drugiej kopii na dysku
 //        (twarde dowiazanie; gdy sie nie da, zwykla kopia)
@@ -196,6 +208,7 @@ function pauzy(argumenty) {
   const min = Number(opcja(argumenty, '--min', 0.08));
   const [plik, od, doCzasu] = argumenty;
   if (!plik || !fs.existsSync(plik)) blad('podaj istniejacy plik');
+  if (argumenty.length > 3 || [od, doCzasu].some((v) => v !== undefined && !Number.isFinite(Number(v)))) blad('od i do podaj w sekundach, jako dwie osobne liczby');
   const lista = cisze(plik, { od: od ? Number(od) : null, do: doCzasu ? Number(doCzasu) : null, prog, min });
   for (const c of lista) wypisz(`CISZA ${c.od} ${c.do ?? 'koniec'} ${c.do ? r3(c.do - c.od) : ''}`.trim());
   wypisz(`STATUS pauzy ${lista.length}`);
@@ -282,6 +295,7 @@ function wczytaj(argumenty) {
     zapiszJson(path.join(praca, `cisze_${k}.json`), mowa);
     tekst.push(`== ${k} ${path.basename(plik)} (${r2(inf.czas)} s, ${inf.szer}x${inf.wys}, ${Math.round(inf.fps)} kl/s)`, ...linijki(slowa), '');
     wypisz(`KROK ${k} gotowe slow=${slowa.length}`);
+    if (slowa.length < 3) wypisz(`INFO ${k} brak mowy w nagraniu (slow=${slowa.length}): zapytaj kursantke, czy to wlasciwy plik`);
   });
 
   zapiszJson(path.join(projekt, 'zrodla.json'), zrodla);
@@ -481,8 +495,8 @@ function glowa(argumenty) {
       glowa_gora: cala.y,
       glowa_x_od: pas ? pas.x : null,
       glowa_x_do: pas ? pas.x + pas.w : null,
-      // Szacunek: glowa jest okolo 1,35 raza wyzsza niz szeroka. Do kart "pod broda" dodaj zapas 40 px.
-      broda_okolo: szer ? Math.round(cala.y + szer * 1.35) : null,
+      // Tylko szacunek (myli sie, gdy w kadrze sa rece albo wlosy): brode odczytaj z arkusza siatka i wpisz w pole broda.
+      broda_okolo: szer ? Math.round(cala.y + Math.min(szer, 640 * Number(seg.zoom || 1)) * 1.1) : null,
       sylwetka: cala,
     };
     wypisz(`GLOWA ${g.id} gora=${g.glowa_gora} x=${g.glowa_x_od}-${g.glowa_x_do} broda~${g.broda_okolo}`);
@@ -553,15 +567,17 @@ function sprawdzCiecia(argumenty) {
     // Ostatnia klatka przed cieciem i pierwsza po nim, para obok pary: lewa = przed, prawa = po.
     const numery = ciecia.flatMap((k) => [k - 1, k]);
     const wybor = numery.map((n) => `eq(n\\,${n})`).join('+');
-    ffWymagane(['-i', render, '-vf', `select='${wybor}',scale=270:-2`, '-fps_mode', 'passthrough', path.join(folder, 'k%03d.png')], 'klatki ciec', { timeout: 1800000 });
+    ffWymagane(['-i', render, '-vf', `select='${wybor}',scale=180:-2`, '-fps_mode', 'passthrough', path.join(folder, 'k%03d.png')], 'klatki ciec', { timeout: 1800000 });
     const arkusz = path.join(projekt, 'work', 'kontrola-ciec.jpg');
-    ffWymagane(['-framerate', '1', '-i', path.join(folder, 'k%03d.png'), '-vf', `tile=2x${ciecia.length}:padding=6:color=white`, '-frames:v', '1', '-q:v', '3', arkusz], 'arkusz ciec');
+    ffWymagane(['-framerate', '1', '-i', path.join(folder, 'k%03d.png'), '-vf', `drawbox=x=0:y=0:w=10:h=ih:color=0xFFD23F:t=fill:enable='not(mod(n\\,2))',tile=10x${Math.ceil(ciecia.length / 5)}:padding=6:color=white`, '-frames:v', '1', '-q:v', '3', arkusz], 'arkusz ciec');
+    wypisz('INFO pary czytaj wierszami: zolty pasek = ostatnia klatka przed cieciem, klatka po prawej = pierwsza po cieciu');
     wypisz(`STATUS ciecia ${ciecia.length} arkusz=${arkusz}`);
     ciecia.forEach((k, i) => wypisz(`CIECIE ${i + 1} czas=${r3(k / FPS)}s przed=${segmenty[i].id} po=${segmenty[i + 1].id}`));
   } else wypisz('STATUS ciecia 0');
 
   const g = mierzGlosnosc(render);
   wypisz(`STATUS glosnosc lufs=${g.lufs} szczyt=${g.szczyt}`);
+  if (Number.isFinite(Number(g.lufs)) && (Number(g.lufs) < -16 || Number(g.lufs) > -12)) wypisz('INFO glosnosc poza celem -14 LUFS: uruchom wyrownaj-glos na tym pliku');
 
   if (telefon) {
     const wyj = render.replace(/(\.[^.]+)$/, '-telefon.mp4');
@@ -573,6 +589,24 @@ function sprawdzCiecia(argumenty) {
 
 // Kompozycja potrzebuje nagrania we wlasnym folderze assets. Twarde dowiazanie to ten sam plik pod druga nazwa:
 // nie zajmuje miejsca drugi raz, a po ponownym "zloz" kompozycja od razu widzi nowa rolke.
+// Render HyperFrames wychodzi zwykle okolo -25 LUFS: dwa przebiegi loudnorm do -14 LUFS, obraz bez zmian.
+function wyrownajGlos(argumenty) {
+  const [plik] = argumenty;
+  if (!plik || !fs.existsSync(plik)) blad('uzycie: wyrownaj-glos <render.mp4>');
+  const pomiar = ff(['-nostats', '-i', plik, '-af', 'loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json', '-f', 'null', '-'], { timeout: 1800000 });
+  const json = (pomiar.err.match(/\{[\s\S]*\}/) || [])[0];
+  if (!json) blad('pomiar glosnosci nie powiodl sie');
+  const m = JSON.parse(json);
+  const wyj = plik.replace(/(\.[^.]+)$/, '.glos$1');
+  ffWymagane(['-i', plik, '-c:v', 'copy', '-af',
+    `loudnorm=I=-14:TP=-1.5:LRA=11:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset}:linear=true,aresample=48000`,
+    '-c:a', 'aac', '-b:a', '256k', '-movflags', '+faststart', wyj], 'wyrownanie glosu', { timeout: 1800000 });
+  fs.renameSync(wyj, plik);
+  const g = mierzGlosnosc(plik);
+  wypisz(`STATUS glosnosc lufs=${g.lufs} szczyt=${g.szczyt}`);
+  wypisz('WYNIK OK');
+}
+
 function podlacz(argumenty) {
   const [projekt, kompozycja] = argumenty;
   if (!projekt || !kompozycja || !fs.existsSync(kompozycja)) blad('uzycie: podlacz <projekt> <folder kompozycji>');
@@ -603,6 +637,21 @@ function podlacz(argumenty) {
     ile++;
   }
   if (!ile) blad('brak assets/aroll.mp4 - najpierw zloz');
+  // Wyciecia okien z plotnem i dlon: tez bez drugiej kopii.
+  const dodatki = [];
+  const okna = path.join(projekt, 'assets', 'syl');
+  if (fs.existsSync(okna)) for (const f of fs.readdirSync(okna)) if (f.endsWith('.webm')) dodatki.push([path.join(okna, f), path.join(cel, 'syl', f)]);
+  const reka = path.join(projekt, 'assets', 'reka.png');
+  if (fs.existsSync(reka)) dodatki.push([reka, path.join(cel, 'reka.png')]);
+  // Czcionka odreczna: wbudowana w HyperFrames nie zawsze ma polskie litery.
+  const caveat = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'fonts', 'caveat-600.woff2');
+  if (fs.existsSync(caveat)) dodatki.push([caveat, path.join(cel, 'fonts', 'caveat-600.woff2')]);
+  for (const [zrodlo, plik] of dodatki) {
+    fs.mkdirSync(path.dirname(plik), { recursive: true });
+    fs.rmSync(plik, { force: true });
+    try { fs.linkSync(zrodlo, plik); } catch { fs.copyFileSync(zrodlo, plik); }
+  }
+  if (dodatki.length) wypisz(`STATUS podlacz dodatki ${dodatki.length}`);
   wypisz('WYNIK OK');
 }
 
@@ -1270,6 +1319,425 @@ function wariantyLista(argumenty) {
   wypisz('WYNIK OK');
 }
 
+// ---------- siatka (pomiar glowy i brody na klatkach) ----------
+
+// Arkusz klatek z linia co 100 px (gruba co 500): stad odczytujesz czubek glowy i brode.
+// Po zloz: srodek kazdego segmentu. Przed zloz: srodek kazdego segmentu z edl.json, a bez planu po 3 klatki z kazdego nagrania, caly kadr 9:16 (do wyliczenia cy).
+function siatka(argumenty) {
+  const [projekt] = argumenty;
+  if (!projekt) blad('uzycie: siatka <projekt>');
+  const folder = path.join(projekt, 'work', 'siatka');
+  fs.rmSync(folder, { recursive: true, force: true });
+  fs.mkdirSync(folder, { recursive: true });
+  const kreski = `drawgrid=w=${W}:h=100:t=2:c=yellow@0.6,drawgrid=w=${W}:h=500:t=6:c=red@0.8,scale=270:-2`;
+  const aroll = path.join(projekt, 'assets', 'aroll.mp4');
+  const plikSegmentow = path.join(projekt, 'segmenty.json');
+  const opis = [];
+  let n = 0;
+  if (fs.existsSync(aroll) && fs.existsSync(plikSegmentow)) {
+    const { segmenty } = czytajJson(plikSegmentow, 'najpierw zloz');
+    for (const s of segmenty) {
+      n++;
+      const t = r3((s.klatka_start + s.klatki / 2) / FPS);
+      ffWymagane(['-ss', String(t), '-i', aroll, '-frames:v', '1', '-vf', kreski, path.join(folder, `k${String(n).padStart(3, '0')}.png`)], `klatka ${s.id}`);
+      opis.push(`${n}=${s.id}(zoom ${s.zoom})`);
+    }
+  } else if (fs.existsSync(path.join(projekt, 'edl.json'))) {
+    // Plan cięć jest, rolki jeszcze nie: srodek kazdego segmentu w pelnym kadrze, stad broda do policzenia cy.
+    const zrodla = czytajJson(path.join(projekt, 'zrodla.json'), 'najpierw wczytaj');
+    for (const e of czytajJson(path.join(projekt, 'edl.json'), '')) {
+      if (!zrodla[e.klip]) continue;
+      n++;
+      const t = r3((Number(e.od) + Number(e.do)) / 2);
+      ffWymagane(['-ss', String(t), '-i', zrodla[e.klip], '-frames:v', '1', '-vf', `${filtrKadru({})},${kreski}`, path.join(folder, `k${String(n).padStart(3, '0')}.png`)], `klatka ${e.id}`);
+      opis.push(`${n}=${e.id}@${r2(t)}s(${e.klip})`);
+    }
+  } else {
+    const zrodla = czytajJson(path.join(projekt, 'zrodla.json'), 'najpierw wczytaj');
+    for (const [klip, plik] of Object.entries(zrodla)) {
+      const czas = info(plik).czas;
+      for (const u of [0.25, 0.5, 0.75]) {
+        n++;
+        ffWymagane(['-ss', String(r3(czas * u)), '-i', plik, '-frames:v', '1', '-vf', `${filtrKadru({})},${kreski}`, path.join(folder, `k${String(n).padStart(3, '0')}.png`)], `klatka ${klip}`);
+        opis.push(`${n}=${klip}@${r2(czas * u)}s`);
+      }
+    }
+  }
+  if (!n) blad('brak klatek');
+  const arkusz = path.join(projekt, 'work', 'siatka.jpg');
+  ffWymagane(['-framerate', '1', '-i', path.join(folder, 'k%03d.png'), '-vf', `tile=${Math.min(n, 8)}x${Math.ceil(n / 8)}:padding=6:color=white`, '-frames:v', '1', '-q:v', '3', arkusz], 'arkusz siatki');
+  wypisz(`STATUS siatka ${n} arkusz=${arkusz} linia_co=100px gruba_co=500px`);
+  wypisz(`INFO kolejnosc ${opis.join(' ')}`);
+  wypisz('WYNIK OK');
+}
+
+// ---------- czyste wyciecie okien z plotnem ----------
+
+const ALFA_PROGI = "alphaextract,lut=c0='clip((val-90)*255/(215-90),0,255)'";
+const OTWARCIE = `scale=270:480:flags=area,${'erosion,'.repeat(4)}${'dilation,'.repeat(8)}scale=${W}:${H}:flags=bilinear,lut=c0='if(gt(val,70),255,0)',gblur=sigma=2.5`;
+const NA_BIALO = "lut=c0='if(gt(val,225),255,val)'";
+const NA_CZARNO = "lut=c0='if(lt(val,24),0,val)'";
+
+function kadrSegmentu(projekt, seg) {
+  const edl = czytajJson(path.join(projekt, 'edl.json'), 'brak edl.json');
+  const wpis = edl.find((e) => e.id === seg.id) || {};
+  const z = Math.max(1, Number(seg.zoom || 1));
+  return { klip: seg.klip, z, cx: z > 1 ? Number(wpis.cx ?? 0.5) : 0.5, cy: z > 1 ? Number(wpis.cy ?? 0.5) : 0.5 };
+}
+
+// Czysty obraz pokoju bez osoby dla danego kadru (pol rozdzielczosci). Kazdy piksel to mediana z tych klatek, w ktorych
+// osoby tam nie ma: gdy wyciecie zawiedzie w pojedynczych klatkach, to nie psuje obrazu. Piksel widziany za rzadko albo
+// niestabilny zostaje przezroczysty: tam czysc-tlo nic nie usuwa.
+const PW = 540;
+const PH = 960;
+
+function surowaKlatka(argumenty, rozmiar) {
+  const r = spawnSync(narzedzia().ffmpeg, ['-hide_banner', '-nostdin', '-v', 'error', ...argumenty, '-f', 'rawvideo', '-'], { env: srodowisko(), windowsHide: true, maxBuffer: 64 * 1024 * 1024 });
+  if (r.status !== 0 || !r.stdout || r.stdout.length < rozmiar) return null;
+  return r.stdout;
+}
+
+function czystyPokoj(projekt, kadr, segmenty) {
+  const folder = path.join(projekt, 'work', 'pokoj');
+  fs.mkdirSync(folder, { recursive: true });
+  const klucz = `${kadr.klip}_z${kadr.z}_${kadr.cx}_${kadr.cy}`;
+  const plik = path.join(folder, `${klucz}.png`);
+  if (fs.existsSync(plik)) return plik;
+  const szerokie = segmenty.filter((s) => s.klip === kadr.klip && Math.max(1, Number(s.zoom || 1)) === 1);
+  const zSzerokich = szerokie.length > 0;
+  const uzyte = zSzerokich
+    ? szerokie
+    : segmenty.filter((s) => { const k = kadrSegmentu(projekt, s); return s.klip === kadr.klip && k.z === kadr.z && k.cx === kadr.cx && k.cy === kadr.cy; });
+  if (!uzyte.length) return null;
+  const baza = path.join(folder, `${zSzerokich ? kadr.klip : klucz}_baza.png`);
+  if (!fs.existsSync(baza)) {
+    const klatki = uzyte.flatMap((s) => Array.from({ length: s.klatki }, (_, i) => s.klatka_start + i));
+    const ile = Math.min(40, klatki.length);
+    wypisz(`KROK pokoj start ${ile} klatek`);
+    const aroll = path.join(projekt, 'assets', 'aroll.mp4');
+    const sylwetka = path.join(projekt, 'assets', 'sylwetka.webm');
+    const obrazy = [];
+    const maski = [];
+    for (let i = 0; i < ile; i++) {
+      const t = String(r3((klatki[Math.floor((i * klatki.length) / ile)] + 0.5) / FPS));
+      const obraz = surowaKlatka(['-ss', t, '-i', aroll, '-frames:v', '1', '-vf', `scale=${PW}:${PH}:flags=area,format=rgb24`], PW * PH * 3);
+      const maska = surowaKlatka(['-c:v', 'libvpx-vp9', '-ss', t, '-i', sylwetka, '-frames:v', '1', '-vf',
+        `format=yuva420p,alphaextract,lut=c0='if(gt(val,25),255,0)',scale=270:480:flags=area,lut=c0='if(gt(val,8),255,0)',${'dilation,'.repeat(6)}scale=${PW}:${PH}:flags=bilinear,format=gray`], PW * PH);
+      if (obraz && maska) { obrazy.push(obraz); maski.push(maska); }
+    }
+    if (obrazy.length < 5) return null;
+    const minWidzianych = Math.max(4, Math.round(obrazy.length * 0.2));
+    const wynik = Buffer.alloc(PW * PH * 4);
+    const jasnosci = new Int16Array(obrazy.length);
+    const numery = new Int16Array(obrazy.length);
+    for (let p = 0; p < PW * PH; p++) {
+      let n = 0;
+      for (let k = 0; k < obrazy.length; k++) {
+        if (maski[k][p] > 5) continue;
+        const o = obrazy[k];
+        const j = o[p * 3] + o[p * 3 + 1] + o[p * 3 + 2];
+        // sortowanie przez wstawianie: malo elementow
+        let m = n++;
+        while (m > 0 && jasnosci[m - 1] > j) { jasnosci[m] = jasnosci[m - 1]; numery[m] = numery[m - 1]; m--; }
+        jasnosci[m] = j;
+        numery[m] = k;
+      }
+      if (n < minWidzianych) continue;
+      const rozrzut = (jasnosci[Math.floor(n * 0.75)] - jasnosci[Math.floor(n * 0.25)]) / 3;
+      if (rozrzut > 22) continue;
+      const o = obrazy[numery[n >> 1]];
+      wynik[p * 4] = o[p * 3];
+      wynik[p * 4 + 1] = o[p * 3 + 1];
+      wynik[p * 4 + 2] = o[p * 3 + 2];
+      wynik[p * 4 + 3] = 255;
+    }
+    const zapis = spawnSync(narzedzia().ffmpeg, ['-hide_banner', '-nostdin', '-v', 'error', '-y', '-f', 'rawvideo', '-pix_fmt', 'rgba', '-s', `${PW}x${PH}`, '-i', '-', '-frames:v', '1', '-c:v', 'png', baza], { input: wynik, env: srodowisko(), windowsHide: true, maxBuffer: 16 * 1024 * 1024 });
+    if (zapis.status !== 0) blad('zapis czystego pokoju nie powiodl sie');
+  }
+  if (zSzerokich && kadr.z > 1) {
+    const { z, cx, cy } = kadr;
+    ffWymagane(['-i', baza, '-vf', `format=rgba,crop=w=iw/${z}:h=ih/${z}:x='min(max(${cx}*iw-ow/2,0),iw-ow)':y='min(max(${cy}*ih-oh/2,0),ih-oh)',scale=${PW}:${PH}:flags=bilinear,format=rgba`, '-frames:v', '1', '-c:v', 'png', plik], 'kadr pokoju');
+  } else {
+    fs.copyFileSync(baza, plik);
+  }
+  return plik;
+}
+
+// Krawedz osoby z tej samej klatki. Model dolicza do osoby pas sciany przy wlosach i poduszke przy ramionach, a tnac po
+// masce w niskiej rozdzielczosci robi sie wycinanka. Dlatego tlo tuz za osoba szacujemy z pikseli, ktorych model na pewno
+// nie objal, i przy brzegu zostaje tylko to, co sie od tego tla rozni: wlosy zachowuja ksztalt, sciana odpada, a zmiana
+// ekspozycji nic nie psuje. Liczone w polowie rozdzielczosci i wygladzone, bo inaczej maska lapie bloki kompresji i brzeg ma
+// schodki. Srodek osoby (rdzen) jest chroniony. Ponizej brody liczymy zgrubnie, zeby faktura poduszki nie udawala osoby. Wejscia: [fr] klatka, [am] alfa modelu. Wyjscie: [kr].
+const SUMA_KANALOW = 'colorchannelmixer=rr=.5:rg=.5:rb=.5:gr=.5:gg=.5:gb=.5:br=.5:bg=.5:bb=.5';
+
+function filtrKrawedzi(yBrody) {
+  return [
+    '[am]split=3[am1][am2][am3]',
+    "[am1]scale=270:480:flags=area,lut=c0='if(gt(val,12),255,0)',dilation,dilation,dilation,lut=c0='255-val',format=gray,split[tm1][tm2]",
+    '[fr]scale=270:480:flags=area,format=gbrp,split=3[fs1][fs2][fs3]',
+    '[tm1]format=gbrp[tm3]',
+    "[fs1][tm3]blend=all_expr='A*B/255',gblur=sigma=6[tla]",
+    '[tm2]format=gbrp,gblur=sigma=6[tlb]',
+    "[tla][tlb]blend=all_expr='if(gt(B,1),min(255,A*255/B),128)',split[tl1][tl2]",
+    `[tl1]scale=${PW}:${PH}:flags=bicubic[tlo]`,
+    '[kol]format=gbrp,split[ff][fk]',
+    `[ff]scale=${PW}:${PH}:flags=area[fh];[fh][tlo]blend=all_mode=difference,format=rgb24,${SUMA_KANALOW},format=gray,gblur=sigma=2,split[d1][d2]`,
+    `[d1]lut=c0='clip((val-16)*6,0,255)',dilation,dilation,erosion,erosion,scale=${W}:${H}:flags=bicubic,format=gray,gblur=sigma=6,lut=c0='clip((val-110)*4,0,255)'[drobna]`,
+    `[fs2][tl2]blend=all_mode=difference,format=rgb24,${SUMA_KANALOW},format=gray,gblur=sigma=.8,lut=c0='clip((val-16)*7,0,255)',scale=${W}:${H}:flags=bilinear,format=gray,gblur=sigma=3,drawbox=x=0:y=0:w=${W}:h=${yBrody}:color=white:t=fill,${NA_BIALO}[zgrubna]`,
+    '[drobna][zgrubna]blend=all_mode=darken[mat]',
+    `[am2]scale=270:480:flags=area,lut=c0='if(gt(val,230),255,0)',${'erosion,'.repeat(7)}format=gray,split=3[rl1][rl2][rl3]`,
+    `[rl1]scale=${W}:${H}:flags=bilinear,format=gray,gblur=sigma=7,lut=c0='clip((val-110)*4,0,255)',split[rdzen][rn]`,
+    "[am3]lut=c0='clip(val*3,0,255)',gblur=sigma=1.5[dop]",
+    '[mat][dop]blend=all_mode=darken[brzeg]',
+    '[brzeg][rdzen]blend=all_mode=lighten[kr]',
+    // Kolor brzegu: co przypomina tlo, dostaje kolor rozlany ze srodka osoby, wiec na plotnie nie ma szarej poswiaty.
+    "[rl2]format=gbrp[rc];[fs3][rc]blend=all_expr='A*B/255',gblur=sigma=9[oa];[rl3]format=gbrp,gblur=sigma=9[ob]",
+    `[oa][ob]blend=all_expr='if(gt(B,1),min(255,A*255/B),128)',scale=${W}:${H}:flags=bicubic[oso]`,
+    `[d2]scale=${W}:${H}:flags=bicubic,format=gray,lut=c0='255-clip((val-25)*2.6,0,255)'[w0];[rn]lut=c0='255-val'[rni];[w0][rni]blend=all_mode=darken,format=gbrp[w]`,
+    '[fk][oso][w]maskedmerge,format=yuv420p[kol2]',
+  ].join(';');
+}
+
+// Czysty pokoj usuwa tylko duze kawalki (poduszka zlapana przez model): to, co sie z nim zgadza na malej powierzchni,
+// to zwykle pasmo wlosow w kolorze sciany, wiec zostaje. Nieznane miejsca zostaja. Ponizej Y 1200 nic nie ruszamy.
+function filtrPokoju() {
+  return [
+    '[frp]scale=270:480:flags=area,format=rgb24[frl]',
+    '[2:v]format=rgba,split[pr0][pa]',
+    `[pr0]format=rgb24,scale=270:480:flags=area[prgb];[frl][prgb]blend=all_mode=difference,${SUMA_KANALOW},format=gray,lut=c0='if(gt(val,14),255,0)'[d]`,
+    "[pa]alphaextract,scale=270:480:flags=area,lut=c0='if(gt(val,250),0,255)',format=gray[u]",
+    `[d][u]blend=all_mode=lighten:shortest=1,dilation,dilation,dilation,erosion,erosion,erosion,dilation,dilation,dilation,scale=${W}:${H}:flags=bilinear,format=gray,lut=c0='clip((val-60)*3,0,255)',gblur=sigma=3,drawbox=x=0:y=1200:w=${W}:h=${H - 1200}:color=white:t=fill,${NA_BIALO}[allow]`,
+  ].join(';');
+}
+
+// Wycina jedno okno rolki pod plotno: assets/syl/<nazwa>.webm (klatka 0 pliku = pierwsza klatka okna).
+function czyscTlo(argumenty) {
+  const bezObwiedni = flaga(argumenty, '--bez-obwiedni');
+  const bezPokoju = flaga(argumenty, '--bez-pokoju');
+  const [projekt, nazwa, odTxt, doTxt] = argumenty;
+  if (!projekt || !nazwa || !odTxt || !doTxt) blad('uzycie: czysc-tlo <projekt> <nazwa> <od> <do> [--bez-obwiedni] [--bez-pokoju]');
+  const sylwetka = path.join(projekt, 'assets', 'sylwetka.webm');
+  const aroll = path.join(projekt, 'assets', 'aroll.mp4');
+  if (!fs.existsSync(sylwetka) || !fs.existsSync(aroll)) blad('brak assets/sylwetka.webm albo aroll.mp4 - najpierw zloz i wytnij-tlo');
+  const { segmenty } = czytajJson(path.join(projekt, 'segmenty.json'), 'najpierw zloz');
+  const k0 = Math.ceil(Number(odTxt) * FPS - 0.2);
+  const k1 = Math.round(Number(doTxt) * FPS);
+  if (!(k1 > k0)) blad('zly zakres czasu');
+  const wOknie = segmenty.filter((s) => s.klatka_start < k1 && s.klatka_start + s.klatki > k0);
+  const kadr = kadrSegmentu(projekt, wOknie[0]);
+  if (wOknie.some((s) => { const k = kadrSegmentu(projekt, s); return k.klip !== kadr.klip || k.z !== kadr.z || k.cx !== kadr.cx || k.cy !== kadr.cy; })) {
+    blad(`okno obejmuje kilka roznych kadrow (${wOknie.map((s) => s.id).join(', ')}): podziel je na osobne okna`);
+  }
+  let glowy = {};
+  const plikGlow = path.join(projekt, 'glowa.json');
+  if (fs.existsSync(plikGlow)) for (const g of czytajJson(plikGlow, '')) glowy[g.id] = g;
+  const pokoj = bezPokoju ? null : czystyPokoj(projekt, kadr, segmenty);
+  const gory = wOknie.map((s) => (glowy[s.id] || {}).glowa_gora).filter((v) => Number.isFinite(v));
+  const ciecie = gory.length ? Math.max(0, Math.min(...gory) - 150) : 0;
+  const brody = wOknie.map((s) => (glowy[s.id] || {}).broda).filter((v) => Number.isFinite(v));
+  const yBrody = Math.round(Math.max(900, Math.min(1300, brody.length ? Math.max(...brody) : 1050)));
+  const gora = ciecie > 0 ? `,drawbox=x=0:y=0:w=${W}:h=${ciecie}:color=black:t=fill,${NA_CZARNO}` : '';
+  const baza = `${ALFA_PROGI}${gora}`;
+  const przeskok = String(r3((k0 - 0.25) / FPS));
+  const trim = `trim=end_frame=${k1 - k0},setpts=PTS-STARTPTS`;
+  const wejscia = ['-c:v', 'libvpx-vp9', '-ss', przeskok, '-i', sylwetka, '-ss', przeskok, '-i', aroll];
+  if (pokoj) wejscia.push('-loop', '1', '-framerate', String(FPS), '-i', pokoj);
+  const folder = path.join(projekt, 'work', 'pokoj');
+  fs.mkdirSync(folder, { recursive: true });
+  fs.mkdirSync(path.join(projekt, 'assets', 'syl'), { recursive: true });
+  let wejsciaKoniec = [...wejscia];
+  let obwiednia = '[a3]null[a4];';
+  let podzial = pokoj ? 'split=3[fr][frp][kol]' : 'split[fr][kol]';
+  if (!bezObwiedni && k1 - k0 >= 20) {
+    // Typowy ksztalt osoby z calego okna: to, co pojawia sie w mniej niz 10% klatek (migajace platy tla), odpada.
+    const env = path.join(folder, `obwiednia_${nazwa}.png`);
+    const m = Math.min(128, Math.floor((k1 - k0) / 2));
+    ffWymagane(['-c:v', 'libvpx-vp9', '-ss', przeskok, '-i', sylwetka, '-filter_complex',
+      `[0:v]${trim},format=yuva420p,${baza},split[a1][a2];[a2]${OTWARCIE}[m];[a1][m]blend=all_mode=darken,select='not(mod(n\\,2))',setpts=N/15/TB,tmix=frames=${m},trim=start_frame=${m - 1},scale=270:480:flags=area,lut=c0='if(gt(val,25),255,0)',${'dilation,'.repeat(3)}scale=${W}:${H}:flags=bilinear,lut=c0='clip((val-40)*3,0,255)',gblur=sigma=3,drawbox=x=0:y=1300:w=${W}:h=${H - 1300}:color=white:t=fill,${NA_BIALO},format=gray[o]`,
+      '-map', '[o]', '-frames:v', '1', '-c:v', 'png', env], 'typowy ksztalt');
+    // Dlon moze wyjsc poza typowy ksztalt przy bokach kadru: skora (kolor z twarzy) zostaje tam zawsze.
+    const srodek = k0 + Math.floor((k1 - k0) / 2);
+    const g = glowy[wOknie[0].id] || {};
+    const yTwarzy = Math.round(Math.min(H - 80, (g.glowa_gora ?? 600) + 220));
+    const skora = (() => {
+      const r2d = spawnSync(narzedzia().ffmpeg, ['-hide_banner', '-nostdin', '-v', 'error', '-ss', String(r3(srodek / FPS)), '-i', aroll, '-frames:v', '1', '-vf', `crop=60:60:510:${yTwarzy},scale=1:1:flags=area,format=rgb24`, '-f', 'rawvideo', '-'], { env: srodowisko(), windowsHide: true });
+      const b = r2d.stdout;
+      return b && b.length >= 3 ? `0x${[b[0], b[1], b[2]].map((v) => v.toString(16).padStart(2, '0')).join('')}` : '0xD9A58C';
+    })();
+    wejsciaKoniec = [...wejscia, '-loop', '1', '-framerate', String(FPS), '-i', env];
+    const nr = pokoj ? 3 : 2;
+    podzial = pokoj ? 'split=4[fr][frp][kol][rgbs]' : 'split=3[fr][kol][rgbs]';
+    obwiednia = `[${nr}:v]format=gray[env0];[rgbs]format=rgba,colorkey=${skora}:0.17:0.05,alphaextract,lut=c0='255-val',lut=c0='if(gt(val,120),255,0)',dilation,dilation,dilation,erosion,erosion,erosion,drawbox=x=180:y=0:w=720:h=${H}:color=black:t=fill,${NA_CZARNO},format=gray[sk];[env0][sk]blend=all_mode=lighten:shortest=1[env];[a3][env]blend=all_mode=darken:shortest=1[a4];`;
+  }
+  const wynik = path.join(projekt, 'assets', 'syl', `${nazwa}.webm`);
+  const krokPokoju = pokoj ? `${filtrPokoju()};[kr][allow]blend=all_mode=darken:shortest=1[k1];` : '[kr]null[k1];';
+  ffWymagane([...wejsciaKoniec, '-filter_complex',
+    `[0:v]${trim},format=yuva420p,alphaextract,format=gray${gora},split[am][ao];[1:v]${trim},format=yuv420p,${podzial};${filtrKrawedzi(yBrody)};${krokPokoju}[ao]lut=c0='clip((val-90)*255/(215-90),0,255)',${OTWARCIE}[m];[k1][m]blend=all_mode=darken[a3];${obwiednia}[a4]gblur=sigma=.6[a];[kol2][a]alphamerge,format=yuva420p[out]`,
+    '-map', '[out]', '-frames:v', String(k1 - k0), '-c:v', 'libvpx-vp9', '-pix_fmt', 'yuva420p', '-crf', '20', '-b:v', '0', '-deadline', 'good', '-cpu-used', '4', '-row-mt', '1', '-threads', '8', '-auto-alt-ref', '0', '-r', String(FPS), wynik],
+    `wyciecie ${nazwa}`, { timeout: 1800000 });
+  const ile = liczKlatki(wynik, 'libvpx-vp9');
+  wypisz(`STATUS czysc-tlo ${nazwa} klatek=${ile} oczekiwane=${k1 - k0} data-start=${r3(k0 / FPS - 0.002)} data-media-start=0 src=assets/syl/${nazwa}.webm`);
+  wypisz(ile === k1 - k0 ? 'WYNIK OK' : 'WYNIK BLAD');
+  if (ile !== k1 - k0) process.exit(1);
+}
+
+// Arkusz do oceny wyciecia: kazde okno na jednolitym fiolecie, 6 klatek na sekunde.
+function kontrolaWyciecia(argumenty) {
+  const [projekt] = argumenty;
+  const folder = path.join(projekt || '', 'assets', 'syl');
+  if (!projekt || !fs.existsSync(folder)) blad('brak assets/syl - najpierw czysc-tlo');
+  const pliki = fs.readdirSync(folder).filter((f) => f.endsWith('.webm')).sort();
+  if (!pliki.length) blad('brak okien w assets/syl');
+  const wyj = path.join(projekt, 'work', 'wyciecie');
+  fs.rmSync(wyj, { recursive: true, force: true });
+  fs.mkdirSync(wyj, { recursive: true });
+  const rzedy = [];
+  for (const f of pliki) {
+    const n = liczKlatki(path.join(folder, f), 'libvpx-vp9');
+    const kolumny = 24;
+    const wiersze = Math.max(1, Math.ceil(Math.ceil(n / 5) / kolumny));
+    const cel = path.join(wyj, `${f}.jpg`);
+    ffWymagane(['-f', 'lavfi', '-i', `color=c=0x7C5CF0:s=${W}x${H}:r=${FPS}`, '-c:v', 'libvpx-vp9', '-i', path.join(folder, f), '-filter_complex',
+      `[0][1]overlay=shortest=1,select='not(mod(n\\,5))',scale=100:-2,tile=${kolumny}x${wiersze}:color=0x222222:padding=2`, '-frames:v', '1', '-q:v', '3', cel], `arkusz ${f}`);
+    rzedy.push(cel);
+    wypisz(`INFO rzad ${rzedy.length}=${f}`);
+  }
+  const arkusz = path.join(projekt, 'work', 'kontrola-wyciecia.jpg');
+  const w = rzedy.flatMap((r) => ['-i', r]);
+  const ek = rzedy.length > 1 ? ['-filter_complex', `${rzedy.map((_, i) => `[${i}]`).join('')}vstack=${rzedy.length}`] : [];
+  ffWymagane([...w, ...ek, '-frames:v', '1', '-q:v', '3', arkusz], 'arkusz wyciecia');
+  // Drugi arkusz: duze kadry, bo na malych nie widac otoczki przy wlosach ani paska poduszki przy ramieniu.
+  const duze = [];
+  for (const f of pliki) {
+    const n = liczKlatki(path.join(folder, f), 'libvpx-vp9');
+    const wybor = Array.from({ length: 6 }, (_, i) => `eq(n\\,${Math.floor(((i + 0.5) * n) / 6)})`).join('+');
+    const cel = path.join(wyj, `${f}-duze.jpg`);
+    ffWymagane(['-f', 'lavfi', '-i', `color=c=0x7C5CF0:s=${W}x${H}:r=${FPS}`, '-c:v', 'libvpx-vp9', '-i', path.join(folder, f), '-filter_complex',
+      `[0][1]overlay=shortest=1,select='${wybor}',crop=${W}:1000:0:250,scale=320:-2,tile=6x1:color=0x222222:padding=2`, '-fps_mode', 'vfr', '-frames:v', '1', '-q:v', '2', cel], `duzy arkusz ${f}`);
+    duze.push(cel);
+  }
+  const arkuszDuzy = path.join(projekt, 'work', 'kontrola-wlosy.jpg');
+  const wd = duze.flatMap((r) => ['-i', r]);
+  const ekd = duze.length > 1 ? ['-filter_complex', `${duze.map((_, i) => `[${i}]`).join('')}vstack=${duze.length}`] : [];
+  ffWymagane([...wd, ...ekd, '-frames:v', '1', '-q:v', '2', arkuszDuzy], 'duzy arkusz');
+  wypisz(`STATUS kontrola-wyciecia ${arkusz} ${arkuszDuzy} (obejrzyj oba: plamy tla i migotanie na malym; otoczka przy wlosach, pasek przy ramieniu, dziury w osobie, ucieta dlon na duzym)`);
+  wypisz('WYNIK OK');
+}
+
+// ---------- dlon z palcem do timeline'u ----------
+
+// Wycina dlon z klatki nagrania po obrysie. W pelni kryjaca, bez rozmyc: ma wchodzic z boku kadru, nadgarstek poza kadrem.
+function wytnijDlon(argumenty) {
+  const [projekt, czas, ramka, obrys] = argumenty;
+  if (!projekt || !czas || !ramka || !obrys) blad('uzycie: wytnij-dlon <projekt> <czas> <x,y,w,h> "<x1,y1 x2,y2 ...>" (obrys w ukladzie ramki)');
+  const [x, y, w, h] = ramka.split(',').map(Number);
+  const punkty = obrys.trim().split(/\s+/).map((p) => p.split(',').map(Number));
+  if (punkty.length < 3 || ![x, y, w, h].every(Number.isFinite)) blad('zla ramka albo obrys');
+  const folder = path.join(projekt, 'work', 'dlon');
+  fs.mkdirSync(folder, { recursive: true });
+  const dane = Buffer.alloc(w * h);
+  for (let py = 0; py < h; py++) {
+    const xs = [];
+    for (let i = 0; i < punkty.length; i++) {
+      const [x1, y1] = punkty[i];
+      const [x2, y2] = punkty[(i + 1) % punkty.length];
+      if ((y1 <= py && py < y2) || (y2 <= py && py < y1)) xs.push(x1 + ((py - y1) * (x2 - x1)) / (y2 - y1));
+    }
+    xs.sort((a, b) => a - b);
+    for (let i = 0; i + 1 < xs.length; i += 2) {
+      for (let px = Math.max(0, Math.floor(xs[i])); px <= Math.min(w - 1, Math.ceil(xs[i + 1])); px++) dane[py * w + px] = 255;
+    }
+  }
+  const pgm = path.join(folder, 'obrys.pgm');
+  fs.writeFileSync(pgm, Buffer.concat([Buffer.from(`P5\n${w} ${h}\n255\n`), dane]));
+  fs.mkdirSync(path.join(projekt, 'assets'), { recursive: true });
+  const wyj = path.join(projekt, 'assets', 'reka.png');
+  ffWymagane(['-ss', String(czas), '-i', path.join(projekt, 'assets', 'aroll.mp4'), '-i', pgm, '-frames:v', '1', '-filter_complex',
+    `[0:v]crop=${w}:${h}:${x}:${y},format=rgba[rgb];[1:v]format=gray,gblur=sigma=2.4,lut=c0='clip((val-110)*5,0,255)',gblur=sigma=0.7[a];[rgb][a]alphamerge,format=rgba[o]`,
+    '-map', '[o]', '-c:v', 'png', wyj], 'wyciecie dloni');
+  const podglad = path.join(projekt, 'work', 'dlon-podglad.jpg');
+  ffWymagane(['-f', 'lavfi', '-i', `color=c=0x1E1E24:s=${w}x${h}`, '-i', wyj, '-filter_complex', '[0][1]overlay=shortest=1', '-frames:v', '1', '-q:v', '3', podglad], 'podglad dloni');
+  wypisz(`STATUS dlon ${wyj} podglad=${podglad}`);
+  wypisz('WYNIK OK');
+}
+
+// ---------- strona z klatkami do oceny przed renderem ----------
+
+const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const czasEtykieta = (t) => {
+  const v = Number(t);
+  const m = Math.floor(v / 60);
+  return `${m}:${(v - m * 60).toFixed(1).padStart(4, '0')}`;
+};
+
+// opis.json: { "tytul": "...", "momenty": [ { "czas": "0:00", "tytul": "...", "opis": "...", "klatki": [0.3, 1.2] } ], "pytania": ["..."] }
+function stronaKlatek(argumenty) {
+  const [projekt, kompozycja, opisPlik] = argumenty;
+  if (!projekt || !kompozycja || !opisPlik) blad('uzycie: strona-klatek <projekt> <folder kompozycji> <opis.json>');
+  const opis = czytajJson(opisPlik, 'brak opisu');
+  const czasy = [...new Set(opis.momenty.flatMap((m) => m.klatki.map(String)))];
+  const folder = path.join(projekt, 'work', 'klatki');
+  const surowe = path.join(folder, 'surowe');
+  fs.rmSync(folder, { recursive: true, force: true });
+  fs.mkdirSync(path.join(folder, 'kl'), { recursive: true });
+  const r = hf(['snapshot', '--no-end', '--at', czasy.join(','), '-o', path.resolve(surowe)], { cwd: kompozycja, timeout: 1800000 });
+  if (!r.ok) {
+    wypisz(`INFO ${(r.err || r.out).trim().split(/\r?\n/).slice(-2).join(' | ')}`);
+    blad('podglad klatek nie powiodl sie');
+  }
+  for (const plik of fs.readdirSync(surowe).filter((f) => /^frame-.*-at-.*s\.png$/.test(f))) {
+    const t = plik.replace(/^frame-.*-at-/, '').replace(/s\.png$/, '');
+    ffWymagane(['-i', path.join(surowe, plik), '-vf', 'scale=540:-2', '-q:v', '3', path.join(folder, 'kl', `t_${t}.jpg`)], `klatka ${t}`);
+  }
+  fs.rmSync(surowe, { recursive: true, force: true });
+  const sekcje = opis.momenty.map((m) => `<section class="mom"><div class="op"><p class="tc">${esc(m.czas)}</p><h2>${esc(m.tytul)}</h2><p>${esc(m.opis)}</p></div><div class="kls">${m.klatki.map((t) => `<button class="kl" type="button" data-src="kl/t_${t}.jpg" data-opis="${esc(czasEtykieta(t))} · ${esc(m.tytul)}" aria-label="Powiększ klatkę ${esc(czasEtykieta(t))}"><img src="kl/t_${t}.jpg" alt="Klatka z ${esc(czasEtykieta(t))}" width="540" height="960"><span>${esc(czasEtykieta(t))}</span></button>`).join('')}</div></section>`).join('\n');
+  const pytania = (opis.pytania || []).length ? `<section class="dec"><h2>Do Twojej decyzji</h2><ol>${opis.pytania.map((p) => `<li>${esc(p)}</li>`).join('')}</ol></section>` : '';
+  const html = `<title>${esc(opis.tytul || 'Klatki rolki')}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta charset="utf-8">
+<style>
+:root { --tlo: #F4F3F8; --tekst: #1D1B2A; --cichy: #5E5B70; --linia: #DEDBE9; --akcent: #5A3BE0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --tlo: #14131B; --tekst: #EFEDF7; --cichy: #A9A5BB; --linia: #33303F; --akcent: #AE9BFF; color-scheme: dark; } }
+:root[data-theme="dark"] { --tlo: #14131B; --tekst: #EFEDF7; --cichy: #A9A5BB; --linia: #33303F; --akcent: #AE9BFF; color-scheme: dark; }
+body { margin: 0; background: var(--tlo); color: var(--tekst); font: 500 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.w { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 32px 56px; display: grid; gap: 32px; }
+h1 { margin: 0; font-size: clamp(28px, 4vw, 40px); line-height: 1.1; text-wrap: balance; }
+header p { margin: 8px 0 0; max-width: 70ch; }
+h2 { margin: 0 0 6px; font-size: 20px; line-height: 1.2; text-wrap: balance; }
+.mom { display: grid; grid-template-columns: minmax(0, 320px) minmax(0, 1fr); gap: 24px; padding-top: 22px; border-top: 1px solid var(--linia); align-items: start; }
+.op { min-width: 0; } .op p { margin: 0; }
+.tc { font-weight: 700; font-size: 15px; color: var(--akcent); font-variant-numeric: tabular-nums; margin-bottom: 4px !important; }
+.kls { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 12px; min-width: 0; }
+.kl { display: grid; gap: 6px; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: zoom-in; text-align: left; }
+.kl img { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 12px; background: var(--linia); }
+.kl span { font-size: 13px; color: var(--cichy); font-variant-numeric: tabular-nums; }
+.kl:focus-visible { outline: 3px solid var(--akcent); outline-offset: 3px; border-radius: 14px; }
+.dec { padding-top: 22px; border-top: 1px solid var(--linia); max-width: 74ch; } .dec ol { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 8px; }
+dialog { border: 0; padding: 0; background: transparent; max-width: 100vw; max-height: 100vh; }
+dialog::backdrop { background: rgba(10, 8, 20, .88); }
+#duza { display: block; max-height: 88vh; max-width: 92vw; width: auto; height: auto; border-radius: 14px; }
+#opis { color: #fff; font-weight: 700; padding: 8px 2px; text-align: center; }
+@media (max-width: 820px) { .mom { grid-template-columns: minmax(0, 1fr); } .kls { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
+<div class="w">
+<header><h1>${esc(opis.tytul || 'Klatki rolki')}</h1><p>To prawdziwe klatki z montażu, jeszcze bez renderu. Kliknięcie powiększa klatkę. Napisz w rozmowie sekundę i co zmienić. Render zrobię dopiero po Twoim OK. Ruch i tempo ocenisz na gotowym filmie.</p></header>
+${sekcje}
+${pytania}
+</div>
+<dialog id="dlg" aria-label="Powiększona klatka"><img id="duza" alt=""><p id="opis"></p></dialog>
+<script>
+const dlg = document.getElementById("dlg"), duza = document.getElementById("duza"), podpis = document.getElementById("opis");
+document.querySelectorAll(".kl").forEach((b) => b.addEventListener("click", () => { duza.src = b.dataset.src; duza.alt = b.dataset.opis; podpis.textContent = b.dataset.opis; dlg.showModal(); }));
+dlg.addEventListener("click", () => dlg.close());
+</script>
+`;
+  const strona = path.join(folder, 'klatki.html');
+  fs.writeFileSync(strona, html);
+  wypisz(`STATUS strona-klatek ${strona} klatek=${czasy.length}`);
+  wypisz('WYNIK OK');
+}
+
 // ---------- start ----------
 
 const [polecenie, ...reszta] = process.argv.slice(2);
@@ -1279,10 +1747,16 @@ const polecenia = {
   zloz,
   transkrypcja: transkrypcjaRolki,
   'wytnij-tlo': wytnijTlo,
+  'czysc-tlo': czyscTlo,
+  'kontrola-wyciecia': kontrolaWyciecia,
+  'wytnij-dlon': wytnijDlon,
   glowa,
+  siatka,
+  'strona-klatek': stronaKlatek,
   strefa,
   'sprawdz-ciecia': sprawdzCiecia,
   glosnosc,
+  'wyrownaj-glos': wyrownajGlos,
   podlacz,
   'warianty-plan': wariantyPlan,
   'warianty-przygotuj': wariantyPrzygotuj,

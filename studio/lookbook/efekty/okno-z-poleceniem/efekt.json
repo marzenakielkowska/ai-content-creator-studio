@@ -1,0 +1,21 @@
+{
+  "id": "okno-z-poleceniem",
+  "kategoria": "animowany-broll",
+  "typ": "nakładkowy",
+  "nazwa": "Okno z poleceniem",
+  "opis": "Hak w dwie sekundy: wideo wpada do okna programu, polecenie wpisuje się samo, rośnie pasek, a z boku wyskakuje gotowa rolka. Widać, co robi AI.",
+  "najlepsze_do": "Pierwsze sekundy rolki o programie, automatyzacji albo AI",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#6C4BEF;display:flex;align-items:flex-end;justify-content:center;padding-bottom:12%\"><div style=\"background:#16151B;border-radius:6px;padding:5px;width:80%;font:500 6px monospace;color:#F2F1EE\"><div style=\"color:#D97757\">&gt; moje-wideo.mov</div><div>&gt; zmontuj to wideo</div><div style=\"color:#7CE29B\">✓ pauzy ✓ napisy</div><div style=\"height:3px;background:#FFD23F;border-radius:2px;margin-top:3px\"></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

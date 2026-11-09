@@ -9,18 +9,21 @@ obowiązują zawsze; ten plik mówi, jak je spełnić co do piksela.
   `glowa_gora` (najwyższy punkt głowy w tym segmencie), `glowa_x_od` / `glowa_x_do` (szerokość głowy),
   `broda_okolo` (szacunek, gdzie kończy się broda) i prostokąt całej sylwetki.
 - Bez sylwetki (rolka bez wycięcia z tła) przyjmij strefę twarzy z SKILL.md (Y 250–1400, X 200–880).
-- `broda_okolo` to szacunek: zawsze dodaj 40 px zapasu i sprawdź na podglądzie. Gdy kursantka podnosi ręce nad głowę,
-  `glowa_gora` pokaże ręce — porównaj z arkuszem klatek.
+- `broda_okolo` to tylko szacunek i myli się o setki pikseli, gdy w kadrze są ręce, rozpuszczone włosy albo przybliżenie.
+  **Brodę zawsze odczytaj z arkusza:** `siatka <projekt>` (linia co 100 px, gruba co 500), każdy segment osobno.
+  Broda to dół twarzy, nie usta: w przybliżeniu jest około 100–150 px pod ustami. Wpisz w `glowa.json` pole `broda`
+  (a gdy trzeba, popraw `glowa_gora`: gdy kursantka podnosi ręce nad głowę, `glowa_gora` pokaże ręce).
 
 ## Gdzie co stawiać
 
-- **Napisy wprowadzające (krótkie linie mówione):** wyśrodkowane, w pasie klatki piersiowej, mniej więcej
-  Y 950–1300, przed osobą. Wyglądają lepiej niż linie przyklejone do lewej krawędzi. Mogą leżeć na tułowiu,
-  nigdy na twarzy. Styl napisów z Lookbooka, który ma własne ułożenie (np. schodki), wygrywa.
+- **Napisy mówione:** wyśrodkowane, w jednym stałym pasie przez całą rolkę, górna krawędź tekstu co najmniej
+  `broda + 40` w każdym segmencie i dolna najwyżej Y 1470. Przy kadrze wg `rules/ciecie.md` to Y około 1335–1466.
+  Leżą na tułowiu, nigdy na brodzie ani na ustach. Sprawdź to na klatce z każdego przybliżenia. Styl napisów
+  z Lookbooka, który ma własne ułożenie (np. schodki), wygrywa.
 - **Pozycje z Lookbooka** (`uklad.napisy` — % od dołu, `uklad.naglowek` — % od góry): przelicz na piksele
   (napisy: Y = 1920 − procent × 19,2). Gdy wypada w strefie Instagrama (napisy niżej niż Y 1470, nagłówek wyżej niż
   Y 220), przesuń do granicy i powiedz kursantce jednym zdaniem dlaczego.
-- **Karty pod brodą:** górna krawędź karty co najmniej `broda_okolo + 40`. Dolna krawędź najwyżej Y 1470.
+- **Karty pod brodą:** górna krawędź karty co najmniej `broda + 40`. Dolna krawędź najwyżej Y 1470.
   Prawa krawędź najwyżej X 900, jeśli karta schodzi poniżej Y 1050 (kolumna ikon Instagrama).
   Gdy karta się nie mieści, zmniejsz ją albo przenieś nad głowę (Y 220 do `glowa_gora − 40`).
 - **Okno „za osobą”** (aplikacja, strona): na ścianie za mówiącą, warstwa pod sylwetką, głowa może zachodzić na

@@ -7,7 +7,7 @@ zasad zostaje PRZEPISANA (nie dopisujesz nowej obok).
 ## Przed budowaniem
 
 - **Najpierw plan, potem budowa.** Lista grafik w czacie (efekt, czas, powód) — kursantka zatwierdza, zanim
-  cokolwiek zbudujesz. Budżet: 5–6 efektów na film, zostaw momenty z samą twarzą.
+  cokolwiek zbudujesz. Tempo: ten sam kadr nie stoi dłużej niż około 3 s (`SKILL.md`, krok 4), a sama twarz to krótkie oddechy.
 
 ## Co pokazywać
 
@@ -23,7 +23,8 @@ zasad zostaje PRZEPISANA (nie dopisujesz nowej obok).
 
 - **Grafika ląduje na słowie albo chwilę przed nim** — nigdy po tym, jak słowo padło.
 - **Minimalny czas na ekranie:** 2 s + 0,35 s na każde słowo na grafice. Krócej to mignięcie, którego na telefonie
-  nikt nie przeczyta.
+  nikt nie przeczyta. Krótka grafika z 1–3 słowami i element, który się buduje na słowach (lista, panel), mogą trwać
+  do końca ujęcia, gdy ujęcie jest krótsze. Nie rozciągaj ujęcia dla grafiki.
 
 ## Wygląd
 

@@ -7,17 +7,22 @@ kolory i czcionki zawsze ze stylu kursantki.
 ## Kiedy włączać
 
 - Fragment z wyliczanką kroków („najpierw… potem… na końcu”), pokazywaniem aplikacji, pliku, rozmowy z AI, ustawień.
+- **Pierwsze sekundy rolki o programie, procesie albo AI**, także gdy kursantka jeszcze nie tłumaczy kroków, tylko
+  mówi, dlaczego warto. Zaraz po haku, układ „Płótno za osobą”. Dwie sekundy po haku bez niczego to za długo. Dotyczy nagrań z osobą; bez osoby nie ma płótna za nią.
 - Jeden fragment trwa zwykle **5–20 s**, potem wracamy do zwykłego kadru (kursantka na cały ekran).
-- Na rolkę najwyżej **2 takie fragmenty** — reszta to mówiąca twarz i lekkie akcenty. W planie montażu (krok 4)
-  zaproponuj tryb tłumaczenia jako jeden efekt budżetu, z czasem od–do i listą klocków.
+- Na rolkę zwykle **2–3 takie fragmenty**, reszta to mówiąca twarz z akcentami. W planie montażu (krok 4) podaj każdy
+  z czasem od–do i listą klocków.
 
 ## Układy
 
 | Układ | Jak wygląda | Kiedy |
 |---|---|---|
-| **Podział** (domyślny) | góra (Y 220–900): jasne tło z kartami; dół: wideo z kursantką | tłumaczenie w trakcie mówienia do kamery |
+| **Płótno za osobą** (domyślny w pierwszych sekundach) | jasne płótno w kratkę zamiast pokoju, osoba zostaje w tej samej wielkości (wycięcie z tła), nad głową 3–4 karty przepływu wchodzą po kolei, np. Nagranie → Polecenie → Program → Rolka; strzałki rysują się między nimi | gdy tłumaczenie ma być krótkie, a osoba mówi dalej do kamery |
+| **Podział** | góra (Y 220–900): jasne tło z kartami; dół: wideo z kursantką | tłumaczenie w trakcie mówienia do kamery |
 | **Pełny ekran tłumaczenia** | cały kadr to jasne tło z kartami, bez osoby; napisy mówione dalej lecą | dłuższy schemat, dużo kart naraz (najwyżej kilka sekund) |
 | **Narrator z polaroidem** | ekran (okno, aplikacja) jako główna karta, kursantka mówi z małego przechylonego zdjęcia w rogu | pokazywanie procesu na ekranie (efekt `polaroid-w-rogu`) |
+
+**Płótno za osobą:** karty w jednym rzędzie, szerokość 205 px, X 70, 315, 560, 805, od Y 310 do najwyżej `glowa_gora − 40`, wysokość co najmniej 150 px. Gdy nad głową jest za mało miejsca, daj na to okno przybliżenie 1,25 z `cy` z brody (głowa zjeżdża niżej) albo tylko karty po bokach głowy. Biała karta z ciemną obwódką, numer w kółku w kolorze akcentu (gdy akcent zlewa się z płótnem: ciemne kółko i biała cyfra), w środku kadr, ikona albo `>_`, pod spodem jedno słowo. Wchodzą na akcentowane słowa (`back.out`), strzałka rysuje się 0,18 s przed kartą. Tło: pierwszy jasny kolor z `plotno.kolory`, bez marki `#F5F2EA`, z siatką `linear-gradient` co 54 px. Płótno może wjechać z góry w 0,22 s (`power3.out`) chwilę po cięciu, gdy w pierwszych klatkach ujęcia wycięcie łapie tło (`rules/pulapki.md`). **Stan początkowy takiego płótna ustaw poza osią czasu** (`gsap.set("#plotno", { y: -1920 })`): inaczej przez jedną klatkę widać całe płótno, potem pokój, potem wjazd.
 
 **Przejście do podziału:** wideo z kursantką płynnie zjeżdża w dół i zmniejsza się (ok. 0,4 s, `power3.inOut`),
 od góry odsłania się jasne tło, potem wskakują karty. Powrót — odwrotnie. Cichy „whoosh” przy przejściu.

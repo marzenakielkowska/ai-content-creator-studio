@@ -24,6 +24,27 @@ render.
 - Nazwy atrybutów: osadzona kompozycja to `data-composition-src="compositions/x.html"`; jej element-gospodarz
   potrzebuje **obu**: `id="scene-x"` i `data-composition-id="scene-x"`.
 - Wideo z głosem: `data-has-audio="true"`, nie `muted`.
+- GSAP ładujesz sama w `<head>` `index.html` (`SKILL.md`, krok 6). Bez tego lint przechodzi, a animacje nie działają.
+
+## Wycięcie z tła
+
+Na ruchliwym pokoju błędów wycięcia nie widać, na gładkim płótnie widać od razu. Kursantka nazywa to prześwitami.
+
+- **Model łapie kawałki tła** (poduszka, kanapa, półka), najczęściej gdy osoba unosi dłoń, pochyla się albo zmienia się
+  światło. Dlatego każde okno z płótnem albo grafiką za osobą przechodzi przez `czysc-tlo`.
+- **Co robi `czysc-tlo`:** przy brzegu osoby szacuje tło z tej samej klatki i zostawia tylko to, co się od niego różni, a brzeg dostaje kolor osoby: włosy zachowują kształt, bez szarej otoczki i bez schodków. Duże kawałki mebli usuwa czystym obrazem pokoju, oderwane resztki i migające płaty odcina typowym kształtem osoby z całego okna. Środek osoby jest chroniony, a skóra (kolor próbkowany z twarzy) zostaje przy bokach kadru, więc dłoń nie znika.
+- **Po każdym czyszczeniu `kontrola-wyciecia`, oba arkusze.** Szukasz dwóch rzeczy naraz: plam i ubytków.
+  - Włosy ucięte, gdy głowa wyszła poza typowy kształt: to okno z `--bez-obwiedni`.
+  - Dziura w osobie o kanciastych brzegach (włosy lub ubranie w kolorze ściany): to okno z `--bez-pokoju`.
+  - Mały kawałek ściany w szparze między włosami a ramieniem albo cienki pasek poduszki przy ramieniu zostaje. Gdy rzuca się w oczy, daj płótno w kolorze bliższym ścianie albo pokaż to okno bez płótna.
+- **Plama trzyma się przez pierwsze klatki ujęcia:** niech płótno wjedzie później. Do tego czasu w tym samym ujęciu stoi
+  nagranie, a gdy pokój jest przyciemniony, daj na ten czas kopię nagrania z filtrem płótna (osobny `<video>` z
+  `data-media-start`, wyciszony), żeby skóra nie skoczyła, gdy płótno wjeżdża.
+- **Postać zmniejszona na płótnie ma ucięte ramiona** prostą linią (krawędź kadru). Zamiast skalować sylwetkę użyj
+  pasma u góry: nagranie zjeżdża w dół (`y`), a płótno wjeżdża z góry i przykrywa pustą górę. Ramiona zostają w kadrze.
+- **Nic półprzezroczystego przed nagraniem.** Rozmyty koniec dłoni czy naklejki wygląda jak prześwit. Elementy są
+  w pełni kryjące, a ich koniec chowa się poza kadrem.
+- **Płaskie cięcia przy dłoni:** nie przycinaj sylwetki prostokątem ani wielokątem w miejscu, gdzie porusza się dłoń.
 
 ## Polskie znaki
 
@@ -71,7 +92,9 @@ render.
     (to obiekt, nie tablica).
   - Stany początkowe ustawiaj `gsap.set(...)` **poza** timeline.
 - **Element widoczny, zanim powinien:** `fromTo` od razu pokazuje stan „from”. Dla wszystkiego, co ma być ukryte do
-  swojego czasu, dodaj `immediateRender: false`.
+  swojego czasu, dodaj `immediateRender: false`. Płótno albo inny duży element, który wjeżdża po cięciu, dostaje stan
+  początkowy przez `gsap.set` poza osią czasu. Podgląd `snapshot` tego nie pokazuje: mignięcie widać dopiero na arkuszu
+  cięć po renderze.
 - **Przezroczystość nie działa:** silnik sam pilnuje widoczności elementów z `data-start` (klipów) i wymusza im pełną
   widoczność. Nie animuj `opacity` ani `autoAlpha` na samym klipie — owiń go w zwykły `div` i animuj ten `div`.
 - **Warstwa „3% przezroczystości” świeci na 100%:** `autoAlpha: 1` nadpisuje `opacity` z CSS. Niską przezroczystość

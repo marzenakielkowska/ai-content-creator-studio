@@ -13,7 +13,7 @@
 ## Czego potrzeba od kursantki
 
 - Nagranie 9:16 z nieruchomym tłem i dobrym kontrastem osoby
-- Grafiki/loga/treści do kart (opcjonalnie — Claude może wygenerować placeholdery)
+- Grafiki, loga i treści do kart: od kursantki albo zbudowane z tego, co pada w nagraniu. Bez pustych placeholderów (`SKILL.md`, „Materiały zewnętrzne”)
 
 ---
 
@@ -30,16 +30,14 @@ pomoże — powiedz kursantce, że ten efekt pominiemy, i zaproponuj efekt bez w
 
 ### Krok 2. Rozmyte tło
 
-```bash
-ffmpeg -i wideo.mp4 -vf "boxblur=12:3,scale=1080:1920" hf/assets/bg-blur.mp4
-```
+Rozmycie jest opcjonalne. Gdy je dajesz: `filter: blur(12px)` na nagraniu w warstwie 0, jeden taki element (`rules/pulapki.md`: za dużo rozmycia psuje render). Bez osobnego pliku.
 
 ### Krok 3. Kompozycja w HyperFrames
 
 W `hf/index.html` zbuduj trzy warstwy:
 
 ```
-Layer 0 (z-index: 0) — rozmyte tło (bg-blur.mp4), pełen kadr
+Layer 0 (z-index: 0) — nagranie (assets/aroll.mp4), pełen kadr, opcjonalnie rozmyte
 Layer 1 (z-index: 1) — karty za osobą: karty wchodzą z animacją na słowo
 Layer 2 (z-index: 2) — sylwetka kursantki (assets/sylwetka.webm), w tym samym miejscu co obraz
 Layer 3 (z-index: 3) — karty przed osobą: (opcjonalnie) mniejsze karty w przednim planie

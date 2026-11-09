@@ -122,7 +122,7 @@ Prawdziwy screenshot artykułu zbliża się do cytatu, żółty zakreślacz prze
 2–5 sekund z oryginalnego launch video producenta, podpisane etykietą (np. "źródło: [marka] launch 2024").
 
 ### Wielka liczba rosnąca
-Liczba animuje w górę za głową kursantki, na słowie ze statystyką. Font: Anton lub Bebas, 180px, żółty lub biały. Animacja count-up: duration 1.5s, ease.out.
+Liczba animuje w górę za głową kursantki, na słowie ze statystyką. Font: czcionka marki albo Anton lub Bebas, co najmniej 260px, pełne krycie, kolor akcentu lub biały. Głowa zasłania najwyżej 30% cyfr. Animacja count-up: duration 1.5s, ease.out.
 
 ### Karta z postem
 Prawdziwy post z X, Threads lub LinkedIn pływa jako karta (zaokrąglona, cień, border-radius 16px).

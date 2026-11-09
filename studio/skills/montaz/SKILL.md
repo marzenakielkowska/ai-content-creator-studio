@@ -26,8 +26,8 @@ do tego czasu montuj z marki (`moj-brand.json`) i wygląd domyślny.
 
 **Gdy `tryb: "wlasny"`** — odczytaj z lookbooka:
 
-- **`hook`** — jeśli pole istnieje, odczytaj `studio/lookbook/hooki/{hook}/hook.json`. Pole `przepis.opis_efektu` to opis efektu dla pierwszych 1–3 sekund (po angielsku, dla Ciebie). Wdróż go dokładnie w HyperFrames na klatce 0.
-- **`napisy`** — jeśli pole istnieje i nie jest `"bez-napisow"`, odczytaj `studio/lookbook/napisy/{napisy}/styl.json`. Pole `przepis` zawiera parametry (czcionka, grubość, rozmiar, kolor, animacja, pozycja), a `przepis.opis_efektu` (jeśli jest) opisuje zachowanie. Zastosuj te parametry do każdej klatki napisów.
+- **`hook`** — jeśli pole istnieje, odczytaj `studio/lookbook/hooki/{hook}/hook.json`. Pole `przepis.opis_efektu` to opis efektu dla pierwszych 1–3 sekund (po angielsku, dla Ciebie). Wdróż go dokładnie w HyperFrames na klatce 0. Gdy hook wymaga czegoś, czego nagranie nie daje (np. logo narzędzia, o którym nie ma mowy), daj ikonę ogólną, nigdy zmyślone logo ani pusty placeholder.
+- **`napisy`** — jeśli pole istnieje i nie jest `"bez-napisow"`, odczytaj `studio/lookbook/napisy/{napisy}/styl.json`. Pole `przepis` zawiera parametry (czcionka, grubość, rozmiar, kolor, animacja, pozycja), a `przepis.opis_efektu` (jeśli jest) opisuje zachowanie. Zastosuj te parametry do każdej klatki napisów. To, co kursantka zapisała w `moj-styl.json` i `moj-brand.json` (cień, kolor, czcionka, rozmiar), wygrywa ze `styl.json`. Gdy nigdzie nie ma czcionki głównej: czcionka ze `styl.json`, a bez niej Nunito 800.
 - **`efekty`** — obiekt, gdzie klucze to ID efektów (foldery w `studio/lookbook/efekty/`), a wartości to:
   - `"wszedzie"` → efekt może pojawić się w dowolnym miejscu rolki (domyślne)
   - `["poczatek"]`, `["srodek"]`, `["koniec"]` lub ich kombinacje → efekt TYLKO w tej części:
@@ -40,14 +40,14 @@ do tego czasu montuj z marki (`moj-brand.json`) i wygląd domyślny.
   - `"nakładkowy"` → efekt dodany na istniejący reel podczas montażu (Krok 4)
   - `"standalone"` → osobny klip generowany przez Claude, niezależny od rolki
   
-  Efekty układu (`kategoria: "uklad"`) zmieniają kompozycję całego kadru. Czytaj PRZEPIS.md przed wykonaniem.
+  Efekty układu (`kategoria: "uklad"`) zmieniają kompozycję całego kadru. Czytaj PRZEPIS.md przed wykonaniem. Gdy `styles.md` mówi o efekcie co innego niż jego `efekt.json` albo `PRZEPIS.md`, wygrywa przepis efektu.
 
   **Efektu nie ma w `studio/lookbook/efekty/`?** Sprawdź `studio/lookbook/zastapione.json` (pole `efekty`: stary
   identyfikator → aktualny zastępca) i użyj zastępcy. Gdy zastępcy nie ma, pomiń ten efekt i powiedz kursantce
   jednym zdaniem, że jeden z jej efektów zniknął z Lookbooka i warto raz jeszcze zapisać tam swój wybór.
 - **`styl`** — jeśli pole istnieje, odczytaj `studio/lookbook/styl/{styl}/styl.json`. Pole `przepis.typ` określa jak zastosować:
   - `"brak"` → nie rób żadnej korekcji koloru
-  - `"media-treatment"` → zastosuj przez `npx hyperframes media-treatment --preset {przepis.grading.preset}` z parametrami z `przepis.grading.details` (np. `--vignette 0.25`)
+  - `"media-treatment"` → zastosuj na każdym nagraniu i sylwetce: `media-treatment --selector "#aroll" --grading '{"preset":"{przepis.grading.preset}","details":{przepis.grading.details}}' --apply` (uruchamiasz jak HyperFrames, sekcja „Narzędzia”; polecenie zapisuje korektę w `index.html`, więc po każdej przebudowie kompozycji jeszcze raz)
 
 **Pierwszeństwo pól:** `moj-styl.json` ma pierwszeństwo nad `moj-brand.json` dla tych samych pól (`czcionki`, `kolory`, `uklad`, `tempo`, `zoom`, `dzwieki`). Marka to baza — styl konkretnego filmu może ją nadpisać.
 
@@ -96,7 +96,7 @@ dawny wybór z Lookbooka: Elsie Swash Caps nie ma liter ć, ś, ź, ż, więc mo
 
 **`uklad`**:
 - `napisy` (liczba) → pozycja napisów od dołu kadru w procentach (np. 25 = 25% od dołu)
-- `naglowek` (liczba) → pozycja nagłówka od dołu kadru w procentach
+- `naglowek` (liczba) → pozycja nagłówka od góry kadru w procentach
 - `napisy_rozmiar` (liczba) → skala rozmiaru napisów (100 = domyślny, 110 = 10% większy)
 - `naglowek_rozmiar` (liczba) → skala rozmiaru nagłówka
 - `napisy_dekor` → dekoracja tekstu napisów: `cien` = text-shadow, `ramka` = border, `brak` = brak
@@ -118,7 +118,7 @@ dawny wybór z Lookbooka: Elsie Swash Caps nie ma liter ć, ś, ź, ż, więc mo
 - `subtelny` → delikatne przybliżanie lub oddalanie co ~15 sekund
 - `dynamiczny` → wyraźne zmiany skali co ~5 sekund
 
-**`dzwieki`** — tablica ID efektów dźwiękowych. Lookup w `studio/dzwieki/katalog.json` (pole `opis` mówi kiedy użyć). Stosuj w odpowiednim momencie (wejście elementu, kluczowe słowo, przejście sceny) — nie na każdej klatce. Poziom: −18 do −24 dB, zawsze ciszej niż głos.
+**`dzwieki`** — tablica ID efektów dźwiękowych. Lookup w `studio/dzwieki/katalog.json` (pole `opis` mówi kiedy użyć). Pliki skopiuj z `studio/dzwieki/pliki/` do `<folder kompozycji>/assets/` i wstaw jako `<audio class="clip" … data-duration data-volume>`; długość zawsze z katalogu (`dlugosc_s`), bo część plików jest dłuższa. Stosuj w odpowiednim momencie (wejście elementu, kluczowe słowo, przejście sceny) — nie na każdej klatce. Poziom: `data-volume` od 0,05 do 0,12, zawsze ciszej niż głos.
 
 ### Jak prosić o plik wideo
 
@@ -175,21 +175,29 @@ w inny sposób (bez Homebrew, npm globalnie, winget).
 
 | Polecenie | Co robi |
 |---|---|
-| `wczytaj <projekt> <pliki lub folder> [--najnowsze N]` | rejestruje nagrania (`zrodla.json`), arkusze klatek `work/arkusz_kN.jpg`, transkrypcja każdego nagrania → `transkrypt.txt` |
-| `pauzy <nagranie> [od] [do]` | pomiar ciszy — potwierdzenie pauz przed cięciem |
+| `wczytaj <projekt> <pliki lub folder> [--najnowsze N] [--silnik whisper]` | rejestruje nagrania (`zrodla.json`), arkusze klatek `work/arkusz_kN.jpg`, transkrypcja każdego nagrania → `transkrypt.txt`. O `--silnik`: krok 2 |
+| `pauzy <nagranie> [od] [do] [--prog -40] [--min 0.08]` | pomiar ciszy — potwierdzenie pauz przed cięciem. Czasy to dwie osobne liczby w sekundach; o progu: `rules/ciecie.md` |
 | `zloz <projekt>` | tnie rolkę z oryginałów wg `edl.json` → `assets/aroll.mp4` (1080×1920, równe 30 kl/s) + `segmenty.json` |
-| `transkrypcja <projekt>` | czasy słów na złożonej rolce → `slowa.json` (z nich idą napisy i animacje) |
+| `transkrypcja <projekt> [--silnik whisper]` | czasy słów na złożonej rolce → `slowa.json` (z nich idą napisy i animacje) i `transkrypt-rolki.txt` |
 | `wytnij-tlo <projekt> [--zgoda]` | sylwetka bez tła → `assets/sylwetka.webm` + sprawdzenie zgodności klatek (uruchamiaj w tle). Przy `STATUS wycinanie DO_POBRANIA` bez `--zgoda` nic nie robi (zob. krok 4) |
 | `wytnij-tlo --sprawdz` | czy narzędzie do wycinania z tła jest już pobrane: `STATUS wycinanie GOTOWE` albo `DO_POBRANIA <MB>` |
-| `glowa <projekt>` | gdzie jest głowa i broda w każdym segmencie → `glowa.json` |
+| `czysc-tlo <projekt> <nazwa> <od> <do> [--bez-obwiedni] [--bez-pokoju]` | czyste wycięcie jednego okna pod płótno → `assets/syl/<nazwa>.webm` (włosy z naturalnym brzegiem, bez pasa ściany i plam tła); podaje `src` i `data-start` |
+| `kontrola-wyciecia <projekt>` | dwa arkusze okien z `assets/syl` na jednolitym tle: `work/kontrola-wyciecia.jpg` (co 5 klatek: plamy, migotanie) i `work/kontrola-wlosy.jpg` (duże kadry: brzeg włosów i ramion) |
+| `wytnij-dlon <projekt> <czas> <x,y,w,h> "<x1,y1 x2,y2 ...>"` | dłoń z klatki nagrania po obrysie, w pełni kryjąca → `assets/reka.png` (efekt Timeline z palcem) |
+| `glowa <projekt>` | gdzie jest głowa w każdym segmencie, broda tylko szacunkowo → `glowa.json` |
+| `siatka <projekt>` | klatki z linią co 100 px → `work/siatka.jpg`: stąd odczytujesz czubek głowy i brodę; przed `zloz` bierze środek każdego segmentu z `edl.json` |
+| `strona-klatek <projekt> <folder kompozycji> <opis.json>` | prawdziwe klatki i strona do oceny przed renderem → `work/klatki/klatki.html` |
 | `strefa <podglądy.png>` | czerwone pola poza strefą bezpieczną Reels na podglądach |
-| `sprawdz-ciecia <projekt> <render.mp4> [--telefon]` | klatka przed/po każdym cięciu na jednym arkuszu, głośność; `--telefon` dodatkowo kopia 720p (tylko na prośbę) |
+| `sprawdz-ciecia <projekt> <render.mp4> [--telefon]` | pary klatek przed/po każdym cięciu na jednym arkuszu (żółty pasek = klatka przed cięciem), głośność; `--telefon` dodatkowo kopia 720p (tylko na prośbę) |
 | `glosnosc <plik>` | głośność (LUFS) i szczyt (dB) |
-| `podlacz <projekt> <folder kompozycji>` | wstawia `assets/aroll.mp4` i `assets/sylwetka.webm` do `<folder kompozycji>/assets` bez drugiej kopii na dysku |
+| `wyrownaj-glos <render.mp4>` | dwa przebiegi wyrównania do −14 LUFS, obraz bez zmian, ten sam plik |
+| `podlacz <projekt> <folder kompozycji>` | wstawia nagranie, sylwetkę, okna z `assets/syl`, dłoń i czcionkę odręczną (`assets/fonts/caveat-600.woff2`, użyj przez `@font-face`) do `<folder kompozycji>/assets` bez drugiej kopii na dysku |
 | `warianty-plan`, `warianty-przygotuj`, `warianty-render`, `warianty-lista` `<projekt>` | warianty gotowej rolki do rolek próbnych: tylko na prośbę kursantki, opis w `rules/warianty.md` |
 
 **Efekty wideo zawsze w HyperFrames.** Przed pierwszą kompozycją przeczytaj skill `hyperframes` (wtyczka
-HyperFrames instaluje się razem ze Studio) — format kompozycji i nazwy atrybutów są w jego `references/`. FFmpeg tylko do
+HyperFrames instaluje się razem ze Studio) — format kompozycji i nazwy atrybutów są w jego `references/`. Gdy skill
+`hyperframes` mówi co innego niż Studio (strefy bezpieczne, muzyka, tło), wygrywa Studio. Muzyki nie dodajesz, gdy
+kursantka o nią nie prosi. FFmpeg tylko do
 przygotowania materiału (to robią skrypty Studio). Nigdy Python/OpenCV ani ręczne renderowanie klatka po klatce.
 
 **HyperFrames** (lint, snapshot, render): `"<node>" "<hyperframes>" <polecenie>` ze ścieżkami z `narzedzia.json`,
@@ -202,6 +210,8 @@ polecenie.
 i przy każdym błędzie `rules/pulapki.md`. Gdy kursantka prosi o warianty gotowej rolki: `rules/warianty.md`.
 
 Kursantce nie pokazuj nazw poleceń, ścieżek ani linii `STATUS` — mów zwykłymi słowami, co robisz.
+
+**Przed każdym długim krokiem** (wycięcie z tła, render) powiedz jednym zdaniem, co teraz robisz, ile mniej więcej potrwa i że komputer może w tym czasie zwalniać. Cała rolka z efektami to zwykle około godziny pracy komputera. Kursantka nie może zostać z pytaniem, co się dzieje.
 
 ---
 
@@ -227,7 +237,8 @@ jednym zdaniem, w którym miejscu jesteście. Nie powtarzaj kroków, które maj�
 | `assets/aroll.mp4`, `segmenty.json`, `slowa.json` | rolka złożona | krok 4 |
 | `plan-montazu.md` | plan efektów zatwierdzony | krok 5 |
 | `assets/sylwetka.webm`, `glowa.json` | kadr przygotowany | krok 6 |
-| `hf/index.html` | kompozycja w budowie | krok 7 (lint i podgląd tego, co jest) |
+| `hf/index.html` | kompozycja w budowie | krok 6 (lint i podgląd tego, co jest) |
+| `work/klatki/klatki.html` | klatki pokazane kursantce | krok 6, gdy są uwagi; krok 7 po jej OK |
 | `renders/*-v001.mp4` i dalsze | jest render | krok 8 (sprawdź najnowszą wersję) |
 | `porzadek.json`, brak `assets/aroll.mp4` | rolka zaakceptowana, projekt posprzątany | przy poprawkach: `zloz`, `transkrypcja`, `wytnij-tlo` i `glowa` (gdy plan ich potrzebuje), `podlacz` dla każdej kompozycji, potem krok 7 |
 | `warianty.json` | kursantka prosiła o warianty do rolek próbnych | `rules/warianty.md` (`warianty-lista` pokaże, co już gotowe) |
@@ -250,16 +261,22 @@ wie — wybierz ręczny przy pierwszej rolce, automatyczny przy kolejnych.
 ### 1. Wczytanie
 `wczytaj` z plikami, które kursantka wrzuciła (może być kilka nagrań: wszystkie naraz). Obejrzyj arkusze klatek
 (ustawienie kamery, czy są różne ujęcia, czy widać sięganie po telefon) i przeczytaj `transkrypt.txt`.
+Ta instrukcja jest do nagrań z mówiącą osobą. Gdy w nagraniu nie ma głosu (`brak mowy`) albo osoby, zatrzymaj się
+i zapytaj: „To nagranie nie ma głosu [nie widać w nim osoby]. Czy to ten plik? Mogę zrobić z niego film z samymi
+napisami, ale to inny montaż.”
 
 ### 2. Transkrypcja do sprawdzenia
 Popraw źle rozpoznane nazwy (zasady w `rules/napisy.md`). Pokaż kursantce tekst i podejrzane miejsca z czasem.
 Nie poprawiaj faktów samodzielnie. Czekaj na OK.
 
+Program potrafi przekręcić polską mowę tak, że zmienia się sens („skomentuj w swoim studio” zamiast „skomentuj słowem studio”), a nagrania nie słyszysz. Każde zdanie bez sensu i każde zdanie z wezwaniem do działania oznacz jako podejrzane i zapytaj o nie kursantkę, także w trybie automatycznym. Gdy takich miejsc jest dużo, zaproponuj dokładniejszy model mowy („jednorazowo około 1,5 GB, trafi do plików Studio. Pobrać?”) i dopiero po zgodzie użyj `--silnik whisper`.
+
 ### 3. Plan cięć
 Wg `rules/ciecie.md`: najlepsze ujęcie każdego zdania ze wszystkich nagrań, pauzy potwierdzone `pauzy`,
-przybliżenia przy dwóch segmentach z tego samego ujęcia. Zapisz `edl.json`. W trybie ręcznym pokaż kursantce krótką
+przybliżenia przy dwóch segmentach z tego samego ujęcia, z `cy` policzonym z `siatka` tak, żeby pod brodą zostało
+miejsce na napisy. Zapisz `edl.json`. W trybie ręcznym pokaż kursantce krótką
 tabelę z uzasadnieniem i tnij (`zloz`) dopiero po OK; w automatycznym tnij od razu i pokaż podsumowanie.
-Potem `transkrypcja` na złożonej rolce.
+Potem `transkrypcja` na złożonej rolce i **porównaj `transkrypt-rolki.txt` z planem, zdanie po zdaniu.** Podwójne słowa i ucięte końcówki widać właśnie tu. Nie idź dalej, póki tekst się nie zgadza.
 
 ### 4. Plan montażu
 
@@ -274,14 +291,19 @@ Potem `transkrypcja` na złożonej rolce.
 | Moment kulminacyjny / CTA / "obserwuj" | karta-wyniku lub live-profile-cta |
 | "Pokazuję coś na ekranie" / nagranie ekranu | screen recording lub polaroid-w-rogu |
 | Kilka elementów naraz / wyliczanka | orbita lub lista równoległa |
+| Program lub AI robi coś za nią (hak, pierwsze zdanie) | okno-z-poleceniem |
+| „Ręcznie”, „godzinami”, „nie wychodzi” | timeline-z-palcem |
+| Trzy korzyści albo kroki przy końcu rolki | panel-montazu zamiast dużej listy |
 
 Kursantka nie zawsze wie, że te momenty warto podkreślić — Ty to widzisz i proponujesz.
 
 Napisz jednozdaniowy cel montażu (co ten film ma zrobić z widzem) i podziel wideo na sekcje: hak, rozwinięcie, dowód, pointę, wezwanie do działania.
 
-Trzymaj się budżetu: **5–6 efektów na całe wideo**. Ten sam zabieg za każdym razem (jeśli dowód to podzielony ekran raz — to podzielony ekran zawsze). Zostaw momenty tylko z mówiącą twarzą, bez grafik.
+**Tempo obrazu:** ten sam kadr nie stoi dłużej niż około 3 s. Co 3 s coś się zmienia: cięcie z przybliżeniem, grafika na słowie, inny rodzaj napisu albo tło. Efektów jest tyle, ile rolka ma myśli, a nie 5–6 na cały film. Pole `tempo` z marki mówi, jak często są cięcia; ta zasada dotyczy każdej zmiany w kadrze, nie tylko cięcia. Ten sam zabieg za każdym razem (jeśli dowód to podzielony ekran raz — to podzielony ekran zawsze). Sama mówiąca twarz to krótki oddech, do 3 s. Same cięcia i zmiana napisów to za mało: w żadnym odcinku dłuższym niż około 10 s nie może brakować grafiki (karty, płótna, okna, liczby), także w drugiej połowie rolki.
 
-Zaproponuj efekty z `styles.md` i Lookbooka. Pokaż listę (max 6 linii): efekt, czas, powód. Czekaj na OK.
+**Pierwsze 6 sekund:** hak pokazuje temat obrazem, nie tylko napisem. Hak to duże formy i głębia: słowo albo ikony częściowo za głową, nie małe ikonki ani mały napis nad głową. Gdy rolka jest o programie, procesie albo AI, zaraz po haku włącz tłumaczenie na płótnie (`rules/tryb-tlumaczenia.md`, układ „Płótno za osobą”).
+
+Zaproponuj efekty z `styles.md` i Lookbooka. Pokaż listę: sekunda, efekt, powód, po jednej linii na moment. Czekaj na OK.
 Gdy na liście jest efekt z wycięciem z tła (słowa za głową, karty wokół osoby, wycięta z tła, orbita), najpierw
 uruchom `wytnij-tlo --sprawdz`. Przy `STATUS wycinanie DO_POBRANIA <MB>` dopisz pod listą jedno zdanie:
 „Ten efekt za pierwszym razem pobierze narzędzie do wycinania z tła (około <MB> MB, jednorazowo). Pobrać je?”
@@ -291,20 +313,38 @@ kontynuacja w kolejnej sesji.
 
 ### 5. Przygotowanie kadru
 Gdy plan ma słowa za głową, karty wokół osoby albo inne efekty z wycięciem z tła: `wytnij-tlo` (w tle — to najdłuższy
-krok), potem `glowa`. Pozycje wszystkich elementów licz z `glowa.json` wg `rules/uklad.md`.
+krok), potem `glowa`.
+
+**Broda zawsze z pomiaru.** `siatka <projekt>` robi arkusz klatek z linią co 100 px. Odczytaj czubek głowy i brodę
+każdego segmentu (usta to nie broda: broda jest pod nimi) i wpisz je w `glowa.json`, pola `glowa_gora` i `broda`.
+Pole `broda_okolo` to tylko szacunek. Pozycje wszystkich elementów licz z tych pomiarów wg `rules/uklad.md`.
+
+**Każde okno, w którym za osobą jest płótno albo grafika, czyść przed budową:**
+`czysc-tlo <projekt> <nazwa> <od> <do>`, jedno okno na jeden kadr. Polecenie podaje `src` i `data-start` do kompozycji.
+Potem `kontrola-wyciecia <projekt>` i obejrzyj oba arkusze: na małym plamy i migotanie, na dużym brzeg włosów i ramion, dziury w osobie, ucięta dłoń. Co zostaje i jak to
+naprawić: `rules/pulapki.md`, „Wycięcie z tła”.
+
 Animowane wstawki: wg `rules/wstawki.md` — przy dwóch lub więcej złożonych buduj je równolegle w tle, w tym czasie
 składaj główną kompozycję.
 
-### 6. Storyboard
-Pokaż jedno zatrzymane ujęcie na sekcję (snapshot) z nakładką `strefa`. **Zawsze powiedz plan, zanim zaczniesz
-render.** Czekaj na akceptację.
-
-### 7. Budowa i render
+### 6. Budowa i klatki do oceny
 Kompozycja 1080×1920, 30 kl/s, na `assets/aroll.mp4` (i `assets/sylwetka.webm`, jeśli jest). Przed budową przeczytaj
-`rules/pulapki.md`. **Najpierw sam `index.html`** (kompozycja główna) → lint → popraw → dopiero wtedy
-`compositions/*.html`. Potem: lint (0 błędów) → snapshot w 10–20 momentach + `strefa` → zbliżenie tekstów
-z polskimi literami (`rules/sprawdzanie.md`) → poprawki → render.
-Nowa nazwa pliku na każdą wersję: `renders/<nazwa>-v001.mp4`, `-v002`…
+`rules/pulapki.md`. **Najpierw sam `index.html`** (kompozycja główna, w `<head>` GSAP:
+`<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>`) → lint → popraw → dopiero wtedy
+`compositions/*.html`. Potem: lint i `check` (0 błędów) → snapshot w 10–20 momentach + `strefa` → zbliżenie tekstów
+z polskimi literami (`rules/sprawdzanie.md`) → poprawki.
+
+**Przed renderem kursantka ocenia prawdziwe klatki, nie opis.** Zapisz `work/klatki-opis.json`:
+`{"tytul": "...", "momenty": [{"czas": "0:00", "tytul": "...", "opis": "...", "klatki": [0.3, 1.2]}], "pytania": ["..."]}`.
+Jeden moment na każdy efekt, 1–4 klatki na moment, opis zwykłymi słowami. Potem
+`strona-klatek <projekt> <folder kompozycji> <opis.json>`. Strona i klatki są w `work/klatki/`. Gdy masz narzędzie do
+publikowania stron (Artifact), opublikuj `klatki.html` z folderem `kl/` i podaj link. Gdy nie masz, otwórz plik
+w przeglądarce (Mac: `open`, Windows: `start`). **Czekaj na OK.** Po uwagach popraw i pokaż tylko zmienione klatki.
+
+### 7. Render
+Render dopiero po OK na klatkach. Polecenie (jak HyperFrames, sekcja „Narzędzia”, w tle):
+`render --output ../renders/<nazwa>-v001.mp4 --fps 30 --quality standard`. Nowa nazwa pliku na każdą wersję: `-v002`…
+Rolka 1,5 minuty ma wtedy około 110 MB. Od razu po renderze `wyrownaj-glos <render>`: render wychodzi zwykle około −25 LUFS, a rolka ma mieć −14.
 
 Nagranie i sylwetkę wstawiaj do kompozycji tylko poleceniem `podlacz` (jeszcze raz po każdym `zloz` i `wytnij-tlo`),
 nigdy nie kopiuj ich ręcznie: każda kopia to kolejne 100–200 MB na dysku kursantki. To samo przy drugiej
@@ -445,8 +485,11 @@ stosujesz tam, gdzie styl niczego nie ustala. Kursantce o nich nie mówisz, po p
   wyglądzie ściemniaj tło, a osobę zostaw jasną (przy wycięciu z tła: sylwetka jaśniejsza niż pokój).
 - **Bez ziarna filmowego.** Na twarzy wygląda jak szum.
 - **Bez wymiany tła na wygenerowany pokój.** Wygląda sztucznie. Klimat robisz kolorem, światłem i napisami.
-- **Napisy wprowadzające wyśrodkowane** przed osobą, w pasie klatki piersiowej — czytają się lepiej niż linie
-  przyklejone do lewej krawędzi (szczegóły w `rules/uklad.md`).
+- **Napisy pod brodą, zawsze w tym samym pasie**, wyśrodkowane, domyślnie Y około 1335–1466. Przybliżenia kadruj tak,
+  żeby broda wypadała najniżej około Y 1290 (`rules/ciecie.md`, `rules/uklad.md`).
+- **Kilka rodzajów napisów w jednej rolce** (`rules/napisy.md`): słowo po słowie jako podstawa, co 8–12 s mała linia
+  z dużym hasłem albo schody słów w wolnym miejscu.
+- **Żaden kadr nie stoi dłużej niż około 3 s** (krok 4, „Tempo obrazu”).
 - **Słowa za głową tylko wtedy, gdy są czytelne** (głowa zasłania najwyżej ~30% liter).
 
 ---

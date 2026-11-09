@@ -31,9 +31,26 @@ Oznacz kluczowe słowa w transkrypcji. Jedno oznaczenie na zdanie (nie licząc w
 
 Oznaczone słowo dostaje kolor akcentu ze stylu kursantki. Spójniki, przyimki i zaimki nigdy.
 
+## Trzy rodzaje napisów w jednej rolce
+
+Jeden rodzaj przez całą rolkę nudzi. Gdy styl kursantki nie mówi inaczej, mieszaj (czcionki i kolory z jej stylu):
+
+| Rodzaj | Jak wygląda | Kiedy i gdzie |
+|---|---|---|
+| **Słowo po słowie** (podstawa) | jedno słowo na raz, kluczowe wielkimi literami, większe, w kolorze akcentu | większość rolki, pas pod brodą |
+| **Małe i wielkie** | mała linia słowo po słowie, pod nią duże hasło w kolorze akcentu, razem najwyżej 2 linie | co 8–12 s, na zdaniu z hasłem („możesz zastosować / INNE MATERIAŁY”), pas pod brodą |
+| **Schody słów** | 3–5 słów ląduje po kolei i schodkami, słowo kluczowe duże, kursywą, z rysowanym podkreśleniem (`schody-slow`) | gdy góra albo bok kadru są wolne: nad głową, od Y 320, nigdy na twarzy |
+
+Kolor i czcionka zawsze ze stylu kursantki (także tam, gdzie styl z Lookbooka ma własny żółty). Rozmiar ze stylu dotyczy zwykłego słowa, nie mniej niż 56 px; słowo kluczowe jest od niego o około 40% większe. Napis w pasie pod brodą
+ma najwyżej 720 px szerokości (kolumna ikon od X 900): gdy nie wchodzi, zmniejsz czcionkę.
+
+Gdy lecą małe i wielkie albo schody, słowo po słowie milknie na ten czas. Schody zostają jeszcze około 0,5 s po
+ostatnim słowie, a słowo po słowie wraca od razu.
+
 ## Gdzie i kiedy
 
-- Pozycje bierz z `rules/uklad.md` i `glowa.json`. Nigdy na ustach ani brodzie.
+- Pozycje bierz z `rules/uklad.md` i z brody zmierzonej na arkuszu `siatka`. Nigdy na ustach ani brodzie. Napis pod
+  brodą w każdym segmencie, także w przybliżeniach, w jednym stałym pasie.
 - Każde słowo pojawia się w chwili, gdy pada (czas z `slowa.json` na złożonej rolce), i zostaje do końca linii.
 - Gdy na ekranie jest grafika z wolnym miejscem, napis może iść tam — nie wracaj na twarz tylko po to, żeby go
   pokazać.
