@@ -1,0 +1,21 @@
+{
+  "id": "spadajacy-komentarz",
+  "kategoria": "wizualizacja",
+  "typ": "nakładkowy",
+  "nazwa": "Spadający komentarz",
+  "opis": "Na Twoje „skomentuj…” wielkie słowo spada z góry prosto do pola komentarza. Komentarz się publikuje, a pod spodem przychodzi Twoja odpowiedź.",
+  "najlepsze_do": "Wezwanie „skomentuj [hasło], a wyślę Ci…”, link w wiadomości, zapisy przez komentarz",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#3a3530;display:flex;align-items:center;justify-content:center\"><div style=\"width:84%;display:flex;flex-direction:column;gap:3px\"><div style=\"font:800 14px Nunito,sans-serif;color:#6C4BEF;text-align:center;line-height:1\">STUDIO</div><div style=\"background:#fff;border-radius:8px;padding:2px 5px;font:800 5px Nunito,sans-serif;color:#8E8B9E;display:flex;justify-content:space-between\">Dodaj komentarz…<b style=\"background:#6C4BEF;color:#fff;border-radius:4px;padding:0 3px\">Opublikuj</b></div><div style=\"background:#fff;border-radius:8px;padding:2px 5px;font:800 5px Nunito,sans-serif;color:#1C1C1E;margin-left:12%\">✓ link wysłany</div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

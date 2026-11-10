@@ -1,0 +1,21 @@
+{
+  "id": "pisanie-na-klawiaturze",
+  "kategoria": "animowany-broll",
+  "typ": "nakładkowy",
+  "nazwa": "Pisanie na klawiaturze",
+  "opis": "Pod brodą wysuwa się klawiatura telefonu. Polecenie wpisuje się litera po literze, a kolejne słowa klawiatura podpowiada dokładnie wtedy, gdy je mówisz. Na końcu wiadomość się wysyła.",
+  "najlepsze_do": "Polecenie albo wiadomość: „zmontuj…”, „wyślij…”, „napisz do…”, praca z AI, czat",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#3a3530;display:flex;align-items:center;justify-content:center\"><div style=\"width:80%;background:#F1EFF7;border-radius:5px;padding:3px\"><div style=\"background:#fff;border-radius:6px;font:800 5px Nunito,sans-serif;padding:2px 4px;color:#1C1C1E\">Zmontuj moje <span style=\"color:#6C4BEF\">surowe</span>|</div><div style=\"display:flex;justify-content:space-around;font:800 4px Nunito,sans-serif;margin:2px 0\"><span>nagranie</span><span style=\"outline:1px solid #6C4BEF;border-radius:3px;padding:0 2px\">surowe</span><span>rolkę</span></div><div style=\"display:grid;grid-template-columns:repeat(10,1fr);gap:1px\"><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i><i style=\"height:4px;background:#fff;border-radius:1px\"></i></div></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

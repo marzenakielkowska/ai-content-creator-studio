@@ -1,0 +1,22 @@
+{
+  "id": "wiadomosc-glosowa",
+  "kategoria": "plansze",
+  "typ": "nakładkowy",
+  "nazwa": "Wiadomość głosowa",
+  "opis": "Nad głową wjeżdża dymek wiadomości głosowej z Twoim zdjęciem. Fala to Twój prawdziwy głos, a postęp i licznik idą równo z Twoją mową.",
+  "najlepsze_do": "Zdanie wprost do widza: „wyobraź sobie…”, „posłuchaj…”, prośba, opinia",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#3a3530;display:flex;align-items:center;justify-content:center\"><div style=\"display:flex;align-items:center;gap:3px;background:#fff;border-radius:9px;padding:3px 5px\"><i style=\"width:10px;height:10px;border-radius:50%;background:#6C4BEF\"></i><i style=\"width:2px;height:3px;border-radius:1px;background:#6C4BEF\"></i><i style=\"width:2px;height:7px;border-radius:1px;background:#6C4BEF\"></i><i style=\"width:2px;height:5px;border-radius:1px;background:#6C4BEF\"></i><i style=\"width:2px;height:9px;border-radius:1px;background:#6C4BEF\"></i><i style=\"width:2px;height:4px;border-radius:1px;background:#6C4BEF\"></i><i style=\"width:2px;height:8px;border-radius:1px;background:#CFCBDB\"></i><i style=\"width:2px;height:6px;border-radius:1px;background:#CFCBDB\"></i><i style=\"width:2px;height:3px;border-radius:1px;background:#CFCBDB\"></i><i style=\"width:2px;height:7px;border-radius:1px;background:#CFCBDB\"></i><i style=\"width:2px;height:4px;border-radius:1px;background:#CFCBDB\"></i><b style=\"font:800 5px Nunito,sans-serif;color:#3A3A44\">0:02</b></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "ffmpeg",
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

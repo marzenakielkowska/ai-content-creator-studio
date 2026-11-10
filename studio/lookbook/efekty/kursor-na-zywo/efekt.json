@@ -1,0 +1,21 @@
+{
+  "id": "kursor-na-zywo",
+  "kategoria": "elementy-wizualne",
+  "typ": "nakładkowy",
+  "nazwa": "Kursor na żywo",
+  "opis": "Na początku rolki wjeżdża kursor z podpisem, jakby ktoś pracował z Tobą w programie graficznym. Rysuje wokół Ciebie ramkę z uchwytami i wymiarami, łapie róg i ją dopasowuje.",
+  "najlepsze_do": "Hak w pierwszych sekundach, „AI robi to za Ciebie”, asystentka, projektowanie, poprawki",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#3a3530;display:flex;align-items:center;justify-content:center\"><div style=\"position:relative;width:56%;height:66%;border:2px solid #6C4BEF\"><i style=\"position:absolute;left:-4px;top:-4px;width:6px;height:6px;background:#fff;border:1.5px solid #6C4BEF\"></i><i style=\"position:absolute;right:-4px;top:-4px;width:6px;height:6px;background:#fff;border:1.5px solid #6C4BEF\"></i><i style=\"position:absolute;left:-4px;bottom:-4px;width:6px;height:6px;background:#fff;border:1.5px solid #6C4BEF\"></i><i style=\"position:absolute;right:-4px;bottom:-4px;width:6px;height:6px;background:#fff;border:1.5px solid #6C4BEF\"></i><b style=\"position:absolute;left:30%;bottom:-13px;background:#6C4BEF;color:#fff;font:500 5px monospace;border-radius:2px;padding:1px 3px\">580 × 870</b><b style=\"position:absolute;right:-26px;bottom:6px;background:#6C4BEF;color:#fff;font:800 6px Nunito,sans-serif;border-radius:3px;padding:1px 3px\">Claude</b></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

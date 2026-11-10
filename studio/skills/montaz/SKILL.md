@@ -314,8 +314,17 @@ Potem `transkrypcja` na złożonej rolce i **porównaj `transkrypt-rolki.txt` z 
 | „To chwilę potrwa”, AI myśli | ikona-mysli |
 | Styl marki, spójność rolek | karta-stylu |
 | Wiele rzeczy w sekundę, przegląd portfolio | szybki-pokaz-w-telefonie |
+| Ktoś albo coś pracuje nad jej materiałem (hak, pierwsze zdanie) | kursor-na-zywo |
+| Wyliczanka obowiązków, pytań, zadań („wszystko na mojej głowie”) | wieza-na-glowie |
+| Polecenie albo wiadomość, którą się wysyła („zmontuj…”, „wyślij…”) | pisanie-na-klawiaturze |
+| Zdanie wprost do widza: „wyobraź sobie…”, „posłuchaj…” | wiadomosc-glosowa |
+| „Skomentuj [hasło], a wyślę Ci…” | spadajacy-komentarz |
+| Koniec rolki, ostatnie słowo, „znikam” | zdmuchniecie |
 
 Kursantka nie zawsze wie, że te momenty warto podkreślić — Ty to widzisz i proponujesz.
+
+W efektach ze słowami (klawiatura, komentarz, karteczki, podpis kursora) wstawiaj słowa z jej nagrania, nigdy przykład
+z filmu podglądowego, i pokaż je w planie montażu.
 
 Napisz jednozdaniowy cel montażu (co ten film ma zrobić z widzem) i podziel wideo na sekcje: hak, rozwinięcie, dowód, pointę, wezwanie do działania.
 

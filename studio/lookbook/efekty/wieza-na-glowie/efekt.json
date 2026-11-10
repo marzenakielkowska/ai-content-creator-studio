@@ -1,0 +1,21 @@
+{
+  "id": "wieza-na-glowie",
+  "kategoria": "wizualizacja",
+  "typ": "nakładkowy",
+  "nazwa": "Wieża na głowie",
+  "opis": "Na każde słowo z wyliczanki spada Ci na głowę karteczka i układa się w coraz wyższą wieżę. Na końcu wieża przewraca się na boki.",
+  "najlepsze_do": "Wyliczanka obowiązków, pytań i zadań, „to wszystko spada na Twoją głowę”, przeciążenie",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#3a3530;display:flex;align-items:center;justify-content:center\"><div style=\"display:flex;flex-direction:column;align-items:center;gap:1px\"><b style=\"background:#fff;border:1.5px solid #1C1C1E;border-radius:3px;font:800 6px Nunito,sans-serif;padding:1px 4px;transform:rotate(5deg)\">kolory</b><b style=\"background:#fff;border:1.5px solid #1C1C1E;border-radius:3px;font:800 6px Nunito,sans-serif;padding:1px 4px;transform:rotate(-2deg)\">czcionki</b><b style=\"background:#fff;border:1.5px solid #1C1C1E;border-radius:3px;font:800 6px Nunito,sans-serif;padding:1px 4px;transform:rotate(4deg)\">marka</b><b style=\"background:#fff;border:1.5px solid #1C1C1E;border-radius:3px;font:800 6px Nunito,sans-serif;padding:1px 4px;transform:rotate(-3deg)\">pytania</b><i style=\"width:30px;height:20px;border-radius:15px 15px 0 0;background:#8a6a4a;margin-top:1px\"></i></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}
