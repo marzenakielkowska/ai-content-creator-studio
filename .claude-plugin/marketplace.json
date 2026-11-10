@@ -14,8 +14,8 @@
     {
       "name": "hyperframes",
       "source": {
-        "source": "github",
-        "repo": "heygen-com/hyperframes"
+        "source": "url",
+        "url": "https://github.com/heygen-com/hyperframes.git"
       },
       "description": "Podpowiedzi dla Claude do silnika montażu HyperFrames (od HeyGen, licencja Apache-2.0). Instaluje się razem ze Studio."
     }
