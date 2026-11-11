@@ -1,0 +1,65 @@
+<title>Przykład: karuzela z rolki</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta charset="utf-8">
+<style>
+:root { --tlo: #F4F3F8; --pow: #FFFFFF; --tekst: #1D1B2A; --cichy: #5E5B70; --linia: #DEDBE9; --akcent: #5A3BE0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --tlo: #14131B; --pow: #1E1C29; --tekst: #EFEDF7; --cichy: #A9A5BB; --linia: #33303F; --akcent: #AE9BFF; color-scheme: dark; } }
+:root[data-theme="dark"] { --tlo: #14131B; --pow: #1E1C29; --tekst: #EFEDF7; --cichy: #A9A5BB; --linia: #33303F; --akcent: #AE9BFF; color-scheme: dark; }
+body { margin: 0; background: var(--tlo); color: var(--tekst); font: 500 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.w { max-width: 1360px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 32px 64px; }
+h1 { margin: 0; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; text-wrap: balance; }
+header p { margin: 10px 0 0; max-width: 68ch; color: var(--cichy); }
+section { margin-top: 36px; }
+h2 { margin: 0 0 14px; padding-top: 18px; border-top: 1px solid var(--linia); font-size: 21px; line-height: 1.2; text-wrap: balance; }
+.siatka { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+figure { margin: 0; min-width: 0; }
+.ob { position: relative; display: block; width: 100%; padding: 0; border: 0; border-radius: 14px; overflow: hidden; background: #000; cursor: zoom-in; aspect-ratio: 1080 / 1650; }
+.ob img, .ob video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ob:focus-visible { outline: 3px solid var(--akcent); outline-offset: 2px; }
+.nr { position: absolute; left: 8px; top: 8px; min-width: 32px; height: 32px; padding: 0 8px; box-sizing: border-box; border-radius: 16px; background: #fff; color: #1D1B2A; font-weight: 800; font-size: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,.35); }
+.film { position: absolute; right: 8px; top: 8px; padding: 4px 10px; border-radius: 12px; background: #fff; color: #1D1B2A; font-weight: 800; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,.35); }
+figcaption p { margin: 0; }
+.cz { margin-top: 8px !important; font-size: 13px; font-weight: 700; color: var(--akcent); font-variant-numeric: tabular-nums; }
+.sl { font-weight: 700; line-height: 1.3; margin-top: 2px !important; }
+.op { margin-top: 4px !important; font-size: 14px; line-height: 1.42; color: var(--cichy); }
+.tel { margin-top: 28px; display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+.ramka { width: min(380px, 100%); background: var(--pow); border: 1px solid var(--linia); border-radius: 22px; padding: 12px; box-sizing: border-box; }
+.przew { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; border-radius: 12px; scrollbar-width: none; }
+.przew::-webkit-scrollbar { display: none; }
+.przew img, .przew video { flex: none; width: 100%; aspect-ratio: 1080 / 1650; object-fit: cover; scroll-snap-align: start; }
+.kropki { display: flex; gap: 6px; justify-content: center; margin-top: 10px; }
+.kropki i { width: 7px; height: 7px; border-radius: 50%; background: var(--linia); }
+.kropki i.on { background: var(--akcent); }
+.tel p { margin: 0; max-width: 46ch; color: var(--cichy); }
+.box { padding: 20px 24px; background: var(--pow); border: 1px solid var(--linia); border-radius: 16px; }
+.box h2 { border: 0; padding: 0; }
+.box ol { margin: 0; padding-left: 22px; } .box li { margin-top: 8px; max-width: 75ch; }
+#duze { position: fixed; inset: 0; z-index: 20; background: rgba(10,8,20,.9); display: flex; align-items: center; justify-content: center; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); cursor: zoom-out; }
+#duze[hidden] { display: none; }
+#duze img { max-width: 100%; max-height: 100%; border-radius: 16px; }
+</style>
+<div class="w">
+<header>
+<h1>Przykład: karuzela z rolki</h1>
+<p>Tak wygląda karuzela zrobiona z gotowej rolki. Pod każdym slajdem jest zasada, którą pokazuje. Twoja karuzela będzie miała Twoje słowa, Twoje zdjęcia i kolory z Twojego Lookbooka.</p>
+</header>
+<div class="tel">
+<div class="ramka"><div class="przew" id="przew"><img src="kl/s01.jpg" alt="Slajd 1"><video src="kl/s02.mp4" poster="kl/s02.jpg" autoplay muted loop playsinline aria-label="Slajd 2, film"></video><img src="kl/s03.jpg" alt="Slajd 3"><video src="kl/s04.mp4" poster="kl/s04.jpg" autoplay muted loop playsinline aria-label="Slajd 4, film"></video><video src="kl/s05.mp4" poster="kl/s05.jpg" autoplay muted loop playsinline aria-label="Slajd 5, film"></video><video src="kl/s06.mp4" poster="kl/s06.jpg" autoplay muted loop playsinline aria-label="Slajd 6, film"></video><video src="kl/s07.mp4" poster="kl/s07.jpg" autoplay muted loop playsinline aria-label="Slajd 7, film"></video><img src="kl/s08.jpg" alt="Slajd 8"><img src="kl/s09.jpg" alt="Slajd 9"><img src="kl/s10.jpg" alt="Slajd 10"></div><div class="kropki" id="kropki"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<p>Przesuń palcem albo myszką. Slajdy z napisem „film” są filmami bez dźwięku.</p>
+</div>
+<section><h2>Dwa haki</h2><div class="siatka"><figure><button class="ob" data-duze="kl/s01.jpg" data-film="" aria-label="Slajd 1"><img src="kl/s01.jpg" alt="Slajd 1" loading="lazy"><span class="nr">1</span></button><figcaption><p class="op">Okładka: najważniejsze słowo ogromne, od lewej, duża ikona narzędzia. Osoba z uśmiechem, wycięta z tła, z poświatą. Mała karta z pytaniem stoi niżej, z dala od brody.</p></figcaption></figure><figure><button class="ob" data-duze="kl/s02.jpg" data-film="1" aria-label="Slajd 2"><video src="kl/s02.mp4" poster="kl/s02.jpg" autoplay muted loop playsinline aria-label="Slajd 2, film"></video><span class="film">film</span><span class="nr">2</span></button><figcaption><p class="op">Drugi hak. Instagram pokazuje ten slajd jeszcze raz osobom, które nie zareagowały na okładkę, więc u góry jest ten sam nagłówek co na okładce, a pod nim pytanie z rolki. Film bez dźwięku: trzy fragmenty rolki.</p></figcaption></figure></div></section>
+<section><h2>Pytanie i odpowiedź</h2><div class="siatka"><figure><button class="ob" data-duze="kl/s03.jpg" data-film="" aria-label="Slajd 3"><img src="kl/s03.jpg" alt="Slajd 3" loading="lazy"><span class="nr">3</span></button><figcaption><p class="op">Pytanie i od razu odpowiedź. Każdy krok w jednej linii, odręczny dopisek prowadzi wzrok.</p></figcaption></figure><figure><button class="ob" data-duze="kl/s04.jpg" data-film="1" aria-label="Slajd 4"><video src="kl/s04.mp4" poster="kl/s04.jpg" autoplay muted loop playsinline aria-label="Slajd 4, film"></video><span class="film">film</span><span class="nr">4</span></button><figcaption><p class="op">Film bez dźwięku: przewijana strona z prawdziwego programu. Dopisek i strzałka do słowa, które ma zostać w głowie.</p></figcaption></figure><figure><button class="ob" data-duze="kl/s05.jpg" data-film="1" aria-label="Slajd 5"><video src="kl/s05.mp4" poster="kl/s05.jpg" autoplay muted loop playsinline aria-label="Slajd 5, film"></video><span class="film">film</span><span class="nr">5</span></button><figcaption><p class="op">Jedna duża liczba. Film: prawdziwe efekty grają w siatce.</p></figcaption></figure><figure><button class="ob" data-duze="kl/s06.jpg" data-film="1" aria-label="Slajd 6"><video src="kl/s06.mp4" poster="kl/s06.jpg" autoplay muted loop playsinline aria-label="Slajd 6, film"></video><span class="film">film</span><span class="nr">6</span></button><figcaption><p class="op">Zdanie z rolki w jednym kawałku. Film: kursor klika przycisk, który zapisuje wybór.</p></figcaption></figure><figure><button class="ob" data-duze="kl/s07.jpg" data-film="1" aria-label="Slajd 7"><video src="kl/s07.mp4" poster="kl/s07.jpg" autoplay muted loop playsinline aria-label="Slajd 7, film"></video><span class="film">film</span><span class="nr">7</span></button><figcaption><p class="op">Najmocniejszy dowód: surowe nagranie obok gotowej rolki, ten sam fragment, równo, bez dźwięku.</p></figcaption></figure><figure><button class="ob" data-duze="kl/s08.jpg" data-film="" aria-label="Slajd 8"><img src="kl/s08.jpg" alt="Slajd 8" loading="lazy"><span class="nr">8</span></button><figcaption><p class="op">Pytanie, które odbiorca ma w głowie, i odpowiedź. Zrzut w karcie, nie pod tekstem.</p></figcaption></figure></div></section>
+<section><h2>Pointa i zaproszenie</h2><div class="siatka"><figure><button class="ob" data-duze="kl/s09.jpg" data-film="" aria-label="Slajd 9"><img src="kl/s09.jpg" alt="Slajd 9" loading="lazy"><span class="nr">9</span></button><figcaption><p class="op">Jej zdanie z rolki. Odpowiedź od nowej linii. Osoba po prawej, tekst po lewej i u góry, nic na twarzy.</p></figcaption></figure><figure><button class="ob" data-duze="kl/s10.jpg" data-film="" aria-label="Slajd 10"><img src="kl/s10.jpg" alt="Slajd 10" loading="lazy"><span class="nr">10</span></button><figcaption><p class="op">Jedno działanie: to samo słowo do komentarza co w rolce. Karta z bonusem odsunięta od osoby.</p></figcaption></figure></div></section>
+
+</div>
+<div id="duze" hidden><img alt="Powiększony slajd"></div>
+<script>
+const d = document.getElementById('duze'), di = d.querySelector('img');
+document.querySelectorAll('.ob').forEach(b => { if (b.dataset.film) { b.style.cursor = 'default'; return; } b.addEventListener('click', () => { di.src = b.dataset.duze; d.hidden = false; }); });
+d.addEventListener('click', () => { d.hidden = true; });
+document.addEventListener('keydown', ev => { if (ev.key === 'Escape') d.hidden = true; });
+const p = document.getElementById('przew'), k = [...document.querySelectorAll('#kropki i')];
+const ust = () => { const i = Math.round(p.scrollLeft / p.clientWidth); k.forEach((x, j) => x.classList.toggle('on', j === i)); };
+p.addEventListener('scroll', ust, { passive: true }); ust();
+</script>

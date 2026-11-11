@@ -1,0 +1,70 @@
+/* Szablon slajdu karuzeli 1080x1650. Kolory i czcionka z marka.css (Lookbook kursantki).
+   Strefa bezpieczna: 90 px z boków, 200 px u góry i u dołu. Tekst i twarz zawsze w niej. */
+@font-face { font-family: 'Caveat'; src: url('caveat-600.woff2') format('woff2'); font-weight: 600; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1650px; overflow: hidden; background: #fff; }
+#root { position: relative; width: 1080px; height: 1650px; overflow: hidden; font-family: var(--czcionka); }
+
+/* slajd */
+.s { position: absolute; left: 0; top: 0; width: 1080px; height: 1650px; overflow: hidden; font-family: var(--czcionka); color: var(--ciemny); background: var(--tlo-jasne); }
+/* tło z marki; kolor tekstu dobrany do jasności tła (marka.css) */
+.s.t1 { background: var(--tlo-1); color: var(--na-1); }
+.s.t2 { background: var(--tlo-2); color: var(--na-2); }
+.s.t3 { background: var(--tlo-3); color: var(--na-3); }
+.s.jasny { color: #fff; }
+.s.ciemny { color: var(--ciemny); }
+
+/* blok tekstu w strefie bezpiecznej */
+.tekst { position: absolute; left: 90px; right: 90px; top: 200px; display: flex; flex-direction: column; align-items: flex-start; gap: 28px; z-index: 10; }
+.pyt { font-weight: 800; font-size: 92px; line-height: 1.05; letter-spacing: -1.5px; }
+.odp { font-weight: 600; font-size: 54px; line-height: 1.22; }
+.pod { font-weight: 600; font-size: 46px; line-height: 1.3; color: var(--szary); }
+.s.t1 .pod, .s.t2 .pod, .s.t3 .pod, .s.jasny .pod { color: inherit; opacity: .88; }
+.wielki { font-weight: 800; font-size: 220px; line-height: .95; letter-spacing: -6px; color: var(--akcent); }
+
+/* wyróżnienie słowa: kolor akcentu albo (gdy kursantka tak chce) podkreślenie markerem */
+.ak { color: var(--akcent); }
+.mk { background: linear-gradient(transparent 70%, var(--akcent) 70%, var(--akcent) 94%, transparent 94%); padding: 0 4px; }
+
+/* konto i numer slajdu (dokłada je karuzela.mjs) */
+.konto { position: absolute; left: 90px; bottom: 110px; display: flex; align-items: center; gap: 14px; font-weight: 800; font-size: 28px; z-index: 20; }
+.konto img { width: 58px; height: 58px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; }
+/* na zdjęciu konto w białej pigułce */
+.s .konto.pig, .s.ze-zdjeciem .konto { background: #fff; color: var(--ciemny); padding: 6px 20px 6px 6px; border-radius: 40px; box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+.nr { position: absolute; right: 90px; top: 90px; font-weight: 800; font-size: 30px; opacity: .6; z-index: 20; }
+
+
+/* osoba wycięta z tła: miękka poświata i cień, żeby nie była płaska */
+.wyc { position: absolute; z-index: 5; filter: drop-shadow(0 0 34px rgba(255,255,255,.55)) drop-shadow(0 30px 50px rgba(20,10,60,.35)); }
+/* bok postaci ucięty w nagraniu: miękko rozmyty (gdy nie dochodzi do krawędzi slajdu ani nie jest przykryty) */
+.wyc.miekko-lewo { -webkit-mask-image: linear-gradient(to right, transparent 0, #000 16%); mask-image: linear-gradient(to right, transparent 0, #000 16%); }
+.wyc.miekko-prawo { -webkit-mask-image: linear-gradient(to left, transparent 0, #000 16%); mask-image: linear-gradient(to left, transparent 0, #000 16%); }
+/* zwykłe zdjęcie w kadrze */
+.foto { position: absolute; overflow: hidden; border-radius: 36px; box-shadow: 0 30px 70px rgba(20,10,60,.3); }
+.foto img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* odręczne dopiski i strzałki */
+.dop { position: absolute; font-family: var(--odreczna); font-weight: 600; line-height: 1.02; z-index: 15; white-space: nowrap; }
+.strz { position: absolute; z-index: 15; overflow: visible; }
+.strz path { fill: none; stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* karty, ramki, listy */
+.karta { position: absolute; background: #fff; border-radius: 36px; box-shadow: 0 30px 80px rgba(30,27,46,.18); overflow: hidden; }
+.karta > img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.karta-tekst { position: absolute; background: #fff; color: var(--ciemny); border-radius: 28px; padding: 22px 32px; font-weight: 800; font-size: 46px; line-height: 1.2; z-index: 12; box-shadow: 0 20px 50px rgba(20,10,60,.3); }
+.ramka { position: absolute; border-radius: 30px; overflow: hidden; border: 8px solid #fff; box-shadow: 0 30px 70px rgba(20,10,60,.35); background: #000; }
+.ramka > img, .ramka > video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.lista { display: flex; flex-direction: column; gap: 24px; width: 100%; }
+.lista > div { background: #fff; border-radius: 30px; padding: 34px 36px; display: flex; align-items: center; gap: 26px; font-weight: 800; font-size: 50px; box-shadow: 0 16px 40px rgba(30,27,46,.10); color: var(--ciemny); }
+.lista i { flex: none; width: 80px; height: 80px; border-radius: 50%; background: var(--tlo-1); color: #fff; font-style: normal; font-size: 42px; display: flex; align-items: center; justify-content: center; }
+.pigulki { display: flex; gap: 20px; flex-wrap: wrap; }
+.pigulki > div { background: #fff; color: var(--ciemny); border-radius: 50px; padding: 18px 34px; font-weight: 800; font-size: 46px; display: flex; align-items: center; gap: 16px; box-shadow: 0 10px 26px rgba(30,27,46,.12); }
+.pigulki i { width: 54px; height: 54px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #fff; font-style: normal; font-size: 30px; }
+.tak { background: #16A34A; } .nie { background: #EF4444; }
+
+/* pole komentarza (wezwanie do działania) */
+.pole { position: absolute; left: 90px; right: 90px; height: 140px; background: #fff; border-radius: 70px; display: flex; align-items: center; gap: 24px; padding: 0 20px 0 22px; box-shadow: 0 24px 60px rgba(30,27,46,.25); z-index: 12; }
+.pole img { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; }
+.pole .w { flex: 1; font-weight: 800; font-size: 66px; letter-spacing: 2px; color: var(--ciemny); }
+.pole .w small { display: block; font-size: 30px; letter-spacing: 0; color: #6E6B82; font-weight: 600; margin-bottom: -8px; }
+.pole .wyslij { width: 100px; height: 100px; border-radius: 50%; background: var(--tlo-1); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 44px; }

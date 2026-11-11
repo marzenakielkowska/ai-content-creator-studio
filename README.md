@@ -5,8 +5,8 @@ Nagrywasz, a Claude montuje rolkę w Twoim stylu.
 Ta wtyczka jest dla kursantów AI Content Creator Studio. Filmy instruktażowe i wsparcie znajdziesz w materiałach kursu.
 
 > **Wersja testowa.** Po instalacji masz do dyspozycji: przygotowanie komputera (`/studio:start`),
-> wybór stylu napisów i efektów (`/studio:lookbook`, `/studio:dzwieki`) oraz montaż rolki jedną komendą
-> (`/studio:montaz`). Wtyczka jest w fazie testów — jeśli coś nie zadziała, napisz na adres wsparcia z kursu.
+> wybór stylu napisów i efektów (`/studio:lookbook`, `/studio:dzwieki`), montaż rolki jedną komendą
+> (`/studio:montaz`) oraz karuzelę na Instagram z gotowej rolki (`/studio:karuzela-z-rolki`). Wtyczka jest w fazie testów — jeśli coś nie zadziała, napisz na adres wsparcia z kursu.
 
 ## Czego potrzebujesz
 
