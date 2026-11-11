@@ -1,7 +1,7 @@
 {
   "name": "studio",
   "displayName": "AI Content Creator Studio",
-  "version": "0.5.101",
+  "version": "0.5.102",
   "description": "Montaż rolek w Twoim stylu jedną komendą. Wersja testowa: przygotowanie komputera, wybór stylu, montaż (/studio:montaz) i karuzela z gotowej rolki (/studio:karuzela-z-rolki).",
   "author": {
     "name": "Marzena Kiełkowska",
