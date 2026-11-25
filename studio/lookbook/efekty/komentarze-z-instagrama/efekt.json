@@ -1,0 +1,22 @@
+{
+  "id": "komentarze-z-instagrama",
+  "kategoria": "dowod",
+  "typ": "nakładkowy",
+  "nazwa": "Komentarze z Instagrama",
+  "opis": "Na Twoje hasło pod brodą sypią się powiadomienia z Instagrama: kolejne osoby komentują Twoim słowem, jedna po drugiej.",
+  "najlepsze_do": "Wezwanie „Skomentuj słowem…”, zapisy, lead magnet, pokazanie, że ludzie reagują",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#7a2a22;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px\"><div style=\"display:flex;align-items:center;gap:3px;background:#fff;border-radius:5px;padding:2px 4px;width:58px\"><i style=\"width:9px;height:9px;border-radius:3px;background:linear-gradient(45deg,#FDF497,#FD5949,#D6249F,#285AEB);flex:none\"></i><b style=\"font:700 4px Figtree,sans-serif;color:#1D1B2A;white-space:nowrap;overflow:hidden\">kasia: NAGRANIE</b></div><div style=\"display:flex;align-items:center;gap:3px;background:#fff;border-radius:5px;padding:2px 4px;width:58px\"><i style=\"width:9px;height:9px;border-radius:3px;background:linear-gradient(45deg,#FDF497,#FD5949,#D6249F,#285AEB);flex:none\"></i><b style=\"font:700 4px Figtree,sans-serif;color:#1D1B2A;white-space:nowrap;overflow:hidden\">ania: NAGRANIE</b></div><div style=\"display:flex;align-items:center;gap:3px;background:#fff;border-radius:5px;padding:2px 4px;width:58px\"><i style=\"width:9px;height:9px;border-radius:3px;background:linear-gradient(45deg,#FDF497,#FD5949,#D6249F,#285AEB);flex:none\"></i><b style=\"font:700 4px Figtree,sans-serif;color:#1D1B2A;white-space:nowrap;overflow:hidden\">monika: NAGRANIE</b></div><div style=\"display:flex;align-items:center;gap:3px;background:#fff;border-radius:5px;padding:2px 4px;width:58px\"><i style=\"width:9px;height:9px;border-radius:3px;background:linear-gradient(45deg,#FDF497,#FD5949,#D6249F,#285AEB);flex:none\"></i><b style=\"font:700 4px Figtree,sans-serif;color:#1D1B2A;white-space:nowrap;overflow:hidden\">agata: NAGRANIE</b></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "ffmpeg",
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

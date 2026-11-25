@@ -1,0 +1,22 @@
+{
+  "id": "zaobserwuj-profil",
+  "kategoria": "elementy-wizualne",
+  "typ": "nakładkowy",
+  "nazwa": "Zaobserwuj profil",
+  "opis": "Pod brodą wjeżdża karta Twojego profilu: zdjęcie, nazwa konta, „Zaobserwuj profil” i fioletowy przycisk. Kursor klika, przycisk zmienia się na „✓ Obserwujesz”.",
+  "najlepsze_do": "Koniec rolki, pożegnanie, „obserwuj, żeby być na bieżąco”, albo zdanie o obserwujących",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#7a2a22;display:flex;align-items:center;justify-content:center\"><div style=\"display:flex;align-items:center;gap:3px;background:#fff;border-radius:7px;padding:3px 4px\"><i style=\"width:11px;height:11px;border-radius:50%;background:#C9B8A6;box-shadow:0 0 0 1px #6C4BEF\"></i><b style=\"font:800 5px Figtree,sans-serif;color:#1D1B2A\">Zaobserwuj profil</b><b style=\"background:#6C4BEF;color:#fff;border-radius:3px;padding:2px 3px;font:800 4px Figtree,sans-serif\">Obserwuj</b></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "ffmpeg",
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

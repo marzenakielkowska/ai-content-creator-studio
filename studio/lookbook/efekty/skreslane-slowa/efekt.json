@@ -1,0 +1,22 @@
+{
+  "id": "skreslane-slowa",
+  "kategoria": "tekst",
+  "typ": "nakładkowy",
+  "nazwa": "Skreślane słowa",
+  "opis": "Słowa, które wyliczasz, wskakują pod brodą jako białe pigułki, schodkami. Na zdaniu, które je odrzuca, wszystkie naraz dostają czerwoną kreskę i znikają.",
+  "najlepsze_do": "Wyliczanka rzeczy, których już nie robisz albo nie musisz: „przesuń, odsuń, popraw… nic nie mówię”, „żadnych diet, liczenia kalorii, głodówek”",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#7a2a22;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:3px;padding:0 6px\"><b style=\"position:relative;background:#fff;border-radius:6px;padding:1px 4px;font:800 5px Figtree,sans-serif;color:#1D1B2A\">przesuń<i style=\"position:absolute;left:2px;right:2px;top:50%;height:1px;background:#FF3B30\"></i></b><b style=\"position:relative;background:#fff;border-radius:6px;padding:1px 4px;font:800 5px Figtree,sans-serif;color:#1D1B2A\">odsuń<i style=\"position:absolute;left:2px;right:2px;top:50%;height:1px;background:#FF3B30\"></i></b><b style=\"position:relative;background:#fff;border-radius:6px;padding:1px 4px;font:800 5px Figtree,sans-serif;color:#1D1B2A\">dodaj<i style=\"position:absolute;left:2px;right:2px;top:50%;height:1px;background:#FF3B30\"></i></b><b style=\"position:relative;background:#fff;border-radius:6px;padding:1px 4px;font:800 5px Figtree,sans-serif;color:#1D1B2A\">popraw<i style=\"position:absolute;left:2px;right:2px;top:50%;height:1px;background:#FF3B30\"></i></b><b style=\"position:relative;background:#fff;border-radius:6px;padding:1px 4px;font:800 5px Figtree,sans-serif;color:#1D1B2A\">wytnij<i style=\"position:absolute;left:2px;right:2px;top:50%;height:1px;background:#FF3B30\"></i></b></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "ffmpeg",
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "powiadomienia-z-telefonu",
+  "kategoria": "elementy-wizualne",
+  "typ": "nakładkowy",
+  "nazwa": "Powiadomienia z telefonu",
+  "opis": "Pod brodą wskakują powiadomienia jak na iPhonie, jedno pod drugim: nadawca i krótka wiadomość. Każde na słowo, które mówisz.",
+  "najlepsze_do": "Gdy mówisz o czekaniu, terminach, wiadomościach od kogoś: „czekałam tydzień”, „klientki piszą”, „ciągle ktoś czegoś chce”",
+  "status": "gotowy",
+  "nowosc": true,
+  "podglad_html": "<div style=\"position:absolute;inset:0;background:#7a2a22;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px\"><div style=\"display:flex;align-items:center;gap:3px;background:#fff;border-radius:5px;padding:2px 4px;width:58px\"><i style=\"width:9px;height:9px;border-radius:3px;background:#2DBE6C;flex:none\"></i><b style=\"font:700 4px Figtree,sans-serif;color:#1D1B2A;white-space:nowrap;overflow:hidden\">Rolka w czwartek</b></div><div style=\"display:flex;align-items:center;gap:3px;background:#fff;border-radius:5px;padding:2px 4px;width:58px\"><i style=\"width:9px;height:9px;border-radius:3px;background:#2DBE6C;flex:none\"></i><b style=\"font:700 4px Figtree,sans-serif;color:#1D1B2A;white-space:nowrap;overflow:hidden\">Poprawki po weekendzie</b></div><div style=\"display:flex;align-items:center;gap:3px;background:#fff;border-radius:5px;padding:2px 4px;width:58px\"><i style=\"width:9px;height:9px;border-radius:3px;background:#2DBE6C;flex:none\"></i><b style=\"font:700 4px Figtree,sans-serif;color:#1D1B2A;white-space:nowrap;overflow:hidden\">Napisy w środę</b></div></div>",
+  "wymagania": {
+    "wideo": "9:16, nagranie kursantki",
+    "narzedzia": [
+      "ffmpeg",
+      "hyperframes"
+    ]
+  },
+  "przepis": {
+    "typ": "hyperframes",
+    "opis_efektu": "PRZEPIS.md"
+  }
+}
